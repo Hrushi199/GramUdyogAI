@@ -1,11 +1,14 @@
 import React from 'react';
 import { Cpu, Building2, Users, GraduationCap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface FeaturesProps {
   loaded: boolean;
 }
 
 const Features: React.FC<FeaturesProps> = ({ loaded }) => {
+  const navigate = useNavigate();
+
   const features = [
     {
       title: "AI Business Suggestions",
@@ -15,7 +18,8 @@ const Features: React.FC<FeaturesProps> = ({ loaded }) => {
     {
       title: "Government Schemes",
       description: "Access a curated database of relevant government programs, subsidies, and support initiatives",
-      icon: Building2
+      icon: Building2,
+      onClick: () => navigate("/schemes")
     },
     {
       title: "Expert Mentorship",
@@ -44,7 +48,8 @@ const Features: React.FC<FeaturesProps> = ({ loaded }) => {
           {features.map((feature, index) => (
             <div 
               key={index} 
-              className={`group bg-gradient-to-br from-white/5 to-white/0 p-8 rounded-2xl border border-white/10 backdrop-blur-sm hover:border-purple-500/50 transition-all duration-300 transform ${loaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+              onClick={feature.onClick}
+              className={`group bg-gradient-to-br from-white/5 to-white/0 p-8 rounded-2xl border border-white/10 backdrop-blur-sm hover:border-purple-500/50 transition-all duration-300 transform ${loaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} cursor-pointer`}
               style={{ transitionDelay: `${300 + (index * 150)}ms` }}
             >
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">

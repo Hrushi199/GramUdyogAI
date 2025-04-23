@@ -7,6 +7,7 @@ import Stats from './components/sections/Stats';
 import CTA from './components/sections/CTA';
 import Footer from './components/sections/Footer';
 import Navbar from './components/sections/Navbar';
+import SchemeRecommendation from './components/sections/SchemeRecommendation'; // Import the component
 
 // NEW pages
 import UserProfile from './pages/UserProfile';
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/dashboard" element={<JobMentorDashboard />} />
           <Route path="/community" element={<Community />} />
+          <Route path="/schemes" element={<SchemeRecommendation />} /> {/* Add this route */}
         </Routes>
       </Router>
     </div>
