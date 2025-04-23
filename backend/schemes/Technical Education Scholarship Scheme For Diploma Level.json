@@ -1,0 +1,88 @@
+{
+  "scheme_name": "Technical Education Scholarship Scheme For Diploma Level",
+  "location": "Himachal Pradesh",
+  "tags": [
+    "Scholarship",
+    "Financial Assistance",
+    "Technical Education",
+    "Diploma Courses"
+  ],
+  "description": "The Technical Education Scholarship Scheme for Diploma Level in Himachal Pradesh provides financial assistance to students pursuing diploma-level technical courses in recognized institutions. The scheme aims to promote technical education among students in Himachal Pradesh by covering educational expenses.",
+  "key_features": [
+    "Scholarships for diploma-level technical courses",
+    "Covers tuition fees and related expenses",
+    "Implemented by the Department of Technical Education, Himachal Pradesh",
+    "Targets meritorious students"
+  ],
+  "benefits": {
+    "scholarship_amount": "Varies based on course and institution",
+    "coverage": "Tuition fees, maintenance allowance"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students enrolled in diploma-level technical courses",
+      "Courses must be approved by AICTE or equivalent"
+    ],
+    "additional_criteria": [
+      "Must be a resident of Himachal Pradesh",
+      "Annual family income criteria may apply (as per state guidelines)",
+      "Must have secured admission through merit or entrance test"
+    ],
+    "admission_requirement": "Admission to recognized technical institutions",
+    "institution_criteria": [
+      "AICTE-approved polytechnics or technical institutions in India"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Diploma courses in engineering, architecture, pharmacy, etc.",
+    "Other technical diploma courses approved by AICTE"
+  ],
+  "application_process": {
+    "mode": "Online/Offline",
+    "steps": [
+      "Visit the Himachal Pradesh Technical Education portal or contact the department",
+      "Fill out the scholarship application form",
+      "Submit required documents",
+      "Verification and approval by the department",
+      "Scholarship disbursed to eligible students"
+    ],
+    "note": "Check the department’s website for application deadlines"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": false,
+      "note": "If applicable per state guidelines"
+    },
+    {
+      "document": "Admission Letter",
+      "mandatory": true
+    },
+    {
+      "document": "Marksheets (10th or last qualifying exam)",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    },
+    {
+      "document": "Domicile Certificate",
+      "mandatory": true,
+      "note": "To prove Himachal Pradesh residency"
+    }
+  ],
+  "special_notes": [
+    "Scholarship amount varies based on course and institution",
+    "Renewal requires satisfactory academic progress",
+    "Limited to diploma-level technical courses"
+  ]
+}

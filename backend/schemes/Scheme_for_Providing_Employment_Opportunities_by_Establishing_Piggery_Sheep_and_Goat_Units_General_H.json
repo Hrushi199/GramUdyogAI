@@ -1,0 +1,50 @@
+{
+  "scheme_name": "Scheme for Providing Employment Opportunities by Establishing Piggery, Sheep and Goat Units (General) (Haryana)",
+  "location": "Haryana",
+  "tags": [
+    "Poultry Farming",
+    "Piggery",
+    "Sheep and Goat Farming",
+    "Employment Generation"
+  ],
+  "description": "This scheme provides financial assistance to establish piggery, sheep, goat, and poultry units to generate employment opportunities for rural households in Haryana.",
+  "key_features": [
+    "Financial support for setting up poultry and other livestock units",
+    "Aims to promote self-employment in rural areas"
+  ],
+  "benefits": {
+    "financial_assistance": "Subsidy as per scheme norms",
+    "unit_types": "Poultry, piggery, sheep, and goat units"
+  },
+  "eligibility": {
+    "category_criteria": [
+      "Open to general category residents of Haryana"
+    ],
+    "additional_criteria": "Must have access to land or space for setting up units"
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Contact the Animal Husbandry Department",
+      "Submit application with required documents",
+      "Verification and sanction by authorities"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residence Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Land Ownership/Lease Documents",
+      "mandatory": false
+    }
+  ],
+  "special_notes": [
+    "Scheme covers multiple livestock types, including poultry"
+  ]
+}

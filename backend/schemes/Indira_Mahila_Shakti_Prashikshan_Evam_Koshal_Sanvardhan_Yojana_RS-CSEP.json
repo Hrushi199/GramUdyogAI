@@ -1,0 +1,75 @@
+{
+  "scheme_name": "Indira Mahila Shakti Prashikshan Evam Koshal Sanvardhan Yojana (RS-CSEP)",
+  "location": "Rajasthan",
+  "tags": [
+    "Skill Training",
+    "Women Empowerment",
+    "Spoken English",
+    "Personality Development"
+  ],
+  "description": "The Indira Mahila Shakti Prashikshan Evam Koshal Sanvardhan Yojana (RS-CSEP) in Rajasthan provides free training in spoken English and personality development to women and girls to enhance their employability and confidence.",
+  "key_features": [
+    "Free training in spoken English",
+    "Personality development workshops",
+    "Empowers women for professional growth"
+  ],
+  "benefits": {
+    "training": "Free 3-month training program",
+    "certification": "Certificate upon course completion",
+    "placement_support": "Assistance for job placement"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women and girls aged 16-45 years"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Rajasthan"
+    ],
+    "education_criteria": [
+      "Minimum 10th standard education"
+    ]
+  },
+  "eligible_activities": [
+    "Participation in spoken English training",
+    "Attending personality development workshops",
+    "Career counseling and job placement activities"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the District Women Empowerment Department",
+      "Submit the application with proof of eligibility",
+      "Attach required documents, including Aadhaar and education certificate",
+      "Applications are reviewed by the department",
+      "Selected candidates are enrolled in training programs"
+    ],
+    "note": "Applicants must attend an orientation session"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "10th Standard Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Training is conducted in batches at district centers",
+    "Priority is given to economically disadvantaged women",
+    "Attendance is mandatory for certification"
+  ]
+}

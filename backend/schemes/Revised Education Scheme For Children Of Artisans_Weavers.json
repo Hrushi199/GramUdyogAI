@@ -1,0 +1,86 @@
+{
+  "scheme_name": "Revised Education Scheme For Children Of Artisans/Weavers Of Handicrafts And Handloom Departments",
+  "location": "Jammu and Kashmir",
+  "tags": [
+    "Financial Assistance",
+    "Education Support",
+    "School Education",
+    "Artisans/Weavers"
+  ],
+  "description": "The Revised Education Scheme in Jammu and Kashmir provides financial assistance to the children of artisans and weavers registered with the Handicrafts and Handloom Departments to support their education from primary to higher secondary levels. The scheme aims to promote education among these communities.",
+  "key_features": [
+    "Financial support for children of artisans/weavers",
+    "Covers primary to higher secondary education",
+    "Implemented by the Handicrafts and Handloom Departments",
+    "Encourages educational continuity"
+  ],
+  "benefits": {
+    "assistance_amount": "Varies based on educational level and department guidelines",
+    "coverage": "School fees, books, and other expenses"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Children enrolled in primary, secondary, or higher secondary classes",
+      "Must be studying in recognized schools"
+    ],
+    "additional_criteria": [
+      "Parent must be a registered artisan/weaver with the Handicrafts or Handloom Department",
+      "Must be a resident of Jammu and Kashmir"
+    ],
+    "admission_requirement": "Enrolled in recognized schools",
+    "institution_criteria": [
+      "Government or recognized private schools in Jammu and Kashmir"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Primary education (Classes 1-8)",
+    "Secondary education (Classes 9-10)",
+    "Higher secondary education (Classes 11-12)"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain application form from the Handicrafts or Handloom Department",
+      "Submit form with required documents",
+      "Verification by the department",
+      "Assistance disbursed to eligible students"
+    ],
+    "note": "Contact the department for application details"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card (Child/Parent)",
+      "mandatory": true
+    },
+    {
+      "document": "Artisan/Weaver Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "School Enrollment Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Marksheet (Previous class)",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    },
+    {
+      "document": "Domicile Certificate",
+      "mandatory": true,
+      "note": "To prove Jammu and Kashmir residency"
+    }
+  ],
+  "special_notes": [
+    "Limited to children of registered artisans/weavers",
+    "Assistance amount varies based on educational level",
+    "Renewal requires proof of continued enrollment"
+  ]
+}

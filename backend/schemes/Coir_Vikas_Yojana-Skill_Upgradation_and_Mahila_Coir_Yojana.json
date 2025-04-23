@@ -1,0 +1,75 @@
+{
+  "scheme_name": "Coir Vikas Yojana-Skill Upgradation and Mahila Coir Yojana",
+  "location": "Pan India",
+  "tags": [
+    "Skill Training",
+    "Women Entrepreneurs",
+    "Coir Industry",
+    "Financial Assistance"
+  ],
+  "description": "The Coir Vikas Yojana-Skill Upgradation and Mahila Coir Yojana, implemented by the Coir Board, provides training programs and subsidized equipment to women entrepreneurs in the coir industry to promote self-employment and entrepreneurship.",
+  "key_features": [
+    "Skill training in coir-based products",
+    "Subsidized coir processing equipment",
+    "Support for women entrepreneurs"
+  ],
+  "benefits": {
+    "training": "Free skill training for 1-3 months",
+    "equipment_subsidy": "75% subsidy on coir machinery, up to Rs. 7.5 Lakhs",
+    "stipend": "Monthly stipend during training, up to Rs. 3,000"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women aged 18-50 years"
+    ],
+    "business_criteria": [
+      "Must intend to start or expand a coir-based enterprise"
+    ],
+    "residency_criteria": [
+      "Must be a resident of India"
+    ]
+  },
+  "eligible_activities": [
+    "Training in coir spinning, weaving, or product manufacturing",
+    "Purchase of coir processing machinery",
+    "Setting up coir-based enterprises"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the Coir Board or regional offices",
+      "Submit the application with a business plan",
+      "Attach required documents, including Aadhaar and residency proof",
+      "Applications are reviewed by the Coir Board",
+      "Approved candidates are enrolled in training and receive subsidies"
+    ],
+    "note": "Applicants must complete training to avail equipment subsidy"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Business Plan",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Training is conducted at Coir Board centers",
+    "Equipment subsidy is linked to bank loans",
+    "Priority is given to women in coir-producing regions"
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "scheme_name": "Tailoring Training To Scheduled Caste & Backward Classes Widows/Destitute Women/Girls",
+  "location": "Haryana",
+  "tags": [
+    "Skill Training",
+    "Financial Assistance",
+    "SC/BC",
+    "Women Empowerment"
+  ],
+  "description": "This scheme in Haryana aims to enable Scheduled Caste (SC) and Backward Classes (BC) widows, destitute women, and girls to achieve self-employment by providing tailoring training and sewing machines. It promotes economic independence through skill development.",
+  "key_features": [
+    "Free tailoring training for SC/BC women",
+    "Provision of sewing machines post-training",
+    "Supports self-employment in tailoring"
+  ],
+  "benefits": {
+    "training": "Free tailoring training for 6 months",
+    "equipment": "Free sewing machine upon course completion",
+    "stipend": "Monthly stipend during training, up to Rs. 1,000"
+  },
+  "eligibility": {
+    "community_criteria": [
+      "Must belong to Scheduled Caste (SC) or Backward Classes (BC)"
+    ],
+    "gender_criteria": [
+      "Widows, destitute women, or girls aged 18-45 years"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Haryana"
+    ]
+  },
+  "eligible_activities": [
+    "Participation in tailoring training programs",
+    "Setting up tailoring businesses post-training",
+    "Using sewing machines for self-employment"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the District Welfare Officer or Social Welfare Department",
+      "Submit the application with proof of eligibility",
+      "Attach required documents, including caste certificate and residency proof",
+      "Applications are reviewed by the Social Welfare Department",
+      "Selected candidates are enrolled in training programs"
+    ],
+    "note": "Applicants must commit to completing the training program"
+  },
+  "required_documents": [
+    {
+      "document": "SC/BC Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Proof of Widow/Destitute Status",
+      "mandatory": true,
+      "required_when": "For widows or destitute women"
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Sewing machines are provided only upon successful completion of training",
+    "Priority is given to economically disadvantaged applicants",
+    "Training centers are located at district levels"
+  ]
+}

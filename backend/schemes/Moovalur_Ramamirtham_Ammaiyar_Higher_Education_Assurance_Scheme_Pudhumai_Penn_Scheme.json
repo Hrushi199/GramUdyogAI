@@ -1,0 +1,74 @@
+{
+  "scheme_name": "Moovalur Ramamirtham Ammaiyar Higher Education Assurance Scheme (Pudhumai Penn Scheme)",
+  "location": "Tamil Nadu",
+  "tags": [
+    "Women Empowerment",
+    "Higher Education",
+    "Financial Assistance",
+    "Girl Students"
+  ],
+  "description": "The Moovalur Ramamirtham Ammaiyar Higher Education Assurance Scheme (Pudhumai Penn Scheme) in Tamil Nadu provides financial assistance to girl students from government schools to pursue higher education, promoting gender equality in education.",
+  "key_features": [
+    "Financial support for higher education",
+    "Targets girl students from government schools",
+    "Encourages women\u00e2\u20ac\u2122s education"
+  ],
+  "benefits": {
+    "financial_assistance": "Rs. 1,000 per month for higher education expenses",
+    "duration": "Support provided until course completion"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Girl students"
+    ],
+    "education_criteria": [
+      "Must have studied in government schools from Class 6 to 12",
+      "Must be enrolled in a recognized higher education institution"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Tamil Nadu"
+    ]
+  },
+  "eligible_activities": [
+    "Pursuing higher education (degree, diploma, or professional courses)",
+    "Covering education-related expenses like fees or books"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the Tamil Nadu Higher Education Department portal",
+      "Submit an online application with enrollment details",
+      "Upload required documents, including Aadhaar and education certificates",
+      "Applications are reviewed by the department",
+      "Approved students receive monthly assistance"
+    ],
+    "note": "Applicants must provide proof of enrollment"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "School Certificates (Class 6-12)",
+      "mandatory": true
+    },
+    {
+      "document": "Higher Education Enrollment Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Assistance is directly credited to students\u00e2\u20ac\u2122 bank accounts",
+    "Students must maintain academic progress",
+    "Priority is given to economically disadvantaged students"
+  ]
+}

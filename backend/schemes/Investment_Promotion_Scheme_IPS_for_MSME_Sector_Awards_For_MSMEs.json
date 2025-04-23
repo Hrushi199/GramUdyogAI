@@ -1,0 +1,73 @@
+{
+  "scheme_name": "Investment Promotion Scheme (IPS) for MSME Sector: Awards For MSMEs",
+  "location": "The Dadra And Nagar Haveli And Daman And Diu",
+  "tags": [
+    "Awards",
+    "MSME",
+    "Recognition",
+    "Financial Incentive"
+  ],
+  "description": "The Investment Promotion Scheme (IPS) for MSME Sector: Awards For MSMEs recognizes outstanding Micro, Small, and Medium Enterprises in The Dadra and Nagar Haveli and Daman and Diu for their contributions to innovation, exports, and employment. The scheme provides cash awards and recognition to motivate MSMEs.",
+  "key_features": [
+    "Cash awards for outstanding MSMEs",
+    "Recognition for innovation, exports, and job creation",
+    "Promotes competitiveness among MSMEs"
+  ],
+  "benefits": {
+    "cash_award": "Up to Rs. 1 Lakh per awardee",
+    "recognition": "Certificates and public recognition at state-level events"
+  },
+  "eligibility": {
+    "business_criteria": [
+      "Must be a registered MSME as per the MSME Development Act, 2006",
+      "Must be located in The Dadra and Nagar Haveli and Daman and Diu"
+    ],
+    "performance_criteria": [
+      "Demonstrated excellence in innovation, exports, employment, or sustainability",
+      "Must have been operational for at least 3 years"
+    ]
+  },
+  "eligible_activities": [
+    "Innovation in products or processes",
+    "Significant export achievements",
+    "Employment generation and sustainable practices"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the nomination form from the District Industries Centre (DIC)",
+      "Submit a detailed application with evidence of achievements",
+      "Attach required documents, including MSME registration and performance reports",
+      "Applications are evaluated by a state-level committee",
+      "Winners are announced at an award ceremony"
+    ],
+    "note": "Nominations must be submitted by the specified deadline"
+  },
+  "required_documents": [
+    {
+      "document": "MSME Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Performance Report (Exports, Employment, Innovation)",
+      "mandatory": true
+    },
+    {
+      "document": "Financial Statements (Last 3 Years)",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card of Proprietor/Partners",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Achievements",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Awards are given annually based on merit",
+    "MSMEs must provide verifiable evidence of achievements",
+    "Priority is given to MSMEs with social or environmental impact"
+  ]
+}

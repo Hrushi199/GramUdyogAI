@@ -1,0 +1,91 @@
+{
+  "scheme_name": "National Overseas Scholarship For Scheduled Caste Etc. Candidates",
+  "location": "Pan India",
+  "tags": [
+    "Scholarship",
+    "Financial Assistance",
+    "Overseas Education",
+    "Scheduled Castes"
+  ],
+  "description": "The National Overseas Scholarship for Scheduled Caste (SC) and other specified candidates provides financial assistance for pursuing master’s and Ph.D. programs abroad. The scheme aims to enable SC and other marginalized students to access world-class education opportunities.",
+  "key_features": [
+    "Scholarships for master’s and Ph.D. programs abroad",
+    "Covers SC and other specified candidates (e.g., Denotified Tribes, Landless Labourers)",
+    "Implemented by the Ministry of Social Justice and Empowerment",
+    "Supports international education"
+  ],
+  "benefits": {
+    "scholarship_amount": "Up to USD 33,600 per year for tuition and living expenses",
+    "additional_support": "Airfare, visa fees, and medical insurance"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students enrolled in master’s or Ph.D. programs abroad",
+      "Courses must be in recognized foreign universities"
+    ],
+    "additional_criteria": [
+      "Applicant must belong to Scheduled Castes, Denotified Tribes, or specified categories",
+      "Annual family income must not exceed Rs. 8 Lakhs",
+      "Minimum 60% marks in previous qualifying exam"
+    ],
+    "admission_requirement": "Admission to recognized foreign universities",
+    "institution_criteria": [
+      "Recognized foreign universities ranked in top global rankings"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Master’s and Ph.D. programs in engineering, sciences, humanities, social sciences, etc.",
+    "Courses offered by recognized foreign universities"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the National Overseas Scholarship portal",
+      "Register and fill out the application form",
+      "Upload required documents",
+      "Submit application and attend interview (if required)",
+      "Scholarship disbursed to selected candidates"
+    ],
+    "note": "Apply as per annual scholarship notification"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "SC/DNT Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": true,
+      "note": "To prove family income below Rs. 8 Lakhs"
+    },
+    {
+      "document": "Admission Letter",
+      "mandatory": true
+    },
+    {
+      "document": "Marksheets (Previous qualifying exam)",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    },
+    {
+      "document": "Passport",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Limited to master’s and Ph.D. programs abroad",
+    "Selection includes academic merit and interview",
+    "Scholarship duration: 3 years for master’s, 4 years for Ph.D."
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "scheme_name": "Subsidy for Fund Raising from SME Exchange",
+  "location": "Tamil Nadu",
+  "tags": [
+    "Financial Assistance",
+    "MSME",
+    "SME Exchange",
+    "Capital Raising"
+  ],
+  "description": "The Subsidy for Fund Raising from SME Exchange in Tamil Nadu supports MSMEs by subsidizing costs incurred while raising funds through the SME Exchange. The scheme aims to facilitate access to public capital markets for growth and expansion.",
+  "key_features": [
+    "Subsidy on expenses for raising funds via SME Exchange",
+    "Support for IPOs and FPOs",
+    "Promotes financial growth of MSMEs"
+  ],
+  "benefits": {
+    "subsidy": "25% of expenses for fund raising, up to a maximum of Rs. 5 Lakhs",
+    "one_time_assistance": "Subsidy provided one time per MSME"
+  },
+  "eligibility": {
+    "business_criteria": [
+      "Must be a registered MSME as per the MSME Development Act, 2006",
+      "Must be located in Tamil Nadu"
+    ],
+    "operational_criteria": [
+      "Must have raised funds through an IPO or FPO on a recognized SME Exchange",
+      "Expenses must be related to fund raising (e.g., legal, audit, listing fees)"
+    ]
+  },
+  "eligible_activities": [
+    "Expenses for raising capital through SME Exchange, including legal, audit, and listing fees"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the Tamil Nadu MSME portal or Industries Department website",
+      "Submit an online application with details of funds raised and expenses",
+      "Upload required documents, including MSME registration and expense receipts",
+      "Applications are reviewed by the District Industries Centre (DIC)",
+      "Approved applicants receive the subsidy upon verification"
+    ],
+    "note": "Applications must be submitted within one year of fund raising"
+  },
+  "required_documents": [
+    {
+      "document": "Udyam Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Proof of Funds Raised (SME Exchange Documents)",
+      "mandatory": true
+    },
+    {
+      "document": "Expense Receipts/Invoices",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "The subsidy is limited to 25% of eligible expenses or Rs. 5 Lakhs, whichever is lower",
+    "MSMEs must comply with Tamil Nadu\u00e2\u20ac\u2122s industrial regulations",
+    "Only expenses directly related to fund raising are eligible"
+  ]
+}

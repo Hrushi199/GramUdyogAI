@@ -1,0 +1,71 @@
+{
+  "scheme_name": "Grant-in-Aid Scheme To Provide Financial Assistance To The Mahila Mandals/Women's Self-help Groups (SWAWLAMBHAN)",
+  "location": "Goa",
+  "tags": [
+    "Women Empowerment",
+    "SHGs",
+    "Financial Assistance",
+    "Self-Employment"
+  ],
+  "description": "The Grant-in-Aid Scheme (SWAWLAMBHAN) in Goa provides financial assistance to women\u00e2\u20ac\u2122s self-help groups (SHGs) and Mahila Mandals for training and self-employment activities, promoting economic independence and community development.",
+  "key_features": [
+    "Grants for women\u00e2\u20ac\u2122s SHGs and Mahila Mandals",
+    "Support for training and self-employment",
+    "Encourages women\u00e2\u20ac\u2122s economic empowerment"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 2 Lakhs per SHG for self-employment activities",
+    "training": "Free skill and entrepreneurship training"
+  },
+  "eligibility": {
+    "group_criteria": [
+      "Registered women\u00e2\u20ac\u2122s SHGs or Mahila Mandals in Goa"
+    ],
+    "activity_criteria": [
+      "Must undertake self-employment or training activities"
+    ]
+  },
+  "eligible_activities": [
+    "Setting up SHG-based enterprises",
+    "Skill training in trades like handicrafts or food processing",
+    "Organizing community-based economic activities"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the Directorate of Women and Child Development, Goa",
+      "Submit the application through the SHG with a project plan",
+      "Attach required documents, including SHG registration and activity details",
+      "Applications are reviewed by the directorate",
+      "Approved SHGs receive grants and training support"
+    ],
+    "note": "Applications are processed through SHGs or Mahila Mandals"
+  },
+  "required_documents": [
+    {
+      "document": "SHG/Mahila Mandal Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card (Group Members)",
+      "mandatory": true
+    },
+    {
+      "document": "Project Plan",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details (SHG Account)",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Funding is provided to groups, not individuals",
+    "SHGs must submit progress reports",
+    "Priority is given to groups with sustainable projects"
+  ]
+}

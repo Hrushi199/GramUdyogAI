@@ -1,0 +1,73 @@
+{
+  "scheme_name": "Assistance for Quality Enhancement",
+  "location": "Rajasthan",
+  "tags": [
+    "Financial Assistance",
+    "MSME",
+    "Quality Certification",
+    "Technology Upgradation"
+  ],
+  "description": "The Assistance for Quality Enhancement scheme in Rajasthan supports MSMEs in obtaining quality certifications and adopting advanced technologies to improve product quality and competitiveness. It provides financial assistance for certification and technology costs.",
+  "key_features": [
+    "Financial aid for quality certifications",
+    "Support for technology upgradation",
+    "Enhances MSME competitiveness"
+  ],
+  "benefits": {
+    "subsidy": "Up to Rs. 2 Lakhs for quality certification and technology upgradation costs",
+    "reimbursement": "50% of certification costs, max Rs. 1 Lakh"
+  },
+  "eligibility": {
+    "business_criteria": [
+      "Must be a registered MSME as per the MSME Development Act, 2006",
+      "Must be located in Rajasthan"
+    ],
+    "operational_criteria": [
+      "Must pursue recognized quality certifications (e.g., ISO, BIS)",
+      "Must invest in technology for quality improvement"
+    ]
+  },
+  "eligible_activities": [
+    "Obtaining quality certifications like ISO, BIS, or HACCP",
+    "Purchasing equipment or software for quality enhancement",
+    "Training for quality management systems"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the Rajasthan Industries Department portal or scheme website",
+      "Submit an online application with details of certification or technology investment",
+      "Upload required documents, including MSME registration and expense details",
+      "Applications are reviewed by the District Industries Centre (DIC)",
+      "Approved applicants receive the subsidy upon verification"
+    ],
+    "note": "Applicants must provide proof of certification or technology adoption"
+  },
+  "required_documents": [
+    {
+      "document": "Udyam Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Certification Details/Invoice",
+      "mandatory": true
+    },
+    {
+      "document": "Expense Receipts for Technology Upgradation",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "The subsidy is limited to approved certifications and technologies",
+    "MSMEs must maintain certification for at least 3 years",
+    "Priority is given to export-oriented MSMEs"
+  ]
+}

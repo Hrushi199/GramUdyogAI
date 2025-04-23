@@ -1,0 +1,51 @@
+{
+  "scheme_name": "Integrated Scheme on Agriculture Cooperation",
+  "location": "Nationwide",
+  "tags": [
+    "Cooperatives",
+    "Financial Assistance",
+    "Agricultural Marketing"
+  ],
+  "description": "The Integrated Scheme on Agriculture Cooperation promotes the development of agricultural cooperatives for marketing, processing, and storage to enhance farmer incomes.",
+  "key_features": [
+    "Financial assistance for cooperative societies",
+    "Support for marketing and storage infrastructure",
+    "Capacity building for cooperative members"
+  ],
+  "benefits": {
+    "financial_support": "Grants and loans for cooperatives",
+    "market_access": "Improved marketing and storage facilities"
+  },
+  "eligibility": {
+    "criteria": [
+      "Registered agricultural cooperative societies",
+      "Farmer groups forming cooperatives"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Apply through National Cooperative Development Corporation",
+      "Submit cooperative registration and project details",
+      "Approval and fund release"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Cooperative Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Project Proposal",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Focus on value addition and market linkages",
+    "Priority to women-led cooperatives"
+  ]
+}

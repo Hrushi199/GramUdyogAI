@@ -1,0 +1,74 @@
+{
+  "scheme_name": "Technology Development And Utilization Programme For Women",
+  "location": "Pan India",
+  "tags": [
+    "Women Empowerment",
+    "Technology Development",
+    "Financial Assistance",
+    "Innovation"
+  ],
+  "description": "The Technology Development and Utilization Programme for Women, implemented by the Department of Science and Technology, provides financial assistance to projects and institutions developing technologies that benefit women. It aims to promote gender-friendly technological innovations.",
+  "key_features": [
+    "Funding for women-centric technology projects",
+    "Support for research and development",
+    "Promotes innovation for women\u00e2\u20ac\u2122s welfare"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 50 Lakhs per project, depending on scope",
+    "technical_support": "Access to expert guidance and resources",
+    "implementation_support": "Assistance for technology deployment"
+  },
+  "eligibility": {
+    "organization_criteria": [
+      "Registered institutions, universities, or NGOs",
+      "Must have expertise in technology development"
+    ],
+    "project_criteria": [
+      "Projects must develop technologies benefiting women",
+      "Must demonstrate feasibility and impact"
+    ]
+  },
+  "eligible_activities": [
+    "Research and development of women-centric technologies",
+    "Prototype development and testing",
+    "Deployment of technologies in communities"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the Department of Science and Technology portal",
+      "Submit an online application with a detailed project proposal",
+      "Upload required documents, including institutional registration and project plan",
+      "Applications are evaluated by a technical committee",
+      "Approved projects receive funding in phases"
+    ],
+    "note": "Funding is released based on project milestones"
+  },
+  "required_documents": [
+    {
+      "document": "Institution Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Detailed Project Proposal",
+      "mandatory": true
+    },
+    {
+      "document": "Financial Plan and Budget",
+      "mandatory": true
+    },
+    {
+      "document": "Proof of Technical Expertise",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Projects must focus on technologies addressing women\u00e2\u20ac\u2122s needs",
+    "Funding is subject to technical evaluation",
+    "Institutions must submit progress reports"
+  ]
+}

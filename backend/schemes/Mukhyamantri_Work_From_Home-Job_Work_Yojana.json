@@ -1,0 +1,76 @@
+{
+  "scheme_name": "Mukhyamantri Work From Home-Job Work Yojana",
+  "location": "Rajasthan",
+  "tags": [
+    "Women Empowerment",
+    "Work From Home",
+    "Financial Assistance",
+    "Self-Employment"
+  ],
+  "description": "The Mukhyamantri Work From Home-Job Work Yojana in Rajasthan allows women to work from home and earn income through various jobs, such as handicrafts, data entry, or packaging, promoting flexible employment opportunities.",
+  "key_features": [
+    "Work-from-home job opportunities for women",
+    "Financial support for job setup",
+    "Training for remote work skills"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 50,000 for job setup",
+    "training": "Free training in work-from-home skills",
+    "market_linkages": "Access to job providers and markets"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women aged 18-50 years"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Rajasthan"
+    ],
+    "economic_criteria": [
+      "Preference for women from low-income households"
+    ]
+  },
+  "eligible_activities": [
+    "Work-from-home jobs like handicrafts, data entry, or packaging",
+    "Training in remote work skills",
+    "Setting up home-based workspaces"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the Rajasthan Women Empowerment Department portal",
+      "Submit an online application with job preferences",
+      "Upload required documents, including Aadhaar and residency proof",
+      "Applications are reviewed by the department",
+      "Approved candidates receive training and job assignments"
+    ],
+    "note": "Applicants must have basic skills for chosen jobs"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": false,
+      "required_when": "For priority consideration"
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Jobs are assigned through registered agencies",
+    "Priority is given to rural women",
+    "Applicants must maintain work quality standards"
+  ]
+}

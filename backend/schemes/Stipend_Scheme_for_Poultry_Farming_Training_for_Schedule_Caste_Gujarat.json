@@ -1,0 +1,50 @@
+{
+  "scheme_name": "Stipend Scheme for Poultry Farming Training for Schedule Caste (Gujarat)",
+  "location": "Gujarat",
+  "tags": [
+    "Poultry Training",
+    "Scheduled Caste",
+    "Skill Development",
+    "Stipend"
+  ],
+  "description": "This scheme provides a stipend to Scheduled Caste individuals undergoing poultry farming training to enhance their skills and promote self-employment in poultry farming.",
+  "key_features": [
+    "Stipend of Rs. 4,000 per month during training",
+    "Training to equip individuals with poultry farming skills"
+  ],
+  "benefits": {
+    "stipend_amount": "Rs. 4,000 per month",
+    "training_duration": "As per training program"
+  },
+  "eligibility": {
+    "category_criteria": [
+      "Applicant must belong to Scheduled Caste"
+    ],
+    "additional_criteria": "Must be a resident of Gujarat"
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Contact the local Animal Husbandry Department or training institute",
+      "Enroll in approved poultry training program",
+      "Submit application for stipend with required documents"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residence Proof",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Stipend provided only during training period"
+  ]
+}

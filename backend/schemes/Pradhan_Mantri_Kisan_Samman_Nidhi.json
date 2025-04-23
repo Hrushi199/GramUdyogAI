@@ -1,0 +1,52 @@
+{
+  "scheme_name": "Pradhan Mantri Kisan Samman Nidhi",
+  "location": "Nationwide",
+  "tags": [
+    "Income Support",
+    "Farmer Welfare",
+    "Direct Benefit Transfer"
+  ],
+  "description": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN), launched in 2018, provides direct income support of Rs. 6000 per year to small and marginal farmers.",
+  "key_features": [
+    "Rs. 6000 annually in three installments",
+    "Direct Benefit Transfer to farmers\u2019 bank accounts",
+    "Covers small and marginal farmers with up to 2 hectares"
+  ],
+  "benefits": {
+    "financial_support": "Rs. 6000 per year",
+    "payment_mode": "Three equal installments via DBT"
+  },
+  "eligibility": {
+    "criteria": [
+      "Small and marginal farmers with up to 2 hectares",
+      "Landholder farmer families",
+      "Excludes institutional landholders and high-income farmers"
+    ]
+  },
+  "application_process": {
+    "mode": "Online/Offline",
+    "steps": [
+      "Register on PM-KISAN portal or at local agriculture office",
+      "Submit land and bank details",
+      "Verification by state authorities"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Land Ownership Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Alternate documents allowed in states like Assam and Meghalaya",
+    "State governments verify eligibility"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "scheme_name": "Financial Assistance for Setting Up of Sales Emporia by Industrial Associations, Handicrafts Societies and Recognized Institutions",
+  "location": "Puducherry",
+  "tags": [
+    "Financial Assistance",
+    "Handicrafts",
+    "MSME",
+    "Sales Emporia"
+  ],
+  "description": "This scheme in Puducherry provides financial assistance to industrial associations, handicraft societies, and recognized institutions for setting up sales emporia to promote handicraft and MSME products. It aims to enhance market access and visibility for artisans and small businesses.",
+  "key_features": [
+    "Financial aid for establishing sales emporia",
+    "Support for handicraft and MSME product promotion",
+    "Encourages market access for artisans"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 10 Lakhs for setting up sales emporia",
+    "one_time_assistance": "Assistance provided one time per emporium"
+  },
+  "eligibility": {
+    "organization_criteria": [
+      "Registered industrial associations, handicraft societies, or recognized institutions in Puducherry",
+      "Must have experience in promoting handicrafts or MSMEs"
+    ],
+    "operational_criteria": [
+      "Emporium must exclusively promote handicraft or MSME products",
+      "Must be located in a commercially viable location"
+    ]
+  },
+  "eligible_activities": [
+    "Setting up sales emporia for handicraft and MSME products",
+    "Infrastructure development for retail spaces",
+    "Promotional activities for emporia"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the Department of Industries and Commerce, Puducherry",
+      "Submit a detailed proposal for the sales emporium",
+      "Attach required documents, including organization registration and location details",
+      "Applications are reviewed by the Industries Department",
+      "Approved applicants receive funding upon verification"
+    ],
+    "note": "Applicants must submit progress reports for fund utilization"
+  },
+  "required_documents": [
+    {
+      "document": "Organization Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Detailed Emporium Proposal",
+      "mandatory": true
+    },
+    {
+      "document": "Location Details/Lease Agreement",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Funding is limited to one emporium per organization",
+    "Emporia must operate for at least 3 years to retain funding",
+    "Priority is given to emporia promoting local artisans"
+  ]
+}

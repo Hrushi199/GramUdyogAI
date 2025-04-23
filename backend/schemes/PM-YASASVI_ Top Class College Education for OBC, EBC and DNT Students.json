@@ -1,0 +1,86 @@
+{
+  "scheme_name": "PM-YASASVI: Top Class College Education for OBC, EBC and DNT Students",
+  "location": "Pan India",
+  "tags": [
+    "Scholarship",
+    "Financial Assistance",
+    "Higher Education",
+    "OBC/EBC/DNT"
+  ],
+  "description": "The PM-YASASVI scheme provides scholarships to Other Backward Classes (OBC), Economically Backward Classes (EBC), and Denotified, Nomadic, and Semi-Nomadic Tribes (DNT) students for pursuing top-class college education in premier institutions. The scheme aims to promote higher education among these communities.",
+  "key_features": [
+    "Scholarships for top-class college education",
+    "Covers OBC, EBC, and DNT students",
+    "Implemented by the Ministry of Social Justice and Empowerment",
+    "Targets premier institutions"
+  ],
+  "benefits": {
+    "scholarship_amount": "Up to Rs. 75,000 per year for tuition and Rs. 40,000 for other expenses",
+    "coverage": "Tuition fees, books, living expenses, and laptop"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students enrolled in graduate or postgraduate courses",
+      "Courses must be in identified premier institutions (e.g., IITs, IIMs, AIIMS)"
+    ],
+    "additional_criteria": [
+      "Applicant must belong to OBC, EBC, or DNT communities",
+      "Annual family income must not exceed Rs. 2.5 Lakhs"
+    ],
+    "admission_requirement": "Admission to identified premier institutions through merit or entrance tests",
+    "institution_criteria": [
+      "Premier institutions listed under the PM-YASASVI scheme"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Graduate and postgraduate courses in engineering, medical, management, law, etc.",
+    "Courses offered by premier institutions like IITs, IIMs, AIIMS"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the National Scholarship Portal (scholarships.gov.in)",
+      "Register and fill out the PM-YASASVI application form",
+      "Upload required documents",
+      "Submit application and track status",
+      "Scholarship disbursed to eligible students"
+    ],
+    "note": "Apply within the academic year deadlines"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "OBC/EBC/DNT Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": true,
+      "note": "To prove family income below Rs. 2.5 Lakhs"
+    },
+    {
+      "document": "Admission Letter",
+      "mandatory": true
+    },
+    {
+      "document": "Marksheets (10th, 12th, or last qualifying exam)",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Limited to premier institutions listed under the scheme",
+    "Includes funding for a laptop",
+    "Renewal requires academic progress"
+  ]
+}

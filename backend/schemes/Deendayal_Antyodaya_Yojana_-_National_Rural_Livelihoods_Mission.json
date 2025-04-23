@@ -1,0 +1,75 @@
+{
+  "scheme_name": "Deendayal Antyodaya Yojana - National Rural Livelihoods Mission",
+  "location": "Pan India",
+  "tags": [
+    "Women Empowerment",
+    "SHGs",
+    "Financial Assistance",
+    "Livelihoods"
+  ],
+  "description": "The Deendayal Antyodaya Yojana - National Rural Livelihoods Mission (DAY-NRLM) aims to create institutional platforms for the rural poor, especially women, to promote sustainable livelihoods through SHGs, financial inclusion, and skill development.",
+  "key_features": [
+    "Formation and strengthening of women\u00e2\u20ac\u2122s SHGs",
+    "Financial assistance for livelihoods",
+    "Skill training and market linkages"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 10 Lakhs for SHG enterprises",
+    "revolving_fund": "Up to Rs. 15,000 per SHG as working capital",
+    "training": "Free skill and entrepreneurship training"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women from rural households"
+    ],
+    "group_criteria": [
+      "Members of registered SHGs under DAY-NRLM"
+    ],
+    "economic_criteria": [
+      "Must belong to Below Poverty Line (BPL) or low-income households"
+    ]
+  },
+  "eligible_activities": [
+    "Setting up SHG-based enterprises",
+    "Skill training in agriculture, handicrafts, or services",
+    "Accessing credit and market linkages"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Join or form an SHG under DAY-NRLM through the local Block Development Office",
+      "Submit an application through the SHG with a business plan",
+      "Attach required documents, including SHG registration and member details",
+      "Applications are reviewed by the State Rural Livelihoods Mission",
+      "Approved SHGs receive funding and support"
+    ],
+    "note": "Applications are processed through SHGs, not individuals"
+  },
+  "required_documents": [
+    {
+      "document": "SHG Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card (SHG Members)",
+      "mandatory": true
+    },
+    {
+      "document": "BPL Card or Income Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Business Plan",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details (SHG Account)",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Funding is provided to SHGs, not individuals",
+    "SHGs must undergo capacity-building training",
+    "Priority is given to women from marginalized communities"
+  ]
+}

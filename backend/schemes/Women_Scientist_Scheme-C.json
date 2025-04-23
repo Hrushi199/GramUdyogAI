@@ -1,0 +1,75 @@
+{
+  "scheme_name": "Women Scientist Scheme-C",
+  "location": "Pan India",
+  "tags": [
+    "Women Scientists",
+    "Skill Training",
+    "IPR",
+    "Career Re-entry"
+  ],
+  "description": "The Women Scientist Scheme-C, implemented by the Department of Science and Technology, provides training in intellectual property rights (IPR), patents, and related fields for women scientists after a career break, enabling them to re-enter professional roles.",
+  "key_features": [
+    "Training in IPR and patent management",
+    "Support for women scientists post-career break",
+    "Career re-entry opportunities"
+  ],
+  "benefits": {
+    "training": "Free 12-month training program",
+    "stipend": "Monthly stipend of Rs. 20,000 during training",
+    "certification": "Certificate in IPR management"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women aged 27-57 years"
+    ],
+    "education_criteria": [
+      "Must hold a Master\u00e2\u20ac\u2122s or Ph.D. in science, engineering, or medicine"
+    ],
+    "additional_criteria": [
+      "Must have a career break of at least 2 years"
+    ]
+  },
+  "eligible_activities": [
+    "Training in IPR, patent drafting, and technology transfer",
+    "Participating in workshops and internships",
+    "Career counseling for re-entry into scientific roles"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the Department of Science and Technology portal",
+      "Submit an online application with a resume and career break details",
+      "Upload required documents, including educational certificates",
+      "Applications are reviewed by a selection committee",
+      "Selected candidates are enrolled in the training program"
+    ],
+    "note": "Applicants must provide a statement of purpose"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Educational Certificates (Master\u00e2\u20ac\u2122s/Ph.D.)",
+      "mandatory": true
+    },
+    {
+      "document": "Resume",
+      "mandatory": true
+    },
+    {
+      "document": "Statement of Purpose",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Training is conducted at designated institutions",
+    "Applicants must commit to full-time training",
+    "Priority is given to women with research experience"
+  ]
+}

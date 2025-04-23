@@ -1,0 +1,82 @@
+{
+  "scheme_name": "Educational Award Scheme - Gujarat Labour Welfare Board",
+  "location": "Gujarat",
+  "tags": [
+    "Scholarship",
+    "Financial Assistance",
+    "School Education",
+    "Labour Welfare"
+  ],
+  "description": "The Educational Award Scheme by the Gujarat Labour Welfare Board provides financial assistance to the children of workers registered with the board to support their education from primary to higher secondary levels. The scheme aims to encourage education among workers’ families by offering monetary awards to meritorious students.",
+  "key_features": [
+    "Financial awards for children of registered workers",
+    "Covers students from primary to higher secondary education",
+    "Aims to promote academic excellence",
+    "Implemented by Gujarat Labour Welfare Board"
+  ],
+  "benefits": {
+    "award_amount": "Varies based on academic level and performance",
+    "coverage": "One-time financial award for meritorious students"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students studying in primary, secondary, or higher secondary classes",
+      "Must have secured high marks in the previous academic year"
+    ],
+    "additional_criteria": [
+      "Parent must be a registered worker with Gujarat Labour Welfare Board",
+      "Must be a resident of Gujarat"
+    ],
+    "admission_requirement": "Enrolled in recognized schools in Gujarat",
+    "institution_criteria": [
+      "Government or recognized private schools in Gujarat"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Primary education (Classes 1-8)",
+    "Secondary education (Classes 9-10)",
+    "Higher secondary education (Classes 11-12)"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain application form from Gujarat Labour Welfare Board office",
+      "Fill and submit the form with required documents",
+      "Verification by the board",
+      "Award disbursed to eligible students"
+    ],
+    "note": "Submit applications within the academic year deadline"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card (Student/Parent)",
+      "mandatory": true
+    },
+    {
+      "document": "Worker Registration Certificate",
+      "mandatory": true,
+      "note": "From Gujarat Labour Welfare Board"
+    },
+    {
+      "document": "Marksheet (Previous academic year)",
+      "mandatory": true
+    },
+    {
+      "document": "School Enrollment Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Award amount depends on academic performance and level of education",
+    "Limited to children of registered workers",
+    "Applications must be renewed annually for continued eligibility"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "scheme_name": "Agriculture Infrastructure Fund",
+  "location": "Nationwide",
+  "tags": [
+    "Infrastructure Development",
+    "Financial Assistance",
+    "Post-Harvest Management"
+  ],
+  "description": "The Agriculture Infrastructure Fund, launched in 2020, provides medium to long-term debt financing for post-harvest management and community farming infrastructure.",
+  "key_features": [
+    "Loans up to Rs. 2 crore with interest subvention",
+    "3% interest subvention and credit guarantee",
+    "Supports warehouses, cold storage, and processing units"
+  ],
+  "benefits": {
+    "loan_amount": "Up to Rs. 2 Crore",
+    "interest_subvention": "3% per annum",
+    "credit_guarantee": "Through Credit Guarantee Fund Trust"
+  },
+  "eligibility": {
+    "criteria": [
+      "Farmers, FPOs, cooperatives, and agri-entrepreneurs",
+      "Projects related to post-harvest infrastructure",
+      "Registered entities or individuals"
+    ]
+  },
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Apply through AIF portal",
+      "Submit project proposal and financial details",
+      "Loan approval by banks or NBFCs"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Project Proposal",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Repayment period up to 7 years",
+    "Focus on reducing post-harvest losses"
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "scheme_name": "Educational Assistance (ANBOCWWB)",
+  "location": "Andaman and Nicobar Islands",
+  "tags": [
+    "Financial Assistance",
+    "Scholarship",
+    "School Education",
+    "Construction Workers"
+  ],
+  "description": "The Educational Assistance scheme by the Andaman and Nicobar Building and Other Construction Workers Welfare Board (ANBOCWWB) provides financial support to the children of registered construction workers for their education from primary to higher secondary levels. The scheme aims to promote education among workers’ families.",
+  "key_features": [
+    "Financial support for children of registered construction workers",
+    "Covers primary to higher secondary education",
+    "Implemented by ANBOCWWB",
+    "Supports school fees and educational materials"
+  ],
+  "benefits": {
+    "assistance_amount": "Varies based on educational level and board guidelines",
+    "coverage": "School fees, books, uniforms, and other expenses"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Children enrolled in primary, secondary, or higher secondary classes",
+      "Must be studying in recognized schools"
+    ],
+    "additional_criteria": [
+      "Parent must be a registered construction worker with ANBOCWWB",
+      "Must be a resident of Andaman and Nicobar Islands"
+    ],
+    "admission_requirement": "Enrolled in recognized schools",
+    "institution_criteria": [
+      "Government or recognized private schools in Andaman and Nicobar Islands"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Primary education (Classes 1-8)",
+    "Secondary education (Classes 9-10)",
+    "Higher secondary education (Classes 11-12)"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain application form from ANBOCWWB office",
+      "Submit form with required documents",
+      "Verification by the board",
+      "Assistance disbursed to eligible students"
+    ],
+    "note": "Contact ANBOCWWB for application details"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card (Child/Parent)",
+      "mandatory": true
+    },
+    {
+      "document": "Worker Registration Certificate",
+      "mandatory": true,
+      "note": "From ANBOCWWB"
+    },
+    {
+      "document": "School Enrollment Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Marksheet (Previous class)",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    },
+    {
+      "document": "Domicile Certificate",
+      "mandatory": true,
+      "note": "To prove Andaman and Nicobar residency"
+    }
+  ],
+  "special_notes": [
+    "Limited to children of registered construction workers",
+    "Assistance amount varies based on educational level",
+    "Renewal requires proof of continued enrollment"
+  ]
+}

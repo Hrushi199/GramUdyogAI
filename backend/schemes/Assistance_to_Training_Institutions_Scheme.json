@@ -1,0 +1,73 @@
+{
+  "scheme_name": "Assistance to Training Institutions Scheme",
+  "location": "Pan India",
+  "tags": [
+    "Training",
+    "Skill Development",
+    "Entrepreneurship",
+    "Financial Assistance"
+  ],
+  "description": "The Assistance to Training Institutions Scheme, implemented by the Ministry of MSME, provides financial support to institutions offering entrepreneurship and skill development training. The scheme aims to enhance the employability and entrepreneurial skills of individuals, particularly in the MSME sector.",
+  "key_features": [
+    "Financial aid for setting up training infrastructure",
+    "Support for conducting entrepreneurship and skill development programs",
+    "Promotes capacity building for MSMEs"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 1 Crore for establishing or upgrading training institutions",
+    "program_support": "Funding for training programs, max Rs. 10 Lakhs per program"
+  },
+  "eligibility": {
+    "institution_criteria": [
+      "Government institutions, NGOs, or private organizations recognized by the MSME Ministry",
+      "Must have experience in conducting training programs"
+    ],
+    "program_criteria": [
+      "Training programs must focus on entrepreneurship or skill development for MSMEs",
+      "Must adhere to MSME Ministry guidelines"
+    ]
+  },
+  "eligible_activities": [
+    "Establishment or upgradation of training infrastructure",
+    "Conducting entrepreneurship development programs (EDPs)",
+    "Skill development training for MSME sectors"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the MSME portal or scheme-specific website",
+      "Submit an online application with a detailed proposal for training activities",
+      "Upload required documents, including institutional registration and program details",
+      "Applications are evaluated by the MSME Ministry",
+      "Approved institutions receive funding in phases"
+    ],
+    "note": "Funding is released based on project milestones and performance"
+  },
+  "required_documents": [
+    {
+      "document": "Institution Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Detailed Training Proposal",
+      "mandatory": true
+    },
+    {
+      "document": "Financial Plan and Budget",
+      "mandatory": true
+    },
+    {
+      "document": "Proof of Past Training Experience",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Institutions must submit progress reports to receive subsequent funding",
+    "Training programs must align with MSME sector needs",
+    "Priority is given to institutions serving underserved regions"
+  ]
+}

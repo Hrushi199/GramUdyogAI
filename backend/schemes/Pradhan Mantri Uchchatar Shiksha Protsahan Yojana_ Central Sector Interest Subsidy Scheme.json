@@ -1,0 +1,84 @@
+{
+  "scheme_name": "Pradhan Mantri Uchchatar Shiksha Protsahan Yojana: Central Sector Interest Subsidy Scheme",
+  "location": "Pan India",
+  "tags": [
+    "Interest Subsidy",
+    "Education Loan",
+    "Higher Education",
+    "Financial Assistance"
+  ],
+  "description": "The Central Sector Interest Subsidy Scheme under the Pradhan Mantri Uchchatar Shiksha Protsahan Yojana provides full interest subsidy on education loans during the moratorium period for students pursuing technical or professional courses in India. The scheme aims to support economically weaker sections by reducing the financial burden of loan interest, enabling access to higher education.",
+  "key_features": [
+    "Full interest subsidy during the moratorium period",
+    "Applicable to loans taken under the Indian Banks’ Association (IBA) Model Education Loan Scheme",
+    "Targets students from economically weaker sections",
+    "Implemented through scheduled banks"
+  ],
+  "benefits": {
+    "interest_subsidy": "100% interest subsidy during moratorium period",
+    "maximum_loan_amount": "Up to Rs. 7.5 Lakhs",
+    "moratorium_period": "Course duration plus 1 year"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students enrolled in professional/technical courses approved by AICTE, UGC, or equivalent bodies",
+      "Courses must be at graduate or postgraduate level"
+    ],
+    "additional_criteria": [
+      "Annual family income must not exceed Rs. 4.5 Lakhs",
+      "Loan must be availed from a scheduled bank under IBA Model Education Loan Scheme"
+    ],
+    "admission_requirement": "Admission through merit-based selection or entrance test",
+    "institution_criteria": [
+      "Recognized institutions in India approved by AICTE, UGC, or other regulatory bodies"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Engineering, medical, law, management, and other professional courses",
+    "Technical courses like B.Tech, B.Arch, MBBS, etc.",
+    "Postgraduate courses in recognized institutions"
+  ],
+  "application_process": {
+    "mode": "Online/Offline",
+    "steps": [
+      "Apply for an education loan through a scheduled bank under IBA Model Education Loan Scheme",
+      "Submit income certificate and other required documents to the bank",
+      "Bank forwards application for interest subsidy to the nodal agency (Canara Bank)",
+      "Subsidy credited to loan account upon approval"
+    ],
+    "note": "Applications processed through banks; contact bank for specific procedures"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": true,
+      "note": "To prove family income below Rs. 4.5 Lakhs"
+    },
+    {
+      "document": "Admission Letter",
+      "mandatory": true
+    },
+    {
+      "document": "Loan Sanction Letter",
+      "mandatory": true,
+      "note": "From scheduled bank"
+    },
+    {
+      "document": "Marksheets (10th, 12th, or last qualifying exam)",
+      "mandatory": true
+    },
+    {
+      "document": "Fee Structure",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Subsidy available only for loans up to Rs. 7.5 Lakhs",
+    "Applicable only during moratorium period; post-moratorium interest is borne by the student",
+    "Students availing other scholarships/subsidies may still be eligible, subject to bank discretion"
+  ]
+}

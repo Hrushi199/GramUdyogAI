@@ -1,0 +1,77 @@
+{
+  "scheme_name": "Mukhyamantri Ati Pichhada Varg Udyami Yojana",
+  "location": "Bihar",
+  "tags": [
+    "Entrepreneurship",
+    "Financial Assistance",
+    "Backward Classes",
+    "Self-Employment"
+  ],
+  "description": "The Mukhyamantri Ati Pichhada Varg Udyami Yojana in Bihar promotes entrepreneurship among Extremely Backward Classes (EBC) by providing financial assistance and training to establish micro-enterprises. The scheme aims to foster economic inclusion and self-reliance.",
+  "key_features": [
+    "Financial support for micro-enterprise setup",
+    "Free training and skill development",
+    "Promotes economic empowerment of EBC communities"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 10 Lakhs per beneficiary, with 50% subsidy and 50% interest-free loan",
+    "training": "Free entrepreneurship and skill training"
+  },
+  "eligibility": {
+    "community_criteria": [
+      "Must belong to the Extremely Backward Classes (EBC) as per Bihar government norms"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Bihar"
+    ],
+    "age_criteria": [
+      "Aged 18-50 years"
+    ],
+    "business_criteria": [
+      "Proposed business must be viable and sustainable"
+    ]
+  },
+  "eligible_activities": [
+    "Setting up micro-enterprises in manufacturing, services, or retail",
+    "Purchase of equipment, raw materials, or infrastructure",
+    "Skill development for entrepreneurship"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the Bihar Industries Department portal or scheme website",
+      "Register and submit an online application with a business plan",
+      "Upload required documents, including EBC certificate and residency proof",
+      "Applications are reviewed by a district-level committee",
+      "Approved beneficiaries receive funds and training"
+    ],
+    "note": "Applicants must complete mandatory training before fund disbursement"
+  },
+  "required_documents": [
+    {
+      "document": "EBC Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Business Plan",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "The loan component is interest-free and repayable over 5 years",
+    "Priority is given to innovative and sustainable business ideas",
+    "Beneficiaries are monitored for proper fund utilization"
+  ]
+}

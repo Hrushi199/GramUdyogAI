@@ -1,0 +1,75 @@
+{
+  "scheme_name": "Mahila Kamgar Kaushal Unnayan Evan Theka Shramik, Hamaal Tatha Ghareloo Mahila Kamgaar Parivar Sashaktikaran Yojana",
+  "location": "Chhattisgarh",
+  "tags": [
+    "Skill Development",
+    "Financial Assistance",
+    "Women Workers",
+    "Empowerment"
+  ],
+  "description": "This scheme in Chhattisgarh provides skill development training in various trades and financial assistance to women workers, including contract laborers, porters, and domestic workers, to empower their families and promote self-reliance.",
+  "key_features": [
+    "Skill training in diverse trades",
+    "Financial assistance for self-employment",
+    "Supports marginalized women workers"
+  ],
+  "benefits": {
+    "training": "Free skill training for 3-6 months",
+    "financial_assistance": "Up to Rs. 2 Lakhs for self-employment ventures",
+    "stipend": "Monthly stipend during training, up to Rs. 1,500"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women aged 18-50 years"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Chhattisgarh"
+    ],
+    "occupation_criteria": [
+      "Contract laborers, porters, domestic workers, or similar marginalized workers"
+    ]
+  },
+  "eligible_activities": [
+    "Skill training in trades like tailoring, beauty services, or food processing",
+    "Setting up self-employment ventures",
+    "Purchase of equipment for income-generating activities"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the District Labor Department",
+      "Submit the application with proof of occupation and residency",
+      "Attach required documents, including Aadhaar and income certificate",
+      "Applications are reviewed by the department",
+      "Selected candidates are enrolled in training and receive assistance"
+    ],
+    "note": "Applicants must commit to completing the training program"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Proof of Occupation",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Priority is given to women from low-income households",
+    "Financial assistance is provided post-training",
+    "Training programs are tailored to local job markets"
+  ]
+}

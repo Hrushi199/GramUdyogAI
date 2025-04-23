@@ -1,0 +1,50 @@
+{
+  "scheme_name": "Dr. Ambedkar Medical Aid Scheme (Revised \u2013 2009)",
+  "location": "Haryana",
+  "tags": [
+    "Medical Assistance",
+    "SC/ST",
+    "Critical Illness"
+  ],
+  "description": "Dr. Ambedkar Medical Aid Scheme provides financial assistance for treatment of life-threatening diseases for SC/ST communities.",
+  "key_features": [
+    "Up to Rs. 1 lakh for treatment",
+    "Covers diseases like cancer, kidney failure, and heart ailments",
+    "Applicable in government-approved hospitals"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 1 Lakh"
+  },
+  "eligibility": {
+    "criteria": [
+      "Belong to SC/ST community",
+      "Annual family income below Rs. 1 lakh",
+      "Residents of Haryana"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Submit application to District Welfare Officer",
+      "Include medical estimates and documents",
+      "Approval and fund release"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Medical Estimate",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Funds released directly to hospital"
+  ]
+}

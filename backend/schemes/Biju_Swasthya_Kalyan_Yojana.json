@@ -1,0 +1,46 @@
+{
+  "scheme_name": "Biju Swasthya Kalyan Yojana",
+  "location": "Odisha",
+  "tags": [
+    "Health Insurance",
+    "Cashless Treatment",
+    "Universal Coverage"
+  ],
+  "description": "Biju Swasthya Kalyan Yojana provides cashless healthcare coverage of up to Rs. 5 lakh per family for critical ailments in empanelled hospitals.",
+  "key_features": [
+    "Up to Rs. 5 lakh for men, Rs. 10 lakh for women per family per year",
+    "Covers 1100+ procedures",
+    "Free treatment in government hospitals"
+  ],
+  "benefits": {
+    "coverage_amount": "Up to Rs. 5 Lakh (men), Rs. 10 Lakh (women) per family per year",
+    "procedure_coverage": "1100+ medical and surgical procedures"
+  },
+  "eligibility": {
+    "criteria": [
+      "Residents of Odisha",
+      "Families with annual income below Rs. 1.2 lakh (rural) or Rs. 1.8 lakh (urban)"
+    ]
+  },
+  "application_process": {
+    "mode": "Automatic/Offline",
+    "steps": [
+      "Approach empanelled hospital",
+      "Verification through Aadhaar or ration card",
+      "Cashless treatment upon approval"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Ration Card",
+      "mandatory": false
+    }
+  ],
+  "special_notes": [
+    "Higher coverage for women to address gender-specific health needs"
+  ]
+}

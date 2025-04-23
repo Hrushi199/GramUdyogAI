@@ -1,0 +1,51 @@
+{
+  "scheme_name": "Atma Nirbhar Krishi Yojana",
+  "location": "Arunachal Pradesh",
+  "tags": [
+    "Financial Assistance",
+    "Agricultural Development",
+    "Self-Reliance"
+  ],
+  "description": "Atma Nirbhar Krishi Yojana in Arunachal Pradesh provides financial assistance to farmers for inputs, equipment, and infrastructure to promote self-reliant agriculture.",
+  "key_features": [
+    "Subsidies for seeds, fertilizers, and machinery",
+    "Support for irrigation and storage facilities",
+    "Focus on organic and local crops"
+  ],
+  "benefits": {
+    "financial_support": "Subsidies for agricultural inputs and infrastructure",
+    "productivity_improvement": "Enhanced crop yields and income"
+  },
+  "eligibility": {
+    "criteria": [
+      "Farmers in Arunachal Pradesh",
+      "Priority to small and marginal farmers"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Apply through local agriculture department",
+      "Submit land and identity documents",
+      "Verification and subsidy approval"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Land Ownership Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Aligned with Atmanirbhar Bharat initiative",
+    "Focus on sustainable farming practices"
+  ]
+}

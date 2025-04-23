@@ -1,0 +1,51 @@
+{
+  "scheme_name": "Dairy Farming Scheme (HSFDC)",
+  "location": "Haryana",
+  "tags": [
+    "Dairy Farming",
+    "Financial Assistance",
+    "SC/ST Welfare"
+  ],
+  "description": "The Dairy Farming Scheme by HSFDC provides financial assistance to SC/ST families in Haryana for establishing dairy units to generate income.",
+  "key_features": [
+    "Subsidies for purchasing dairy cattle",
+    "Training on dairy management",
+    "Support for fodder and veterinary care"
+  ],
+  "benefits": {
+    "financial_support": "Subsidies for dairy cattle and setup",
+    "income_generation": "Revenue from milk production"
+  },
+  "eligibility": {
+    "criteria": [
+      "SC/ST families in Haryana",
+      "Interest in dairy farming"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Apply through HSFDC office",
+      "Submit caste certificate and identity documents",
+      "Approval and subsidy release"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Focus on high-yield cattle breeds",
+    "Veterinary support provided"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "scheme_name": "Integrated Horticulture Development Plan Scheme for Scheduled Caste Families",
+  "location": "Haryana",
+  "tags": [
+    "Horticulture",
+    "Financial Assistance",
+    "SC Families"
+  ],
+  "description": "The Integrated Horticulture Development Plan Scheme supports Scheduled Caste families in Haryana to undertake horticulture activities for income generation.",
+  "key_features": [
+    "Subsidies for horticulture inputs and equipment",
+    "Training on horticulture practices",
+    "Focus on fruit and vegetable cultivation"
+  ],
+  "benefits": {
+    "financial_support": "Subsidies for horticulture activities",
+    "income_generation": "Revenue from horticultural produce"
+  },
+  "eligibility": {
+    "criteria": [
+      "Scheduled Caste families in Haryana",
+      "Ownership of agricultural land"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Apply through horticulture department",
+      "Submit caste certificate and land documents",
+      "Approval and subsidy release"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Land Ownership Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Aims to uplift SC families through horticulture",
+    "Focus on market-driven crops"
+  ]
+}

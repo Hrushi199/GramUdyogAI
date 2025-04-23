@@ -1,0 +1,75 @@
+{
+  "scheme_name": "Udyogini Scheme",
+  "location": "Karnataka",
+  "tags": [
+    "Women Entrepreneurs",
+    "Financial Assistance",
+    "Micro Enterprises",
+    "Subsidy"
+  ],
+  "description": "The Udyogini Scheme in Karnataka provides subsidies on loans for women to undertake business activities or micro-enterprises, promoting entrepreneurship and economic empowerment.",
+  "key_features": [
+    "Subsidized loans for women entrepreneurs",
+    "Support for micro-enterprise setup",
+    "Training for business management"
+  ],
+  "benefits": {
+    "loan_amount": "Up to Rs. 3 Lakhs for business setup",
+    "subsidy": "30% subsidy on loan amount, up to Rs. 90,000",
+    "training": "Free entrepreneurship training"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women aged 18-55 years"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Karnataka"
+    ],
+    "business_criteria": [
+      "Proposed business must be viable and sustainable"
+    ]
+  },
+  "eligible_activities": [
+    "Setting up micro-enterprises in manufacturing, services, or retail",
+    "Purchase of equipment or raw materials",
+    "Business expansion activities"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the Karnataka State Women\u00e2\u20ac\u2122s Development Corporation",
+      "Submit a detailed business plan with the application",
+      "Attach required documents, including Aadhaar and residency proof",
+      "Applications are reviewed by the corporation",
+      "Approved applicants receive loans and subsidies"
+    ],
+    "note": "Applicants must secure a bank loan to avail subsidy"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Business Plan",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Loan Sanction Letter",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "The subsidy is linked to bank loans",
+    "Priority is given to women from SC/ST or disabled categories",
+    "Applicants must undergo entrepreneurship training"
+  ]
+}

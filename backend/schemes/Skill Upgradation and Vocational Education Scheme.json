@@ -1,0 +1,86 @@
+{
+  "scheme_name": "Skill Upgradation and Vocational Education Scheme: For Worker's Childrens (P.B.O.C.W.W.B)",
+  "location": "Punjab",
+  "tags": [
+    "Financial Assistance",
+    "Vocational Education",
+    "Skill Development",
+    "Construction Workers"
+  ],
+  "description": "The Skill Upgradation and Vocational Education Scheme by the Punjab Building and Other Construction Workers Welfare Board (P.B.O.C.W.W.B) provides financial support to the children of registered construction workers for vocational and skill-based education. The scheme aims to enhance employability through skill development.",
+  "key_features": [
+    "Financial support for vocational and skill-based courses",
+    "Covers children of registered construction workers",
+    "Implemented by P.B.O.C.W.W.B",
+    "Promotes skill development and job readiness"
+  ],
+  "benefits": {
+    "assistance_amount": "Varies based on course and board guidelines",
+    "coverage": "Course fees, training materials, and related expenses"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students enrolled in recognized vocational or skill-based courses",
+      "Courses must be approved by relevant authorities"
+    ],
+    "additional_criteria": [
+      "Parent must be a registered construction worker with P.B.O.C.W.W.B",
+      "Must be a resident of Punjab"
+    ],
+    "admission_requirement": "Enrolled in recognized vocational institutions",
+    "institution_criteria": [
+      "Government or recognized private vocational training institutes in Punjab"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Vocational courses in IT, mechanics, electrician training, etc.",
+    "Skill-based courses approved by state or national skill councils"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain application form from P.B.O.C.W.W.B office",
+      "Submit form with required documents",
+      "Verification by the board",
+      "Assistance disbursed to eligible students"
+    ],
+    "note": "Contact P.B.O.C.W.W.B for application details"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Worker Registration Certificate",
+      "mandatory": true,
+      "note": "From P.B.O.C.W.W.B"
+    },
+    {
+      "document": "Course Enrollment Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Fee Structure",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    },
+    {
+      "document": "Domicile Certificate",
+      "mandatory": true,
+      "note": "To prove Punjab residency"
+    }
+  ],
+  "special_notes": [
+    "Limited to vocational and skill-based courses",
+    "Assistance amount varies based on course type",
+    "Renewal may be required for multi-year courses"
+  ]
+}

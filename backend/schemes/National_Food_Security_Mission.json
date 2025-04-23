@@ -1,0 +1,47 @@
+{
+  "scheme_name": "National Food Security Mission",
+  "location": "Nationwide",
+  "tags": [
+    "Food Security",
+    "Crop Production",
+    "Farmer Support"
+  ],
+  "description": "The National Food Security Mission (NFSM), launched in 2007, aims to increase production of rice, wheat, pulses, and coarse cereals through improved seeds, inputs, and practices.",
+  "key_features": [
+    "Subsidized seeds, fertilizers, and farm equipment",
+    "Cluster demonstrations for best practices",
+    "Targets 13 million tonnes additional foodgrain production"
+  ],
+  "benefits": {
+    "input_support": "Subsidized seeds and fertilizers",
+    "production_increase": "Enhanced yields of staple crops"
+  },
+  "eligibility": {
+    "criteria": [
+      "Farmers growing rice, wheat, pulses, or coarse cereals",
+      "Priority to small and marginal farmers"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Contact local agriculture department",
+      "Register for input subsidies or demonstrations",
+      "Verification and distribution of benefits"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Land Ownership Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Focus on nutri-cereals like millets",
+    "Implemented in identified districts"
+  ]
+}

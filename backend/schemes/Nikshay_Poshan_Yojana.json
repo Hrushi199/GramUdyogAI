@@ -1,0 +1,45 @@
+{
+  "scheme_name": "Nikshay Poshan Yojana",
+  "location": "Nationwide",
+  "tags": [
+    "Nutrition Support",
+    "Tuberculosis",
+    "Financial Assistance"
+  ],
+  "description": "Nikshay Poshan Yojana provides nutritional support of Rs. 500 per month to TB patients during treatment.",
+  "key_features": [
+    "Rs. 500 per month for TB patients",
+    "Direct Benefit Transfer (DBT) to bank account",
+    "Support for entire treatment duration"
+  ],
+  "benefits": {
+    "financial_support": "Rs. 500 per month"
+  },
+  "eligibility": {
+    "criteria": [
+      "Diagnosed TB patients registered under Nikshay portal",
+      "Undergoing treatment in public or private sector"
+    ]
+  },
+  "application_process": {
+    "mode": "Automatic",
+    "steps": [
+      "Register on Nikshay portal through health facility",
+      "Provide bank account details",
+      "Receive monthly payments via DBT"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Payment continues until treatment completion"
+  ]
+}

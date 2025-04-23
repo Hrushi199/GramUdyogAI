@@ -1,0 +1,50 @@
+{
+  "scheme_name": "Scheme for Establishment of Backyard Poultry Units under Mukhya Mantri Antyodaya Parivaar Utthan Yojana (Haryana)",
+  "location": "Haryana",
+  "tags": [
+    "Backyard Poultry",
+    "Antyodaya",
+    "Financial Assistance",
+    "Employment"
+  ],
+  "description": "This scheme, under the Mukhya Mantri Antyodaya Parivaar Utthan Yojana, provides financial assistance for backyard poultry units to uplift economically weaker families in Haryana.",
+  "key_features": [
+    "Financial support for backyard poultry units",
+    "Focus on economically weaker sections"
+  ],
+  "benefits": {
+    "financial_assistance": "As per scheme norms",
+    "unit_size": "Small-scale backyard poultry units"
+  },
+  "eligibility": {
+    "category_criteria": [
+      "Open to economically weaker families under Antyodaya Yojana"
+    ],
+    "additional_criteria": "Must be a resident of Haryana"
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Contact the Animal Husbandry Department",
+      "Submit application under Antyodaya Yojana",
+      "Verification and approval"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Residence Proof",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Part of the Antyodaya upliftment program"
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "scheme_name": "Scheme for Grant of Additional Scholarship to the Students Belonging to Scheduled Tribes of Andaman and Nicobar Islands for Pursuing Higher Studies Anywhere in India Post-Senior Secondary Courses (Post 10+2 Courses)",
+  "location": "Andaman and Nicobar Islands",
+  "tags": [
+    "Scholarship",
+    "Financial Assistance",
+    "Higher Education",
+    "Scheduled Tribes"
+  ],
+  "description": "This scheme provides additional scholarships to Scheduled Tribe (ST) students from Andaman and Nicobar Islands pursuing higher education (post 10+2) anywhere in India. The scheme aims to support ST students in accessing quality higher education opportunities.",
+  "key_features": [
+    "Additional scholarships for ST students",
+    "Covers post 10+2 courses anywhere in India",
+    "Implemented by the Andaman and Nicobar Administration",
+    "Promotes higher education access"
+  ],
+  "benefits": {
+    "scholarship_amount": "Varies based on course and institution",
+    "coverage": "Tuition fees, maintenance allowance, and other expenses"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students enrolled in post 10+2 courses (degree, diploma, postgraduate)",
+      "Courses must be recognized by UGC, AICTE, or equivalent"
+    ],
+    "additional_criteria": [
+      "Applicant must belong to Scheduled Tribes (ST) of Andaman and Nicobar Islands",
+      "Must be a resident of Andaman and Nicobar Islands"
+    ],
+    "admission_requirement": "Admission to recognized institutions through merit or entrance tests",
+    "institution_criteria": [
+      "Recognized institutions anywhere in India"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Graduate and postgraduate courses in arts, science, commerce, engineering, medical, etc.",
+    "Professional courses like B.Tech, MBBS, MBA, etc.",
+    "Diploma courses approved by regulatory bodies"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain application form from the Tribal Welfare Department, Andaman and Nicobar",
+      "Submit form with required documents",
+      "Verification by the department",
+      "Scholarship disbursed to eligible students"
+    ],
+    "note": "Contact the department for application details"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "ST Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Admission Letter",
+      "mandatory": true
+    },
+    {
+      "document": "Marksheets (10th, 12th, or last qualifying exam)",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    },
+    {
+      "document": "Domicile Certificate",
+      "mandatory": true,
+      "note": "To prove Andaman and Nicobar residency"
+    }
+  ],
+  "special_notes": [
+    "Scholarship is additional to other scholarships",
+    "Applicable for studies anywhere in India",
+    "Renewal requires academic progress"
+  ]
+}

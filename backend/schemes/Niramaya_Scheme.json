@@ -1,0 +1,33 @@
+{
+  "scheme_name": "Niramaya Scheme",
+  "location": "Odisha",
+  "tags": [
+    "Health Insurance",
+    "Free Medicine",
+    "Public Health"
+  ],
+  "description": "The Niramaya Scheme in Odisha provides free medicines to all patients visiting government hospitals, ensuring access to essential drugs without financial burden.",
+  "key_features": [
+    "Free medicines at all government hospitals",
+    "Covers both in-patients and out-patients",
+    "Implemented across District Headquarters Hospitals, Sub-Divisional Hospitals, Community Health Centres, and Primary Health Centres"
+  ],
+  "benefits": {
+    "medicine_coverage": "Free essential medicines",
+    "hospital_types": "District Headquarters Hospitals, Sub-Divisional Hospitals, Community Health Centres, Primary Health Centres"
+  },
+  "eligibility": {
+    "criteria": "All patients visiting government hospitals in Odisha"
+  },
+  "application_process": {
+    "mode": "Automatic",
+    "steps": [
+      "Visit any government hospital in Odisha",
+      "Medicines provided free of cost during treatment"
+    ]
+  },
+  "required_documents": [],
+  "special_notes": [
+    "No formal application required; medicines provided during hospital visits"
+  ]
+}

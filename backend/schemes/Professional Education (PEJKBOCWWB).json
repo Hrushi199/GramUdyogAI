@@ -1,0 +1,90 @@
+{
+  "scheme_name": "Professional Education (PEJKBOCWWB)",
+  "location": "Jammu and Kashmir",
+  "tags": [
+    "Financial Assistance",
+    "Higher Education",
+    "Professional Courses",
+    "Construction Workers"
+  ],
+  "description": "The Professional Education scheme by the Jammu and Kashmir Building and Other Construction Workers Welfare Board (JKBOCWWB) provides financial assistance to the children of registered construction workers for pursuing professional courses. The scheme aims to support higher education and career development.",
+  "key_features": [
+    "Financial support for professional courses",
+    "Covers children of registered construction workers",
+    "Implemented by JKBOCWWB",
+    "Promotes access to higher education"
+  ],
+  "benefits": {
+    "assistance_amount": "Varies based on course and board guidelines",
+    "coverage": "Tuition fees, books, and other expenses"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students enrolled in professional courses (e.g., engineering, medical, law)",
+      "Courses must be recognized by UGC, AICTE, or equivalent"
+    ],
+    "additional_criteria": [
+      "Parent must be a registered construction worker with JKBOCWWB",
+      "Must be a resident of Jammu and Kashmir"
+    ],
+    "admission_requirement": "Admission to recognized institutions through merit or entrance tests",
+    "institution_criteria": [
+      "Recognized institutions in India"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Engineering, medical, law, management, and other professional courses",
+    "Courses approved by UGC, AICTE, or equivalent"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain application form from JKBOCWWB office",
+      "Submit form with required documents",
+      "Verification by the board",
+      "Assistance disbursed to eligible students"
+    ],
+    "note": "Contact JKBOCWWB for application details"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Worker Registration Certificate",
+      "mandatory": true,
+      "note": "From JKBOCWWB"
+    },
+    {
+      "document": "Admission Letter",
+      "mandatory": true
+    },
+    {
+      "document": "Fee Structure",
+      "mandatory": true
+    },
+    {
+      "document": "Marksheets (10th, 12th, or last qualifying exam)",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    },
+    {
+      "document": "Domicile Certificate",
+      "mandatory": true,
+      "note": "To prove Jammu and Kashmir residency"
+    }
+  ],
+  "special_notes": [
+    "Limited to professional courses",
+    "Assistance amount varies based on course type",
+    "Renewal requires proof of academic progress"
+  ]
+}

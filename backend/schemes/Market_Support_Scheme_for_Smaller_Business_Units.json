@@ -1,0 +1,74 @@
+{
+  "scheme_name": "Market Support Scheme for Smaller Business Units",
+  "location": "Goa",
+  "tags": [
+    "Market Access",
+    "Financial Assistance",
+    "Small Businesses",
+    "Promotion"
+  ],
+  "description": "The Market Support Scheme for Smaller Business Units in Goa provides financial assistance to small businesses to enhance their market presence through promotional activities, exhibitions, and trade fairs. The scheme aims to improve competitiveness and visibility of small enterprises.",
+  "key_features": [
+    "Financial aid for marketing and promotional activities",
+    "Support for participation in trade fairs and exhibitions",
+    "Enhances market access for small businesses"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 5 Lakhs for marketing and promotional activities",
+    "reimbursement": "Up to 50% of expenses for trade fairs, max Rs. 2 Lakhs"
+  },
+  "eligibility": {
+    "business_criteria": [
+      "Must be a registered small business or MSME in Goa",
+      "Must have a valid Udyam Registration"
+    ],
+    "operational_criteria": [
+      "Must engage in marketing or promotional activities like trade fairs or exhibitions",
+      "Business must be operational for at least 1 year"
+    ]
+  },
+  "eligible_activities": [
+    "Participation in state, national, or international trade fairs",
+    "Organizing promotional events or exhibitions",
+    "Developing marketing materials and campaigns"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the Directorate of Industries, Trade, and Commerce (DITC) in Goa",
+      "Submit the application with details of proposed marketing activities",
+      "Attach required documents, including MSME registration and expense estimates",
+      "Applications are reviewed by the DITC",
+      "Approved applicants receive funding or reimbursement"
+    ],
+    "note": "Reimbursement claims require proof of participation and expenses"
+  },
+  "required_documents": [
+    {
+      "document": "Udyam Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Marketing Plan/Proposal",
+      "mandatory": true
+    },
+    {
+      "document": "Expense Receipts/Invoices",
+      "mandatory": true,
+      "required_when": "For reimbursement"
+    },
+    {
+      "document": "Bank Details",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Funding is limited to approved marketing activities",
+    "Businesses must submit claims within the specified period",
+    "Priority is given to businesses with innovative products"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "scheme_name": "Sheep Rearing Scheme (HSFDC)",
+  "location": "Haryana",
+  "tags": [
+    "Sheep Rearing",
+    "Financial Assistance",
+    "SC/ST Welfare"
+  ],
+  "description": "The Sheep Rearing Scheme by Haryana Scheduled Castes Finance and Development Corporation (HSFDC) provides financial assistance to SC/ST families for sheep rearing.",
+  "key_features": [
+    "Subsidies for purchasing sheep",
+    "Training on sheep management",
+    "Support for fodder and veterinary care"
+  ],
+  "benefits": {
+    "financial_support": "Subsidies for sheep purchase",
+    "income_generation": "Revenue from sheep rearing"
+  },
+  "eligibility": {
+    "criteria": [
+      "SC/ST families in Haryana",
+      "Interest in sheep rearing"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Apply through HSFDC office",
+      "Submit caste certificate and identity documents",
+      "Approval and subsidy release"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Aims to uplift SC/ST communities",
+    "Focus on local sheep breeds"
+  ]
+}

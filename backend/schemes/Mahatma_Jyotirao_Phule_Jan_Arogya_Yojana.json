@@ -1,0 +1,51 @@
+{
+  "scheme_name": "Mahatma Jyotirao Phule Jan Arogya Yojana",
+  "location": "Maharashtra",
+  "tags": [
+    "Health Insurance",
+    "Cashless Treatment",
+    "Critical Illness"
+  ],
+  "description": "Mahatma Jyotirao Phule Jan Arogya Yojana provides cashless health insurance for low-income families, covering critical illnesses and hospitalization.",
+  "key_features": [
+    "Coverage up to Rs. 1.5 lakh per family per year",
+    "Covers 971 procedures, including surgeries and therapies",
+    "Cashless treatment in empanelled hospitals"
+  ],
+  "benefits": {
+    "coverage_amount": "Up to Rs. 1.5 Lakh per family per year",
+    "procedure_coverage": "971 procedures including kidney transplant"
+  },
+  "eligibility": {
+    "criteria": [
+      "Families with yellow, orange, or white ration cards",
+      "Residents of Maharashtra",
+      "Farmers from 14 distressed districts"
+    ]
+  },
+  "application_process": {
+    "mode": "Online/Offline",
+    "steps": [
+      "Register at empanelled hospital or through scheme website",
+      "Submit documents for verification",
+      "Receive health card for cashless treatment"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Ration Card",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": false
+    }
+  ],
+  "special_notes": [
+    "Includes post-hospitalization expenses for 10 days"
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "scheme_name": "Rajiv Gandhi Swavlamban Rojgar Yojna",
+  "location": "Delhi",
+  "tags": [
+    "Self-Employment",
+    "Financial Assistance",
+    "Entrepreneurship",
+    "Loan Subsidy"
+  ],
+  "description": "The Rajiv Gandhi Swavlamban Rojgar Yojna in Delhi promotes self-employment by providing financial assistance through loans and subsidies to unemployed youth and entrepreneurs for setting up small businesses or enterprises.",
+  "key_features": [
+    "Subsidized loans for business setup",
+    "Support for unemployed youth and entrepreneurs",
+    "Promotes self-employment in Delhi"
+  ],
+  "benefits": {
+    "loan_amount": "Up to Rs. 3 Lakhs for business setup",
+    "subsidy": "25% subsidy on the loan amount, max Rs. 75,000",
+    "training": "Free entrepreneurship training"
+  },
+  "eligibility": {
+    "age_criteria": [
+      "Aged 18-35 years"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Delhi"
+    ],
+    "employment_criteria": [
+      "Must be unemployed or underemployed"
+    ],
+    "business_criteria": [
+      "Proposed business must be viable and located in Delhi"
+    ]
+  },
+  "eligible_activities": [
+    "Setting up small businesses in manufacturing, services, or retail",
+    "Purchase of equipment or raw materials",
+    "Skill development for entrepreneurship"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the Delhi Khadi and Village Industries Board (DKVIB)",
+      "Submit a detailed business plan with the application",
+      "Attach required documents, including Aadhaar and residency proof",
+      "Applications are reviewed by the DKVIB",
+      "Approved applicants receive loans and subsidies"
+    ],
+    "note": "Applicants may need to attend an interview or training session"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Unemployment Declaration",
+      "mandatory": true
+    },
+    {
+      "document": "Business Plan",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "The loan is provided through designated banks with DKVIB support",
+    "Subsidy is disbursed after loan sanction",
+    "Beneficiaries must comply with DKVIB guidelines"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "scheme_name": "Pradhan Mantri Garib Kalyan Package: Insurance Scheme For Health Workers Fighting COVID-19",
+  "location": "Nationwide",
+  "tags": [
+    "Health Insurance",
+    "COVID-19",
+    "Health Workers"
+  ],
+  "description": "This scheme provides insurance cover of Rs. 50 lakh for health workers involved in COVID-19 duties, including accidental death.",
+  "key_features": [
+    "Rs. 50 lakh insurance cover",
+    "Covers public and private health workers",
+    "Includes accidental death due to COVID-19"
+  ],
+  "benefits": {
+    "insurance_coverage": "Rs. 50 Lakh"
+  },
+  "eligibility": {
+    "criteria": [
+      "Health workers including doctors, nurses, paramedics, and support staff involved in COVID-19 duties",
+      "Both public and private sector workers"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Nomination by employer or institution",
+      "Claim processed through insurance provider"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Proof of Employment",
+      "mandatory": true
+    },
+    {
+      "document": "COVID-19 Duty Certificate",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Extended multiple times during the pandemic"
+  ]
+}

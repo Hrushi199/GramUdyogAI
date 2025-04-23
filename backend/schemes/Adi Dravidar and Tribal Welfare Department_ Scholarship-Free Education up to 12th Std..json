@@ -1,0 +1,78 @@
+{
+  "scheme_name": "Adi Dravidar and Tribal Welfare Department: Scholarship-Free Education up to 12th Std. to All",
+  "location": "Tamil Nadu",
+  "tags": [
+    "Scholarship",
+    "Free Education",
+    "School Education",
+    "SC/ST Welfare"
+  ],
+  "description": "The Adi Dravidar and Tribal Welfare Department in Tamil Nadu provides free education up to the 12th standard for students from Scheduled Castes (SC) and Scheduled Tribes (ST) communities. The scheme aims to ensure access to quality education and reduce financial barriers for SC/ST students.",
+  "key_features": [
+    "Free education for SC/ST students up to 12th standard",
+    "Covers tuition fees and other educational expenses",
+    "Implemented by the Tamil Nadu Adi Dravidar and Tribal Welfare Department",
+    "Promotes educational equity for marginalized communities"
+  ],
+  "benefits": {
+    "coverage": "Full tuition fees, books, uniforms, and other school expenses",
+    "additional_support": "Hostel facilities for eligible students"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students enrolled in classes 1 to 12",
+      "Must be studying in government or government-aided schools"
+    ],
+    "additional_criteria": [
+      "Applicant must belong to Scheduled Castes (SC) or Scheduled Tribes (ST) as per Tamil Nadu government norms",
+      "Must be a resident of Tamil Nadu"
+    ],
+    "admission_requirement": "Enrolled in government or government-aided schools",
+    "institution_criteria": [
+      "Government or government-aided schools in Tamil Nadu"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Primary education (Classes 1-8)",
+    "Secondary education (Classes 9-10)",
+    "Higher secondary education (Classes 11-12)"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Apply through the school or Adi Dravidar and Tribal Welfare Department",
+      "Submit application form with required documents",
+      "Verification by school or department authorities",
+      "Benefits provided directly to the school or student"
+    ],
+    "note": "Contact school or department for application process"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "SC/ST Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "School Enrollment Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Domicile Certificate",
+      "mandatory": true,
+      "note": "To prove Tamil Nadu residency"
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Covers only government or government-aided schools",
+    "Hostel facilities may be provided for eligible students",
+    "No income limit for eligibility"
+  ]
+}

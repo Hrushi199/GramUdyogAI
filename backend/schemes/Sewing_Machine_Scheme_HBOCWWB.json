@@ -1,0 +1,73 @@
+{
+  "scheme_name": "Sewing Machine Scheme (HBOCWWB)",
+  "location": "Haryana",
+  "tags": [
+    "Women Empowerment",
+    "Financial Assistance",
+    "Construction Workers",
+    "Self-Employment"
+  ],
+  "description": "The Sewing Machine Scheme under the Haryana Building and Other Construction Workers Welfare Board (HBOCWWB) provides financial assistance to registered women construction workers for purchasing sewing machines, enabling self-employment through tailoring.",
+  "key_features": [
+    "Financial aid for sewing machine purchase",
+    "Supports women construction workers",
+    "Promotes self-employment in tailoring"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 3,500 for purchasing a sewing machine",
+    "one_time_assistance": "Assistance provided once per beneficiary"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women aged 18-50 years"
+    ],
+    "occupation_criteria": [
+      "Must be a registered construction worker with HBOCWWB"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Haryana"
+    ]
+  },
+  "eligible_activities": [
+    "Purchasing sewing machines",
+    "Setting up tailoring businesses"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the HBOCWWB office",
+      "Submit the application with proof of registration",
+      "Attach required documents, including Aadhaar and HBOCWWB ID",
+      "Applications are reviewed by the board",
+      "Approved applicants receive financial assistance"
+    ],
+    "note": "Applicants must provide proof of sewing machine purchase"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "HBOCWWB Registration ID",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Assistance is limited to one sewing machine per beneficiary",
+    "Applicants must be active HBOCWWB members",
+    "Priority is given to economically disadvantaged workers"
+  ]
+}

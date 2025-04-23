@@ -1,0 +1,51 @@
+{
+  "scheme_name": "Poultry Farming Scheme (HSFDC)",
+  "location": "Haryana",
+  "tags": [
+    "Poultry Farming",
+    "Financial Assistance",
+    "SC/ST Welfare"
+  ],
+  "description": "The Poultry Farming Scheme by HSFDC supports SC/ST families in Haryana to establish poultry units for income generation.",
+  "key_features": [
+    "Subsidies for poultry birds and infrastructure",
+    "Training on poultry management",
+    "Support for feed and veterinary care"
+  ],
+  "benefits": {
+    "financial_support": "Subsidies for poultry setup",
+    "income_generation": "Revenue from poultry products"
+  },
+  "eligibility": {
+    "criteria": [
+      "SC/ST families in Haryana",
+      "Interest in poultry farming"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Apply through HSFDC office",
+      "Submit caste certificate and identity documents",
+      "Approval and subsidy release"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Focus on broiler and layer farming",
+    "Market linkage support provided"
+  ]
+}

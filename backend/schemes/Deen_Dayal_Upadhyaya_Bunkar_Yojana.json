@@ -1,0 +1,75 @@
+{
+  "scheme_name": "Deen Dayal Upadhyaya Bunkar Yojana",
+  "location": "Arunachal Pradesh",
+  "tags": [
+    "Women Weavers",
+    "Financial Assistance",
+    "Skill Upgradation",
+    "Handloom"
+  ],
+  "description": "The Deen Dayal Upadhyaya Bunkar Yojana in Arunachal Pradesh provides financial assistance and skill upgradation training to women weavers to enhance their productivity and income in the handloom sector.",
+  "key_features": [
+    "Financial support for women weavers",
+    "Skill training in handloom techniques",
+    "Market linkages for handloom products"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 50,000 for equipment and raw materials",
+    "training": "Free skill upgradation training for 1-3 months",
+    "market_support": "Assistance for marketing handloom products"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women aged 18-50 years"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Arunachal Pradesh"
+    ],
+    "occupation_criteria": [
+      "Must be engaged in handloom weaving"
+    ]
+  },
+  "eligible_activities": [
+    "Training in advanced handloom techniques",
+    "Purchase of looms or raw materials",
+    "Marketing handloom products"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the District Textile and Handicrafts Office",
+      "Submit the application with proof of weaving experience",
+      "Attach required documents, including Aadhaar and residency proof",
+      "Applications are reviewed by the department",
+      "Approved applicants receive assistance and training"
+    ],
+    "note": "Applicants must demonstrate weaving skills"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Proof of Weaving Experience",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Priority is given to traditional weavers",
+    "Training is conducted at local centers",
+    "Beneficiaries must submit product samples"
+  ]
+}

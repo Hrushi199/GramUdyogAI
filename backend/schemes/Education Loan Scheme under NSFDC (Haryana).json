@@ -1,0 +1,88 @@
+{
+  "scheme_name": "Education Loan Scheme under NSFDC",
+  "location": "Haryana",
+  "tags": [
+    "Education Loan",
+    "Financial Assistance",
+    "Higher Education",
+    "Scheduled Castes"
+  ],
+  "description": "The Education Loan Scheme under the National Scheduled Castes Finance and Development Corporation (NSFDC) in Haryana provides financial assistance to Scheduled Caste (SC) students for pursuing professional or technical education at graduate and higher levels. The scheme aims to empower SC students by offering loans at concessional rates to support their educational aspirations.",
+  "key_features": [
+    "Concessional interest rates for SC students",
+    "Covers professional and technical courses in India and abroad",
+    "Implemented through Haryana Scheduled Castes Finance and Development Corporation",
+    "Flexible repayment terms with moratorium period"
+  ],
+  "benefits": {
+    "maximum_loan_amount": "Up to Rs. 20 Lakhs for studies in India; Up to Rs. 30 Lakhs for studies abroad",
+    "interest_rate": "4% per annum for male students, 3.5% per annum for female students",
+    "moratorium_period": "6 months after course completion or securing a job"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students pursuing professional or technical courses at graduate or postgraduate level",
+      "Courses must be recognized by UGC, AICTE, or equivalent"
+    ],
+    "additional_criteria": [
+      "Applicant must belong to Scheduled Castes (SC) as per Haryana government norms",
+      "Annual family income must not exceed Rs. 3 Lakhs",
+      "Must be a resident of Haryana"
+    ],
+    "admission_requirement": "Admission to recognized institutions through merit or entrance tests",
+    "institution_criteria": [
+      "Recognized institutions in India or abroad"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Engineering, medical, law, management, and other professional courses",
+    "Technical courses approved by regulatory bodies",
+    "Vocational courses leading to employment"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain application form from Haryana Scheduled Castes Finance and Development Corporation",
+      "Fill and submit the form with required documents",
+      "Verification and sanction by the corporation",
+      "Sign loan agreement upon approval"
+    ],
+    "note": "Contact the corporation office for application details"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "SC Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": true,
+      "note": "To prove family income below Rs. 3 Lakhs"
+    },
+    {
+      "document": "Admission Letter",
+      "mandatory": true
+    },
+    {
+      "document": "Fee Structure",
+      "mandatory": true
+    },
+    {
+      "document": "Marksheets (10th, 12th, or last qualifying exam)",
+      "mandatory": true
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Loan covers tuition fees, books, and living expenses",
+    "Female students receive a 0.5% interest rate concession",
+    "Repayment terms extend up to 15 years post-moratorium"
+  ]
+}

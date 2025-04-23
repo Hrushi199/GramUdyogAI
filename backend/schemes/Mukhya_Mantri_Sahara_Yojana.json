@@ -1,0 +1,50 @@
+{
+  "scheme_name": "Mukhya Mantri Sahara Yojana",
+  "location": "Himachal Pradesh",
+  "tags": [
+    "Financial Assistance",
+    "Critical Illness",
+    "Low-Income Families"
+  ],
+  "description": "Mukhya Mantri Sahara Yojana provides monthly financial assistance of Rs. 3000 to families with a member suffering from critical illnesses.",
+  "key_features": [
+    "Rs. 3000 per month per family",
+    "Covers diseases like cancer, paralysis, and muscular dystrophy",
+    "Direct Benefit Transfer to bank account"
+  ],
+  "benefits": {
+    "financial_support": "Rs. 3000 per month"
+  },
+  "eligibility": {
+    "criteria": [
+      "Annual family income below Rs. 4 lakh",
+      "Residents of Himachal Pradesh",
+      "Patient diagnosed with specified critical illness"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Apply through District Medical Officer",
+      "Submit medical certificate and income proof",
+      "Approval and DBT initiation"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Medical Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Support continues during treatment period"
+  ]
+}

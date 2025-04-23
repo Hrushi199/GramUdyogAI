@@ -1,0 +1,54 @@
+{
+  "scheme_name": "Subsidy Scheme for Establishment of 100 Broiler Birds' Farm for Schedule Caste (Gujarat)",
+  "location": "Gujarat",
+  "tags": [
+    "Poultry Farming",
+    "Scheduled Caste",
+    "Subsidy",
+    "Broiler Birds"
+  ],
+  "description": "This scheme provides financial assistance to Scheduled Caste individuals for establishing a poultry farm with 100 broiler birds to promote self-employment.",
+  "key_features": [
+    "Subsidy of Rs. 10,000 for setting up a 100-broiler bird farm",
+    "Support for Scheduled Caste individuals"
+  ],
+  "benefits": {
+    "subsidy_amount": "Rs. 10,000",
+    "unit_size": "100 broiler birds"
+  },
+  "eligibility": {
+    "category_criteria": [
+      "Applicant must belong to Scheduled Caste"
+    ],
+    "additional_criteria": "Must be a resident of Gujarat"
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Approach the Animal Husbandry Department",
+      "Submit application with required documents",
+      "Verification and approval by authorities"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residence Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Limited to broiler poultry farming for Scheduled Caste individuals"
+  ]
+}

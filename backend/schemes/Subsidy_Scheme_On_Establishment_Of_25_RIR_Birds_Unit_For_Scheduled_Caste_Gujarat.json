@@ -1,0 +1,50 @@
+{
+  "scheme_name": "Subsidy Scheme On Establishment Of 25 R.I.R. Birds' Unit For Scheduled Caste (Gujarat)",
+  "location": "Gujarat",
+  "tags": [
+    "Poultry Farming",
+    "Scheduled Caste",
+    "Subsidy",
+    "RIR Birds"
+  ],
+  "description": "This scheme provides financial assistance to Scheduled Caste individuals for establishing a poultry unit with 25 R.I.R. birds to promote self-employment.",
+  "key_features": [
+    "Subsidy of Rs. 6,000 for 25 R.I.R. birds unit",
+    "Support for Scheduled Caste individuals"
+  ],
+  "benefits": {
+    "subsidy_amount": "Rs. 6,000",
+    "unit_size": "25 R.I.R. birds"
+  },
+  "eligibility": {
+    "category_criteria": [
+      "Applicant must belong to Scheduled Caste"
+    ],
+    "additional_criteria": "Must be a resident of Gujarat"
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Contact the Animal Husbandry Department",
+      "Submit application with required documents",
+      "Verification and approval"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residence Proof",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Limited to R.I.R. birds for Scheduled Caste individuals"
+  ]
+}

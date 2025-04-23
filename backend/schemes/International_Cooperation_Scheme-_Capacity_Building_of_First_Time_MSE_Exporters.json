@@ -1,0 +1,75 @@
+{
+  "scheme_name": "International Cooperation Scheme- Capacity Building of First Time MSE Exporters",
+  "location": "Pan India",
+  "tags": [
+    "Export Promotion",
+    "MSME",
+    "Capacity Building",
+    "Financial Assistance"
+  ],
+  "description": "The International Cooperation Scheme aims to enhance the export capabilities of first-time Micro and Small Enterprises (MSEs) by providing financial assistance for capacity building. It supports participation in international trade fairs, buyer-seller meets, and other export-related activities to promote global market access.",
+  "key_features": [
+    "Financial support for export-related activities",
+    "Capacity building through training and exposure",
+    "Facilitates international market access for MSEs"
+  ],
+  "benefits": {
+    "reimbursement": "Up to 75% of expenses for participation in international events, max Rs. 10 Lakhs",
+    "training_support": "Free or subsidized export training programs",
+    "market_access": "Support for buyer-seller meets and trade fairs"
+  },
+  "eligibility": {
+    "business_criteria": [
+      "Must be a registered Micro or Small Enterprise (MSE) as per the MSME Development Act, 2006",
+      "First-time exporters or MSEs with limited export experience"
+    ],
+    "operational_criteria": [
+      "Must participate in approved international trade fairs, exhibitions, or buyer-seller meets",
+      "Must have a valid Udyam Registration"
+    ]
+  },
+  "eligible_activities": [
+    "Participation in international trade fairs and exhibitions",
+    "Buyer-seller meets and trade delegations",
+    "Export-related training and capacity building"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the MSME portal or the International Cooperation Scheme website",
+      "Register and submit an application with details of the proposed export activity",
+      "Upload required documents, including Udyam Registration and event details",
+      "Applications are reviewed by the MSME Ministry",
+      "Approved applicants receive funding post-event upon submission of claims"
+    ],
+    "note": "Reimbursement is processed after submitting proof of participation and expenses"
+  },
+  "required_documents": [
+    {
+      "document": "Udyam Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Event Participation Details",
+      "mandatory": true
+    },
+    {
+      "document": "Expense Receipts/Invoices",
+      "mandatory": true,
+      "required_when": "For reimbursement claims"
+    },
+    {
+      "document": "Bank Details",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of First-Time Exporter Status",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Funding is subject to approval of the event by the MSME Ministry",
+    "MSEs must submit claims within the stipulated time frame",
+    "Priority is given to MSEs from underrepresented sectors"
+  ]
+}

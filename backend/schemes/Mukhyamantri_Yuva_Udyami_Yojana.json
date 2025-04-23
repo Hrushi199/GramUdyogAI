@@ -1,0 +1,74 @@
+{
+  "scheme_name": "Mukhyamantri Yuva Udyami Yojana",
+  "location": "Bihar",
+  "tags": [
+    "Entrepreneurship",
+    "Financial Assistance",
+    "Youth",
+    "Self-Employment"
+  ],
+  "description": "The Mukhyamantri Yuva Udyami Yojana in Bihar supports young entrepreneurs by providing financial assistance and training to establish micro-enterprises. The scheme aims to promote youth entrepreneurship and economic development.",
+  "key_features": [
+    "Financial support for micro-enterprise setup",
+    "Free training and skill development",
+    "Encourages youth entrepreneurship"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 10 Lakhs per beneficiary, with 50% subsidy and 50% interest-free loan",
+    "training": "Free entrepreneurship and skill training"
+  },
+  "eligibility": {
+    "age_criteria": [
+      "Aged 18-40 years"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Bihar"
+    ],
+    "business_criteria": [
+      "Proposed business must be viable and sustainable"
+    ]
+  },
+  "eligible_activities": [
+    "Setting up micro-enterprises in manufacturing, services, or retail",
+    "Purchase of equipment, raw materials, or infrastructure",
+    "Skill development for entrepreneurship"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the Bihar Industries Department portal or scheme website",
+      "Register and submit an online application with a business plan",
+      "Upload required documents, including Aadhaar and residency proof",
+      "Applications are reviewed by a district-level committee",
+      "Approved beneficiaries receive funds and training"
+    ],
+    "note": "Applicants must complete mandatory training before fund disbursement"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Age Proof (Birth Certificate or ID)",
+      "mandatory": true
+    },
+    {
+      "document": "Business Plan",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "The loan component is interest-free and repayable over 5 years",
+    "Priority is given to innovative and sustainable business ideas",
+    "Beneficiaries are monitored for proper fund utilization"
+  ]
+}
