@@ -29,7 +29,8 @@ const Features: React.FC<FeaturesProps> = ({ loaded }) => {
     {
       title: "Skills Development",
       description: "Access targeted training resources to build the exact skills you need for your business",
-      icon: GraduationCap
+      icon: GraduationCap,
+      onClick: () => navigate("/skill-builder")
     }
   ];
 
