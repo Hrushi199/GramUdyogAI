@@ -12,6 +12,9 @@ const Navbar = () => {
             <a href="#features" className="text-gray-300 hover:text-white transition-colors">Features</a>
             <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
             <a href="#contact" className="text-gray-300 hover:text-white transition-colors">Contact</a>
+            <a href="/profile" className="text-gray-300 hover:text-white transition-colors">Profile</a>
+            <a href="/dashboard" className="text-gray-300 hover:text-white transition-colors">Dashboard</a>
+            <a href="/community" className="text-gray-300 hover:text-white transition-colors">Community</a>
             <Button>Sign Up</Button>
           </div>
         </div>

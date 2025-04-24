@@ -10,9 +10,9 @@ import Navbar from './components/sections/Navbar';
 import SchemeRecommendation from './components/sections/SchemeRecommendation'; // Import the component
 
 // NEW pages
-import UserProfile from './pages/UserProfile';
-import JobMentorDashboard from './pages/JobMentorDashboard';
-import Community from './pages/Community';
+import UserProfile from './components/sections/UserProfile';
+import JobMentorDashboard from './components/sections/JobMentorDashboard';
+import Community from './components/sections/Community';
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
