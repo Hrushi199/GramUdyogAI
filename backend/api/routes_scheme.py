@@ -9,7 +9,7 @@ from core.scheme_recommender import (
     load_selected_schemes,
     explain_schemes,
 )
-from core.government_api import router as government_router
+#from core.government_api import router as government_router
 from core.government_api import (
     UserInput,
     RecommendationResponse,
