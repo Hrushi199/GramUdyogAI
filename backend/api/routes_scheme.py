@@ -1,6 +1,7 @@
 # api/routes_scheme.py
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import List
 from core.scheme_recommender import (
@@ -9,7 +10,6 @@ from core.scheme_recommender import (
     load_selected_schemes,
     explain_schemes,
 )
-from core.government_api import router as government_router
 from core.government_api import (
     UserInput,
     RecommendationResponse,
@@ -18,7 +18,7 @@ from core.government_api import (
 )
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
-
+import os
 router = APIRouter()
 
 class UserRequest(BaseModel):
@@ -41,4 +41,18 @@ async def get_recommendations(user_input: UserInput):
     price_data = await fetch_commodity_prices(user_input.state)
     response = build_recommendation_response(user_input, price_data)
     return JSONResponse(content=jsonable_encoder(response))
-    
+
+
+IMAGE_FOLDER = "/images"
+
+@router.get("/images/{image_name}")
+async def get_image(image_name: str):
+    image_path = os.path.join(IMAGE_FOLDER, image_name)
+
+    if not os.path.isfile(image_path):
+        raise HTTPException(status_code=404, detail="Image not found")
+
+    # Here you can add logic to ensure the image is in portrait orientation
+    # For example, you could check the image dimensions and return an error if it's not portrait
+
+    return FileResponse(image_path)
