@@ -5,7 +5,7 @@ const BusinessSuggestion: React.FC = () => {
   const [suggestions, setSuggestions] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -13,7 +13,7 @@ const BusinessSuggestion: React.FC = () => {
     setSuggestions('');
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/suggest-business', {
+      const response = await fetch(`${API_BASE_URL}/suggest-business`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

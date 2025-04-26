@@ -12,6 +12,8 @@ def initialize_database():
             description TEXT NOT NULL,
             company TEXT NOT NULL,
             location TEXT NOT NULL,
+            company_contact TEXT NOT NULL,
+            pay TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
