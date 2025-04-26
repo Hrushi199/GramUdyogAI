@@ -9,6 +9,7 @@ import Footer from './components/sections/Footer';
 import Navbar from './components/sections/Navbar';
 import SchemeRecommendation from './components/sections/SchemeRecommendation'; // Import the component
 import SkillBuilder from './components/sections/SkillBuilder';
+import BusinessSuggestions from './components/sections/BusinessSuggestions';
 // NEW pages
 import UserProfile from './components/sections/UserProfile';
 import JobMentorDashboard from './components/sections/JobMentorDashboard';
@@ -47,6 +48,7 @@ export default function App() {
           <Route path="/community" element={<Community />} />
           <Route path="/schemes" element={<SchemeRecommendation />} /> {/* Add this route */}
           <Route path="/skill-builder" element={<SkillBuilder />} />
+          <Route path="/business-suggestions" element={<BusinessSuggestions />} />
           {/* 404 Page */}
         </Routes>
       </Router>

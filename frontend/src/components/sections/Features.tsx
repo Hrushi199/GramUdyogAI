@@ -13,7 +13,8 @@ const Features: React.FC<FeaturesProps> = ({ loaded }) => {
     {
       title: "AI Business Suggestions",
       description: "Get personalized business recommendations based on your skills, resources, and market conditions",
-      icon: Cpu
+      icon: Cpu,
+      onClick: () => navigate("/business-suggestions")
     },
     {
       title: "Government Schemes",
