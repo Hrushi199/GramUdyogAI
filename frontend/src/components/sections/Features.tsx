@@ -22,9 +22,10 @@ const Features: React.FC<FeaturesProps> = ({ loaded }) => {
       onClick: () => navigate("/schemes")
     },
     {
-      title: "Expert Mentorship",
-      description: "Connect with experienced entrepreneurs and industry experts for guidance and advice",
-      icon: Users
+      title: "Networking Opportunities",
+      description: "Post and find job openings to connect with like-minded professionals.",
+      icon: Users,
+      onClick: () => navigate("/job-board")
     },
     {
       title: "Skills Development",

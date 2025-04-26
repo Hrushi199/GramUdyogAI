@@ -13,6 +13,7 @@ import SkillBuilder from './components/sections/SkillBuilder';
 import UserProfile from './components/sections/UserProfile';
 import JobMentorDashboard from './components/sections/JobMentorDashboard';
 import Community from './components/sections/Community';
+import JobBoard from './components/sections/job_board'; // Import the JobBoard component
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
@@ -40,6 +41,7 @@ export default function App() {
           } />
 
           {/* NEW Pages */}
+          <Route path="/job-board" element={<JobBoard />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/dashboard" element={<JobMentorDashboard />} />
           <Route path="/community" element={<Community />} />
