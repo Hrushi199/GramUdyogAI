@@ -10,10 +10,7 @@ from core.scheme_recommender import (
     load_selected_schemes,
     explain_schemes,
 )
-<<<<<<< HEAD
-=======
 #from core.government_api import router as government_router
->>>>>>> 940a7aa58013d8dca835e170c8307fb974785e76
 from core.government_api import (
     UserInput,
     RecommendationResponse,
@@ -28,7 +25,20 @@ router = APIRouter()
 class UserRequest(BaseModel):
     occupation: str
 
-@router.post("/schemes")
+class SchemeExplanation(BaseModel):
+    name: str
+    goal: str
+    benefit: str
+    eligibility: str
+    application_process: str
+    special_features: str
+    full_json: dict = {}
+
+class SchemeResponse(BaseModel):
+    relevant_schemes: List[str]
+    explanation: List[SchemeExplanation]
+
+@router.post("/schemes", response_model=SchemeResponse)
 async def recommend_schemes(data: UserRequest):
     all_names = get_all_scheme_names()
     relevant_names = get_relevant_scheme_names(data.occupation, all_names)
@@ -37,7 +47,7 @@ async def recommend_schemes(data: UserRequest):
     print(explanation)
     return {
         "relevant_schemes": relevant_names,
-        "explanation": explanation
+        "explanation": explanation  # Now a JSON list/object, not a string
     }
 
 @router.post("/prices/", response_model=RecommendationResponse)
