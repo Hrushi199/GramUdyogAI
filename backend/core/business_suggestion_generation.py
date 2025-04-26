@@ -5,8 +5,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
-groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+os.environ.pop("GROQ_API_KEY", None)
+load_dotenv("./.env")
+api_key=os.getenv("GROQ_API_KEY")
+groq_client = Groq(api_key=api_key)
 
 def generate_prompt_from_skills(skills_text):
     return (
