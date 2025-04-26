@@ -20,7 +20,9 @@ const JobBoard = () => {
   const [location, setLocation] = useState("");
   const [companyContact, setCompanyContact] = useState("");
   const [pay, setPay] = useState("");
-  const [activeTab, setActiveTab] = useState<"view" | "post">("view"); // Tab state
+  const [userInfo, setUserInfo] = useState(""); // For job recommender input
+  const [recommendedJob, setRecommendedJob] = useState<Job | null>(null); // For storing the recommended job
+  const [activeTab, setActiveTab] = useState<"view" | "post" | "recommend">("view"); // Tab state
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   // Fetch job postings
@@ -56,6 +58,32 @@ const JobBoard = () => {
       const updatedJobs: Job[] = await fetch(`${API_BASE_URL}/api/jobs`).then((res) => res.json());
       setJobs(updatedJobs);
       setActiveTab("view"); // Switch to the "View Jobs" tab after posting
+    }
+  };
+
+  // Handle job recommendation
+  const handleRecommend = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/recommend-job`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user_info: userInfo }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.detail}`);
+        return;
+      }
+
+      const data = await response.json();
+      setRecommendedJob(data.best_job);
+    } catch (error) {
+      console.error("Error fetching job recommendation:", error);
+      alert("An unexpected error occurred. Please try again.");
     }
   };
 
@@ -99,6 +127,14 @@ const JobBoard = () => {
             onClick={() => setActiveTab("post")}
           >
             Post a Job
+          </button>
+          <button
+            className={`px-6 py-2 text-lg font-medium rounded-t-lg ${
+              activeTab === "recommend" ? "bg-blue-700 text-white" : "bg-gray-300 text-black"
+            }`}
+            onClick={() => setActiveTab("recommend")}
+          >
+            Recommend a Job
           </button>
         </div>
 
@@ -200,6 +236,38 @@ const JobBoard = () => {
               <button type="submit" className="w-full bg-blue-700 text-white py-3 rounded-lg hover:bg-blue-800">
                 Post Job
               </button>
+            </form>
+          )}
+
+          {activeTab === "recommend" && (
+            <form onSubmit={handleRecommend} className="bg-gray-800 p-6 rounded-lg shadow-md text-white">
+              <h2 className="text-2xl font-bold mb-4">Recommend a Job</h2>
+              <div className="mb-4">
+                <label htmlFor="user_info" className="block text-lg font-medium mb-2">Your Information</label>
+                <textarea
+                  id="user_info"
+                  value={userInfo}
+                  onChange={(e) => setUserInfo(e.target.value)}
+                  className="w-full p-3 border border-gray-600 rounded-lg bg-gray-900 text-white"
+                  rows={4}
+                  placeholder="Enter your skills, experience, and preferences"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" className="w-full bg-blue-700 text-white py-3 rounded-lg hover:bg-blue-800">
+                Get Recommendation
+              </button>
+              {recommendedJob && (
+                <div className="mt-6 bg-gray-700 p-6 rounded-lg text-white shadow-md">
+                  <h3 className="text-2xl font-bold mb-4">Recommended Job</h3>
+                  <p className="mb-2"><strong>Title:</strong> {recommendedJob.title}</p>
+                  <p className="mb-2"><strong>Description:</strong> {recommendedJob.description}</p>
+                  <p className="mb-2"><strong>Company:</strong> {recommendedJob.company}</p>
+                  <p className="mb-2"><strong>Location:</strong> {recommendedJob.location}</p>
+                  <p className="mb-2"><strong>Contact:</strong> {recommendedJob.company_contact}</p>
+                  <p className="mb-2"><strong>Pay:</strong> {recommendedJob.pay}</p>
+                </div>
+              )}
             </form>
           )}
         </div>

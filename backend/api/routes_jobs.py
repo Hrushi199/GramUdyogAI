@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 import sqlite3
-
+from core.job_recommender import *
 router = APIRouter()
 
 class JobPosting(BaseModel):
@@ -11,6 +11,9 @@ class JobPosting(BaseModel):
     location: str
     company_contact: str
     pay: str
+
+class UserInfo(BaseModel):
+    user_info: str  # Input from the user for job recommendation
 
 @router.post("/jobs")
 async def create_job(job: JobPosting):
@@ -50,3 +53,17 @@ async def get_jobs():
         }
         for job in jobs
     ]
+
+@router.post("/recommend-job")
+async def recommend_job(user_info: UserInfo):
+    """
+    Recommend the best job for a user based on their information.
+    """
+    try:
+        all_job_names = get_all_job_names()
+        relevant_job_names = get_relevant_jobs(user_info.user_info, all_job_names)
+        relevant_jobs = load_selected_jobs(relevant_job_names)
+        best_job = find_best_job(user_info.user_info, relevant_jobs)
+        return {"best_job": best_job}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
