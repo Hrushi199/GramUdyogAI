@@ -4,6 +4,8 @@ import os
 from typing import List, Dict
 from groq import Groq
 from dotenv import load_dotenv,find_dotenv
+from pydantic import BaseModel
+
 # Load environment variables from the .env file
 os.environ.pop("GROQ_API_KEY", None)
 load_dotenv("./.env")
@@ -65,70 +67,58 @@ def load_selected_schemes(selected_names: List[str]) -> List[Dict]:
             continue
     return schemes
 
-def explain_schemes(occupation: str, selected_schemes: List[Dict]) -> str:
-    # Define a structured example JSON format
-    example_json_format = json.dumps([
-        {
-            "name": "Scheme Name",
-            "goal": "Main purpose of the scheme",
-            "benefit": "How it helps someone with this occupation",
-            "eligibility": "Short eligibility criteria",
-            "application_process": "Simple explanation of how to apply",
-            "special_features": "Any extra benefits or useful highlights"
-        }
-    ], indent=2)
+class SchemeExplanation(BaseModel):
+    name: str
+    goal: str
+    benefit: str
+    eligibility: str
+    application_process: str
+    special_features: str
+    full_json: dict = {}  # Add this field
 
-    # Example output format for clarity in instructions
-    example_output_format = (
-        "Name: Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)\n"
-        "Goal: To provide income support to small and marginal farmers by disbursing direct annual financial assistance.\n"
-        "Benefit: You receive ₹6,000 per year in three equal installments of ₹2,000, helping cover expenses like seeds, fertilizers, equipment or labor.\n"
-        "Eligibility: Resident farmers who own cultivable land up to 2 hectares, whose names appear in land records, with a linked Aadhaar and bank account.\n"
-        "Application process:\n"
-        "• Gather your Aadhaar card, bank passbook and land-holding documents.\n"
-        "• Visit your nearest Common Service Centre (CSC) or log in to pmkisan.gov.in.\n"
-        "• Complete and submit the PM-KISAN application form with the required documents.\n"
-        "• Track your application status on the portal; once approved, installments will be credited via Direct Benefit Transfer.\n"
-        "Special features:\n"
-        "• No application fee and no middlemen—entirely paperless if you apply online.\n"
-        "• Funds are deposited directly into your bank account in three instalments.\n"
-        "• Covers over 8 crore farmer families across India."
-    )
+class SchemeResponse(BaseModel):
+    schemes: List[SchemeExplanation]
 
-    # Final prompt construction
+def explain_schemes(occupation: str, selected_schemes: List[Dict]) -> list:
     prompt = (
-        f"You are an expert assistant who explains government schemes in a clear, simple, and practical way.\n\n"
-        f"The user works as a '{occupation}'. Based on this, you are given a list of government schemes in JSON format:\n\n"
-        f"{json.dumps(selected_schemes, indent=2)}\n\n"
-        f"Please return explanations for all the schemes provided.\n"
-        f"Your output should strictly follow the structure shown below for each scheme:\n\n"
-        f"{example_json_format}\n\n"
-        f"And your output format (human-readable text) should strictly follow this style and use the date from the JSON:\n\n"
-        f"{example_output_format}\n\n"
-        f"Important Instructions:\n"
-        f"- Do NOT wrap your output in JSON.\n"
-        f"- Return all the schemes from the list, no need to filter.\n"
-        f"- Use the same order as in the input.\n"
-        f"- Please leave a SINGLE BLANK LINE after each section like Name, Goal, Benefit, etc.\n"
-        f"- Do NOT use asterisks or any Markdown symbols.\n"
-        f"- Make the explanations friendly and easy to follow without jargon.\n"
+        f"Parse and explain these government schemes for a {occupation}.\n\n"
+        f"Input schemes: {json.dumps(selected_schemes, indent=2)}\n\n"
+        f"Return a JSON object following this schema:\n"
+        f"{json.dumps(SchemeResponse.model_json_schema(), indent=2)}\n\n"
+        "Rules:\n"
+        "1. Response MUST be valid JSON matching the schema exactly\n"
+        "2. MUST have a 'schemes' array\n"
+        "3. Each scheme MUST have ALL required fields\n"
+        "4. Use simple language\n"
+        "5. Convert scheme_name to 'name' field\n"
+        "Respond in JSON format."
     )
 
-    print(f'This is selected schemes: {selected_schemes}')
+    print(f'Input schemes: {selected_schemes}')
 
-    # Make the model call
     response = client.chat.completions.create(
-        model="llama3-8b-8192",
+        model="llama-3.3-70b-versatile",
         messages=[
-            {
-                "role": "system",
-                "content": "You are an expert in explaining government schemes. Your job is to make them clear and accessible to everyone based on their job profile."
-            },
+            {"role": "system", "content": "You are a JSON API that explains government schemes."},
             {"role": "user", "content": prompt}
-        ]
+        ],
+        response_format={"type": "json_object"},
     )
 
-    # Clean and return output
     result = response.choices[0].message.content
-    cleaned_result = result.replace('*', '')  # precaution
-    return cleaned_result
+    print(f'Raw LLM response: {result}')
+    
+    try:
+        # Use Pydantic for validation
+        parsed = SchemeResponse.model_validate_json(result)
+        # Add full JSON data to each scheme
+        for scheme in parsed.schemes:
+            for original_scheme in selected_schemes:
+                if original_scheme["scheme_name"] == scheme.name:
+                    scheme.full_json = original_scheme
+                    break
+        return parsed.schemes
+    except Exception as e:
+        print(f"Error parsing/validating JSON: {e}")
+        print(f"Raw response: {result}")
+        return []
