@@ -37,18 +37,6 @@ class SchemeResponse(BaseModel):
     relevant_schemes: List[str]
     explanation: List[SchemeExplanation]
 
-@router.post("/schemes", response_model=SchemeResponse)
-async def recommend_schemes(data: UserRequest):
-    all_names = get_all_scheme_names()
-    relevant_names = get_relevant_scheme_names(data.occupation, all_names)
-    selected_schemes = load_selected_schemes(relevant_names)
-    explanation = explain_schemes(data.occupation, selected_schemes)
-    print(explanation)
-    return {
-        "relevant_schemes": relevant_names,
-        "explanation": explanation  # Now a JSON list/object, not a string
-    }
-
 @router.post('/suggest-business')
 def suggest_business(data: Recommendation):
     skills_text = data.skills
