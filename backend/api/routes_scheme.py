@@ -4,16 +4,14 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import List
+from core.business_suggestion_generation import *
 from core.scheme_recommender import (
     get_all_scheme_names,
     get_relevant_scheme_names,
     load_selected_schemes,
     explain_schemes,
 )
-<<<<<<< HEAD
-=======
 #from core.government_api import router as government_router
->>>>>>> 940a7aa58013d8dca835e170c8307fb974785e76
 from core.government_api import (
     UserInput,
     RecommendationResponse,
@@ -28,6 +26,9 @@ router = APIRouter()
 class UserRequest(BaseModel):
     occupation: str
 
+class Recommendation(BaseModel):
+    skills: str
+    
 @router.post("/schemes")
 async def recommend_schemes(data: UserRequest):
     all_names = get_all_scheme_names()
@@ -60,3 +61,11 @@ async def get_image(image_name: str):
     # For example, you could check the image dimensions and return an error if it's not portrait
 
     return FileResponse(image_path)
+
+@router.post('/suggest-business')
+def suggest_business(data: Recommendation):
+    skills_text = data.skills
+    prompt = generate_prompt_from_skills(skills_text)
+    suggestions = get_business_suggestions(prompt)
+    return {"suggestions": suggestions}
+
