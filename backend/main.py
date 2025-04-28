@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from api.routes_scheme import router as scheme_router
 from fastapi.middleware.cors import CORSMiddleware
 from api.routes_jobs import router as jobs_router
+from api.routes_business import router as business_router
 
 app = FastAPI()
 
@@ -16,3 +17,4 @@ app.add_middleware(
 
 app.include_router(scheme_router)
 app.include_router(jobs_router,prefix="/api")
+app.include_router(business_router)

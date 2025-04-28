@@ -16,6 +16,7 @@ from core.scheme_recommender import (
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import os
+import json
 router = APIRouter()
 
 class UserRequest(BaseModel):
@@ -42,5 +43,8 @@ def suggest_business(data: Recommendation):
     skills_text = data.skills
     prompt = generate_prompt_from_skills(skills_text)
     suggestions = get_business_suggestions(prompt)
-    return {"suggestions": suggestions}
+    if isinstance(suggestions, dict) and "error" in suggestions:
+        return suggestions
+    # suggestions is a Pydantic model
+    return suggestions.dict()
 

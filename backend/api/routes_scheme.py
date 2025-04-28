@@ -44,15 +44,8 @@ async def recommend_schemes(data: UserRequest):
     selected_schemes = load_selected_schemes(relevant_names)
     explanation = explain_schemes(data.occupation, selected_schemes)
     print(explanation)
-    return {
-        "relevant_schemes": relevant_names,
-        "explanation": explanation  # Now a JSON list/object, not a string
-    }
-
-@router.post('/suggest-business')
-def suggest_business(data: Recommendation):
-    skills_text = data.skills
-    prompt = generate_prompt_from_skills(skills_text)
-    suggestions = get_business_suggestions(prompt)
-    return {"suggestions": suggestions}
-
+    # explanation is a list of SchemeExplanation Pydantic models
+    return SchemeResponse(
+        relevant_schemes=relevant_names,
+        explanation=explanation
+    )
