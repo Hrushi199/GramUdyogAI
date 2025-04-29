@@ -23,21 +23,43 @@ class BusinessSuggestionsResponse(BaseModel):
     suggestions: List[BusinessSuggestion]
 
 def generate_prompt_from_skills(skills_text):
-    return """You are a business consultant. A user has the following skills: {skills_text}. Based on these, suggest 3 practical and scalable business ideas that they can start with low to medium investment.
+    return f"""
+you are a business consultant helping users launch businesses based on their existing skills. 
+The user has the following skill: {skills_text}. suggest 3 specific, scalable, and low-to-medium investment 
+business ideas that are directly and practically built around this skill.
 
-Return your response STRICTLY as a JSON object with this exact structure (do not use any other key names):
-{
+guidelines:
+- do not suggest generic business models unless they are clearly and directly tailored to the given skill
+- suggestions must be skill-specific, relevant, and executable
+- each idea must be creative but realistic and use the user's core skill as the main driver
+
+Return your response STRICTLY as a JSON object in the following format:
+
+{{
   "suggestions": [
-    {
-      "idea_name": "Idea 1 Name",
-      "business_type": "Type",
-      "required_resources": ["resource1", "resource2"],
-      "initial_steps": ["step1", "step2"],
-      "why_it_suits": "explanation"
-    },
-    {...}
+    {{
+      "idea_name": "Name of the idea",
+      "business_type": "type of business (e.g. service-based, product-based, online store)",
+      "required_resources": [
+        "list tools, equipment, or services needed (be specific)"
+      ],
+      "initial_steps": [
+        "step 1: what the user needs to do first",
+        "step 2: next logical action",
+        "step 3: any low-cost setup or outreach required"
+      ],
+      "why_it_suits": "short explanation of why this idea is a strong fit for the skill"
+    }},
+    {{
+      "idea_name": "another relevant idea",
+      ...
+    }},
+    {{
+      "idea_name": "third unique idea",
+      ...
+    }}
   ]
-}
+}}
 """
 
 def get_business_suggestions(prompt):
