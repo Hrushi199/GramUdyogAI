@@ -173,5 +173,15 @@
       "tailoringQna": "Q&A on Tailoring Techniques",
       "digitalMarketingWorkshop": "Digital Marketing Live Workshop"
     }
+  },
+  "navbar": {
+    "features": "Features",
+    "about": "About",
+    "contact": "Contact",
+    "profile": "Profile",
+    "dashboard": "Dashboard",
+    "community": "Community",
+    "skills": "Skills",
+    "signUp": "Sign Up"
   }
 }

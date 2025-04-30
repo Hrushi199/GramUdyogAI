@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Zap } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Button from '../ui/Button';
 import ParticleBackground from '../ui/ParticleBackground';
 
@@ -8,6 +9,7 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ loaded }) => {
+  const { t, i18n } = useTranslation('hero'); // Use 'hero' namespace
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -45,17 +47,32 @@ const Hero: React.FC<HeroProps> = ({ loaded }) => {
       
       {/* Main content */}
       <div className="relative z-20 max-w-7xl mx-auto px-6 py-32">
+        {/* Language Switcher */}
+        <div className="absolute top-4 right-4">
+          <select
+            className="p-2 border border-white/20 bg-black/50 text-white rounded focus:outline-none [&>option]:bg-gray-900"
+            value={i18n.language}
+            onChange={(e) => i18n.changeLanguage(e.target.value)}
+          >
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+          </select>
+        </div>
+
         <div className="flex flex-col md:flex-row items-center gap-16 mt-16">
           <div className={`w-full md:w-1/2 transform transition-all duration-1000 ${loaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
             <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">Empower</span> your business journey
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
+                {t('header.title.highlight')}
+              </span>{' '}
+              {t('header.title.rest')}
             </h1>
             <p className="mt-6 text-xl text-gray-300 max-w-xl">
-              AI-powered platform for Business Suggestions, Government Schemes, Mentorship, and Skilling — tailored for grassroots entrepreneurs.
+              {t('description')}
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
-              <Button size="lg">Get Started</Button>
-              <Button variant="secondary" size="lg">Learn More</Button>
+              <Button size="lg">{t('buttons.getStarted')}</Button>
+              <Button variant="secondary" size="lg">{t('buttons.learnMore')}</Button>
             </div>
           </div>
           

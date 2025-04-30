@@ -12,8 +12,8 @@ import base64
 from PIL import Image
 from time import sleep
 from e2enetworks.cloud import tir
-import torch
-import torchvision.transforms as transforms
+# import torch
+# import torchvision.transforms as transforms
 # Load environment variables from the .env file
 os.environ.pop("GROQ_API_KEY", None)
 load_dotenv(find_dotenv())
@@ -44,15 +44,15 @@ class VisualSummary(BaseModel):
     title: str
     sections: List[VisualSummarySection]
 
-def display_images(tensor_image_data_list, image_path):
-    '''convert PyTorch Tensors to PIL Image'''
-    for tensor_data in tensor_image_data_list:
-        print(tensor_data)
-        tensor_image = torch.tensor(tensor_data.get("data"))  # initialise the tensor
-        pil_img = transforms.ToPILImage()(tensor_image)  # convert to PIL Image
-        # pil_img.show()
-        # to save the generated_images, uncomment the line below
-        pil_img.save(image_path)
+# def display_images(tensor_image_data_list, image_path):
+#     '''convert PyTorch Tensors to PIL Image'''
+#     for tensor_data in tensor_image_data_list:
+#         print(tensor_data)
+#         tensor_image = torch.tensor(tensor_data.get("data"))  # initialise the tensor
+#         pil_img = transforms.ToPILImage()(tensor_image)  # convert to PIL Image
+#         # pil_img.show()
+#         # to save the generated_images, uncomment the line below
+#         pil_img.save(image_path)
 
 def llama_chat_completion(messages, temperature=1, max_tokens=1024):
     # Ensure at least one message contains "json"
@@ -76,7 +76,7 @@ def generate_image_prompt(section_content):
     - Encourage a vivid, artistic, or symbolic depiction (e.g., capturing mood, themes, or key moments),
     - Avoid any text or numbers in the image,
     - Be specific enough to inspire a unique visual that enhances the narrative,
-    - Be concise (1-2 sentences).
+    - Be concise (tags seperated by commas, danbooru style)
     Return your response as a JSON object: {{"prompt": "<your prompt here>"}}.
     """
     try:

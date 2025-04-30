@@ -173,5 +173,15 @@
         "tailoringQna": "टेलरिंग तकनीकों पर प्रश्नोत्तर",
         "digitalMarketingWorkshop": "डिजिटल मार्केटिंग लाइव कार्यशाला"
       }
-    }
+    },
+    "navbar": {
+    "features": "विशेषताएँ",
+    "about": "हमारे बारे में",
+    "contact": "संपर्क",
+    "profile": "प्रोफाइल",
+    "dashboard": "डैशबोर्ड",
+    "community": "समुदाय",
+    "skills": "कौशल",
+    "signUp": "साइन अप"
+  }
   }

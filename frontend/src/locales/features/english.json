@@ -1,0 +1,24 @@
+{
+    "header": {
+      "title": "Comprehensive Business Support",
+      "description": "Everything you need to succeed as an entrepreneur, all in one place"
+    },
+    "features": [
+      {
+        "title": "AI Business Suggestions",
+        "description": "Get personalized business recommendations based on your skills, resources, and market conditions"
+      },
+      {
+        "title": "Government Schemes",
+        "description": "Access a curated database of relevant government programs, subsidies, and support initiatives"
+      },
+      {
+        "title": "Networking Opportunities",
+        "description": "Post and find job openings to connect with like-minded professionals."
+      },
+      {
+        "title": "Skills Development",
+        "description": "Access targeted training resources to build the exact skills you need for your business"
+      }
+    ]
+  }

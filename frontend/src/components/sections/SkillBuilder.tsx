@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 const dummyContent = [
   {
     id: 1,
-    titleKey: 'dummyData.content.tailoring', // Translation key
+    titleKey: 'dummyData.content.tailoring',
     type: 'Tutorial',
     format: 'Video',
     language: 'Hindi',
@@ -100,7 +100,7 @@ interface VisualSummary {
 
 // Main Component
 const SkillBuilder = () => {
-  const { t, i18n } = useTranslation('skillbuilder'); // Use 'skillbuilder' namespace
+  const { t, i18n } = useTranslation('skillbuilder'); // Use 'translation' namespace
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [role, setRole] = useState('Consumer');
@@ -247,7 +247,7 @@ const SkillBuilder = () => {
     const newId = content.length + 1;
     const uploadedContent = {
       id: newId,
-      titleKey: `dummyData.content.custom_${newId}`, // Placeholder key; handle dynamic translations separately
+      titleKey: `dummyData.content.custom_${newId}`,
       ...newContent,
       provider: role === 'Provider' ? 'Local Trainer' : null,
       uploader: role === 'Uploader' ? 'New CSR/Government' : null,
@@ -418,19 +418,6 @@ const SkillBuilder = () => {
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-10 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
           {t('header.title')}
         </h1>
-
-        {/* Language Switcher */}
-        <div className="mb-8">
-          <label className="block text-sm font-medium text-purple-200 mb-2">{t('roleSwitcher.languageLabel')}</label>
-          <select
-            className="p-2 border border-white/20 bg-black/50 text-white rounded focus:outline-none [&>option]:bg-gray-900"
-            value={i18n.language}
-            onChange={(e) => i18n.changeLanguage(e.target.value)}
-          >
-            <option value="en">{t('consumer.filters.languageEnglish')}</option>
-            <option value="hi">{t('consumer.filters.languageHindi')}</option>
-          </select>
-        </div>
 
         {/* Role Switcher */}
         <div className="mb-8">
