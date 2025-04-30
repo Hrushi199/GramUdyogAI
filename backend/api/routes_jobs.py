@@ -10,6 +10,26 @@ class JobPosting(BaseModel):
     company: str
     location: str
 
+def create_jobs_table():
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+    
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS job_postings (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            description TEXT NOT NULL,
+            company TEXT NOT NULL,
+            location TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    
+    conn.commit()
+    conn.close()
+
+create_jobs_table()
+
 @router.post("/jobs")
 async def create_job(job: JobPosting):
     conn = sqlite3.connect("database.db")

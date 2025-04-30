@@ -12,10 +12,23 @@ import base64
 from huggingface_hub import InferenceClient
 from PIL import Image
 from time import sleep
+from e2enetworks.cloud import tir
+import torch
+import torchvision.transforms as transforms
 # Load environment variables from the .env file
 os.environ.pop("GROQ_API_KEY", None)
 load_dotenv("../.env")
 api_key = os.getenv("GROQ_API_KEY")
+e2e_token = os.getenv("E2E_TIR_ACCESS_TOKEN")
+e2e_api_key = os.getenv("E2E_TIR_API_KEY")
+e2e_project_id = os.getenv("E2E_TIR_PROJECT_ID")
+e2e_team_id = os.getenv("E2E_TIR_TEAM_ID")
+
+# Initialize e2e networks
+if all([e2e_token, e2e_api_key, e2e_project_id, e2e_team_id]):
+    tir.init()
+    e2e_client = tir.ModelAPIClient()
+
 client = Groq(api_key=api_key)
 
 LLAMA_MODEL = "llama-3.3-70b-versatile"
@@ -31,6 +44,16 @@ class VisualSummary(BaseModel):
     type: str
     title: str
     sections: List[VisualSummarySection]
+
+def display_images(tensor_image_data_list, image_path):
+    '''convert PyTorch Tensors to PIL Image'''
+    for tensor_data in tensor_image_data_list:
+        print(tensor_data)
+        tensor_image = torch.tensor(tensor_data.get("data"))  # initialise the tensor
+        pil_img = transforms.ToPILImage()(tensor_image)  # convert to PIL Image
+        # pil_img.show()
+        # to save the generated_images, uncomment the line below
+        pil_img.save(image_path)
 
 def llama_chat_completion(messages, temperature=1, max_tokens=1024):
     # Ensure at least one message contains "json"
@@ -75,24 +98,84 @@ def generate_image(section_content):
     # Return None or a placeholder path
     return None
 
-def generate_image_hidream(prompt, image_path, hf_api_key):
-    """Generate image using HuggingFace HiDream model via fal-ai provider and save to image_path."""
+def generate_image_e2e(prompt, image_path):
+    """Generate image using e2e networks API directly"""
     try:
-        client = InferenceClient(
-            provider="fal-ai",
-            api_key=hf_api_key,
-        )
-        image = client.text_to_image(
-            prompt,
-            model="HiDream-ai/HiDream-I1-Fast",
-            # Portrait ratio for YouTube Shorts (9:16)
-            width=576,
-            height=1024,
-        )
-        image.save(image_path)
-        return True
+        auth_token = e2e_token
+        project_id = e2e_project_id
+        
+        url = f"https://infer.e2enetworks.net/project/p-{project_id}/v1/stable-diffusion-2-1/infer"
+        
+        payload = {
+            "inputs": [
+                {
+                    "name": "prompt",
+                    "shape": [1,1],
+                    "datatype": "BYTES",
+                    "data": [prompt]
+                },
+                {
+                    "name": "height",
+                    "shape": [1,1],
+                    "datatype": "UINT16",
+                    "data": [1024]  # Portrait for YouTube shorts
+                },
+                {
+                    "name": "width",
+                    "shape": [1,1],
+                    "datatype": "UINT16", 
+                    "data": [576]
+                },
+                {
+                    "name": "num_inference_steps",
+                    "shape": [1,1],
+                    "datatype": "UINT16",
+                    "data": [50]
+                },
+                {
+                    "name": "guidance_scale",
+                    "shape": [1,1],
+                    "datatype": "FP32",
+                    "data": [7.5]
+                },
+                {
+                    "name": "guidance_rescale",
+                    "shape": [1,1],
+                    "datatype": "FP32",
+                    "data": [0.7]
+                }
+            ]
+        }
+        
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {auth_token}'
+        }
+        
+        response = requests.post(url, headers=headers, json=payload)
+        
+        if response.status_code == 200:
+            # Parse the JSON response
+            response_data = response.json()
+            
+            # Extract base64 image data
+            if 'outputs' in response_data and len(response_data['outputs']) > 0:
+                image_data = response_data['outputs'][0]['data'][0]
+                # Decode base64 and save image
+                image_bytes = base64.b64decode(image_data)
+                with open(image_path, 'wb') as f:
+                    f.write(image_bytes)
+                return True
+            else:
+                print("No image data in response")
+                return False
+        else:
+            print(f"Error response: {response.status_code}")
+            print(response.text)
+            return False
+            
     except Exception as e:
-        print(f"Error generating image from HiDream: {e}")
+        print(f"Error generating image from E2E: {e}")
         return False
 
 def upload_to_cloudinary(image_path):
@@ -143,7 +226,7 @@ def generate_visual_summary_json(topic, rag) -> VisualSummary:
     topic_slug = slugify(topic)
     unique_tag = f"{topic_slug}_{timestamp}"
 
-    hf_api_key = os.getenv("HF_API_KEY")
+    # hf_api_key = os.getenv("HF_API_KEY")
 
     # For each section, generate image and set imageUrl
     for idx, section in enumerate(summary.sections):
@@ -151,16 +234,11 @@ def generate_visual_summary_json(topic, rag) -> VisualSummary:
         image_path = images_dir / image_filename
         # Generate image prompt for this section
         image_prompt = generate_image_prompt(section.text)
-        # Generate image using HiDream
-        if hf_api_key:
-            success = generate_image_hidream(image_prompt, image_path, hf_api_key)
-            sleep(5)
-            if not success:
-                # If image generation fails, create an empty placeholder
-                with open(image_path, "wb") as f:
-                    f.write(b"")
-        else:
-            # If no API key, create an empty placeholder
+        # Generate image using E2E
+        success = generate_image_e2e(image_prompt, image_path)
+        sleep(5)
+        if not success:
+            # If image generation fails, create an empty placeholder
             with open(image_path, "wb") as f:
                 f.write(b"")
         section.imageUrl = f"{image_filename}"

@@ -48,11 +48,3 @@ async def recommend_schemes(data: UserRequest):
         "relevant_schemes": relevant_names,
         "explanation": explanation  # Now a JSON list/object, not a string
     }
-
-@router.post('/suggest-business')
-def suggest_business(data: Recommendation):
-    skills_text = data.skills
-    prompt = generate_prompt_from_skills(skills_text)
-    suggestions = get_business_suggestions(prompt)
-    return {"suggestions": suggestions}
-

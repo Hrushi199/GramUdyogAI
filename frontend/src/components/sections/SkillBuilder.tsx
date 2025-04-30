@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+
 
 // Dummy data for tutorials, courses, and live sessions
 const dummyContent = [
@@ -80,8 +83,26 @@ const dummyLiveSessions = [
   },
 ];
 
+interface VisualSummary {
+  id: number;
+  topic: string;
+  summary_data: {
+    type: string;
+    title: string;
+    sections: {
+      title: string;
+      text: string;
+      imageUrl: string;
+      audioUrl: string;
+    }[];
+  };
+  created_at: string;
+}
+
 // Main Component
 const SkillBuilder = () => {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const [role, setRole] = useState('Consumer'); // Role state: Consumer, Provider, Uploader
   const [content, setContent] = useState(dummyContent);
   const [liveSessions, setLiveSessions] = useState(dummyLiveSessions);
@@ -104,6 +125,12 @@ const SkillBuilder = () => {
     physicalDetails: { location: '', date: '' },
   });
 
+  const [showSummaryCreator, setShowSummaryCreator] = useState(false);
+  const [summaries, setSummaries] = useState<VisualSummary[]>([]);
+  const [currentSummary, setCurrentSummary] = useState<VisualSummary | null>(null);
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+  const [isCreating, setIsCreating] = useState(false);
+
   // Simulate offline caching with Service Worker
   useEffect(() => {
     if ('serviceWorker' in navigator) {
@@ -112,6 +139,38 @@ const SkillBuilder = () => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    fetchSummaries();
+  }, []);
+
+  const fetchSummaries = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/visual-summaries`);
+      const data = await response.json();
+      setSummaries(data);
+    } catch (error) {
+      console.error('Error fetching summaries:', error);
+    }
+  };
+
+  const createVisualSummary = async (topic: string, context: string) => {
+    setIsCreating(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/visual-summary`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topic, context })
+      });
+      const data = await response.json();
+      setSummaries([data, ...summaries]);
+      setCurrentSummary(data);
+      setShowSummaryCreator(false);
+    } catch (error) {
+      console.error('Error creating summary:', error);
+    }
+    setIsCreating(false);
+  };
 
   // Filter content based on role, language, and delivery mode
   const filteredContent = content.filter((item) => {
@@ -224,6 +283,84 @@ const SkillBuilder = () => {
     a.download = 'analytics.csv';
     a.click();
     window.URL.revokeObjectURL(url);
+  };
+
+  const VisualSummaryViewer = ({ summary }: { summary: VisualSummary }) => {
+    const section = summary.summary_data.sections[currentSectionIndex];
+    
+    return (
+      <motion.div 
+        className="fixed inset-0 bg-black z-50 overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <div className="h-full w-full max-w-md mx-auto relative">
+          {/* Close button */}
+          <button
+            className="absolute top-4 right-4 z-10 text-white p-2"
+            onClick={() => setCurrentSummary(null)}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+  
+          {/* Content */}
+          <motion.div 
+            className="h-full w-full flex flex-col"
+            key={currentSectionIndex}
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+          >
+            {/* Image */}
+            <div className="relative h-[70vh] w-full">
+              <img
+                src={`/api/images/${section.imageUrl}`}
+                alt={section.title}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+  
+            {/* Text overlay */}
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+              <h3 className="text-xl font-bold text-white mb-2">{section.title}</h3>
+              <p className="text-white text-sm">{section.text}</p>
+            </div>
+  
+            {/* Navigation dots */}
+            <div className="absolute bottom-20 left-0 right-0 flex justify-center gap-2">
+              {summary.summary_data.sections.map((_, idx) => (
+                <button
+                  key={idx}
+                  className={`w-2 h-2 rounded-full ${
+                    idx === currentSectionIndex ? 'bg-white' : 'bg-white/50'
+                  }`}
+                  onClick={() => setCurrentSectionIndex(idx)}
+                />
+              ))}
+            </div>
+          </motion.div>
+  
+          {/* Swipe navigation */}
+          <div className="absolute inset-0 flex">
+            <button
+              className="w-1/2 h-full"
+              onClick={() => setCurrentSectionIndex(Math.max(0, currentSectionIndex - 1))}
+            />
+            <button
+              className="w-1/2 h-full"
+              onClick={() => 
+                setCurrentSectionIndex(
+                  Math.min(summary.summary_data.sections.length - 1, currentSectionIndex + 1)
+                )
+              }
+            />
+          </div>
+        </div>
+      </motion.div>
+    );
   };
 
   return (
@@ -469,6 +606,95 @@ const SkillBuilder = () => {
                 </button>
               </div>
             )}
+
+            {/* Visual Summaries */}
+            <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-semibold text-purple-200">Visual Summaries</h2>
+                <button
+                  onClick={() => setShowSummaryCreator(true)}
+                  className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg"
+                >
+                  Create New Summary
+                </button>
+              </div>
+            
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {summaries.map(summary => (
+                  <div
+                    key={summary.id}
+                    className="border border-white/10 bg-black/30 p-4 rounded-xl cursor-pointer hover:bg-black/40 transition"
+                    onClick={() => {
+                      setCurrentSummary(summary);
+                      setCurrentSectionIndex(0);
+                    }}
+                  >
+                    <h3 className="text-lg font-semibold text-purple-200">{summary.summary_data.title}</h3>
+                    <p className="text-sm text-gray-200 mt-2">
+                      {summary.summary_data.sections.length} sections
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      Created: {new Date(summary.created_at).toLocaleDateString()}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Summary Creator Modal */}
+            {showSummaryCreator && (
+              <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+                <div className="bg-gray-900 p-6 rounded-xl w-full max-w-md">
+                  <h3 className="text-xl font-semibold text-purple-200 mb-4">Create Visual Summary</h3>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      const form = e.target as HTMLFormElement;
+                      const topic = (form.elements.namedItem('topic') as HTMLInputElement).value;
+                      const context = (form.elements.namedItem('context') as HTMLTextAreaElement).value;
+                      createVisualSummary(topic, context);
+                    }}
+                  >
+                    <input
+                      type="text"
+                      name="topic"
+                      placeholder="Enter topic..."
+                      className="w-full p-2 bg-black/50 text-white border border-white/20 rounded mb-4"
+                      required
+                    />
+                    <textarea
+                      name="context"
+                      placeholder="Enter additional context..."
+                      className="w-full p-2 bg-black/50 text-white border border-white/20 rounded mb-4 h-32"
+                      required
+                    />
+                    <div className="flex justify-end gap-4">
+                      <button
+                        type="button"
+                        onClick={() => setShowSummaryCreator(false)}
+                        className="px-4 py-2 text-gray-400 hover:text-white"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={isCreating}
+                        className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg disabled:opacity-50"
+                      >
+                        {isCreating ? 'Creating...' : 'Create'}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
+            
+            {/* Visual Summary Viewer */}
+            <AnimatePresence>
+              {currentSummary && (
+                <VisualSummaryViewer summary={currentSummary} />
+              )}
+            </AnimatePresence>
           </>
         )}
 
