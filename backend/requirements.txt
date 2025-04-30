@@ -1,1 +1,8 @@
-// placeholder
+
+fastapi
+pydantic
+groq
+python-dotenv
+requests
+pillow
+e2enetworks
