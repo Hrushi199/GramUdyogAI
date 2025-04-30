@@ -20,9 +20,9 @@ app.add_middleware(
 
 # Include all routers with proper prefixes
 app.include_router(skills_router, prefix="/api", tags=["skills"])
-app.include_router(business_router, prefix="/api", tags=["business"])
+app.include_router(business_router,tags=["business"])
 # app.include_router(government_router, prefix="/api", tags=["government"])  # Commented out as the module does not exist
-app.include_router(scheme_router, prefix="/api", tags=["schemes"])
+app.include_router(scheme_router, tags=["schemes"])
 app.include_router(jobs_router, prefix="/api", tags=["jobs"])
 
 if __name__ == "__main__":

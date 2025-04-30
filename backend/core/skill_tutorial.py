@@ -9,7 +9,6 @@ import time
 import re
 import requests
 import base64
-from huggingface_hub import InferenceClient
 from PIL import Image
 from time import sleep
 from e2enetworks.cloud import tir

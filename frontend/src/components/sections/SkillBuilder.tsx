@@ -319,7 +319,7 @@ const SkillBuilder = () => {
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="relative w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#1a1333] via-[#181a2a] to-[#1a2333] border border-white/10"
+            className="relative w-full max-w-lg max-h-[90vh] rounded-3xl overflow-auto shadow-2xl bg-gradient-to-br from-[#1a1333] via-[#181a2a] to-[#1a2333] border border-white/10"
             initial={{ scale: 0.98, y: 40 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.98, y: 40 }}
@@ -338,7 +338,7 @@ const SkillBuilder = () => {
             {/* Image */}
             <div className="relative h-[60vh] bg-black">
               <img
-                src={`/api/images/${section.imageUrl}`}
+                src={`${API_BASE_URL}/api/images/${section.imageUrl}`}
                 alt={section.title}
                 className="w-full h-full object-cover object-center transition-all duration-300"
                 style={{ minHeight: 320, background: "#222" }}
@@ -422,7 +422,7 @@ const SkillBuilder = () => {
       <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-blue-600 rounded-full filter blur-[128px] opacity-20 z-0 pointer-events-none"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 z-10 pointer-events-none"></div>
 
-      <div className="relative z-20 max-w-7xl mx-auto px-6 py-16">
+      <div className={`relative z-20 max-w-7xl mx-auto px-6 py-16 ${currentSummary ? "hidden" : ""}`}>
         {/* Header */}
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-10 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
           Skill Builder & Adaptive Learning
@@ -508,7 +508,7 @@ const SkillBuilder = () => {
                 <div key={item.id} className="bg-white/10 backdrop-blur-lg p-5 rounded-2xl shadow-lg border border-white/10 hover:shadow-2xl transition">
                   <h3 className="text-xl font-semibold text-purple-200">{item.title}</h3>
                   <p className="text-sm text-gray-200">Type: {item.type}</p>
-                  <p className="text-sm text-gray-200">Format: {item.format}</p>
+                  <p className="text-sm text.gray-200">Format: {item.format}</p>
                   <p className="text-sm text-gray-200">Language: {item.language}</p>
                   <p className="text-sm text-gray-200">
                     Source: {item.uploader ? <span className="text-blue-300">{item.uploader} (CSR)</span> : <span className="text-purple-300">{item.provider}</span>}
@@ -683,7 +683,7 @@ const SkillBuilder = () => {
                     >
                       <div className="relative h-48 w-full">
                         <img
-                          src={`/api/images/${firstSection.imageUrl}`}
+                          src={`${API_BASE_URL}/api/images/${firstSection.imageUrl}`}
                           alt={firstSection.title}
                           className="w-full h-full object-cover object-center transition-all duration-300 group-hover:scale-105"
                           loading="lazy"
@@ -757,13 +757,6 @@ const SkillBuilder = () => {
               </div>
             )}
             
-            {/* Visual Summary Modal */}
-            {currentSummary && (
-              <VisualSummaryModal
-                summary={currentSummary}
-                onClose={() => setCurrentSummary(null)}
-              />
-            )}
           </>
         )}
 
@@ -791,7 +784,7 @@ const SkillBuilder = () => {
                   {/* ...existing code for other fields... */}
                   {/* Type */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">Type</label>
+                    <label className="block text-sm font-medium text.gray-200">Type</label>
                     <select
                       className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.type}
@@ -843,7 +836,7 @@ const SkillBuilder = () => {
                     <label className="block text-sm font-medium text-gray-200">Content URL</label>
                     <input
                       type="url"
-                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg-white/10 text.white border border-white/20 rounded focus:outline-none"
                       value={newContent.url}
                       onChange={(e) => setNewContent({ ...newContent, url: e.target.value })}
                       required
@@ -979,7 +972,7 @@ const SkillBuilder = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-200">Format</label>
                     <select
-                      className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
+                      className="mt-1 block w-full p-2 bg.black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.format}
                       onChange={(e) => setNewContent({ ...newContent, format: e.target.value })}
                     >
@@ -1006,7 +999,7 @@ const SkillBuilder = () => {
                     <label className="block text-sm font-medium text-gray-200">Duration</label>
                     <input
                       type="text"
-                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg.white/10 text-white border border-white/20 rounded focus:outline-none"
                       value={newContent.duration}
                       onChange={(e) => setNewContent({ ...newContent, duration: e.target.value })}
                       required
@@ -1017,7 +1010,7 @@ const SkillBuilder = () => {
                     <label className="block text-sm font-medium text-gray-200">Content URL</label>
                     <input
                       type="url"
-                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg.white/10 text-white border border-white/20 rounded focus:outline-none"
                       value={newContent.url}
                       onChange={(e) => setNewContent({ ...newContent, url: e.target.value })}
                       required
@@ -1088,7 +1081,7 @@ const SkillBuilder = () => {
                   <div key={item.id} className="border border-white/10 bg-black/20 p-4 rounded">
                     <h3 className="text-lg font-semibold text-purple-200">{item.title}</h3>
                     <p className="text-sm text-blue-200">Enrollments: {item.enrollments}</p>
-                    <p className="text-sm text-blue-200">Completions: {item.completions}</p>
+                    <p className="text-sm text.blue-200">Completions: {item.completions}</p>
                     <p className="text-sm text-gray-200">
                       Completion Rate: {((item.completions / item.enrollments) * 100 || 0).toFixed(2)}%
                     </p>
@@ -1124,6 +1117,13 @@ const SkillBuilder = () => {
           </>
         )}
       </div>
+      {/* Visual Summary Modal */}
+      {currentSummary && (
+        <VisualSummaryModal
+          summary={currentSummary}
+          onClose={() => setCurrentSummary(null)}
+        />
+      )}
     </div>
   );
 };
