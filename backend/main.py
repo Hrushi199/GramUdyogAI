@@ -5,6 +5,7 @@ from api.routes_business import router as business_router
 from api.routes_government import router as government_router
 from api.routes_scheme import router as scheme_router
 from api.routes_jobs import router as jobs_router
+from api.routes_business import router as business_router
 
 app = FastAPI(title="GramUdyogAI API")
 
