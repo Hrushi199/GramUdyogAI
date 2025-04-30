@@ -146,7 +146,7 @@ const SkillBuilder = () => {
 
   const fetchSummaries = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/visual-summaries`);
+      const response = await fetch(`${API_BASE_URL}/api/visual-summaries`);
       const data = await response.json();
       setSummaries(data);
     } catch (error) {
@@ -157,7 +157,7 @@ const SkillBuilder = () => {
   const createVisualSummary = async (topic: string, context: string) => {
     setIsCreating(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/visual-summary`, {
+      const response = await fetch(`${API_BASE_URL}/api/visual-summary`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic, context })
@@ -285,83 +285,132 @@ const SkillBuilder = () => {
     window.URL.revokeObjectURL(url);
   };
 
-  const VisualSummaryViewer = ({ summary }: { summary: VisualSummary }) => {
-    const section = summary.summary_data.sections[currentSectionIndex];
-    
-    return (
-      <motion.div 
-        className="fixed inset-0 bg-black z-50 overflow-hidden"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
-        <div className="h-full w-full max-w-md mx-auto relative">
-          {/* Close button */}
-          <button
-            className="absolute top-4 right-4 z-10 text-white p-2"
-            onClick={() => setCurrentSummary(null)}
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+  const VisualSummaryModal = ({
+    summary,
+    onClose,
+  }: {
+    summary: VisualSummary;
+    onClose: () => void;
+  }) => {
+    const [sectionIdx, setSectionIdx] = useState(0);
+    const sections = summary.summary_data?.sections || [];
+    const section = sections[sectionIdx] || { title: "", text: "", imageUrl: "", audioUrl: "" };
   
-          {/* Content */}
-          <motion.div 
-            className="h-full w-full flex flex-col"
-            key={currentSectionIndex}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
+    // Keyboard navigation
+    useEffect(() => {
+      const handleKey = (e: KeyboardEvent) => {
+        if (e.key === "ArrowLeft") setSectionIdx((idx) => Math.max(0, idx - 1));
+        if (e.key === "ArrowRight")
+          setSectionIdx((idx) =>
+            Math.min(sections.length - 1, idx + 1)
+          );
+        if (e.key === "Escape") onClose();
+      };
+      window.addEventListener("keydown", handleKey);
+      return () => window.removeEventListener("keydown", handleKey);
+    }, [sections, onClose]);
+  
+    return (
+      <AnimatePresence>
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div
+            className="relative w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#1a1333] via-[#181a2a] to-[#1a2333] border border-white/10"
+            initial={{ scale: 0.98, y: 40 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.98, y: 40 }}
           >
+            {/* Close button */}
+            <button
+              className="absolute top-4 right-4 z-10 text-white/80 hover:text-white p-2 bg-black/30 rounded-full"
+              onClick={onClose}
+              aria-label="Close"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+  
             {/* Image */}
-            <div className="relative h-[70vh] w-full">
+            <div className="relative h-[60vh] bg-black">
               <img
                 src={`/api/images/${section.imageUrl}`}
                 alt={section.title}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="w-full h-full object-cover object-center transition-all duration-300"
+                style={{ minHeight: 320, background: "#222" }}
+                loading="lazy"
               />
+              {/* Overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+              {/* Section navigation arrows */}
+              <button
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white p-2 rounded-full"
+                onClick={() => setSectionIdx((idx) => Math.max(0, idx - 1))}
+                disabled={sectionIdx === 0}
+                aria-label="Previous"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white p-2 rounded-full"
+                onClick={() =>
+                  setSectionIdx((idx) =>
+                    Math.min(sections.length - 1, idx + 1)
+                  )
+                }
+                disabled={sectionIdx === sections.length - 1}
+                aria-label="Next"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
   
-            {/* Text overlay */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-              <h3 className="text-xl font-bold text-white mb-2">{section.title}</h3>
-              <p className="text-white text-sm">{section.text}</p>
-            </div>
-  
-            {/* Navigation dots */}
-            <div className="absolute bottom-20 left-0 right-0 flex justify-center gap-2">
-              {summary.summary_data.sections.map((_, idx) => (
-                <button
-                  key={idx}
-                  className={`w-2 h-2 rounded-full ${
-                    idx === currentSectionIndex ? 'bg-white' : 'bg-white/50'
-                  }`}
-                  onClick={() => setCurrentSectionIndex(idx)}
-                />
-              ))}
+            {/* Section text */}
+            <div className="p-6 pb-4">
+              <h2 className="text-2xl font-bold text-purple-200 mb-2">{summary.summary_data.title}</h2>
+              <div className="mb-4">
+                <span className="inline-block px-3 py-1 text-xs rounded-full bg-purple-900/40 text-purple-200 mr-2">
+                  Section {sectionIdx + 1} of {sections.length}
+                </span>
+                <span className="inline-block px-3 py-1 text-xs rounded-full bg-blue-900/40 text-blue-200">
+                  {section.title}
+                </span>
+              </div>
+              <p className="text-white/90 text-lg leading-relaxed mb-2">{section.text}</p>
+              {/* Optionally, add audio if available */}
+              {section.audioUrl && section.audioUrl.length > 0 && (
+                <audio controls src={section.audioUrl} className="mt-2 w-full" />
+              )}
+              {/* Navigation dots */}
+              <div className="flex justify-center gap-2 mt-6">
+                {sections.map((_, idx) => (
+                  <button
+                    key={idx}
+                    className={`w-3 h-3 rounded-full border-2 ${
+                      idx === sectionIdx
+                        ? "bg-purple-400 border-purple-400"
+                        : "bg-white/30 border-white/30"
+                    }`}
+                    onClick={() => setSectionIdx(idx)}
+                    aria-label={`Go to section ${idx + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </motion.div>
-  
-          {/* Swipe navigation */}
-          <div className="absolute inset-0 flex">
-            <button
-              className="w-1/2 h-full"
-              onClick={() => setCurrentSectionIndex(Math.max(0, currentSectionIndex - 1))}
-            />
-            <button
-              className="w-1/2 h-full"
-              onClick={() => 
-                setCurrentSectionIndex(
-                  Math.min(summary.summary_data.sections.length - 1, currentSectionIndex + 1)
-                )
-              }
-            />
-          </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </AnimatePresence>
     );
   };
+  
 
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
@@ -618,26 +667,45 @@ const SkillBuilder = () => {
                   Create New Summary
                 </button>
               </div>
-            
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {summaries.map(summary => (
-                  <div
-                    key={summary.id}
-                    className="border border-white/10 bg-black/30 p-4 rounded-xl cursor-pointer hover:bg-black/40 transition"
-                    onClick={() => {
-                      setCurrentSummary(summary);
-                      setCurrentSectionIndex(0);
-                    }}
-                  >
-                    <h3 className="text-lg font-semibold text-purple-200">{summary.summary_data.title}</h3>
-                    <p className="text-sm text-gray-200 mt-2">
-                      {summary.summary_data.sections.length} sections
-                    </p>
-                    <p className="text-xs text-gray-400 mt-1">
-                      Created: {new Date(summary.created_at).toLocaleDateString()}
-                    </p>
-                  </div>
-                ))}
+              {/* Thumbnails grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {summaries.map((summary) => {
+                  const firstSection = summary.summary_data?.sections?.[0];
+                  if (!firstSection) return null;
+                  return (
+                    <div
+                      key={summary.id}
+                      className="relative group cursor-pointer rounded-xl overflow-hidden border border-white/10 bg-black/40 hover:shadow-xl transition"
+                      onClick={() => {
+                        setCurrentSummary(summary);
+                        setCurrentSectionIndex(0);
+                      }}
+                    >
+                      <div className="relative h-48 w-full">
+                        <img
+                          src={`/api/images/${firstSection.imageUrl}`}
+                          alt={firstSection.title}
+                          className="w-full h-full object-cover object-center transition-all duration-300 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                      </div>
+                      <div className="absolute top-2 left-2 bg-purple-800/70 text-xs px-3 py-1 rounded-full text-white">
+                        {summary.summary_data.title}
+                      </div>
+                      <div className="absolute bottom-2 left-2 right-2 flex flex-col gap-1">
+                        <span className="text-sm font-semibold text-purple-200 drop-shadow">{firstSection.title}</span>
+                        <span className="text-xs text-white/80">{firstSection.text.slice(0, 60)}...</span>
+                      </div>
+                      <div className="absolute top-2 right-2 bg-black/60 text-xs px-2 py-1 rounded text-white">
+                        {summary.summary_data.sections.length} sections
+                      </div>
+                      <div className="absolute bottom-2 right-2 text-xs text-gray-400">
+                        {new Date(summary.created_at).toLocaleDateString()}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
             
@@ -689,12 +757,13 @@ const SkillBuilder = () => {
               </div>
             )}
             
-            {/* Visual Summary Viewer */}
-            <AnimatePresence>
-              {currentSummary && (
-                <VisualSummaryViewer summary={currentSummary} />
-              )}
-            </AnimatePresence>
+            {/* Visual Summary Modal */}
+            {currentSummary && (
+              <VisualSummaryModal
+                summary={currentSummary}
+                onClose={() => setCurrentSummary(null)}
+              />
+            )}
           </>
         )}
 
@@ -763,7 +832,7 @@ const SkillBuilder = () => {
                     <label className="block text-sm font-medium text-gray-200">Duration</label>
                     <input
                       type="text"
-                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg.white/10 text-white border border-white/20 rounded focus:outline-none"
                       value={newContent.duration}
                       onChange={(e) => setNewContent({ ...newContent, duration: e.target.value })}
                       required

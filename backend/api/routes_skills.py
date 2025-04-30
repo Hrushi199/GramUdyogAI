@@ -71,9 +71,23 @@ async def create_visual_summary(request: VisualSummaryRequest):
         
         summary_id = cursor.lastrowid
         conn.commit()
+        # Fetch the inserted row to return in the same format as GET endpoints
+        cursor.execute(
+            "SELECT * FROM visual_summaries WHERE id = ?",
+            (summary_id,)
+        )
+        result = cursor.fetchone()
         conn.close()
         
-        return {"id": summary_id, "summary": summary}
+        if not result:
+            raise HTTPException(status_code=500, detail="Failed to fetch created summary")
+        
+        return {
+            "id": result[0],
+            "topic": result[1],
+            "summary_data": json.loads(result[2]),
+            "created_at": result[3]
+        }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

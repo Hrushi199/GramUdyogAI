@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import json
 from groq import Groq
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 import pathlib
 import time
 import re
@@ -17,7 +17,7 @@ import torch
 import torchvision.transforms as transforms
 # Load environment variables from the .env file
 os.environ.pop("GROQ_API_KEY", None)
-load_dotenv("../.env")
+load_dotenv(find_dotenv())
 api_key = os.getenv("GROQ_API_KEY")
 e2e_token = os.getenv("E2E_TIR_ACCESS_TOKEN")
 e2e_api_key = os.getenv("E2E_TIR_API_KEY")

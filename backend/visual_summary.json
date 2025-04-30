@@ -1,0 +1,30 @@
+{
+    "type": "VisualSummary",
+    "title": "Farming in Madhya Pradesh",
+    "sections": [
+        {
+            "title": "Introduction to Farming",
+            "text": "Madhya Pradesh, with its fertile soil and favorable climate, has been a hub for farming since ancient times. The state is known for its production of crops like wheat, soybean, and cotton. Farming is the backbone of the state's economy, providing livelihood to a significant portion of its population.",
+            "imageUrl": "farming_in_madhya_pradesh_1746031543_section_1.png",
+            "audioUrl": ""
+        },
+        {
+            "title": "Green Revolution",
+            "text": "The Green Revolution in the 1960s transformed the farming landscape of Madhya Pradesh. The introduction of high-yielding varieties of wheat and rice, along with improved irrigation and farming techniques, led to a significant increase in crop production. This period saw a major shift from traditional to modern farming practices.",
+            "imageUrl": "farming_in_madhya_pradesh_1746031543_section_2.png",
+            "audioUrl": ""
+        },
+        {
+            "title": "Modern Farming Techniques",
+            "text": "In recent years, Madhya Pradesh has adopted modern farming techniques, including precision farming and organic farming. The state government has initiated various schemes to promote farm mechanization, soil health cards, and crop insurance. These initiatives have helped farmers to improve their productivity and income.",
+            "imageUrl": "farming_in_madhya_pradesh_1746031543_section_3.png",
+            "audioUrl": ""
+        },
+        {
+            "title": "Challenges and Opportunities",
+            "text": "Despite the progress made in farming, Madhya Pradesh still faces challenges like water scarcity, soil degradation, and climate change. However, the state also has opportunities to adopt innovative technologies like drone farming, vertical farming, and digital agriculture. By addressing the challenges and leveraging the opportunities, Madhya Pradesh can become a leader in sustainable and productive farming.",
+            "imageUrl": "farming_in_madhya_pradesh_1746031543_section_4.png",
+            "audioUrl": ""
+        }
+    ]
+}
