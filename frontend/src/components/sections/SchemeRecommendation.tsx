@@ -18,11 +18,13 @@ const SchemeRecommendation = () => {
   const [openIndexes, setOpenIndexes] = useState<number[]>([]);
   const [selectedJson, setSelectedJson] = useState<Record<string, any> | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false); // Added loading state
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when submission starts
 
     try {
       const response = await fetch(`${API_BASE_URL}/schemes`, {
@@ -46,6 +48,8 @@ const SchemeRecommendation = () => {
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setLoading(false); // Set loading to false when done
     }
   };
 
@@ -118,6 +122,9 @@ const SchemeRecommendation = () => {
               Get Recommendations
             </button>
           </form>
+
+          {/* Loading indicator - added from first code with style adjustments */}
+          {loading && <p className="text-purple-400 mt-4">Loading recommendations...</p>}
 
           {schemes.length > 0 || (explanation && explanation.length > 0) ? (
             <div className="mt-8 w-full max-w-2xl">
