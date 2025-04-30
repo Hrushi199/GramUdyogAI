@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-
+import { useTranslation } from 'react-i18next';
 
 // Dummy data for tutorials, courses, and live sessions
 const dummyContent = [
   {
     id: 1,
-    title: 'Introduction to Tailoring',
+    titleKey: 'dummyData.content.tailoring', // Translation key
     type: 'Tutorial',
     format: 'Video',
     language: 'Hindi',
@@ -23,7 +22,7 @@ const dummyContent = [
   },
   {
     id: 2,
-    title: 'Digital Marketing Basics',
+    titleKey: 'dummyData.content.digitalMarketing',
     type: 'Course',
     format: 'Text + Audio',
     language: 'English',
@@ -39,7 +38,7 @@ const dummyContent = [
   },
   {
     id: 3,
-    title: 'Organic Farming Workshop',
+    titleKey: 'dummyData.content.farming',
     type: 'Course',
     format: 'Video + Physical',
     language: 'Tamil',
@@ -59,7 +58,7 @@ const dummyContent = [
 const dummyLiveSessions = [
   {
     id: 1,
-    title: 'Q&A on Tailoring Techniques',
+    titleKey: 'dummyData.liveSessions.tailoringQna',
     provider: 'Local Trainer',
     uploader: null,
     date: '2025-04-30',
@@ -71,7 +70,7 @@ const dummyLiveSessions = [
   },
   {
     id: 2,
-    title: 'Digital Marketing Live Workshop',
+    titleKey: 'dummyData.liveSessions.digitalMarketingWorkshop',
     provider: null,
     uploader: 'Infosys (CSR)',
     date: '2025-05-02',
@@ -101,9 +100,10 @@ interface VisualSummary {
 
 // Main Component
 const SkillBuilder = () => {
+  const { t, i18n } = useTranslation('skillbuilder'); // Use 'skillbuilder' namespace
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const [role, setRole] = useState('Consumer'); // Role state: Consumer, Provider, Uploader
+  const [role, setRole] = useState('Consumer');
   const [content, setContent] = useState(dummyContent);
   const [liveSessions, setLiveSessions] = useState(dummyLiveSessions);
   const [selectedContent, setSelectedContent] = useState(null);
@@ -160,7 +160,7 @@ const SkillBuilder = () => {
       const response = await fetch(`${API_BASE_URL}/api/visual-summary`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic, context })
+        body: JSON.stringify({ topic, context }),
       });
       const data = await response.json();
       setSummaries([data, ...summaries]);
@@ -190,8 +190,8 @@ const SkillBuilder = () => {
   // Handle content selection (Consumer)
   const handleContentSelect = (item) => {
     setSelectedContent(item);
-    setProgress(progress + 10); // Simulate progress
-    setTokens(tokens + item.tokens); // Award tokens
+    setProgress(progress + 10);
+    setTokens(tokens + item.tokens);
   };
 
   // Handle live session selection
@@ -228,14 +228,14 @@ const SkillBuilder = () => {
         session.id === selectedSession.id
           ? {
               ...session,
-              qna: [...session.qna, { user: 'You', question: qnaQuestion, timestamp: new Date().toLocaleTimeString() }],
+              qna: [...session.qna, { user: "You", question: qnaQuestion, timestamp: new Date().toLocaleTimeString() }],
             }
           : session
       );
       setLiveSessions(updatedSessions);
       setSelectedSession({
         ...selectedSession,
-        qna: [...selectedSession.qna, { user: 'You', question: qnaQuestion, timestamp: new Date().toLocaleTimeString() }],
+        qna: [...selectedSession.qna, { user: "You", question: qnaQuestion, timestamp: new Date().toLocaleTimeString() }],
       });
       setQnaQuestion('');
     }
@@ -247,6 +247,7 @@ const SkillBuilder = () => {
     const newId = content.length + 1;
     const uploadedContent = {
       id: newId,
+      titleKey: `dummyData.content.custom_${newId}`, // Placeholder key; handle dynamic translations separately
       ...newContent,
       provider: role === 'Provider' ? 'Local Trainer' : null,
       uploader: role === 'Uploader' ? 'New CSR/Government' : null,
@@ -273,7 +274,7 @@ const SkillBuilder = () => {
     const csvContent = filteredContent
       .map(
         (item) =>
-          `${item.title},${item.enrollments},${item.completions},${(item.completions / item.enrollments) * 100 || 0}%`
+          `${t(item.titleKey)},${item.enrollments},${item.completions},${(item.completions / item.enrollments) * 100 || 0}%`
       )
       .join('\n');
     const blob = new Blob([`Title,Enrollments,Completions,Completion Rate\n${csvContent}`], { type: 'text/csv' });
@@ -294,22 +295,19 @@ const SkillBuilder = () => {
   }) => {
     const [sectionIdx, setSectionIdx] = useState(0);
     const sections = summary.summary_data?.sections || [];
-    const section = sections[sectionIdx] || { title: "", text: "", imageUrl: "", audioUrl: "" };
-  
+    const section = sections[sectionIdx] || { title: '', text: '', imageUrl: '', audioUrl: '' };
+
     // Keyboard navigation
     useEffect(() => {
       const handleKey = (e: KeyboardEvent) => {
-        if (e.key === "ArrowLeft") setSectionIdx((idx) => Math.max(0, idx - 1));
-        if (e.key === "ArrowRight")
-          setSectionIdx((idx) =>
-            Math.min(sections.length - 1, idx + 1)
-          );
-        if (e.key === "Escape") onClose();
+        if (e.key === 'ArrowLeft') setSectionIdx((idx) => Math.max(0, idx - 1));
+        if (e.key === 'ArrowRight') setSectionIdx((idx) => Math.min(sections.length - 1, idx + 1));
+        if (e.key === 'Escape') onClose();
       };
-      window.addEventListener("keydown", handleKey);
-      return () => window.removeEventListener("keydown", handleKey);
+      window.addEventListener('keydown', handleKey);
+      return () => window.removeEventListener('keydown', handleKey);
     }, [sections, onClose]);
-  
+
     return (
       <AnimatePresence>
         <motion.div
@@ -328,30 +326,29 @@ const SkillBuilder = () => {
             <button
               className="absolute top-4 right-4 z-10 text-white/80 hover:text-white p-2 bg-black/30 rounded-full"
               onClick={onClose}
-              aria-label="Close"
+              aria-label={t('consumer.visualSummaryModal.close')}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-  
+
             {/* Image */}
             <div className="relative h-[60vh] bg-black">
               <img
                 src={`${API_BASE_URL}/api/images/${section.imageUrl}`}
                 alt={section.title}
                 className="w-full h-full object-cover object-center transition-all duration-300"
-                style={{ minHeight: 320, background: "#222" }}
+                style={{ minHeight: 320, background: '#222' }}
                 loading="lazy"
               />
-              {/* Overlay gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
               {/* Section navigation arrows */}
               <button
                 className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white p-2 rounded-full"
                 onClick={() => setSectionIdx((idx) => Math.max(0, idx - 1))}
                 disabled={sectionIdx === 0}
-                aria-label="Previous"
+                aria-label={t('consumer.visualSummaryModal.previous')}
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -359,48 +356,43 @@ const SkillBuilder = () => {
               </button>
               <button
                 className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white p-2 rounded-full"
-                onClick={() =>
-                  setSectionIdx((idx) =>
-                    Math.min(sections.length - 1, idx + 1)
-                  )
-                }
+                onClick={() => setSectionIdx((idx) => Math.min(sections.length - 1, idx + 1))}
                 disabled={sectionIdx === sections.length - 1}
-                aria-label="Next"
+                aria-label={t('consumer.visualSummaryModal.next')}
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
             </div>
-  
+
             {/* Section text */}
             <div className="p-6 pb-4">
               <h2 className="text-2xl font-bold text-purple-200 mb-2">{summary.summary_data.title}</h2>
               <div className="mb-4">
                 <span className="inline-block px-3 py-1 text-xs rounded-full bg-purple-900/40 text-purple-200 mr-2">
-                  Section {sectionIdx + 1} of {sections.length}
+                  {t('consumer.visualSummaryModal.sectionInfo', {
+                    sectionIdx: sectionIdx + 1,
+                    sectionsLength: sections.length,
+                  })}
                 </span>
                 <span className="inline-block px-3 py-1 text-xs rounded-full bg-blue-900/40 text-blue-200">
                   {section.title}
                 </span>
               </div>
               <p className="text-white/90 text-lg leading-relaxed mb-2">{section.text}</p>
-              {/* Optionally, add audio if available */}
               {section.audioUrl && section.audioUrl.length > 0 && (
                 <audio controls src={section.audioUrl} className="mt-2 w-full" />
               )}
-              {/* Navigation dots */}
               <div className="flex justify-center gap-2 mt-6">
                 {sections.map((_, idx) => (
                   <button
                     key={idx}
                     className={`w-3 h-3 rounded-full border-2 ${
-                      idx === sectionIdx
-                        ? "bg-purple-400 border-purple-400"
-                        : "bg-white/30 border-white/30"
+                      idx === sectionIdx ? 'bg-purple-400 border-purple-400' : 'bg-white/30 border-white/30'
                     }`}
                     onClick={() => setSectionIdx(idx)}
-                    aria-label={`Go to section ${idx + 1}`}
+                    aria-label={t('consumer.visualSummaryModal.goToSection', { sectionIdx: idx + 1 })}
                   />
                 ))}
               </div>
@@ -410,7 +402,6 @@ const SkillBuilder = () => {
       </AnimatePresence>
     );
   };
-  
 
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
@@ -422,51 +413,53 @@ const SkillBuilder = () => {
       <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-blue-600 rounded-full filter blur-[128px] opacity-20 z-0 pointer-events-none"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 z-10 pointer-events-none"></div>
 
-      <div className={`relative z-20 max-w-7xl mx-auto px-6 py-16 ${currentSummary ? "hidden" : ""}`}>
+      <div className={`relative z-20 max-w-7xl mx-auto px-6 py-16 ${currentSummary ? 'hidden' : ''}`}>
         {/* Header */}
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-10 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
-          Skill Builder & Adaptive Learning
+          {t('header.title')}
         </h1>
+
+        {/* Language Switcher */}
+        <div className="mb-8">
+          <label className="block text-sm font-medium text-purple-200 mb-2">{t('roleSwitcher.languageLabel')}</label>
+          <select
+            className="p-2 border border-white/20 bg-black/50 text-white rounded focus:outline-none [&>option]:bg-gray-900"
+            value={i18n.language}
+            onChange={(e) => i18n.changeLanguage(e.target.value)}
+          >
+            <option value="en">{t('consumer.filters.languageEnglish')}</option>
+            <option value="hi">{t('consumer.filters.languageHindi')}</option>
+          </select>
+        </div>
 
         {/* Role Switcher */}
         <div className="mb-8">
-          <label className="block text-sm font-medium text-purple-200 mb-2">Select Role</label>
+          <label className="block text-sm font-medium text-purple-200 mb-2">{t('roleSwitcher.label')}</label>
           <select
             className="p-2 border border-white/20 bg-black/50 text-white rounded focus:outline-none [&>option]:bg-gray-900"
             value={role}
             onChange={(e) => setRole(e.target.value)}
           >
-            <option>Consumer</option>
-            <option>Provider</option>
-            <option>Uploader</option>
+            <option>{t('roleSwitcher.consumer')}</option>
+            <option>{t('roleSwitcher.provider')}</option>
+            <option>{t('roleSwitcher.uploader')}</option>
           </select>
         </div>
 
         {/* Consumer View */}
         {role === 'Consumer' && (
           <>
-            {/* Progress Dashboard */}
-            {/* <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
-              <h2 className="text-2xl font-semibold mb-2 text-white">Your Progress</h2>
-              <div className="flex justify-between text-lg">
-                <p className="text-purple-200">Progress: <span className="font-bold">{progress}%</span></p>
-                <p className="text-blue-200">Shiksha Tokens: <span className="font-bold">{tokens}</span></p>
-              </div>
-              <div className="w-full bg-gray-700 rounded-full h-3 mt-3">
-                <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-3 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
-              </div>
-            </div> */}
             {/* Search Bar */}
             <div className="mb-8">
               <input
                 type="text"
                 className="w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
-                placeholder="Search content..."
+                placeholder={t('consumer.searchBar.placeholder')}
                 onChange={(e) => {
                   const searchQuery = e.target.value.toLowerCase();
                   setContent(
                     dummyContent.filter((item) =>
-                      item.title.toLowerCase().includes(searchQuery)
+                      t(item.titleKey).toLowerCase().includes(searchQuery)
                     )
                   );
                 }}
@@ -476,28 +469,28 @@ const SkillBuilder = () => {
             {/* Filters */}
             <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 mb-8">
               <div>
-                <label className="block text-sm font-medium text-purple-200">Language</label>
+                <label className="block text-sm font-medium text-purple-200">{t('consumer.filters.languageLabel')}</label>
                 <select
                   className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                   value={filterLanguage}
                   onChange={(e) => setFilterLanguage(e.target.value)}
                 >
-                  <option>All</option>
-                  <option>Hindi</option>
-                  <option>English</option>
-                  <option>Tamil</option>
+                  <option>{t('consumer.filters.languageAll')}</option>
+                  <option>{t('consumer.filters.languageHindi')}</option>
+                  <option>{t('consumer.filters.languageEnglish')}</option>
+                  <option>{t('consumer.filters.languageTamil')}</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-blue-200">Delivery Mode</label>
+                <label className="block text-sm font-medium text-blue-200">{t('consumer.filters.deliveryModeLabel')}</label>
                 <select
                   className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                   value={filterMode}
                   onChange={(e) => setFilterMode(e.target.value)}
                 >
-                  <option>All</option>
-                  <option>Online</option>
-                  <option>Hybrid</option>
+                  <option>{t('consumer.filters.deliveryModeAll')}</option>
+                  <option>{t('consumer.filters.deliveryModeOnline')}</option>
+                  <option>{t('consumer.filters.deliveryModeHybrid')}</option>
                 </select>
               </div>
             </div>
@@ -506,26 +499,32 @@ const SkillBuilder = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
               {filteredContent.map((item) => (
                 <div key={item.id} className="bg-white/10 backdrop-blur-lg p-5 rounded-2xl shadow-lg border border-white/10 hover:shadow-2xl transition">
-                  <h3 className="text-xl font-semibold text-purple-200">{item.title}</h3>
-                  <p className="text-sm text-gray-200">Type: {item.type}</p>
-                  <p className="text-sm text.gray-200">Format: {item.format}</p>
-                  <p className="text-sm text-gray-200">Language: {item.language}</p>
+                  <h3 className="text-xl font-semibold text-purple-200">{t(item.titleKey)}</h3>
+                  <p className="text-sm text-gray-200">{t('consumer.contentList.type')}{item.type}</p>
+                  <p className="text-sm text-gray-200">{t('consumer.contentList.format')}{item.format}</p>
+                  <p className="text-sm text-gray-200">{t('consumer.contentList.language')}{item.language}</p>
                   <p className="text-sm text-gray-200">
-                    Source: {item.uploader ? <span className="text-blue-300">{item.uploader} (CSR)</span> : <span className="text-purple-300">{item.provider}</span>}
+                    {t('consumer.contentList.source')}
+                    {item.uploader ? (
+                      <span className="text-blue-300">{item.uploader} (CSR)</span>
+                    ) : (
+                      <span className="text-purple-300">{item.provider}</span>
+                    )}
                   </p>
-                  <p className="text-sm text-gray-200">Duration: {item.duration}</p>
-                  <p className="text-sm text-blue-200">Tokens: {item.tokens}</p>
-                  <p className="text-sm text-gray-200">Mode: {item.deliveryMode}</p>
+                  <p className="text-sm text-gray-200">{t('consumer.contentList.duration')}{item.duration}</p>
+                  <p className="text-sm text-blue-200">{t('consumer.contentList.tokens')}{item.tokens}</p>
+                  <p className="text-sm text-gray-200">{t('consumer.contentList.mode')}{item.deliveryMode}</p>
                   {item.physicalDetails && (
                     <p className="text-sm text-gray-200">
-                      Physical: {item.physicalDetails.location} on {item.physicalDetails.date}
+                      {t('consumer.contentList.physical')}
+                      {item.physicalDetails.location} on {item.physicalDetails.date}
                     </p>
                   )}
                   <button
                     className="mt-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:from-purple-600 hover:to-blue-600 transition"
                     onClick={() => handleContentSelect(item)}
                   >
-                    Start Learning
+                    {t('consumer.contentList.startLearning')}
                   </button>
                 </div>
               ))}
@@ -534,15 +533,18 @@ const SkillBuilder = () => {
             {/* Selected Content Details */}
             {selectedContent && (
               <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
-                <h2 className="text-2xl font-semibold mb-2 text-purple-200">{selectedContent.title}</h2>
-                <p className="text-gray-200">Source: {selectedContent.uploader || selectedContent.provider}</p>
-                <p className="text-gray-200">Format: {selectedContent.format}</p>
-                <p className="text-gray-200">Language: {selectedContent.language}</p>
+                <h2 className="text-2xl font-semibold mb-2 text-purple-200">{t(selectedContent.titleKey)}</h2>
+                <p className="text-gray-200">
+                  {t('consumer.selectedContent.source')}
+                  {selectedContent.uploader || selectedContent.provider}
+                </p>
+                <p className="text-gray-200">{t('consumer.selectedContent.format')}{selectedContent.format}</p>
+                <p className="text-gray-200">{t('consumer.selectedContent.language')}{selectedContent.language}</p>
                 <div className="mt-4">
                   {selectedContent.format.includes('Video') ? (
                     <video controls className="w-full rounded-lg border border-white/10">
                       <source src={selectedContent.url} type="video/mp4" />
-                      Your browser does not support the video tag.
+                      {t('consumer.selectedContent.videoError')}
                     </video>
                   ) : (
                     <a
@@ -551,7 +553,7 @@ const SkillBuilder = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      View Content
+                      {t('consumer.selectedContent.viewContent')}
                     </a>
                   )}
                 </div>
@@ -559,34 +561,37 @@ const SkillBuilder = () => {
                   className="mt-4 bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
                   onClick={() => setSelectedContent(null)}
                 >
-                  Close
+                  {t('consumer.selectedContent.close')}
                 </button>
               </div>
             )}
 
             {/* Live Sessions */}
             <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4 text-blue-200">Live Sessions</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-blue-200">{t('consumer.liveSessions.title')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {liveSessions.map((session) => (
                   <div key={session.id} className="border border-white/10 bg-black/30 p-5 rounded-xl shadow">
-                    <h3 className="text-lg font-semibold text-purple-200">{session.title}</h3>
-                    <p className="text-sm text-gray-200">Source: {session.uploader || session.provider}</p>
-                    <p className="text-sm text-gray-200">Date: {session.date}</p>
-                    <p className="text-sm text-gray-200">Time: {session.time}</p>
+                    <h3 className="text-lg font-semibold text-purple-200">{t(session.titleKey)}</h3>
+                    <p className="text-sm text-gray-200">
+                      {t('consumer.liveSessions.source')}
+                      {session.uploader || session.provider}
+                    </p>
+                    <p className="text-sm text-gray-200">{t('consumer.liveSessions.date')}{session.date}</p>
+                    <p className="text-sm text-gray-200">{t('consumer.liveSessions.time')}{session.time}</p>
                     <a
                       href={session.meetingLink}
                       className="text-blue-400 underline"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Join Meeting
+                      {t('consumer.liveSessions.joinMeeting')}
                     </a>
                     <button
                       className="mt-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:from-purple-600 hover:to-blue-600 transition"
                       onClick={() => handleSessionSelect(session)}
                     >
-                      View Chat & Q&A
+                      {t('consumer.liveSessions.viewChatQna')}
                     </button>
                   </div>
                 ))}
@@ -596,11 +601,13 @@ const SkillBuilder = () => {
             {/* Chat and Q&A for Selected Session */}
             {selectedSession && (
               <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg border border-white/10">
-                <h2 className="text-2xl font-semibold mb-4 text-blue-200">{selectedSession.title} - Interaction</h2>
+                <h2 className="text-2xl font-semibold mb-4 text-blue-200">
+                  {t(selectedSession.titleKey)} - {t('consumer.chatQna.interaction')}
+                </h2>
                 <div className="flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-6">
                   {/* Chat Section */}
                   <div className="md:w-1/2">
-                    <h3 className="text-lg font-semibold mb-2 text-purple-200">Chat</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-purple-200">{t('consumer.chatQna.chatTitle')}</h3>
                     <div className="h-64 overflow-y-auto border border-white/10 bg-black/20 p-2 rounded-lg mb-4">
                       {selectedSession.chat.map((msg, index) => (
                         <div key={index} className="mb-2">
@@ -613,18 +620,21 @@ const SkillBuilder = () => {
                       <input
                         type="text"
                         className="w-full p-2 bg-white/10 text-white border border-white/20 rounded mb-2 focus:outline-none"
-                        placeholder="Type your message..."
+                        placeholder={t('consumer.chatQna.chatPlaceholder')}
                         value={chatMessage}
                         onChange={(e) => setChatMessage(e.target.value)}
                       />
-                      <button type="submit" className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition">
-                        Send
+                      <button
+                        type="submit"
+                        className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition"
+                      >
+                        {t('consumer.chatQna.chatSend')}
                       </button>
                     </form>
                   </div>
                   {/* Q&A Section */}
                   <div className="md:w-1/2">
-                    <h3 className="text-lg font-semibold mb-2 text-blue-200">Q&A</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-blue-200">{t('consumer.chatQna.qnaTitle')}</h3>
                     <div className="h-64 overflow-y-auto border border-white/10 bg-black/20 p-2 rounded-lg mb-4">
                       {selectedSession.qna.map((q, index) => (
                         <div key={index} className="mb-2">
@@ -637,12 +647,15 @@ const SkillBuilder = () => {
                       <input
                         type="text"
                         className="w-full p-2 bg-white/10 text-white border border-white/20 rounded mb-2 focus:outline-none"
-                        placeholder="Ask a question..."
+                        placeholder={t('consumer.chatQna.qnaPlaceholder')}
                         value={qnaQuestion}
                         onChange={(e) => setQnaQuestion(e.target.value)}
                       />
-                      <button type="submit" className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition">
-                        Submit
+                      <button
+                        type="submit"
+                        className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition"
+                      >
+                        {t('consumer.chatQna.qnaSubmit')}
                       </button>
                     </form>
                   </div>
@@ -651,7 +664,7 @@ const SkillBuilder = () => {
                   className="mt-6 bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
                   onClick={() => setSelectedSession(null)}
                 >
-                  Close
+                  {t('consumer.chatQna.close')}
                 </button>
               </div>
             )}
@@ -659,15 +672,14 @@ const SkillBuilder = () => {
             {/* Visual Summaries */}
             <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-semibold text-purple-200">Visual Summaries</h2>
+                <h2 className="text-2xl font-semibold text-purple-200">{t('consumer.visualSummaries.title')}</h2>
                 <button
                   onClick={() => setShowSummaryCreator(true)}
                   className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg"
                 >
-                  Create New Summary
+                  {t('consumer.visualSummaries.createNew')}
                 </button>
               </div>
-              {/* Thumbnails grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {summaries.map((summary) => {
                   const firstSection = summary.summary_data?.sections?.[0];
@@ -708,12 +720,12 @@ const SkillBuilder = () => {
                 })}
               </div>
             </div>
-            
+
             {/* Summary Creator Modal */}
             {showSummaryCreator && (
               <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
                 <div className="bg-gray-900 p-6 rounded-xl w-full max-w-md">
-                  <h3 className="text-xl font-semibold text-purple-200 mb-4">Create Visual Summary</h3>
+                  <h3 className="text-xl font-semibold text-purple-200 mb-4">{t('consumer.summaryCreatorModal.title')}</h3>
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
@@ -726,13 +738,13 @@ const SkillBuilder = () => {
                     <input
                       type="text"
                       name="topic"
-                      placeholder="Enter topic..."
+                      placeholder={t('consumer.summaryCreatorModal.topicPlaceholder')}
                       className="w-full p-2 bg-black/50 text-white border border-white/20 rounded mb-4"
                       required
                     />
                     <textarea
                       name="context"
-                      placeholder="Enter additional context..."
+                      placeholder={t('consumer.summaryCreatorModal.contextPlaceholder')}
                       className="w-full p-2 bg-black/50 text-white border border-white/20 rounded mb-4 h-32"
                       required
                     />
@@ -742,21 +754,20 @@ const SkillBuilder = () => {
                         onClick={() => setShowSummaryCreator(false)}
                         className="px-4 py-2 text-gray-400 hover:text-white"
                       >
-                        Cancel
+                        {t('consumer.summaryCreatorModal.cancel')}
                       </button>
                       <button
                         type="submit"
                         disabled={isCreating}
                         className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg disabled:opacity-50"
                       >
-                        {isCreating ? 'Creating...' : 'Create'}
+                        {isCreating ? t('consumer.summaryCreatorModal.creating') : t('consumer.summaryCreatorModal.create')}
                       </button>
                     </div>
                   </form>
                 </div>
               </div>
             )}
-            
           </>
         )}
 
@@ -765,13 +776,11 @@ const SkillBuilder = () => {
           <>
             {/* Content Upload Form */}
             <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4 text-purple-200">Upload New Content</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-purple-200">{t('provider.contentUpload.title')}</h2>
               <form onSubmit={handleContentUpload}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* ...existing form fields, update input backgrounds and text... */}
-                  {/* Title */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">Title</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.titleLabel')}</label>
                     <input
                       type="text"
                       className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
@@ -780,84 +789,76 @@ const SkillBuilder = () => {
                       required
                     />
                   </div>
-                  {/* ...repeat for all other fields, updating classes as above... */}
-                  {/* ...existing code for other fields... */}
-                  {/* Type */}
                   <div>
-                    <label className="block text-sm font-medium text.gray-200">Type</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.typeLabel')}</label>
                     <select
                       className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.type}
                       onChange={(e) => setNewContent({ ...newContent, type: e.target.value })}
                     >
-                      <option>Tutorial</option>
-                      <option>Course</option>
+                      <option>{t('provider.contentUpload.typeTutorial')}</option>
+                      <option>{t('provider.contentUpload.typeCourse')}</option>
                     </select>
                   </div>
-                  {/* Format */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">Format</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.formatLabel')}</label>
                     <select
                       className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.format}
                       onChange={(e) => setNewContent({ ...newContent, format: e.target.value })}
                     >
-                      <option>Video</option>
-                      <option>Text + Audio</option>
-                      <option>Video + Physical</option>
+                      <option>{t('provider.contentUpload.formatVideo')}</option>
+                      <option>{t('provider.contentUpload.formatTextAudio')}</option>
+                      <option>{t('provider.contentUpload.formatVideoPhysical')}</option>
                     </select>
                   </div>
-                  {/* Language */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">Language</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.languageLabel')}</label>
                     <select
                       className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.language}
                       onChange={(e) => setNewContent({ ...newContent, language: e.target.value })}
                     >
-                      <option>Hindi</option>
-                      <option>English</option>
-                      <option>Tamil</option>
+                      <option>{t('provider.contentUpload.languageHindi')}</option>
+                      <option>{t('provider.contentUpload.languageEnglish')}</option>
+                      <option>{t('provider.contentUpload.languageTamil')}</option>
                     </select>
                   </div>
-                  {/* Duration */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">Duration</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.durationLabel')}</label>
                     <input
                       type="text"
-                      className="mt-1 block w-full p-2 bg.white/10 text-white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
                       value={newContent.duration}
                       onChange={(e) => setNewContent({ ...newContent, duration: e.target.value })}
                       required
                     />
                   </div>
-                  {/* Content URL */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">Content URL</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.urlLabel')}</label>
                     <input
                       type="url"
-                      className="mt-1 block w-full p-2 bg-white/10 text.white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
                       value={newContent.url}
                       onChange={(e) => setNewContent({ ...newContent, url: e.target.value })}
                       required
                     />
                   </div>
-                  {/* Delivery Mode */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">Delivery Mode</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.deliveryModeLabel')}</label>
                     <select
                       className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.deliveryMode}
                       onChange={(e) => setNewContent({ ...newContent, deliveryMode: e.target.value })}
                     >
-                      <option>Online</option>
-                      <option>Hybrid</option>
+                      <option>{t('provider.contentUpload.deliveryModeOnline')}</option>
+                      <option>{t('provider.contentUpload.deliveryModeHybrid')}</option>
                     </select>
                   </div>
                   {newContent.deliveryMode === 'Hybrid' && (
                     <>
                       <div>
-                        <label className="block text-sm font-medium text-gray-200">Physical Location</label>
+                        <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.physicalLocationLabel')}</label>
                         <input
                           type="text"
                           className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
@@ -871,7 +872,7 @@ const SkillBuilder = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-200">Physical Date</label>
+                        <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.physicalDateLabel')}</label>
                         <input
                           type="date"
                           className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
@@ -887,22 +888,25 @@ const SkillBuilder = () => {
                     </>
                   )}
                 </div>
-                <button type="submit" className="mt-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition">
-                  Upload Content
+                <button
+                  type="submit"
+                  className="mt-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition"
+                >
+                  {t('provider.contentUpload.uploadButton')}
                 </button>
               </form>
             </div>
 
             {/* Provider Content List */}
             <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4 text-blue-200">Your Content</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-blue-200">{t('provider.contentList.title')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filteredContent.map((item) => (
                   <div key={item.id} className="border border-white/10 bg-black/20 p-4 rounded">
-                    <h3 className="text-lg font-semibold text-purple-200">{item.title}</h3>
-                    <p className="text-sm text-gray-200">Type: {item.type}</p>
-                    <p className="text-sm text-blue-200">Enrollments: {item.enrollments}</p>
-                    <p className="text-sm text-blue-200">Completions: {item.completions}</p>
+                    <h3 className="text-lg font-semibold text-purple-200">{t(item.titleKey)}</h3>
+                    <p className="text-sm text-gray-200">{t('provider.contentList.type')}{item.type}</p>
+                    <p className="text-sm text-blue-200">{t('provider.contentList.enrollments')}{item.enrollments}</p>
+                    <p className="text-sm text-blue-200">{t('provider.contentList.completions')}{item.completions}</p>
                   </div>
                 ))}
               </div>
@@ -910,23 +914,23 @@ const SkillBuilder = () => {
 
             {/* Provider Live Sessions */}
             <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4 text-blue-200">Your Live Sessions</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-blue-200">{t('provider.liveSessions.title')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {liveSessions
                   .filter((session) => session.provider)
                   .map((session) => (
                     <div key={session.id} className="border border-white/10 bg-black/20 p-4 rounded">
-                      <h3 className="text-lg font-semibold text-purple-200">{session.title}</h3>
-                      <p className="text-sm text-gray-200">Date: {session.date}</p>
-                      <p className="text-sm text-gray-200">Time: {session.time}</p>
-                      <p className="text-sm text-blue-200">Participants: {session.participants}</p>
+                      <h3 className="text-lg font-semibold text-purple-200">{t(session.titleKey)}</h3>
+                      <p className="text-sm text-gray-200">{t('provider.liveSessions.date')}{session.date}</p>
+                      <p className="text-sm text-gray-200">{t('provider.liveSessions.time')}{session.time}</p>
+                      <p className="text-sm text-blue-200">{t('provider.liveSessions.participants')}{session.participants}</p>
                       <a
                         href={session.meetingLink}
                         className="text-blue-400 underline"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Host Meeting
+                        {t('provider.liveSessions.hostMeeting')}
                       </a>
                     </div>
                   ))}
@@ -940,13 +944,11 @@ const SkillBuilder = () => {
           <>
             {/* Content Upload Form (CSR-Branded) */}
             <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4 text-purple-200">Upload CSR-Branded Content</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-purple-200">{t('uploader.contentUpload.title')}</h2>
               <form onSubmit={handleContentUpload}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* ...same input fields as above, with dark theme classes... */}
-                  {/* Title */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">Title</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.titleLabel')}</label>
                     <input
                       type="text"
                       className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
@@ -955,83 +957,76 @@ const SkillBuilder = () => {
                       required
                     />
                   </div>
-                  {/* ...repeat for all other fields, updating classes as above... */}
-                  {/* Type */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">Type</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.typeLabel')}</label>
                     <select
                       className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.type}
                       onChange={(e) => setNewContent({ ...newContent, type: e.target.value })}
                     >
-                      <option>Tutorial</option>
-                      <option>Course</option>
+                      <option>{t('uploader.contentUpload.typeTutorial')}</option>
+                      <option>{t('uploader.contentUpload.typeCourse')}</option>
                     </select>
                   </div>
-                  {/* Format */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">Format</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.formatLabel')}</label>
                     <select
-                      className="mt-1 block w-full p-2 bg.black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
+                      className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.format}
                       onChange={(e) => setNewContent({ ...newContent, format: e.target.value })}
                     >
-                      <option>Video</option>
-                      <option>Text + Audio</option>
-                      <option>Video + Physical</option>
+                      <option>{t('uploader.contentUpload.formatVideo')}</option>
+                      <option>{t('uploader.contentUpload.formatTextAudio')}</option>
+                      <option>{t('uploader.contentUpload.formatVideoPhysical')}</option>
                     </select>
                   </div>
-                  {/* Language */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">Language</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.languageLabel')}</label>
                     <select
                       className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.language}
                       onChange={(e) => setNewContent({ ...newContent, language: e.target.value })}
                     >
-                      <option>Hindi</option>
-                      <option>English</option>
-                      <option>Tamil</option>
+                      <option>{t('uploader.contentUpload.languageHindi')}</option>
+                      <option>{t('uploader.contentUpload.languageEnglish')}</option>
+                      <option>{t('uploader.contentUpload.languageTamil')}</option>
                     </select>
                   </div>
-                  {/* Duration */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">Duration</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.durationLabel')}</label>
                     <input
                       type="text"
-                      className="mt-1 block w-full p-2 bg.white/10 text-white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
                       value={newContent.duration}
                       onChange={(e) => setNewContent({ ...newContent, duration: e.target.value })}
                       required
                     />
                   </div>
-                  {/* Content URL */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">Content URL</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.urlLabel')}</label>
                     <input
                       type="url"
-                      className="mt-1 block w-full p-2 bg.white/10 text-white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
                       value={newContent.url}
                       onChange={(e) => setNewContent({ ...newContent, url: e.target.value })}
                       required
                     />
                   </div>
-                  {/* Delivery Mode */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">Delivery Mode</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.deliveryModeLabel')}</label>
                     <select
                       className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.deliveryMode}
                       onChange={(e) => setNewContent({ ...newContent, deliveryMode: e.target.value })}
                     >
-                      <option>Online</option>
-                      <option>Hybrid</option>
+                      <option>{t('uploader.contentUpload.deliveryModeOnline')}</option>
+                      <option>{t('uploader.contentUpload.deliveryModeHybrid')}</option>
                     </select>
                   </div>
                   {newContent.deliveryMode === 'Hybrid' && (
                     <>
                       <div>
-                        <label className="block text-sm font-medium text-gray-200">Physical Location</label>
+                        <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.physicalLocationLabel')}</label>
                         <input
                           type="text"
                           className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
@@ -1045,7 +1040,7 @@ const SkillBuilder = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-200">Physical Date</label>
+                        <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.physicalDateLabel')}</label>
                         <input
                           type="date"
                           className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
@@ -1061,29 +1056,33 @@ const SkillBuilder = () => {
                     </>
                   )}
                 </div>
-                <button type="submit" className="mt-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition">
-                  Upload Content
+                <button
+                  type="submit"
+                  className="mt-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition"
+                >
+                  {t('uploader.contentUpload.uploadButton')}
                 </button>
               </form>
             </div>
 
             {/* Uploader Analytics Dashboard */}
             <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4 text-blue-200">Analytics Dashboard</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-blue-200">{t('uploader.analyticsDashboard.title')}</h2>
               <button
                 className="mb-4 bg-gradient-to-r from-green-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-green-600 hover:to-blue-600 transition"
                 onClick={handleExportAnalytics}
               >
-                Export Analytics (CSV)
+                {t('uploader.analyticsDashboard.exportCsv')}
               </button>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filteredContent.map((item) => (
                   <div key={item.id} className="border border-white/10 bg-black/20 p-4 rounded">
-                    <h3 className="text-lg font-semibold text-purple-200">{item.title}</h3>
-                    <p className="text-sm text-blue-200">Enrollments: {item.enrollments}</p>
-                    <p className="text-sm text.blue-200">Completions: {item.completions}</p>
+                    <h3 className="text-lg font-semibold text-purple-200">{t(item.titleKey)}</h3>
+                    <p className="text-sm text-blue-200">{t('uploader.analyticsDashboard.enrollments')}{item.enrollments}</p>
+                    <p className="text-sm text-blue-200">{t('uploader.analyticsDashboard.completions')}{item.completions}</p>
                     <p className="text-sm text-gray-200">
-                      Completion Rate: {((item.completions / item.enrollments) * 100 || 0).toFixed(2)}%
+                      {t('uploader.analyticsDashboard.completionRate')}
+                      {((item.completions / item.enrollments) * 100 || 0).toFixed(2)}%
                     </p>
                   </div>
                 ))}
@@ -1092,23 +1091,23 @@ const SkillBuilder = () => {
 
             {/* Uploader Live Sessions */}
             <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4 text-blue-200">Your Live Sessions</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-blue-200">{t('uploader.liveSessions.title')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {liveSessions
                   .filter((session) => session.uploader)
                   .map((session) => (
                     <div key={session.id} className="border border-white/10 bg-black/20 p-4 rounded">
-                      <h3 className="text-lg font-semibold text-purple-200">{session.title}</h3>
-                      <p className="text-sm text-gray-200">Date: {session.date}</p>
-                      <p className="text-sm text-gray-200">Time: {session.time}</p>
-                      <p className="text-sm text-blue-200">Participants: {session.participants}</p>
+                      <h3 className="text-lg font-semibold text-purple-200">{t(session.titleKey)}</h3>
+                      <p className="text-sm text-gray-200">{t('uploader.liveSessions.date')}{session.date}</p>
+                      <p className="text-sm text-gray-200">{t('uploader.liveSessions.time')}{session.time}</p>
+                      <p className="text-sm text-blue-200">{t('uploader.liveSessions.participants')}{session.participants}</p>
                       <a
                         href={session.meetingLink}
                         className="text-blue-400 underline"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Host Meeting
+                        {t('uploader.liveSessions.hostMeeting')}
                       </a>
                     </div>
                   ))}
@@ -1117,13 +1116,7 @@ const SkillBuilder = () => {
           </>
         )}
       </div>
-      {/* Visual Summary Modal */}
-      {currentSummary && (
-        <VisualSummaryModal
-          summary={currentSummary}
-          onClose={() => setCurrentSummary(null)}
-        />
-      )}
+      {currentSummary && <VisualSummaryModal summary={currentSummary} onClose={() => setCurrentSummary(null)} />}
     </div>
   );
 };

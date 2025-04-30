@@ -1,0 +1,177 @@
+{
+    "header": {
+      "title": "कौशल निर्माण और अनुकूली शिक्षा"
+    },
+    "roleSwitcher": {
+      "label": "भूमिका चुनें",
+      "consumer": "उपभोक्ता",
+      "provider": "प्रदाता",
+      "uploader": "अपलोडर",
+      "languageLabel": "भाषा चुनें"
+    },
+    "consumer": {
+      "progressDashboard": {
+        "title": "आपकी प्रगति",
+        "progress": "प्रगति: ",
+        "tokens": "शिक्षा टोकन: "
+      },
+      "searchBar": {
+        "placeholder": "सामग्री खोजें..."
+      },
+      "filters": {
+        "languageLabel": "भाषा",
+        "languageAll": "सभी",
+        "languageHindi": "हिन्दी",
+        "languageEnglish": "अंग्रेजी",
+        "languageTamil": "तमिल",
+        "deliveryModeLabel": "वितरण मोड",
+        "deliveryModeAll": "सभी",
+        "deliveryModeOnline": "ऑनलाइन",
+        "deliveryModeHybrid": "हाइब्रिड"
+      },
+      "contentList": {
+        "type": "प्रकार: ",
+        "format": "प्रारूप: ",
+        "language": "भाषा: ",
+        "source": "स्रोत: ",
+        "duration": "अवधि: ",
+        "tokens": "टोकन: ",
+        "mode": "मोड: ",
+        "physical": "भौतिक: ",
+        "startLearning": "सीखना शुरू करें"
+      },
+      "selectedContent": {
+        "source": "स्रोत: ",
+        "format": "प्रारूप: ",
+        "language": "भाषा: ",
+        "videoError": "आपका ब्राउज़र वीडियो टैग का समर्थन नहीं करता।",
+        "viewContent": "सामग्री देखें",
+        "close": "बंद करें"
+      },
+      "liveSessions": {
+        "title": "लाइव सत्र",
+        "source": "स्रोत: ",
+        "date": "तारीख: ",
+        "time": "समय: ",
+        "joinMeeting": "बैठक में शामिल हों",
+        "viewChatQna": "चैट और प्रश्नोत्तर देखें"
+      },
+      "chatQna": {
+        "interaction": "संवाद",
+        "chatTitle": "चैट",
+        "chatPlaceholder": "अपना संदेश टाइप करें...",
+        "chatSend": "भेजें",
+        "qnaTitle": "प्रश्नोत्तर",
+        "qnaPlaceholder": "प्रश्न पूछें...",
+        "qnaSubmit": "जमा करें",
+        "close": "बंद करें"
+      },
+      "visualSummaries": {
+        "title": "दृश्य सारांश",
+        "createNew": "नया सारांश बनाएं"
+      },
+      "summaryCreatorModal": {
+        "title": "दृश्य सारांश बनाएं",
+        "topicPlaceholder": "विषय दर्ज करें...",
+        "contextPlaceholder": "अतिरिक्त संदर्भ दर्ज करें...",
+        "cancel": "रद्द करें",
+        "create": "बनाएं",
+        "creating": "बनाया जा रहा है..."
+      },
+      "visualSummaryModal": {
+        "close": "बंद करें",
+        "previous": "पिछला",
+        "next": "अगला",
+        "sectionInfo": "खंड {sectionIdx} का {sectionsLength}",
+        "goToSection": "खंड {sectionIdx} पर जाएं"
+      }
+    },
+    "provider": {
+      "contentUpload": {
+        "title": "नई सामग्री अपलोड करें",
+        "titleLabel": "शीर्षक",
+        "typeLabel": "प्रकार",
+        "typeTutorial": "ट्यूटोरियल",
+        "typeCourse": "कोर्स",
+        "formatLabel": "प्रारूप",
+        "formatVideo": "वीडियो",
+        "formatTextAudio": "पाठ + ऑडियो",
+        "formatVideoPhysical": "वीडियो + भौतिक",
+        "languageLabel": "भाषा",
+        "languageHindi": "हिन्दी",
+        "languageEnglish": "अंग्रेजी",
+        "languageTamil": "तमिल",
+        "durationLabel": "अवधि",
+        "urlLabel": "सामग्री URL",
+        "deliveryModeLabel": "वितरण मोड",
+        "deliveryModeOnline": "ऑनलाइन",
+        "deliveryModeHybrid": "हाइब्रिड",
+        "physicalLocationLabel": "भौतिक स्थान",
+        "physicalDateLabel": "भौतिक तारीख",
+        "uploadButton": "सामग्री अपलोड करें"
+      },
+      "contentList": {
+        "title": "आपकी सामग्री",
+        "type": "प्रकार: ",
+        "enrollments": "नामांकन: ",
+        "completions": "पूरा हुआ: "
+      },
+      "liveSessions": {
+        "title": "आपके लाइव सत्र",
+        "date": "तारीख: ",
+        "time": "समय: ",
+        "participants": "प्रतिभागी: ",
+        "hostMeeting": "बैठक की मेजबानी करें"
+      }
+    },
+    "uploader": {
+      "contentUpload": {
+        "title": "सीएसआर-ब्रांडेड सामग्री अपलोड करें",
+        "titleLabel": "शीर्षक",
+        "typeLabel": "प्रकार",
+        "typeTutorial": "ट्यूटोरियल",
+        "typeCourse": "कोर्स",
+        "formatLabel": "प्रारूप",
+        "formatVideo": "वीडियो",
+        "formatTextAudio": "पाठ + ऑडियो",
+        "formatVideoPhysical": "वीडियो + भौतिक",
+        "languageLabel": "भाषा",
+        "languageHindi": "हिन्दी",
+        "languageEnglish": "अंग्रेजी",
+        "languageTamil": "तमिल",
+        "durationLabel": "अवधि",
+        "urlLabel": "सामग्री URL",
+        "deliveryModeLabel": "वितरण मोड",
+        "deliveryModeOnline": "ऑनलाइन",
+        "deliveryModeHybrid": "हाइब्रिड",
+        "physicalLocationLabel": "भौतिक स्थान",
+        "physicalDateLabel": "भौतिक तारीख",
+        "uploadButton": "सामग्री अपलोड करें"
+      },
+      "analyticsDashboard": {
+        "title": "विश्लेषण डैशबोर्ड",
+        "exportCsv": "विश्लेषण निर्यात करें (CSV)",
+        "enrollments": "नामांकन: ",
+        "completions": "पूरा हुआ: ",
+        "completionRate": "पूरा होने की दर: "
+      },
+      "liveSessions": {
+        "title": "आपके लाइव सत्र",
+        "date": "तारीख: ",
+        "time": "समय: ",
+        "participants": "प्रतिभागी: ",
+        "hostMeeting": "बैठक की मेजबानी करें"
+      }
+    },
+    "dummyData": {
+      "content": {
+        "tailoring": "टेलरिंग का परिचय",
+        "digitalMarketing": "डिजिटल मार्केटिंग की मूल बातें",
+        "farming": "जैविक खेती कार्यशाला"
+      },
+      "liveSessions": {
+        "tailoringQna": "टेलरिंग तकनीकों पर प्रश्नोत्तर",
+        "digitalMarketingWorkshop": "डिजिटल मार्केटिंग लाइव कार्यशाला"
+      }
+    }
+  }
