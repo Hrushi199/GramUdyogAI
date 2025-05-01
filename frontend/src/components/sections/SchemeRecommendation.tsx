@@ -102,32 +102,47 @@ const SchemeRecommendation = () => {
             {t('pageDescription')}
           </p>
 
+          {/* Updated Form with Matching Theme */}
           <form
             onSubmit={handleSubmit}
-            className="w-full max-w-md bg-white p-6 rounded-lg shadow-md text-black"
+            className="w-full max-w-md bg-gradient-to-br from-gray-900 to-gray-800 p-6 rounded-lg shadow-xl border border-gray-700 relative overflow-hidden"
           >
-            <label htmlFor="occupation" className="block text-lg font-medium mb-2">
+            {/* Subtle glowing accent */}
+            <div className="absolute -top-10 -left-10 w-40 h-40 bg-purple-500 rounded-full filter blur-3xl opacity-10"></div>
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500 rounded-full filter blur-3xl opacity-10"></div>
+            
+            <label htmlFor="occupation" className="block text-lg font-medium mb-3 text-purple-300">
               {t('form.occupationLabel')}
             </label>
-            <input
-              type="text"
-              id="occupation"
-              value={occupation}
-              onChange={(e) => setOccupation(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg mb-4"
-              placeholder={t('form.occupationPlaceholder')}
-              required
-            />
+            <div className="relative">
+              <input
+                type="text"
+                id="occupation"
+                value={occupation}
+                onChange={(e) => setOccupation(e.target.value)}
+                className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg mb-5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+                placeholder={t('form.occupationPlaceholder')}
+                style={{backgroundColor: '#1f2937', WebkitAppearance: 'none'}}
+                required
+              />
+              {/* Subtle highlight effect on focus */}
+              <div className="absolute inset-0 -z-10 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-lg filter blur-md opacity-0 peer-focus:opacity-100 transition-opacity"></div>
+            </div>
             <button
               type="submit"
-              className="w-full bg-blue-700 text-white py-3 rounded-lg hover:bg-blue-800"
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg shadow-purple-900/20 font-medium"
             >
               {t('form.submitButton')}
             </button>
           </form>
 
           {/* Loading indicator - added from first code with style adjustments */}
-          {loading && <p className="text-purple-400 mt-4">{t('loading')}</p>}
+          {loading && 
+            <div className="flex items-center space-x-2">
+              <div className="w-5 h-5 rounded-full border-2 border-gray-300 border-t-purple-500 animate-spin"></div>
+              <p className="text-purple-400">{t('loading')}</p>
+            </div>
+          }
 
           {schemes.length > 0 || (explanation && explanation.length > 0) ? (
             <div className="mt-8 w-full max-w-2xl">
