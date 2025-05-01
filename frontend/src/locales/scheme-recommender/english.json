@@ -1,0 +1,80 @@
+{
+  "pageTitle": "Discover Government Schemes",
+  "pageDescription": "Register your occupation and find government schemes that can help you grow and succeed.",
+  "form": {
+    "occupationLabel": "Enter your occupation:",
+    "occupationPlaceholder": "Example: Farmer, Teacher",
+    "submitButton": "Get Recommendations"
+  },
+  "loading": "Loading recommendations...",
+  "recommendedSchemes": "Recommended Schemes",
+  "scheme": {
+    "goal": "Goal",
+    "benefits": "Benefits",
+    "eligibility": "Eligibility",
+    "howToApply": "How to Apply",
+    "specialFeatures": "Special Features",
+    "viewFullDetails": "View Full Details"
+  },
+  "noExplanation": "No explanation provided.",
+  "noData": "No data received yet. Please submit the form for recommendations.",
+  "modal": {
+    "schemeDetails": "Scheme Details",
+    "fields": {
+      "scheme_name": "Scheme Name",
+      "goal": "Goal",
+      "benefit": "Benefit",
+      "eligibility": "Eligibility",
+      "application_process": "Application Process",
+      "special_features": "Special Features",
+      "description": "Description",
+      "website": "Website",
+      "contact": "Contact",
+      "location": "Location",
+      "tags": "Tags",
+      "key_features": "Key Features",
+      "benefits_details": {
+        "interest_subsidy": "Interest Subsidy",
+        "maximum_loan_amount": "Maximum Loan Amount",
+        "moratorium_period": "Moratorium Period",
+        "knowledge_transfer": "Knowledge Transfer",
+        "productivity_improvement": "Productivity Improvement"
+      },
+      "eligibility_details": {
+        "education_criteria": "Educational Criteria",
+        "additional_criteria": "Additional Criteria",
+        "admission_requirement": "Admission Requirement",
+        "institution_criteria": "Institution Criteria",
+        "criteria": "Criteria"
+      },
+      "eligible_courses": "Eligible Courses",
+      "application_details": {
+        "mode": "Mode",
+        "steps": "Steps",
+        "note": "Note"
+      },
+      "required_documents": "Required Documents",
+      "document_fields": {
+        "document": "Document",
+        "mandatory": "Mandatory",
+        "note": "Note"
+      },
+      "special_notes": "Special Notes",
+      "document": "Document",
+      "mandatory": "Mandatory",
+      "note": "Note",
+      "mode": "Mode",
+      "steps": "Steps",
+      "interest_subsidy": "Interest Subsidy",
+      "maximum_loan_amount": "Maximum Loan Amount",
+      "moratorium_period": "Moratorium Period",
+      "knowledge_transfer": "Knowledge Transfer",
+      "productivity_improvement": "Productivity Improvement",
+      "education_criteria": "Educational Criteria",
+      "additional_criteria": "Additional Criteria",
+      "admission_requirement": "Admission Requirement",
+      "institution_criteria": "Institution Criteria",
+      "criteria": "Criteria"
+    }
+  }
+}

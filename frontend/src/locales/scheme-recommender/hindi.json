@@ -1,0 +1,80 @@
+{
+  "pageTitle": "सरकारी योजनाओं की खोज करें",
+  "pageDescription": "अपने व्यवसाय को दर्ज करें और ऐसी सरकारी योजनाओं का पता लगाएं जो आपको विकास और सफलता में मदद कर सकती हैं।",
+  "form": {
+    "occupationLabel": "अपना व्यवसाय दर्ज करें:",
+    "occupationPlaceholder": "उदाहरण: किसान, शिक्षक",
+    "submitButton": "अनुशंसाएँ प्राप्त करें"
+  },
+  "loading": "अनुशंसाएँ लोड हो रही हैं...",
+  "recommendedSchemes": "अनुशंसित योजनाएँ",
+  "scheme": {
+    "goal": "लक्ष्य",
+    "benefits": "लाभ",
+    "eligibility": "पात्रता",
+    "howToApply": "आवेदन कैसे करें",
+    "specialFeatures": "विशेष सुविधाएँ",
+    "viewFullDetails": "पूरा विवरण देखें"
+  },
+  "noExplanation": "कोई स्पष्टीकरण प्रदान नहीं किया गया है।",
+  "noData": "अभी तक कोई डेटा प्राप्त नहीं हुआ है। अनुशंसाओं के लिए फॉर्म जमा करें।",
+  "modal": {
+    "schemeDetails": "योजना का विवरण",
+    "fields": {
+      "scheme_name": "योजना का नाम",
+      "goal": "लक्ष्य",
+      "benefit": "लाभ",
+      "eligibility": "पात्रता",
+      "application_process": "आवेदन प्रक्रिया",
+      "special_features": "विशेष सुविधाएँ",
+      "description": "विवरण",
+      "website": "वेबसाइट",
+      "contact": "संपर्क",
+      "location": "स्थान",
+      "tags": "टैग",
+      "key_features": "मुख्य विशेषताएं",
+      "benefits_details": {
+        "interest_subsidy": "ब्याज सब्सिडी",
+        "maximum_loan_amount": "अधिकतम ऋण राशि",
+        "moratorium_period": "अधिस्थगन अवधि",
+        "knowledge_transfer": "ज्ञान हस्तांतरण",
+        "productivity_improvement": "उत्पादकता सुधार"
+      },
+      "eligibility_details": {
+        "education_criteria": "शैक्षिक मानदंड",
+        "additional_criteria": "अतिरिक्त मानदंड",
+        "admission_requirement": "प्रवेश आवश्यकता",
+        "institution_criteria": "संस्थान मानदंड",
+        "criteria": "मानदंड"
+      },
+      "eligible_courses": "योग्य पाठ्यक्रम",
+      "application_details": {
+        "mode": "माध्यम",
+        "steps": "चरण",
+        "note": "नोट"
+      },
+      "required_documents": "आवश्यक दस्तावेज़",
+      "document_fields": {
+        "document": "दस्तावेज़",
+        "mandatory": "अनिवार्य",
+        "note": "नोट"
+      },
+      "special_notes": "विशेष नोट्स",
+      "document": "दस्तावेज़",
+      "mandatory": "अनिवार्य",
+      "note": "नोट",
+      "mode": "माध्यम",
+      "steps": "चरण",
+      "interest_subsidy": "ब्याज सब्सिडी",
+      "maximum_loan_amount": "अधिकतम ऋण राशि",
+      "moratorium_period": "अधिस्थगन अवधि",
+      "knowledge_transfer": "ज्ञान हस्तांतरण",
+      "productivity_improvement": "उत्पादकता सुधार",
+      "education_criteria": "शैक्षिक मानदंड",
+      "additional_criteria": "अतिरिक्त मानदंड",
+      "admission_requirement": "प्रवेश आवश्यकता",
+      "institution_criteria": "संस्थान मानदंड",
+      "criteria": "मानदंड"
+    }
+  }
+}

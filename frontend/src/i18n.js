@@ -6,19 +6,30 @@ import enHero from './locales/hero/english.json';
 import hiHero from './locales/hero/hindi.json';
 import enFeatures from './locales/features/english.json';
 import hiFeatures from './locales/features/hindi.json';
-// Add other languages as needed
-// import hiTranslation from './locales/hi/translation.json';
+// Import the scheme-recommender namespace translations
+import enSchemeRecommender from './locales/scheme-recommender/english.json';
+import hiSchemeRecommender from './locales/scheme-recommender/hindi.json';
 
 i18n
   .use(initReactI18next)
   .init({
     resources: {
-      en: { skillbuilder: enSkillBuilder, hero: enHero, featuresname: enFeatures },
-      hi: { skillbuilder: hiSkillBuilder, hero: hiHero, featuresname: hiFeatures },
+      en: { 
+        skillbuilder: enSkillBuilder, 
+        hero: enHero, 
+        featuresname: enFeatures,
+        'scheme-recommender': enSchemeRecommender // Add scheme-recommender namespace
+      },
+      hi: { 
+        skillbuilder: hiSkillBuilder, 
+        hero: hiHero, 
+        featuresname: hiFeatures,
+        'scheme-recommender': hiSchemeRecommender // Add scheme-recommender namespace
+      },
     },
     lng: 'en', // Default language
     fallbackLng: 'en',
-    ns: ['skillbuilder', 'hero', 'featuresname'], // Include features namespace
+    ns: ['skillbuilder', 'hero', 'featuresname', 'scheme-recommender'], // Include scheme-recommender namespace
     defaultNS: 'translation', // Default namespace for SkillBuilder
     interpolation: {
       escapeValue: false, // React handles XSS

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ParticleBackground from "../ui/ParticleBackground";
+import { useTranslation } from "react-i18next"; // Import useTranslation hook
 
 type SchemeExplanation = {
   name: string;
@@ -12,6 +13,8 @@ type SchemeExplanation = {
 };
 
 const SchemeRecommendation = () => {
+  const { t } = useTranslation('scheme-recommender'); // Use 'scheme-recommender' namespace
+  
   const [occupation, setOccupation] = useState("");
   const [schemes, setSchemes] = useState<string[]>([]);
   const [explanation, setExplanation] = useState<SchemeExplanation[]>([]);
@@ -92,11 +95,11 @@ const SchemeRecommendation = () => {
         <div className="flex flex-col items-center gap-16">
           <h1 className="text-5xl md:text-6xl font-bold leading-tight text-center">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
-              Discover Government Schemes
+              {t('pageTitle')}
             </span>
           </h1>
           <p className="mt-6 text-xl text-gray-300 text-center max-w-2xl">
-            Enter your occupation to find tailored government schemes that can help you grow and succeed.
+            {t('pageDescription')}
           </p>
 
           <form
@@ -104,7 +107,7 @@ const SchemeRecommendation = () => {
             className="w-full max-w-md bg-white p-6 rounded-lg shadow-md text-black"
           >
             <label htmlFor="occupation" className="block text-lg font-medium mb-2">
-              Enter Your Occupation:
+              {t('form.occupationLabel')}
             </label>
             <input
               type="text"
@@ -112,23 +115,23 @@ const SchemeRecommendation = () => {
               value={occupation}
               onChange={(e) => setOccupation(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-lg mb-4"
-              placeholder="e.g., Farmer, Teacher"
+              placeholder={t('form.occupationPlaceholder')}
               required
             />
             <button
               type="submit"
               className="w-full bg-blue-700 text-white py-3 rounded-lg hover:bg-blue-800"
             >
-              Get Recommendations
+              {t('form.submitButton')}
             </button>
           </form>
 
           {/* Loading indicator - added from first code with style adjustments */}
-          {loading && <p className="text-purple-400 mt-4">Loading recommendations...</p>}
+          {loading && <p className="text-purple-400 mt-4">{t('loading')}</p>}
 
           {schemes.length > 0 || (explanation && explanation.length > 0) ? (
             <div className="mt-8 w-full max-w-2xl">
-              <h2 className="text-2xl font-bold mb-4 text-white">Recommended Schemes</h2>
+              <h2 className="text-2xl font-bold mb-4 text-white">{t('recommendedSchemes')}</h2>
               <div className="grid gap-6">
                 {explanation.length > 0 ? (
                   explanation.map((scheme, idx) => (
@@ -162,23 +165,23 @@ const SchemeRecommendation = () => {
                       >
                         <div className="py-2 space-y-4">
                           <div className="flex flex-col gap-1">
-                            <span className="font-medium text-purple-400">Goal</span>
+                            <span className="font-medium text-purple-400">{t('scheme.goal')}</span>
                             <span className="text-gray-300">{scheme.goal}</span>
                           </div>
                           <div className="flex flex-col gap-1">
-                            <span className="font-medium text-purple-400">Benefits</span>
+                            <span className="font-medium text-purple-400">{t('scheme.benefits')}</span>
                             <span className="text-gray-300">{scheme.benefit}</span>
                           </div>
                           <div className="flex flex-col gap-1">
-                            <span className="font-medium text-purple-400">Eligibility</span>
+                            <span className="font-medium text-purple-400">{t('scheme.eligibility')}</span>
                             <span className="text-gray-300">{scheme.eligibility}</span>
                           </div>
                           <div className="flex flex-col gap-1">
-                            <span className="font-medium text-purple-400">How to Apply</span>
+                            <span className="font-medium text-purple-400">{t('scheme.howToApply')}</span>
                             <span className="text-gray-300">{scheme.application_process}</span>
                           </div>
                           <div className="flex flex-col gap-1">
-                            <span className="font-medium text-purple-400">Special Features</span>
+                            <span className="font-medium text-purple-400">{t('scheme.specialFeatures')}</span>
                             <span className="text-gray-300">{scheme.special_features}</span>
                           </div>
                           <div className="mt-4 flex justify-end">
@@ -186,7 +189,7 @@ const SchemeRecommendation = () => {
                               onClick={(e) => handleViewDetails(e, scheme)}
                               className="px-4 py-2 text-sm font-medium text-purple-400 hover:text-purple-300 bg-gray-800 rounded-lg border border-purple-500/30 hover:border-purple-500/50 transition-colors"
                             >
-                              View Full Details
+                              {t('scheme.viewFullDetails')}
                             </button>
                           </div>
                         </div>
@@ -194,12 +197,12 @@ const SchemeRecommendation = () => {
                     </div>
                   ))
                 ) : (
-                  <p className="text-gray-300">No explanation provided.</p>
+                  <p className="text-gray-300">{t('noExplanation')}</p>
                 )}
               </div>
             </div>
           ) : (
-            <p className="mt-8 text-gray-300">No data received yet. Submit the form to get recommendations.</p>
+            <p className="mt-8 text-gray-300">{t('noData')}</p>
           )}
         </div>
       </div>
@@ -216,7 +219,7 @@ const SchemeRecommendation = () => {
           >
             <div className="sticky top-0 z-10 flex justify-between items-center px-6 py-4 bg-gray-900 border-b border-gray-700">
               <h3 className="text-xl font-semibold text-white">
-                {selectedJson.scheme_name || "Scheme Details"}
+                {selectedJson.scheme_name || t('modal.schemeDetails')}
               </h3>
               <button
                 onClick={closeModal}
@@ -231,7 +234,7 @@ const SchemeRecommendation = () => {
               {Object.entries(selectedJson).map(([key, value]) => (
                 <div key={key} className="group">
                   <h4 className="text-lg font-medium text-purple-400 mb-2 flex items-center gap-2">
-                    <span className="capitalize">{key.replace(/_/g, ' ')}</span>
+                    <span className="capitalize">{t(`modal.fields.${key}`, { defaultValue: key.replace(/_/g, ' ') })}</span>
                     <div className="h-px flex-grow bg-gradient-to-r from-purple-500/50 to-transparent"></div>
                   </h4>
                   <div className="pl-4 text-gray-300">
@@ -243,7 +246,7 @@ const SchemeRecommendation = () => {
                               <div className="ml-4 mt-2">
                                 {Object.entries(item).map(([subKey, subValue]) => (
                                   <div key={subKey} className="flex gap-2 text-sm">
-                                    <span className="text-purple-400">{subKey}:</span>
+                                    <span className="text-purple-400">{t(`modal.fields.${subKey}`, { defaultValue: subKey })}:</span>
                                     <span>{String(subValue)}</span>
                                   </div>
                                 ))}
@@ -258,7 +261,7 @@ const SchemeRecommendation = () => {
                       <div className="space-y-2 bg-black/20 p-4 rounded-lg">
                         {Object.entries(value).map(([subKey, subValue]) => (
                           <div key={subKey} className="flex flex-col gap-1">
-                            <span className="text-purple-400 text-sm">{subKey.replace(/_/g, ' ')}:</span>
+                            <span className="text-purple-400 text-sm">{t(`modal.fields.${subKey}`, { defaultValue: subKey.replace(/_/g, ' ') })}:</span>
                             <span className="pl-4">{String(subValue)}</span>
                           </div>
                         ))}
