@@ -1,0 +1,26 @@
+{
+    "pageTitle": "AI Business Suggestion",
+    "pageDescription": "Share your skills and discover tailored business ideas that match your expertise.",
+    "form": {
+      "skillsLabel": "Enter your skills:",
+      "skillsPlaceholder": "Example: Web development, marketing, cooking...",
+      "submitButton": "Get Suggestions"
+    },
+    "loading": "Loading suggestions...",
+    "error": {
+      "generic": "Something went wrong",
+      "connection": "Error connecting to server."
+    },
+    "businessIdeas": "Business Ideas:",
+    "businessDetails": {
+      "businessType": "Business Type",
+      "requiredResources": "Required Resources",
+      "initialSteps": "Initial Steps",
+      "whyItSuits": "Why It Suits You"
+    },
+    "actions": {
+      "translate": "Translate",
+      "translating": "Translating..."
+    },
+    "noSuggestions": "No suggestions available. Please try with different skills."
+  }
