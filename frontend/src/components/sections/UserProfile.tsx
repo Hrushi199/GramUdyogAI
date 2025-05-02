@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ParticleBackground from "../ui/ParticleBackground";
 
 interface UserProfileForm {
@@ -132,59 +133,114 @@ export default function UserProfile() {
     }));
   };
 
+  // const saveProfile = async () => {
+  //   if (form.skills.includes("Other") && form.customSkills.length === 0) {
+  //     setSkillError('Please add at least one custom skill or deselect "Other"');
+  //     return;
+  //   }
+    
+  //   if (form.jobTypes.includes("Other") && form.customJobTypes.length === 0) {
+  //     setJobTypeError('Please add at least one custom job type or deselect "Other"');
+  //     return;
+  //   }
+    
+  //   if (form.language === "Other" && !form.customLanguage.trim()) {
+  //     setLanguageError('Please enter your preferred language');
+  //     return;
+  //   }
+    
+  //   try {
+  //     setSaving(true);
+      
+  //     const finalLanguage = form.language === "Other" ? form.customLanguage : form.language;
+      
+  //     const { customLanguage, ...formWithoutCustomLanguage } = form;
+  //     const profileData = {
+  //       ...formWithoutCustomLanguage,
+  //       language: finalLanguage,
+  //       skills: [...form.skills.filter(s => s !== "Other"), ...form.customSkills],
+  //       jobTypes: [...form.jobTypes.filter(j => j !== "Other"), ...form.customJobTypes]
+  //     };
+      
+  //     console.log('Sending profile data:', profileData);
+  //     const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(profileData),
+  //     });
+
+  //     const data = await response.json();
+  //     console.log('Response data:', data);
+      
+  //     if (!response.ok) {
+  //       throw new Error(data.detail || data.error || 'Failed to save profile');
+  //     }
+
+  //     setTimeout(() => {
+  //       setSaving(false);
+  //       alert('Profile saved successfully!');
+  //     }, 1000);
+  //   } catch (error: unknown) {
+  //     console.error('Error saving profile:', error);
+  //     setSaving(false);
+  //     alert(error instanceof Error ? error.message : 'Failed to save profile. Please try again.');
+  //   }
+  // };
+
+  const navigate = useNavigate();
   const saveProfile = async () => {
     if (form.skills.includes("Other") && form.customSkills.length === 0) {
       setSkillError('Please add at least one custom skill or deselect "Other"');
       return;
     }
-    
+  
     if (form.jobTypes.includes("Other") && form.customJobTypes.length === 0) {
       setJobTypeError('Please add at least one custom job type or deselect "Other"');
       return;
     }
-    
+  
     if (form.language === "Other" && !form.customLanguage.trim()) {
       setLanguageError('Please enter your preferred language');
       return;
     }
-    
+  
     try {
       setSaving(true);
-      
+  
       const finalLanguage = form.language === "Other" ? form.customLanguage : form.language;
-      
+  
       const { customLanguage, ...formWithoutCustomLanguage } = form;
       const profileData = {
         ...formWithoutCustomLanguage,
         language: finalLanguage,
         skills: [...form.skills.filter(s => s !== "Other"), ...form.customSkills],
-        jobTypes: [...form.jobTypes.filter(j => j !== "Other"), ...form.customJobTypes]
+        jobTypes: [...form.jobTypes.filter(j => j !== "Other"), ...form.customJobTypes],
       };
-      
+  
       console.log('Sending profile data:', profileData);
       const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(profileData),
       });
-
+  
       const data = await response.json();
       console.log('Response data:', data);
-      
+  
       if (!response.ok) {
         throw new Error(data.detail || data.error || 'Failed to save profile');
       }
-
-      setTimeout(() => {
-        setSaving(false);
-        alert('Profile saved successfully!');
-      }, 1000);
+  
+      alert('Profile saved successfully!');
+      navigate('/dashboard'); // ✅ Redirect to dashboard
     } catch (error: unknown) {
       console.error('Error saving profile:', error);
-      setSaving(false);
       alert(error instanceof Error ? error.message : 'Failed to save profile. Please try again.');
+    } finally {
+      setSaving(false);
     }
   };
+  
 
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
