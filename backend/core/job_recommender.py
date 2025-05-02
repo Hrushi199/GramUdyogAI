@@ -1,13 +1,13 @@
 import json
 from typing import List, Dict
 from groq import Groq
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 import os
 import sqlite3
 from pydantic import BaseModel
 
 # Load environment variables from the .env file
-load_dotenv("./.env")
+load_dotenv(find_dotenv())
 api_key = os.getenv("GROQ_API_KEY")
 client = Groq(api_key=api_key)
 

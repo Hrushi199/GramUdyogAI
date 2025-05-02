@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react'
 export default function JobMentorDashboard() {
   const [jobs, setJobs] = useState([])
   const [mentors, setMentors] = useState([])
-
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   useEffect(() => {
-    fetch('/api/match/jobs').then(res => res.json()).then(setJobs)
-    fetch('/api/match/mentors').then(res => res.json()).then(setMentors)
+    fetch(`${API_BASE_URL}/api/match/jobs`).then(res => res.json()).then(setJobs)
+    fetch(`${API_BASE_URL}/api/match/mentors`).then(res => res.json()).then(setMentors)
   }, [])
 
   return (

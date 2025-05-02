@@ -63,6 +63,7 @@ async def get_image(image_name: str):
 
 @router.get("/audio/{audio_name}")
 async def get_audio(audio_name: str):
+    print('Getting audio file: ', audio_name)
     audio_path = os.path.join(AUDIO_FOLDER, audio_name)
 
     if not os.path.isfile(audio_path):

@@ -19,6 +19,7 @@ const dummyContent = [
     deliveryMode: 'Online',
     enrollments: 120,
     completions: 80,
+    skills: [],
   },
   {
     id: 2,
@@ -35,6 +36,7 @@ const dummyContent = [
     deliveryMode: 'Online',
     enrollments: 200,
     completions: 150,
+    skills: [],
   },
   {
     id: 3,
@@ -52,6 +54,7 @@ const dummyContent = [
     physicalDetails: { location: 'Chennai Community Center', date: '2025-05-01' },
     enrollments: 90,
     completions: 60,
+    skills: [],
   },
 ];
 
@@ -98,15 +101,44 @@ interface VisualSummary {
   created_at: string;
 }
 
+interface CSRCourse {
+  id: number;
+  company_id: number;
+  title: string;
+  description: string;
+  skills: string[];
+  duration: string;
+  language: string;
+  certification: boolean;
+  max_seats: number;
+  start_date: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  enrollments?: number;
+  completions?: number;
+}
+
+interface CSREnrollment {
+  id: number;
+  course_id: number;
+  user_id: number;
+  status: string;
+  progress: number;
+  feedback?: string;
+}
+
 // Main Component
 const SkillBuilder = () => {
-  const { t, i18n } = useTranslation('skillbuilder'); // Use 'translation' namespace
+  const { t, i18n } = useTranslation('skillbuilder');
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const USER_ID = 1; // Simulated user ID for demo purposes
+  const COMPANY_ID = 1; // Simulated company ID for demo purposes
 
   const [role, setRole] = useState('Consumer');
   const [content, setContent] = useState(dummyContent);
   const [liveSessions, setLiveSessions] = useState(dummyLiveSessions);
-  const [selectedContent, setSelectedContent] = useState(null);
+  const [selectedContent, setSelectedContent] = useState<CSRCourse | null>(null);
   const [selectedSession, setSelectedSession] = useState(null);
   const [chatMessage, setChatMessage] = useState('');
   const [qnaQuestion, setQnaQuestion] = useState('');
@@ -116,13 +148,19 @@ const SkillBuilder = () => {
   const [progress, setProgress] = useState(0);
   const [newContent, setNewContent] = useState({
     title: '',
-    type: 'Tutorial',
+    description: '',
+    skills: '',
+    type: 'Course',
     format: 'Video',
     language: 'Hindi',
     duration: '',
     url: '',
     deliveryMode: 'Online',
     physicalDetails: { location: '', date: '' },
+    certification: false,
+    max_seats: 0,
+    start_date: '',
+    status: 'active',
   });
 
   const [showSummaryCreator, setShowSummaryCreator] = useState(false);
@@ -131,9 +169,7 @@ const SkillBuilder = () => {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [isCreating, setIsCreating] = useState(false);
   const [translatingSummaryId, setTranslatingSummaryId] = useState<number | null>(null);
-
-  // Add new state for audio generation type
-  const [audioGenType, setAudioGenType] = useState('none'); // 'none', 'onDemand', 'all'
+  const [audioGenType, setAudioGenType] = useState('none');
 
   // Simulate offline caching with Service Worker
   useEffect(() => {
@@ -146,13 +182,13 @@ const SkillBuilder = () => {
 
   useEffect(() => {
     fetchSummaries();
-  }, []);
+    fetchCourses();
+  }, [API_BASE_URL]);
 
   const fetchSummaries = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/api/visual-summaries`);
-      let data = await response.json();
-      // Always use English summaries, do not translate here
+      const data = await response.json();
       setSummaries(data);
     } catch (error) {
       console.error('Error fetching summaries:', error);
@@ -167,8 +203,7 @@ const SkillBuilder = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic, context }),
       });
-      let data = await response.json();
-      // Always use English summary, do not translate here
+      const data = await response.json();
       setSummaries([data, ...summaries]);
       setCurrentSummary(data);
       setShowSummaryCreator(false);
@@ -178,13 +213,12 @@ const SkillBuilder = () => {
     setIsCreating(false);
   };
 
-  // Translate a single summary by id
   const handleTranslateSummary = async (summary: VisualSummary) => {
     setTranslatingSummaryId(summary.id);
     try {
       const tr = await fetch(`${API_BASE_URL}/api/translate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ json: summary, target_language: i18n.language }),
       });
       if (tr.ok) {
@@ -197,97 +231,177 @@ const SkillBuilder = () => {
         }
       }
     } catch (e) {
-      alert("Translation failed.");
+      alert('Translation failed.');
     }
     setTranslatingSummaryId(null);
   };
 
-  // Add audio generation function
   const generateSectionAudio = async (text: string, language: string, summaryId: number, sectionIndex: number) => {
-    console.log('Generating audio for section:', { text: text.substring(0, 100), language, summaryId, sectionIndex });
-    
     try {
-      // Generate the audio
       const response = await fetch(`${API_BASE_URL}/api/generate/${language}`, {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({ text, speaker: "male" }),
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ text, speaker: 'male' }),
       });
-      
-      if (!response.ok) {
-        console.error('Audio generation failed:', response.status);
-        const errorText = await response.text();
-        console.error('Error details:', errorText);
-        throw new Error('Audio generation failed');
-      }
-      
-      // Get the response data
+      if (!response.ok) throw new Error('Audio generation failed');
       const data = await response.json();
-      console.log('Audio generation response:', data);
-  
-      if (!data.filename) {
-        throw new Error('No filename in response');
-      }
-  
-      // Update the summary in the database with the new audio URL
-      const updateResponse = await fetch(
-        `${API_BASE_URL}/api/update-summary-audio`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            summary_id: summaryId,
-            section_index: sectionIndex,
-            audio_url: data.filename
-          })
-        }
-      );
-      
-      if (!updateResponse.ok) {
-        console.error('Failed to update summary with audio URL:', updateResponse.status);
-        throw new Error('Failed to update summary');
-      }
-      
-      console.log('Summary updated with audio URL');
+      if (!data.filename) throw new Error('No filename in response');
+
+      const updateResponse = await fetch(`${API_BASE_URL}/api/update-summary-audio`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          summary_id: summaryId,
+          section_index: sectionIndex,
+          audio_url: data.filename,
+        }),
+      });
+      if (!updateResponse.ok) throw new Error('Failed to update summary');
       return data.filename;
-      
     } catch (error) {
       console.error('Error in generateSectionAudio:', error);
       return null;
     }
   };
 
-  // Filter content based on role, language, and delivery mode
+  const fetchCourses = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/csr/courses`);
+      const csrCourses = await response.json();
+
+      const csrContent = csrCourses.map((course: CSRCourse) => ({
+        id: course.id,
+        titleKey: course.title,
+        type: 'Course',
+        format: 'CSR Course',
+        language: course.language,
+        provider: null,
+        uploader: `CSR Provider ${course.company_id}`,
+        isCSR: true,
+        duration: course.duration,
+        tokens: 0,
+        url: '#',
+        deliveryMode: 'Online',
+        enrollments: course.enrollments || 0,
+        completions: course.completions || 0,
+        certification: course.certification,
+        max_seats: course.max_seats,
+        start_date: course.start_date,
+        skills: course.skills,
+        description: course.description,
+        status: course.status,
+      }));
+
+      setContent([...dummyContent, ...csrContent]);
+    } catch (error) {
+      console.error('Error fetching CSR courses:', error);
+    }
+  };
+
+  const createCourse = async (courseData: any) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/csr/courses`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          company_id: COMPANY_ID,
+          title: courseData.title,
+          description: courseData.description,
+          skills: courseData.skills.split(',').map((s: string) => s.trim()),
+          duration: courseData.duration,
+          language: courseData.language,
+          certification: courseData.certification,
+          max_seats: courseData.max_seats,
+          start_date: courseData.start_date,
+          status: courseData.status,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        }),
+      });
+      if (!response.ok) throw new Error('Failed to create course');
+      const newCourse = await response.json();
+      setContent([
+        ...content,
+        {
+          id: newCourse.id,
+          titleKey: newCourse.title,
+          type: 'Course',
+          format: 'CSR Course',
+          language: newCourse.language,
+          provider: null,
+          uploader: `CSR Provider ${newCourse.company_id}`,
+          isCSR: true,
+          duration: newCourse.duration,
+          tokens: 0,
+          url: '#',
+          deliveryMode: 'Online',
+          enrollments: 0,
+          completions: 0,
+          certification: newCourse.certification,
+          max_seats: newCourse.max_seats,
+          start_date: newCourse.start_date,
+          skills: newCourse.skills,
+          description: newCourse.description,
+          status: newCourse.status,
+        },
+      ]);
+    } catch (error) {
+      console.error('Error creating course:', error);
+      alert('Failed to create course.');
+    }
+  };
+
+  const enrollCourse = async (courseId: number) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/csr/courses/${courseId}/enroll`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          course_id: courseId, // Added course_id to the request body
+          user_id: USER_ID,
+          status: 'pending',
+          progress: 0,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        const errorMessage = Array.isArray(errorData.detail)
+          ? errorData.detail.map((err: any) => err.msg).join(', ')
+          : errorData.detail;
+        throw new Error(errorMessage);
+      }
+      alert(t('consumer.enrollment.success'));
+      setTokens(tokens + selectedContent?.tokens || 0);
+      setProgress(progress + 10);
+    } catch (error: any) {
+      console.error('Error enrolling in course:', error);
+      alert(t('consumer.enrollment.failure') + ' ' + error.message);
+    }
+  };
+
   const filteredContent = content.filter((item) => {
     if (role === 'Consumer') {
       return (
         (filterLanguage === 'All' || item.language === filterLanguage) &&
         (filterMode === 'All' || item.deliveryMode === filterMode)
       );
-    } else if (role === 'Provider') {
-      return item.provider && item.provider !== 'NSDC';
     } else if (role === 'Uploader') {
-      return item.uploader;
+      return item.uploader && item.isCSR;
     }
     return false;
   });
 
-  // Handle content selection (Consumer)
-  const handleContentSelect = (item) => {
+  const handleContentSelect = (item: any) => {
     setSelectedContent(item);
-    setProgress(progress + 10);
-    setTokens(tokens + item.tokens);
   };
 
-  // Handle live session selection
-  const handleSessionSelect = (session) => {
+  const handleSessionSelect = (session: any) => {
     setSelectedSession(session);
   };
 
-  // Handle chat submission (Consumer)
-  const handleChatSubmit = (e) => {
+  const handleChatSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (chatMessage.trim() && selectedSession) {
       const updatedSessions = liveSessions.map((session) =>
@@ -307,68 +421,65 @@ const SkillBuilder = () => {
     }
   };
 
-  // Handle Q&A submission (Consumer)
-  const handleQnaSubmit = (e) => {
+  const handleQnaSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (qnaQuestion.trim() && selectedSession) {
       const updatedSessions = liveSessions.map((session) =>
         session.id === selectedSession.id
           ? {
               ...session,
-              qna: [...session.qna, { user: "You", question: qnaQuestion, timestamp: new Date().toLocaleTimeString() }],
+              qna: [...session.qna, { user: 'You', question: qnaQuestion, timestamp: new Date().toLocaleTimeString() }],
             }
           : session
       );
       setLiveSessions(updatedSessions);
       setSelectedSession({
         ...selectedSession,
-        qna: [...selectedSession.qna, { user: "You", question: qnaQuestion, timestamp: new Date().toLocaleTimeString() }],
+        qna: [...selectedSession.qna, { user: 'You', question: qnaQuestion, timestamp: new Date().toLocaleTimeString() }],
       });
       setQnaQuestion('');
     }
   };
 
-  // Handle content upload (Provider/Uploader)
-  const handleContentUpload = (e) => {
+  const handleContentUpload = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newId = content.length + 1;
-    const uploadedContent = {
-      id: newId,
-      titleKey: `dummyData.content.custom_${newId}`,
-      ...newContent,
-      provider: role === 'Provider' ? 'Local Trainer' : null,
-      uploader: role === 'Uploader' ? 'New CSR/Government' : null,
-      isCSR: role === 'Uploader',
-      tokens: 10,
-      enrollments: 0,
-      completions: 0,
-    };
-    setContent([...content, uploadedContent]);
+    await createCourse(newContent);
     setNewContent({
       title: '',
-      type: 'Tutorial',
+      description: '',
+      skills: '',
+      type: 'Course',
       format: 'Video',
       language: 'Hindi',
       duration: '',
       url: '',
       deliveryMode: 'Online',
       physicalDetails: { location: '', date: '' },
+      certification: false,
+      max_seats: 0,
+      start_date: '',
+      status: 'active',
     });
   };
 
-  // Handle analytics export (Uploader)
   const handleExportAnalytics = () => {
     const csvContent = filteredContent
-      .map(
-        (item) =>
-          `${t(item.titleKey)},${item.enrollments},${item.completions},${(item.completions / item.enrollments) * 100 || 0}%`
-      )
+      .map((item) => {
+        const completionRate = item.enrollments > 0 ? ((item.completions / item.enrollments) * 100).toFixed(2) : '0.00';
+        const seatsAvailable = item.max_seats ? item.max_seats - item.enrollments : 'N/A';
+        return `${item.titleKey},${item.language},${item.duration},${item.enrollments},${item.completions},${completionRate}%,${item.max_seats || 'N/A'},${seatsAvailable},${item.start_date || 'N/A'},${item.status || 'N/A'}`;
+      })
       .join('\n');
-    const blob = new Blob([`Title,Enrollments,Completions,Completion Rate\n${csvContent}`], { type: 'text/csv' });
+    const blob = new Blob(
+      [
+        `Title,Language,Duration,Enrollments,Completions,Completion Rate,Max Seats,Seats Available,Start Date,Status\n${csvContent}`,
+      ],
+      { type: 'text/csv' }
+    );
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'analytics.csv';
+    a.download = 'course_analytics.csv';
     a.click();
     window.URL.revokeObjectURL(url);
   };
@@ -381,11 +492,10 @@ const SkillBuilder = () => {
     onClose: () => void;
   }) => {
     const [sectionIdx, setSectionIdx] = useState(0);
-    const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);  // Add state for audio generation
+    const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
     const sections = summary.summary_data?.sections || [];
     const section = sections[sectionIdx] || { title: '', text: '', imageUrl: '', audioUrl: '' };
 
-    // Keyboard navigation
     useEffect(() => {
       const handleKey = (e: KeyboardEvent) => {
         if (e.key === 'ArrowLeft') setSectionIdx((idx) => Math.max(0, idx - 1));
@@ -410,7 +520,6 @@ const SkillBuilder = () => {
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.98, y: 40 }}
           >
-            {/* Close button */}
             <button
               className="absolute top-4 right-4 z-10 text-white/80 hover:text-white p-2 bg-black/30 rounded-full"
               onClick={onClose}
@@ -420,16 +529,16 @@ const SkillBuilder = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            {/* Translate button in modal */}
             <button
               className="absolute top-4 left-4 z-10 text-white/80 hover:text-white p-2 bg-black/30 rounded-full"
               onClick={() => handleTranslateSummary(summary)}
               disabled={translatingSummaryId === summary.id}
-              aria-label="Translate"
+              aria-label={t('consumer.visualSummaryModal.translate')}
             >
-              {translatingSummaryId === summary.id ? "Translating..." : "Translate"}
+              {translatingSummaryId === summary.id
+                ? t('consumer.visualSummaryModal.translating')
+                : t('consumer.visualSummaryModal.translate')}
             </button>
-            {/* Image */}
             <div className="relative h-[60vh] bg-black">
               <img
                 src={`${API_BASE_URL}/api/images/${section.imageUrl}`}
@@ -439,7 +548,6 @@ const SkillBuilder = () => {
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-              {/* Section navigation arrows */}
               <button
                 className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white p-2 rounded-full"
                 onClick={() => setSectionIdx((idx) => Math.max(0, idx - 1))}
@@ -461,8 +569,6 @@ const SkillBuilder = () => {
                 </svg>
               </button>
             </div>
-
-            {/* Section text */}
             <div className="p-6 pb-4">
               <h2 className="text-2xl font-bold text-purple-200 mb-2">{summary.summary_data.title}</h2>
               <div className="mb-4">
@@ -482,12 +588,12 @@ const SkillBuilder = () => {
               )}
               <div className="mt-4 flex items-center gap-4">
                 {section.audioUrl ? (
-                  <audio 
-                    controls 
-                    src={`${API_BASE_URL}/api/audio/${i18n.language}/${section.audioUrl}`} 
-                    className="flex-1" 
+                  <audio
+                    controls
+                    src={`${API_BASE_URL}/api/audio/${i18n.language}/${section.audioUrl}`}
+                    className="flex-1"
                   />
-                ) : true && (
+                ) : (
                   <button
                     onClick={async () => {
                       setIsGeneratingAudio(true);
@@ -499,16 +605,11 @@ const SkillBuilder = () => {
                           sectionIdx
                         );
                         if (audioUrl) {
-                          // Update the local state
-                          const updatedSummary = {...summary};
+                          const updatedSummary = { ...summary };
                           updatedSummary.summary_data.sections[sectionIdx].audioUrl = audioUrl;
                           setCurrentSummary(updatedSummary);
-                          
-                          // Update the summaries list
-                          setSummaries(prevSummaries =>
-                            prevSummaries.map(s =>
-                              s.id === summary.id ? updatedSummary : s
-                            )
+                          setSummaries((prevSummaries) =>
+                            prevSummaries.map((s) => (s.id === summary.id ? updatedSummary : s))
                           );
                         }
                       } finally {
@@ -518,7 +619,9 @@ const SkillBuilder = () => {
                     disabled={isGeneratingAudio}
                     className="bg-purple-500 text-white px-4 py-2 rounded-lg disabled:opacity-50"
                   >
-                    {isGeneratingAudio ? t('consumer.visualSummaryModal.generatingAudio') : t('consumer.visualSummaryModal.generateAudio')}
+                    {isGeneratingAudio
+                      ? t('consumer.visualSummaryModal.generatingAudio')
+                      : t('consumer.visualSummaryModal.generateAudio')}
                   </button>
                 )}
               </div>
@@ -543,7 +646,6 @@ const SkillBuilder = () => {
 
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
-      {/* Background grid and accent lights */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="h-full w-full bg-[radial-gradient(circle_at_center,rgba(38,38,38,0.3)_1px,transparent_1px)] bg-[length:24px_24px]"></div>
       </div>
@@ -552,12 +654,10 @@ const SkillBuilder = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 z-10 pointer-events-none"></div>
 
       <div className={`relative z-20 max-w-7xl mx-auto px-6 py-16 ${currentSummary ? 'hidden' : ''}`}>
-        {/* Header */}
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-10 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
           {t('header.title')}
         </h1>
 
-        {/* Role Switcher */}
         <div className="mb-8">
           <label className="block text-sm font-medium text-purple-200 mb-2">{t('roleSwitcher.label')}</label>
           <select
@@ -565,16 +665,13 @@ const SkillBuilder = () => {
             value={role}
             onChange={(e) => setRole(e.target.value)}
           >
-            <option>{t('roleSwitcher.consumer')}</option>
-            <option>{t('roleSwitcher.provider')}</option>
-            <option>{t('roleSwitcher.uploader')}</option>
+            <option value="Consumer">{t('roleSwitcher.consumer')}</option>
+            <option value="Uploader">{t('roleSwitcher.uploader')}</option>
           </select>
         </div>
 
-        {/* Consumer View */}
         {role === 'Consumer' && (
           <>
-            {/* Search Bar */}
             <div className="mb-8">
               <input
                 type="text"
@@ -583,15 +680,14 @@ const SkillBuilder = () => {
                 onChange={(e) => {
                   const searchQuery = e.target.value.toLowerCase();
                   setContent(
-                    dummyContent.filter((item) =>
-                      t(item.titleKey).toLowerCase().includes(searchQuery)
+                    [...dummyContent, ...content.filter((item) => item.isCSR)].filter((item) =>
+                      item.titleKey.toLowerCase().includes(searchQuery)
                     )
                   );
                 }}
               />
             </div>
 
-            {/* Filters */}
             <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 mb-8">
               <div>
                 <label className="block text-sm font-medium text-purple-200">{t('consumer.filters.languageLabel')}</label>
@@ -609,7 +705,7 @@ const SkillBuilder = () => {
               <div>
                 <label className="block text-sm font-medium text-blue-200">{t('consumer.filters.deliveryModeLabel')}</label>
                 <select
-                  className="mt-1 block w-full p-2 bg-black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
+                  className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                   value={filterMode}
                   onChange={(e) => setFilterMode(e.target.value)}
                 >
@@ -620,13 +716,20 @@ const SkillBuilder = () => {
               </div>
             </div>
 
-            {/* Content List */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
               {filteredContent.map((item) => (
-                <div key={item.id} className="bg-white/10 backdrop-blur-lg p-5 rounded-2xl shadow-lg border border-white/10 hover:shadow-2xl transition">
-                  <h3 className="text-xl font-semibold text-purple-200">{t(item.titleKey)}</h3>
+                <div
+                  key={item.id}
+                  className="bg-white/10 backdrop-blur-lg p-5 rounded-2xl shadow-lg border border-white/10 hover:shadow-2xl transition"
+                >
+                  <h3 className="text-xl font-semibold text-purple-200">{item.isCSR ? item.titleKey : t(item.titleKey)}</h3>
+                  {item.isCSR && (
+                    <span className="inline-block px-2 py-1 rounded-full text-xs bg-blue-600 text-white mb-2">
+                      CSR Course
+                    </span>
+                  )}
                   <p className="text-sm text-gray-200">{t('consumer.contentList.type')}{item.type}</p>
-                  <p className="text-sm text.gray-200">{t('consumer.contentList.format')}{item.format}</p>
+                  <p className="text-sm text-gray-200">{t('consumer.contentList.format')}{item.format}</p>
                   <p className="text-sm text-gray-200">{t('consumer.contentList.language')}{item.language}</p>
                   <p className="text-sm text-gray-200">
                     {t('consumer.contentList.source')}
@@ -645,26 +748,67 @@ const SkillBuilder = () => {
                       {item.physicalDetails.location} on {item.physicalDetails.date}
                     </p>
                   )}
+                  {item.isCSR && Array.isArray(item.skills) && item.skills.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {item.skills.map((skill, idx) => (
+                        <span key={idx} className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded-full">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  {item.isCSR && (
+                    <>
+                      <p className="text-sm text-gray-200">
+                        {t('consumer.contentList.seats')}{item.max_seats - (item.enrollments || 0)}/{item.max_seats}
+                      </p>
+                      <p className="text-sm text-gray-200">
+                        {t('consumer.contentList.startDate')}{item.start_date}
+                      </p>
+                    </>
+                  )}
                   <button
                     className="mt-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:from-purple-600 hover:to-blue-600 transition"
                     onClick={() => handleContentSelect(item)}
                   >
                     {t('consumer.contentList.startLearning')}
                   </button>
+                  {item.isCSR && (
+                    <button
+                      className="mt-3 ml-2 bg-gradient-to-r from-green-500 to-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:from-green-600 hover:to-blue-600 transition"
+                      onClick={() => enrollCourse(item.id)}
+                    >
+                      {t('consumer.contentList.enroll')}
+                    </button>
+                  )}
                 </div>
               ))}
             </div>
 
-            {/* Selected Content Details */}
             {selectedContent && (
               <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
-                <h2 className="text-2xl font-semibold mb-2 text-purple-200">{t(selectedContent.titleKey)}</h2>
+                <h2 className="text-2xl font-semibold mb-2 text-purple-200">{selectedContent.titleKey}</h2>
                 <p className="text-gray-200">
                   {t('consumer.selectedContent.source')}
                   {selectedContent.uploader || selectedContent.provider}
                 </p>
                 <p className="text-gray-200">{t('consumer.selectedContent.format')}{selectedContent.format}</p>
                 <p className="text-gray-200">{t('consumer.selectedContent.language')}{selectedContent.language}</p>
+                {selectedContent.isCSR && (
+                  <>
+                    <p className="text-gray-200">{t('consumer.selectedContent.description')}{selectedContent.description}</p>
+                    <p className="text-gray-200">
+                      {t('consumer.selectedContent.certification')}{selectedContent.certification ? 'Yes' : 'No'}
+                    </p>
+                    <p className="text-gray-200">
+                      {t('consumer.selectedContent.seats')}{selectedContent.max_seats - (selectedContent.enrollments || 0)}/
+                      {selectedContent.max_seats}
+                    </p>
+                    <p className="text-gray-200">
+                      {t('consumer.selectedContent.startDate')}{selectedContent.start_date}
+                    </p>
+                  </>
+                )}
                 <div className="mt-4">
                   {selectedContent.format.includes('Video') ? (
                     <video controls className="w-full rounded-lg border border-white/10">
@@ -691,7 +835,6 @@ const SkillBuilder = () => {
               </div>
             )}
 
-            {/* Live Sessions */}
             <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
               <h2 className="text-2xl font-semibold mb-4 text-blue-200">{t('consumer.liveSessions.title')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -723,14 +866,12 @@ const SkillBuilder = () => {
               </div>
             </div>
 
-            {/* Chat and Q&A for Selected Session */}
             {selectedSession && (
               <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg border border-white/10">
                 <h2 className="text-2xl font-semibold mb-4 text-blue-200">
                   {t(selectedSession.titleKey)} - {t('consumer.chatQna.interaction')}
                 </h2>
                 <div className="flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-6">
-                  {/* Chat Section */}
                   <div className="md:w-1/2">
                     <h3 className="text-lg font-semibold mb-2 text-purple-200">{t('consumer.chatQna.chatTitle')}</h3>
                     <div className="h-64 overflow-y-auto border border-white/10 bg-black/20 p-2 rounded-lg mb-4">
@@ -757,7 +898,6 @@ const SkillBuilder = () => {
                       </button>
                     </form>
                   </div>
-                  {/* Q&A Section */}
                   <div className="md:w-1/2">
                     <h3 className="text-lg font-semibold mb-2 text-blue-200">{t('consumer.chatQna.qnaTitle')}</h3>
                     <div className="h-64 overflow-y-auto border border-white/10 bg-black/20 p-2 rounded-lg mb-4">
@@ -794,7 +934,6 @@ const SkillBuilder = () => {
               </div>
             )}
 
-            {/* Visual Summaries */}
             <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-semibold text-purple-200">{t('consumer.visualSummaries.title')}</h2>
@@ -840,16 +979,15 @@ const SkillBuilder = () => {
                       <div className="absolute bottom-2 right-2 text-xs text-gray-400">
                         {new Date(summary.created_at).toLocaleDateString()}
                       </div>
-                      {/* Translate button on card */}
                       <button
                         className="absolute bottom-2 left-2 bg-blue-700/80 text-xs px-3 py-1 rounded text-white hover:bg-blue-800 transition"
-                        onClick={e => {
+                        onClick={(e) => {
                           e.stopPropagation();
                           handleTranslateSummary(summary);
                         }}
                         disabled={translatingSummaryId === summary.id}
                       >
-                        {translatingSummaryId === summary.id ? "Translating..." : "Translate"}
+                        {translatingSummaryId === summary.id ? 'Translating...' : 'Translate'}
                       </button>
                     </div>
                   );
@@ -857,7 +995,6 @@ const SkillBuilder = () => {
               </div>
             </div>
 
-            {/* Summary Creator Modal */}
             {showSummaryCreator && (
               <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
                 <div className="bg-gray-900 p-6 rounded-xl w-full max-w-md">
@@ -868,30 +1005,27 @@ const SkillBuilder = () => {
                       const form = e.target as HTMLFormElement;
                       const topic = (form.elements.namedItem('topic') as HTMLInputElement).value;
                       const context = (form.elements.namedItem('context') as HTMLTextAreaElement).value;
-                      
+
                       if (audioGenType === 'all') {
-                        // Create summary with all audio files
                         const response = await fetch(`${API_BASE_URL}/api/visual-summary`, {
                           method: 'POST',
                           headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({ 
-                            topic, 
+                          body: JSON.stringify({
+                            topic,
                             context,
                             generateAudio: true,
-                            language: i18n.language 
+                            language: i18n.language,
                           }),
                         });
                         const data = await response.json();
                         setSummaries([data, ...summaries]);
                         setCurrentSummary(data);
                       } else {
-                        // Create summary without audio
                         createVisualSummary(topic, context);
                       }
                       setShowSummaryCreator(false);
                     }}
                   >
-                    {/* Existing form fields */}
                     <input
                       type="text"
                       name="topic"
@@ -905,8 +1039,6 @@ const SkillBuilder = () => {
                       className="w-full p-2 bg-black/50 text-white border border-white/20 rounded mb-4 h-32"
                       required
                     />
-                    
-                    {/* Add audio generation options */}
                     <div className="mb-4">
                       <label className="block text-sm font-medium text-gray-200 mb-2">
                         {t('consumer.summaryCreatorModal.audioOptions')}
@@ -921,9 +1053,7 @@ const SkillBuilder = () => {
                             onChange={(e) => setAudioGenType(e.target.value)}
                             className="text-purple-500"
                           />
-                          <span className="text-white">
-                            {t('consumer.summaryCreatorModal.audioNone')}
-                          </span>
+                          <span className="text-white">{t('consumer.summaryCreatorModal.audioNone')}</span>
                         </label>
                         <label className="flex items-center space-x-2">
                           <input
@@ -934,9 +1064,7 @@ const SkillBuilder = () => {
                             onChange={(e) => setAudioGenType(e.target.value)}
                             className="text-purple-500"
                           />
-                          <span className="text-white">
-                            {t('consumer.summaryCreatorModal.audioOnDemand')}
-                          </span>
+                          <span className="text-white">{t('consumer.summaryCreatorModal.audioOnDemand')}</span>
                         </label>
                         <label className="flex items-center space-x-2">
                           <input
@@ -947,14 +1075,11 @@ const SkillBuilder = () => {
                             onChange={(e) => setAudioGenType(e.target.value)}
                             className="text-purple-500"
                           />
-                          <span className="text-white">
-                            {t('consumer.summaryCreatorModal.audioAll')}
-                          </span>
+                          <span className="text-white">{t('consumer.summaryCreatorModal.audioAll')}</span>
                         </label>
                       </div>
                     </div>
 
-                    {/* Existing buttons */}
                     <div className="flex justify-end gap-4">
                       <button
                         type="button"
@@ -978,16 +1103,14 @@ const SkillBuilder = () => {
           </>
         )}
 
-        {/* Provider View */}
-        {role === 'Provider' && (
+        {role === 'Uploader' && (
           <>
-            {/* Content Upload Form */}
             <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4 text-purple-200">{t('provider.contentUpload.title')}</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-purple-200">{t('uploader.contentUpload.title')}</h2>
               <form onSubmit={handleContentUpload}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.titleLabel')}</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.titleLabel')}</label>
                     <input
                       type="text"
                       className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
@@ -997,200 +1120,29 @@ const SkillBuilder = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.typeLabel')}</label>
-                    <select
-                      className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
-                      value={newContent.type}
-                      onChange={(e) => setNewContent({ ...newContent, type: e.target.value })}
-                    >
-                      <option>{t('provider.contentUpload.typeTutorial')}</option>
-                      <option>{t('provider.contentUpload.typeCourse')}</option>
-                    </select>
+                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.descriptionLabel')}</label>
+                    <textarea
+                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                      value={newContent.description}
+                      onChange={(e) => setNewContent({ ...newContent, description: e.target.value })}
+                      required
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.formatLabel')}</label>
-                    <select
-                      className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
-                      value={newContent.format}
-                      onChange={(e) => setNewContent({ ...newContent, format: e.target.value })}
-                    >
-                      <option>{t('provider.contentUpload.formatVideo')}</option>
-                      <option>{t('provider.contentUpload.formatTextAudio')}</option>
-                      <option>{t('provider.contentUpload.formatVideoPhysical')}</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.languageLabel')}</label>
-                    <select
-                      className="mt-1 block w-full p-2 bg.black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
-                      value={newContent.language}
-                      onChange={(e) => setNewContent({ ...newContent, language: e.target.value })}
-                    >
-                      <option>{t('provider.contentUpload.languageHindi')}</option>
-                      <option>{t('provider.contentUpload.languageEnglish')}</option>
-                      <option>{t('provider.contentUpload.languageTamil')}</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.durationLabel')}</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.skillsLabel')}</label>
                     <input
                       type="text"
-                      className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
-                      value={newContent.duration}
-                      onChange={(e) => setNewContent({ ...newContent, duration: e.target.value })}
+                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                      value={newContent.skills}
+                      onChange={(e) => setNewContent({ ...newContent, skills: e.target.value })}
+                      placeholder="Comma-separated skills (e.g., Python, Data Analysis)"
                       required
                     />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.urlLabel')}</label>
-                    <input
-                      type="url"
-                      className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
-                      value={newContent.url}
-                      onChange={(e) => setNewContent({ ...newContent, url: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.deliveryModeLabel')}</label>
-                    <select
-                      className="mt-1 block w-full p-2 bg.black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
-                      value={newContent.deliveryMode}
-                      onChange={(e) => setNewContent({ ...newContent, deliveryMode: e.target.value })}
-                    >
-                      <option>{t('provider.contentUpload.deliveryModeOnline')}</option>
-                      <option>{t('provider.contentUpload.deliveryModeHybrid')}</option>
-                    </select>
-                  </div>
-                  {newContent.deliveryMode === 'Hybrid' && (
-                    <>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.physicalLocationLabel')}</label>
-                        <input
-                          type="text"
-                          className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
-                          value={newContent.physicalDetails.location}
-                          onChange={(e) =>
-                            setNewContent({
-                              ...newContent,
-                              physicalDetails: { ...newContent.physicalDetails, location: e.target.value },
-                            })
-                          }
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.physicalDateLabel')}</label>
-                        <input
-                          type="date"
-                          className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
-                          value={newContent.physicalDetails.date}
-                          onChange={(e) =>
-                            setNewContent({
-                              ...newContent,
-                              physicalDetails: { ...newContent.physicalDetails, date: e.target.value },
-                            })
-                          }
-                        />
-                      </div>
-                    </>
-                  )}
-                </div>
-                <button
-                  type="submit"
-                  className="mt-4 bg-gradient-to-r from-purple-500 to-blue-500 text.white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition"
-                >
-                  {t('provider.contentUpload.uploadButton')}
-                </button>
-              </form>
-            </div>
-
-            {/* Provider Content List */}
-            <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4 text-blue-200">{t('provider.contentList.title')}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {filteredContent.map((item) => (
-                  <div key={item.id} className="border border-white/10 bg-black/20 p-4 rounded">
-                    <h3 className="text-lg font-semibold text-purple-200">{t(item.titleKey)}</h3>
-                    <p className="text-sm text-gray-200">{t('provider.contentList.type')}{item.type}</p>
-                    <p className="text-sm text-blue-200">{t('provider.contentList.enrollments')}{item.enrollments}</p>
-                    <p className="text-sm text-blue-200">{t('provider.contentList.completions')}{item.completions}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Provider Live Sessions */}
-            <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4 text.blue-200">{t('provider.liveSessions.title')}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {liveSessions
-                  .filter((session) => session.provider)
-                  .map((session) => (
-                    <div key={session.id} className="border border-white/10 bg-black/20 p-4 rounded">
-                      <h3 className="text-lg font-semibold text-purple-200">{t(session.titleKey)}</h3>
-                      <p className="text-sm text-gray-200">{t('provider.liveSessions.date')}{session.date}</p>
-                      <p className="text-sm text-gray-200">{t('provider.liveSessions.time')}{session.time}</p>
-                      <p className="text-sm text-blue-200">{t('provider.liveSessions.participants')}{session.participants}</p>
-                      <a
-                        href={session.meetingLink}
-                        className="text-blue-400 underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {t('provider.liveSessions.hostMeeting')}
-                      </a>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          </>
-        )}
-
-        {/* Uploader View */}
-        {role === 'Uploader' && (
-          <>
-            {/* Content Upload Form (CSR-Branded) */}
-            <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4 text-purple-200">{t('uploader.contentUpload.title')}</h2>
-              <form onSubmit={handleContentUpload}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.titleLabel')}</label>
-                    <input
-                      type="text"
-                      className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
-                      value={newContent.title}
-                      onChange={(e) => setNewContent({ ...newContent, title: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.typeLabel')}</label>
-                    <select
-                      className="mt-1 block w-full p-2 bg.black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
-                      value={newContent.type}
-                      onChange={(e) => setNewContent({ ...newContent, type: e.target.value })}
-                    >
-                      <option>{t('uploader.contentUpload.typeTutorial')}</option>
-                      <option>{t('uploader.contentUpload.typeCourse')}</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.formatLabel')}</label>
-                    <select
-                      className="mt-1 block w-full p-2 bg.black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
-                      value={newContent.format}
-                      onChange={(e) => setNewContent({ ...newContent, format: e.target.value })}
-                    >
-                      <option>{t('uploader.contentUpload.formatVideo')}</option>
-                      <option>{t('uploader.contentUpload.formatTextAudio')}</option>
-                      <option>{t('uploader.contentUpload.formatVideoPhysical')}</option>
-                    </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.languageLabel')}</label>
                     <select
-                      className="mt-1 block w-full p-2 bg.black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
+                      className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.language}
                       onChange={(e) => setNewContent({ ...newContent, language: e.target.value })}
                     >
@@ -1203,127 +1155,116 @@ const SkillBuilder = () => {
                     <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.durationLabel')}</label>
                     <input
                       type="text"
-                      className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
                       value={newContent.duration}
                       onChange={(e) => setNewContent({ ...newContent, duration: e.target.value })}
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.urlLabel')}</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.maxSeatsLabel')}</label>
                     <input
-                      type="url"
-                      className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
-                      value={newContent.url}
-                      onChange={(e) => setNewContent({ ...newContent, url: e.target.value })}
+                      type="number"
+                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                      value={newContent.max_seats}
+                      onChange={(e) => setNewContent({ ...newContent, max_seats: parseInt(e.target.value) })}
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.deliveryModeLabel')}</label>
+                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.startDateLabel')}</label>
+                    <input
+                      type="date"
+                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                      value={newContent.start_date}
+                      onChange={(e) => setNewContent({ ...newContent, start_date: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.certificationLabel')}</label>
+                    <input
+                      type="checkbox"
+                      className="mt-1"
+                      checked={newContent.certification}
+                      onChange={(e) => setNewContent({ ...newContent, certification: e.target.checked })}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.statusLabel')}</label>
                     <select
-                      className="mt-1 block w-full p-2 bg.black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
-                      value={newContent.deliveryMode}
-                      onChange={(e) => setNewContent({ ...newContent, deliveryMode: e.target.value })}
+                      className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
+                      value={newContent.status}
+                      onChange={(e) => setNewContent({ ...newContent, status: e.target.value })}
                     >
-                      <option>{t('uploader.contentUpload.deliveryModeOnline')}</option>
-                      <option>{t('uploader.contentUpload.deliveryModeHybrid')}</option>
+                      <option value="active">{t('uploader.contentUpload.statusActive')}</option>
+                      <option value="inactive">{t('uploader.contentUpload.statusInactive')}</option>
                     </select>
                   </div>
-                  {newContent.deliveryMode === 'Hybrid' && (
-                    <>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.physicalLocationLabel')}</label>
-                        <input
-                          type="text"
-                          className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
-                          value={newContent.physicalDetails.location}
-                          onChange={(e) =>
-                            setNewContent({
-                              ...newContent,
-                              physicalDetails: { ...newContent.physicalDetails, location: e.target.value },
-                            })
-                          }
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.physicalDateLabel')}</label>
-                        <input
-                          type="date"
-                          className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
-                          value={newContent.physicalDetails.date}
-                          onChange={(e) =>
-                            setNewContent({
-                              ...newContent,
-                              physicalDetails: { ...newContent.physicalDetails, date: e.target.value },
-                            })
-                          }
-                        />
-                      </div>
-                    </>
-                  )}
                 </div>
                 <button
                   type="submit"
-                  className="mt-4 bg-gradient-to-r from-purple-500 to-blue-500 text.white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition"
+                  className="mt-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition"
                 >
                   {t('uploader.contentUpload.uploadButton')}
                 </button>
               </form>
             </div>
 
-            {/* Uploader Analytics Dashboard */}
             <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4 text-blue-200">{t('uploader.analyticsDashboard.title')}</h2>
-              <button
-                className="mb-4 bg-gradient-to-r from-green-500 to-blue-500 text.white px-4 py-2 rounded-lg hover:from-green-600 hover:to-blue-600 transition"
-                onClick={handleExportAnalytics}
-              >
-                {t('uploader.analyticsDashboard.exportCsv')}
-              </button>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {filteredContent.map((item) => (
-                  <div key={item.id} className="border border-white/10 bg.black/20 p-4 rounded">
-                    <h3 className="text-lg font-semibold text-purple-200">{t(item.titleKey)}</h3>
-                    <p className="text-sm text-blue-200">{t('uploader.analyticsDashboard.enrollments')}{item.enrollments}</p>
-                    <p className="text-sm text-blue-200">{t('uploader.analyticsDashboard.completions')}{item.completions}</p>
-                    <p className="text-sm text-gray-200">
-                      {t('uploader.analyticsDashboard.completionRate')}
-                      {((item.completions / item.enrollments) * 100 || 0).toFixed(2)}%
-                    </p>
-                  </div>
-                ))}
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-semibold text-blue-200">{t('uploader.analytics.title')}</h2>
+                <button
+                >
+                  {t('uploader.analytics.exportButton')}
+                </button>
               </div>
-            </div>
-
-            {/* Uploader Live Sessions */}
-            <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4 text-blue-200">{t('uploader.liveSessions.title')}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {liveSessions
-                  .filter((session) => session.uploader)
-                  .map((session) => (
-                    <div key={session.id} className="border border-white/10 bg.black/20 p-4 rounded">
-                      <h3 className="text-lg font-semibold text-purple-200">{t(session.titleKey)}</h3>
-                      <p className="text-sm text-gray-200">{t('uploader.liveSessions.date')}{session.date}</p>
-                      <p className="text-sm text-gray-200">{t('uploader.liveSessions.time')}{session.time}</p>
-                      <p className="text-sm text-blue-200">{t('uploader.liveSessions.participants')}{session.participants}</p>
-                      <a
-                        href={session.meetingLink}
-                        className="text-blue-400 underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {t('uploader.liveSessions.hostMeeting')}
-                      </a>
-                    </div>
-                  ))}
+              <div className="overflow-x-auto">
+                <table className="w-full text-left">
+                  <thead>
+                    <tr className="text-gray-200 border-b border-white/10">
+                      <th className="py-2">{t('uploader.analytics.table.title')}</th>
+                      <th className="py-2">{t('uploader.analytics.table.language')}</th>
+                      <th className="py-2">{t('uploader.analytics.table.duration')}</th>
+                      <th className="py-2">{t('uploader.analytics.table.enrollments')}</th>
+                      <th className="py-2">{t('uploader.analytics.table.completions')}</th>
+                      <th className="py-2">{t('uploader.analytics.table.completionRate')}</th>
+                      <th className="py-2">{t('uploader.analytics.table.maxSeats')}</th>
+                      <th className="py-2">{t('uploader.analytics.table.seatsAvailable')}</th>
+                      <th className="py-2">{t('uploader.analytics.table.startDate')}</th>
+                      <th className="py-2">{t('uploader.analytics.table.status')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredContent.map((item) => {
+                      const completionRate = item.enrollments > 0 ? ((item.completions / item.enrollments) * 100).toFixed(2) : '0.00';
+                      const seatsAvailable = item.max_seats ? item.max_seats - item.enrollments : 'N/A';
+                      return (
+                        <tr key={item.id} className="border-b border-white/10">
+                          <td className="py-2">{item.titleKey}</td>
+                          <td className="py-2">{item.language}</td>
+                          <td className="py-2">{item.duration}</td>
+                          <td className="py-2">{item.enrollments}</td>
+                          <td className="py-2">{item.completions}</td>
+                          <td className="py-2">{completionRate}%</td>
+                          <td className="py-2">{item.max_seats || 'N/A'}</td>
+                          <td className="py-2">{seatsAvailable}</td>
+                          <td className="py-2">{item.start_date || 'N/A'}</td>
+                          <td className="py-2">{item.status || 'N/A'}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
             </div>
           </>
         )}
       </div>
-      {currentSummary && <VisualSummaryModal summary={currentSummary} onClose={() => setCurrentSummary(null)} />}
+
+      {currentSummary && (
+        <VisualSummaryModal summary={currentSummary} onClose={() => setCurrentSummary(null)} />
+      )}
     </div>
   );
 };
