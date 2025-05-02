@@ -130,6 +130,7 @@ const SkillBuilder = () => {
   const [currentSummary, setCurrentSummary] = useState<VisualSummary | null>(null);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [isCreating, setIsCreating] = useState(false);
+  const [translatingSummaryId, setTranslatingSummaryId] = useState<number | null>(null);
 
   // Simulate offline caching with Service Worker
   useEffect(() => {
@@ -147,7 +148,8 @@ const SkillBuilder = () => {
   const fetchSummaries = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/api/visual-summaries`);
-      const data = await response.json();
+      let data = await response.json();
+      // Always use English summaries, do not translate here
       setSummaries(data);
     } catch (error) {
       console.error('Error fetching summaries:', error);
@@ -162,7 +164,8 @@ const SkillBuilder = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic, context }),
       });
-      const data = await response.json();
+      let data = await response.json();
+      // Always use English summary, do not translate here
       setSummaries([data, ...summaries]);
       setCurrentSummary(data);
       setShowSummaryCreator(false);
@@ -170,6 +173,30 @@ const SkillBuilder = () => {
       console.error('Error creating summary:', error);
     }
     setIsCreating(false);
+  };
+
+  // Translate a single summary by id
+  const handleTranslateSummary = async (summary: VisualSummary) => {
+    setTranslatingSummaryId(summary.id);
+    try {
+      const tr = await fetch(`${API_BASE_URL}/api/translate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ json: summary, target_language: i18n.language }),
+      });
+      if (tr.ok) {
+        const translated = await tr.json();
+        setSummaries((prev) =>
+          prev.map((s) => (s.id === summary.id ? { ...s, ...translated, id: s.id } : s))
+        );
+        if (currentSummary && currentSummary.id === summary.id) {
+          setCurrentSummary({ ...currentSummary, ...translated, id: summary.id });
+        }
+      }
+    } catch (e) {
+      alert("Translation failed.");
+    }
+    setTranslatingSummaryId(null);
   };
 
   // Filter content based on role, language, and delivery mode
@@ -332,7 +359,15 @@ const SkillBuilder = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-
+            {/* Translate button in modal */}
+            <button
+              className="absolute top-4 left-4 z-10 text-white/80 hover:text-white p-2 bg-black/30 rounded-full"
+              onClick={() => handleTranslateSummary(summary)}
+              disabled={translatingSummaryId === summary.id}
+              aria-label="Translate"
+            >
+              {translatingSummaryId === summary.id ? "Translating..." : "Translate"}
+            </button>
             {/* Image */}
             <div className="relative h-[60vh] bg-black">
               <img
@@ -411,7 +446,7 @@ const SkillBuilder = () => {
       </div>
       <div className="absolute -top-24 -left-24 w-96 h-96 bg-purple-600 rounded-full filter blur-[128px] opacity-20 z-0 pointer-events-none"></div>
       <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-blue-600 rounded-full filter blur-[128px] opacity-20 z-0 pointer-events-none"></div>
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 z-10 pointer-events-none"></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 z-10 pointer-events-none"></div>
 
       <div className={`relative z-20 max-w-7xl mx-auto px-6 py-16 ${currentSummary ? 'hidden' : ''}`}>
         {/* Header */}
@@ -488,7 +523,7 @@ const SkillBuilder = () => {
                 <div key={item.id} className="bg-white/10 backdrop-blur-lg p-5 rounded-2xl shadow-lg border border-white/10 hover:shadow-2xl transition">
                   <h3 className="text-xl font-semibold text-purple-200">{t(item.titleKey)}</h3>
                   <p className="text-sm text-gray-200">{t('consumer.contentList.type')}{item.type}</p>
-                  <p className="text-sm text-gray-200">{t('consumer.contentList.format')}{item.format}</p>
+                  <p className="text-sm text.gray-200">{t('consumer.contentList.format')}{item.format}</p>
                   <p className="text-sm text-gray-200">{t('consumer.contentList.language')}{item.language}</p>
                   <p className="text-sm text-gray-200">
                     {t('consumer.contentList.source')}
@@ -702,6 +737,17 @@ const SkillBuilder = () => {
                       <div className="absolute bottom-2 right-2 text-xs text-gray-400">
                         {new Date(summary.created_at).toLocaleDateString()}
                       </div>
+                      {/* Translate button on card */}
+                      <button
+                        className="absolute bottom-2 left-2 bg-blue-700/80 text-xs px-3 py-1 rounded text-white hover:bg-blue-800 transition"
+                        onClick={e => {
+                          e.stopPropagation();
+                          handleTranslateSummary(summary);
+                        }}
+                        disabled={translatingSummaryId === summary.id}
+                      >
+                        {translatingSummaryId === summary.id ? "Translating..." : "Translate"}
+                      </button>
                     </div>
                   );
                 })}
@@ -770,7 +816,7 @@ const SkillBuilder = () => {
                     <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.titleLabel')}</label>
                     <input
                       type="text"
-                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg.white/10 text-white border border-white/20 rounded focus:outline-none"
                       value={newContent.title}
                       onChange={(e) => setNewContent({ ...newContent, title: e.target.value })}
                       required
@@ -901,7 +947,7 @@ const SkillBuilder = () => {
 
             {/* Provider Live Sessions */}
             <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4 text-blue-200">{t('provider.liveSessions.title')}</h2>
+              <h2 className="text-2xl font-semibold mb-4 text.blue-200">{t('provider.liveSessions.title')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {liveSessions
                   .filter((session) => session.provider)
@@ -947,7 +993,7 @@ const SkillBuilder = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.typeLabel')}</label>
                     <select
-                      className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
+                      className="mt-1 block w-full p-2 bg-black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.type}
                       onChange={(e) => setNewContent({ ...newContent, type: e.target.value })}
                     >

@@ -13,7 +13,7 @@ type SchemeExplanation = {
 };
 
 const SchemeRecommendation = () => {
-  const { t } = useTranslation('scheme-recommender'); // Use 'scheme-recommender' namespace
+  const { t, i18n } = useTranslation('scheme-recommender'); // Use 'scheme-recommender' namespace
   
   const [occupation, setOccupation] = useState("");
   const [schemes, setSchemes] = useState<string[]>([]);
@@ -22,12 +22,13 @@ const SchemeRecommendation = () => {
   const [selectedJson, setSelectedJson] = useState<Record<string, any> | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false); // Added loading state
+  const [translatingIdx, setTranslatingIdx] = useState<number | null>(null);
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true); // Set loading to true when submission starts
+    setLoading(true);
 
     try {
       const response = await fetch(`${API_BASE_URL}/schemes`, {
@@ -40,19 +41,16 @@ const SchemeRecommendation = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Received data:', data); // Debug log
         setSchemes(data.relevant_schemes || []);
-        // Ensure explanation is an array of valid scheme objects
-        const explanations = Array.isArray(data.explanation) ? data.explanation : [];
-        console.log('Parsed explanations:', explanations); // Debug log
-        setExplanation(explanations);
+        // Always use English explanation, do not translate here
+        setExplanation(data.explanation || []);
       } else {
         console.error("Failed to fetch schemes:", response.statusText);
       }
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      setLoading(false); // Set loading to false when done
+      setLoading(false);
     }
   };
 
@@ -73,6 +71,26 @@ const SchemeRecommendation = () => {
     setSelectedJson(null);
     setIsModalOpen(false);
     document.body.style.overflow = 'unset';
+  };
+
+  const handleTranslateExplanation = async (idx: number, scheme: SchemeExplanation) => {
+    setTranslatingIdx(idx);
+    try {
+      const tr = await fetch(`${API_BASE_URL}/api/translate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ json: scheme, target_language: i18n.language }),
+      });
+      if (tr.ok) {
+        const translated = await tr.json();
+        setExplanation((prev) =>
+          prev.map((s, i) => (i === idx ? { ...s, ...translated } : s))
+        );
+      }
+    } catch {
+      alert("Translation failed.");
+    }
+    setTranslatingIdx(null);
   };
 
   return (
@@ -178,6 +196,20 @@ const SchemeRecommendation = () => {
                           openIndexes.includes(idx) ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0 overflow-hidden"
                         }`}
                       >
+                        {openIndexes.includes(idx) && (
+                          <div className="flex justify-end mb-2">
+                            <button
+                              className="bg-blue-700/80 text-xs px-3 py-1 rounded text-white hover:bg-blue-800 transition"
+                              onClick={e => {
+                                e.stopPropagation();
+                                handleTranslateExplanation(idx, scheme);
+                              }}
+                              disabled={translatingIdx === idx}
+                            >
+                              {translatingIdx === idx ? "Translating..." : "Translate"}
+                            </button>
+                          </div>
+                        )}
                         <div className="py-2 space-y-4">
                           <div className="flex flex-col gap-1">
                             <span className="font-medium text-purple-400">{t('scheme.goal')}</span>

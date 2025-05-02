@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface Suggestion {
   idea_name: string;
@@ -14,8 +15,10 @@ const BusinessSuggestion: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [openIndexes, setOpenIndexes] = useState<number[]>([]);
+  const [translatingIdx, setTranslatingIdx] = useState<number | null>(null);
   
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const { i18n } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,10 +37,9 @@ const BusinessSuggestion: React.FC = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setSuggestions(data.suggestions || []);
-        console.log(data);
-        console.log(data.suggestions.length);
-
+        let suggestions = data.suggestions || [];
+        // Always use English suggestions, do not translate here
+        setSuggestions([...suggestions]);
       } else {
         setError(data.error || 'Something went wrong');
       }
@@ -46,6 +48,26 @@ const BusinessSuggestion: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleTranslateSuggestion = async (idx: number, suggestion: Suggestion) => {
+    setTranslatingIdx(idx);
+    try {
+      const tr = await fetch(`${API_BASE_URL}/api/translate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ json: suggestion, target_language: i18n.language }),
+      });
+      if (tr.ok) {
+        const translated = await tr.json();
+        setSuggestions((prev) =>
+          prev.map((s, i) => (i === idx ? { ...s, ...translated } : s))
+        );
+      }
+    } catch {
+      alert("Translation failed.");
+    }
+    setTranslatingIdx(null);
   };
 
   const toggleCollapse = (idx: number) => {
@@ -107,6 +129,20 @@ const BusinessSuggestion: React.FC = () => {
                   openIndexes.includes(idx) ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
                 }`}
               >
+                {openIndexes.includes(idx) && (
+                  <div className="flex justify-end mb-2">
+                    <button
+                      className="bg-blue-700/80 text-xs px-3 py-1 rounded text-white hover:bg-blue-800 transition"
+                      onClick={e => {
+                        e.stopPropagation();
+                        handleTranslateSuggestion(idx, suggestion);
+                      }}
+                      disabled={translatingIdx === idx}
+                    >
+                      {translatingIdx === idx ? "Translating..." : "Translate"}
+                    </button>
+                  </div>
+                )}
                 <div className="py-2 space-y-4">
                   <div className="flex flex-col gap-1">
                     <span className="font-medium text-purple-400">Business Type</span>
