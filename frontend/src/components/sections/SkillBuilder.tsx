@@ -132,6 +132,9 @@ const SkillBuilder = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [translatingSummaryId, setTranslatingSummaryId] = useState<number | null>(null);
 
+  // Add new state for audio generation type
+  const [audioGenType, setAudioGenType] = useState('none'); // 'none', 'onDemand', 'all'
+
   // Simulate offline caching with Service Worker
   useEffect(() => {
     if ('serviceWorker' in navigator) {
@@ -197,6 +200,63 @@ const SkillBuilder = () => {
       alert("Translation failed.");
     }
     setTranslatingSummaryId(null);
+  };
+
+  // Add audio generation function
+  const generateSectionAudio = async (text: string, language: string, summaryId: number, sectionIndex: number) => {
+    console.log('Generating audio for section:', { text: text.substring(0, 100), language, summaryId, sectionIndex });
+    
+    try {
+      // Generate the audio
+      const response = await fetch(`${API_BASE_URL}/api/generate/${language}`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ text, speaker: "male" }),
+      });
+      
+      if (!response.ok) {
+        console.error('Audio generation failed:', response.status);
+        const errorText = await response.text();
+        console.error('Error details:', errorText);
+        throw new Error('Audio generation failed');
+      }
+      
+      // Get the response data
+      const data = await response.json();
+      console.log('Audio generation response:', data);
+  
+      if (!data.filename) {
+        throw new Error('No filename in response');
+      }
+  
+      // Update the summary in the database with the new audio URL
+      const updateResponse = await fetch(
+        `${API_BASE_URL}/api/update-summary-audio`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            summary_id: summaryId,
+            section_index: sectionIndex,
+            audio_url: data.filename
+          })
+        }
+      );
+      
+      if (!updateResponse.ok) {
+        console.error('Failed to update summary with audio URL:', updateResponse.status);
+        throw new Error('Failed to update summary');
+      }
+      
+      console.log('Summary updated with audio URL');
+      return data.filename;
+      
+    } catch (error) {
+      console.error('Error in generateSectionAudio:', error);
+      return null;
+    }
   };
 
   // Filter content based on role, language, and delivery mode
@@ -321,6 +381,7 @@ const SkillBuilder = () => {
     onClose: () => void;
   }) => {
     const [sectionIdx, setSectionIdx] = useState(0);
+    const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);  // Add state for audio generation
     const sections = summary.summary_data?.sections || [];
     const section = sections[sectionIdx] || { title: '', text: '', imageUrl: '', audioUrl: '' };
 
@@ -419,6 +480,48 @@ const SkillBuilder = () => {
               {section.audioUrl && section.audioUrl.length > 0 && (
                 <audio controls src={section.audioUrl} className="mt-2 w-full" />
               )}
+              <div className="mt-4 flex items-center gap-4">
+                {section.audioUrl ? (
+                  <audio 
+                    controls 
+                    src={`${API_BASE_URL}/api/audio/${i18n.language}/${section.audioUrl}`} 
+                    className="flex-1" 
+                  />
+                ) : true && (
+                  <button
+                    onClick={async () => {
+                      setIsGeneratingAudio(true);
+                      try {
+                        const audioUrl = await generateSectionAudio(
+                          section.text,
+                          i18n.language,
+                          summary.id,
+                          sectionIdx
+                        );
+                        if (audioUrl) {
+                          // Update the local state
+                          const updatedSummary = {...summary};
+                          updatedSummary.summary_data.sections[sectionIdx].audioUrl = audioUrl;
+                          setCurrentSummary(updatedSummary);
+                          
+                          // Update the summaries list
+                          setSummaries(prevSummaries =>
+                            prevSummaries.map(s =>
+                              s.id === summary.id ? updatedSummary : s
+                            )
+                          );
+                        }
+                      } finally {
+                        setIsGeneratingAudio(false);
+                      }
+                    }}
+                    disabled={isGeneratingAudio}
+                    className="bg-purple-500 text-white px-4 py-2 rounded-lg disabled:opacity-50"
+                  >
+                    {isGeneratingAudio ? t('consumer.visualSummaryModal.generatingAudio') : t('consumer.visualSummaryModal.generateAudio')}
+                  </button>
+                )}
+              </div>
               <div className="flex justify-center gap-2 mt-6">
                 {sections.map((_, idx) => (
                   <button
@@ -446,7 +549,7 @@ const SkillBuilder = () => {
       </div>
       <div className="absolute -top-24 -left-24 w-96 h-96 bg-purple-600 rounded-full filter blur-[128px] opacity-20 z-0 pointer-events-none"></div>
       <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-blue-600 rounded-full filter blur-[128px] opacity-20 z-0 pointer-events-none"></div>
-      <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 z-10 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 z-10 pointer-events-none"></div>
 
       <div className={`relative z-20 max-w-7xl mx-auto px-6 py-16 ${currentSummary ? 'hidden' : ''}`}>
         {/* Header */}
@@ -506,7 +609,7 @@ const SkillBuilder = () => {
               <div>
                 <label className="block text-sm font-medium text-blue-200">{t('consumer.filters.deliveryModeLabel')}</label>
                 <select
-                  className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
+                  className="mt-1 block w-full p-2 bg-black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                   value={filterMode}
                   onChange={(e) => setFilterMode(e.target.value)}
                 >
@@ -760,14 +863,35 @@ const SkillBuilder = () => {
                 <div className="bg-gray-900 p-6 rounded-xl w-full max-w-md">
                   <h3 className="text-xl font-semibold text-purple-200 mb-4">{t('consumer.summaryCreatorModal.title')}</h3>
                   <form
-                    onSubmit={(e) => {
+                    onSubmit={async (e) => {
                       e.preventDefault();
                       const form = e.target as HTMLFormElement;
                       const topic = (form.elements.namedItem('topic') as HTMLInputElement).value;
                       const context = (form.elements.namedItem('context') as HTMLTextAreaElement).value;
-                      createVisualSummary(topic, context);
+                      
+                      if (audioGenType === 'all') {
+                        // Create summary with all audio files
+                        const response = await fetch(`${API_BASE_URL}/api/visual-summary`, {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ 
+                            topic, 
+                            context,
+                            generateAudio: true,
+                            language: i18n.language 
+                          }),
+                        });
+                        const data = await response.json();
+                        setSummaries([data, ...summaries]);
+                        setCurrentSummary(data);
+                      } else {
+                        // Create summary without audio
+                        createVisualSummary(topic, context);
+                      }
+                      setShowSummaryCreator(false);
                     }}
                   >
+                    {/* Existing form fields */}
                     <input
                       type="text"
                       name="topic"
@@ -781,6 +905,56 @@ const SkillBuilder = () => {
                       className="w-full p-2 bg-black/50 text-white border border-white/20 rounded mb-4 h-32"
                       required
                     />
+                    
+                    {/* Add audio generation options */}
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-200 mb-2">
+                        {t('consumer.summaryCreatorModal.audioOptions')}
+                      </label>
+                      <div className="space-y-2">
+                        <label className="flex items-center space-x-2">
+                          <input
+                            type="radio"
+                            name="audioGen"
+                            value="none"
+                            checked={audioGenType === 'none'}
+                            onChange={(e) => setAudioGenType(e.target.value)}
+                            className="text-purple-500"
+                          />
+                          <span className="text-white">
+                            {t('consumer.summaryCreatorModal.audioNone')}
+                          </span>
+                        </label>
+                        <label className="flex items-center space-x-2">
+                          <input
+                            type="radio"
+                            name="audioGen"
+                            value="onDemand"
+                            checked={audioGenType === 'onDemand'}
+                            onChange={(e) => setAudioGenType(e.target.value)}
+                            className="text-purple-500"
+                          />
+                          <span className="text-white">
+                            {t('consumer.summaryCreatorModal.audioOnDemand')}
+                          </span>
+                        </label>
+                        <label className="flex items-center space-x-2">
+                          <input
+                            type="radio"
+                            name="audioGen"
+                            value="all"
+                            checked={audioGenType === 'all'}
+                            onChange={(e) => setAudioGenType(e.target.value)}
+                            className="text-purple-500"
+                          />
+                          <span className="text-white">
+                            {t('consumer.summaryCreatorModal.audioAll')}
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+
+                    {/* Existing buttons */}
                     <div className="flex justify-end gap-4">
                       <button
                         type="button"
@@ -816,7 +990,7 @@ const SkillBuilder = () => {
                     <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.titleLabel')}</label>
                     <input
                       type="text"
-                      className="mt-1 block w-full p-2 bg.white/10 text-white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
                       value={newContent.title}
                       onChange={(e) => setNewContent({ ...newContent, title: e.target.value })}
                       required
@@ -848,7 +1022,7 @@ const SkillBuilder = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.languageLabel')}</label>
                     <select
-                      className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
+                      className="mt-1 block w-full p-2 bg.black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.language}
                       onChange={(e) => setNewContent({ ...newContent, language: e.target.value })}
                     >
@@ -861,7 +1035,7 @@ const SkillBuilder = () => {
                     <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.durationLabel')}</label>
                     <input
                       type="text"
-                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
                       value={newContent.duration}
                       onChange={(e) => setNewContent({ ...newContent, duration: e.target.value })}
                       required
@@ -871,7 +1045,7 @@ const SkillBuilder = () => {
                     <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.urlLabel')}</label>
                     <input
                       type="url"
-                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
                       value={newContent.url}
                       onChange={(e) => setNewContent({ ...newContent, url: e.target.value })}
                       required
@@ -880,7 +1054,7 @@ const SkillBuilder = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.deliveryModeLabel')}</label>
                     <select
-                      className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
+                      className="mt-1 block w-full p-2 bg.black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.deliveryMode}
                       onChange={(e) => setNewContent({ ...newContent, deliveryMode: e.target.value })}
                     >
@@ -894,7 +1068,7 @@ const SkillBuilder = () => {
                         <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.physicalLocationLabel')}</label>
                         <input
                           type="text"
-                          className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                          className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
                           value={newContent.physicalDetails.location}
                           onChange={(e) =>
                             setNewContent({
@@ -908,7 +1082,7 @@ const SkillBuilder = () => {
                         <label className="block text-sm font-medium text-gray-200">{t('provider.contentUpload.physicalDateLabel')}</label>
                         <input
                           type="date"
-                          className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                          className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
                           value={newContent.physicalDetails.date}
                           onChange={(e) =>
                             setNewContent({
@@ -923,7 +1097,7 @@ const SkillBuilder = () => {
                 </div>
                 <button
                   type="submit"
-                  className="mt-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition"
+                  className="mt-4 bg-gradient-to-r from-purple-500 to-blue-500 text.white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition"
                 >
                   {t('provider.contentUpload.uploadButton')}
                 </button>
@@ -984,7 +1158,7 @@ const SkillBuilder = () => {
                     <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.titleLabel')}</label>
                     <input
                       type="text"
-                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
                       value={newContent.title}
                       onChange={(e) => setNewContent({ ...newContent, title: e.target.value })}
                       required
@@ -993,7 +1167,7 @@ const SkillBuilder = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.typeLabel')}</label>
                     <select
-                      className="mt-1 block w-full p-2 bg-black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
+                      className="mt-1 block w-full p-2 bg.black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.type}
                       onChange={(e) => setNewContent({ ...newContent, type: e.target.value })}
                     >
@@ -1004,7 +1178,7 @@ const SkillBuilder = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.formatLabel')}</label>
                     <select
-                      className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
+                      className="mt-1 block w-full p-2 bg.black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.format}
                       onChange={(e) => setNewContent({ ...newContent, format: e.target.value })}
                     >
@@ -1016,7 +1190,7 @@ const SkillBuilder = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.languageLabel')}</label>
                     <select
-                      className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
+                      className="mt-1 block w-full p-2 bg.black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.language}
                       onChange={(e) => setNewContent({ ...newContent, language: e.target.value })}
                     >
@@ -1029,7 +1203,7 @@ const SkillBuilder = () => {
                     <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.durationLabel')}</label>
                     <input
                       type="text"
-                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
                       value={newContent.duration}
                       onChange={(e) => setNewContent({ ...newContent, duration: e.target.value })}
                       required
@@ -1039,7 +1213,7 @@ const SkillBuilder = () => {
                     <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.urlLabel')}</label>
                     <input
                       type="url"
-                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                      className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
                       value={newContent.url}
                       onChange={(e) => setNewContent({ ...newContent, url: e.target.value })}
                       required
@@ -1048,7 +1222,7 @@ const SkillBuilder = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.deliveryModeLabel')}</label>
                     <select
-                      className="mt-1 block w-full p-2 bg-black/50 text-white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
+                      className="mt-1 block w-full p-2 bg.black/50 text.white border border-white/20 rounded focus:outline-none [&>option]:bg-gray-900"
                       value={newContent.deliveryMode}
                       onChange={(e) => setNewContent({ ...newContent, deliveryMode: e.target.value })}
                     >
@@ -1062,7 +1236,7 @@ const SkillBuilder = () => {
                         <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.physicalLocationLabel')}</label>
                         <input
                           type="text"
-                          className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                          className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
                           value={newContent.physicalDetails.location}
                           onChange={(e) =>
                             setNewContent({
@@ -1076,7 +1250,7 @@ const SkillBuilder = () => {
                         <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.physicalDateLabel')}</label>
                         <input
                           type="date"
-                          className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                          className="mt-1 block w-full p-2 bg.white/10 text.white border border-white/20 rounded focus:outline-none"
                           value={newContent.physicalDetails.date}
                           onChange={(e) =>
                             setNewContent({
@@ -1091,7 +1265,7 @@ const SkillBuilder = () => {
                 </div>
                 <button
                   type="submit"
-                  className="mt-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition"
+                  className="mt-4 bg-gradient-to-r from-purple-500 to-blue-500 text.white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition"
                 >
                   {t('uploader.contentUpload.uploadButton')}
                 </button>
@@ -1102,14 +1276,14 @@ const SkillBuilder = () => {
             <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-8 border border-white/10">
               <h2 className="text-2xl font-semibold mb-4 text-blue-200">{t('uploader.analyticsDashboard.title')}</h2>
               <button
-                className="mb-4 bg-gradient-to-r from-green-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-green-600 hover:to-blue-600 transition"
+                className="mb-4 bg-gradient-to-r from-green-500 to-blue-500 text.white px-4 py-2 rounded-lg hover:from-green-600 hover:to-blue-600 transition"
                 onClick={handleExportAnalytics}
               >
                 {t('uploader.analyticsDashboard.exportCsv')}
               </button>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filteredContent.map((item) => (
-                  <div key={item.id} className="border border-white/10 bg-black/20 p-4 rounded">
+                  <div key={item.id} className="border border-white/10 bg.black/20 p-4 rounded">
                     <h3 className="text-lg font-semibold text-purple-200">{t(item.titleKey)}</h3>
                     <p className="text-sm text-blue-200">{t('uploader.analyticsDashboard.enrollments')}{item.enrollments}</p>
                     <p className="text-sm text-blue-200">{t('uploader.analyticsDashboard.completions')}{item.completions}</p>
@@ -1129,7 +1303,7 @@ const SkillBuilder = () => {
                 {liveSessions
                   .filter((session) => session.uploader)
                   .map((session) => (
-                    <div key={session.id} className="border border-white/10 bg-black/20 p-4 rounded">
+                    <div key={session.id} className="border border-white/10 bg.black/20 p-4 rounded">
                       <h3 className="text-lg font-semibold text-purple-200">{t(session.titleKey)}</h3>
                       <p className="text-sm text-gray-200">{t('uploader.liveSessions.date')}{session.date}</p>
                       <p className="text-sm text-gray-200">{t('uploader.liveSessions.time')}{session.time}</p>

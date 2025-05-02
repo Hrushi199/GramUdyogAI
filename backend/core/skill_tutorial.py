@@ -12,6 +12,8 @@ import base64
 from PIL import Image
 from time import sleep
 from e2enetworks.cloud import tir
+from core.audio_generation import TextToSpeech
+
 # import torch
 # import torchvision.transforms as transforms
 # Load environment variables from the .env file
@@ -185,8 +187,31 @@ def slugify(text):
     # Simple slugify: lowercase, replace spaces with _, remove non-alphanum
     return re.sub(r'[^a-zA-Z0-9_]', '', text.lower().replace(' ', '_'))
 
-def generate_visual_summary_json(topic, rag) -> VisualSummary:
-    print('Received:', topic, rag)
+tts = TextToSpeech()
+
+def translate_text(text: str, target_language: str) -> str:
+    """Translate text to target language"""
+    try:
+        # Use your translation API here
+        # For now, we'll use a mock implementation
+        if target_language == "en":
+            return text
+        response = requests.post(
+            "http://127.0.0.1:8000/translate",  # Replace with your actual translation endpoint
+            json={"text": text, "target_language": target_language}
+        )
+        return response.json()["translated_text"]
+    except Exception as e:
+        print(f"Translation failed: {e}")
+        return text
+
+def generate_visual_summary_json(topic: str, rag: str, language: str = "en", generate_audio: bool = False) -> VisualSummary:
+    print(f"\n=== Starting Visual Summary Generation ===")
+    print(f"Topic: {topic}")
+    print(f"Language: {language}")
+    print(f"Generate Audio: {generate_audio}")
+    
+    # First generate summary in English
     schema = json.dumps(VisualSummary.model_json_schema(), indent=2)
     prompt = (
         "You are an educational assistant that outputs visual summaries in JSON.\n"
@@ -200,6 +225,8 @@ def generate_visual_summary_json(topic, rag) -> VisualSummary:
         "Ensure the content is engaging, concise, and suitable for an immersive, story-like presentation with visuals and audio narration.\n"
         "Respond in JSON format."
     )
+    
+    print("\n--- Generating Initial Summary ---")
     chat_completion = client.chat.completions.create(
         messages=[
             {"role": "system", "content": prompt},
@@ -209,42 +236,84 @@ def generate_visual_summary_json(topic, rag) -> VisualSummary:
         stream=False,
         response_format={"type": "json_object"},
     )
+    
     try:
+        print("\n--- Validating Summary JSON ---")
         summary = VisualSummary.model_validate_json(chat_completion.choices[0].message.content)
+        print(f"Initial Summary: {json.dumps(summary.model_dump(), indent=2)}")
+        
+        # If language is not English, translate the content
+        if language != "en":
+            print(f"\n--- Translating Content to {language} ---")
+            summary.title = translate_text(summary.title, language)
+            print(f"Translated Title: {summary.title}")
+            for idx, section in enumerate(summary.sections):
+                print(f"\nTranslating Section {idx + 1}")
+                section.title = translate_text(section.title, language)
+                section.text = translate_text(section.text, language)
+                print(f"Section {idx + 1} Title: {section.title}")
+                print(f"Section {idx + 1} Text: {section.text}")
     except Exception as e:
-        print(f"Error validating JSON: {e}")
-        summary = VisualSummary(type="summary", title=f"Error generating visual summary for {topic}", sections=[])
-    print("Generated visual summary:", summary)
+        print(f"\n!!! Error in Summary Generation/Translation: {e}")
+        summary = VisualSummary(type="summary", title=f"Error generating summary for {topic}", sections=[])
 
-    # Ensure images directory exists
-    images_dir = pathlib.Path("images")
-    images_dir.mkdir(exist_ok=True)
-
-    # Unique tag for this visual summary
+    print("\n--- Setting up Asset Generation ---")
     timestamp = int(time.time())
     topic_slug = slugify(topic)
     unique_tag = f"{topic_slug}_{timestamp}"
+    print(f"Generated Tag: {unique_tag}")
+    
+    # Create directories
+    images_dir = pathlib.Path("images")
+    audio_dir = pathlib.Path("audio")
+    images_dir.mkdir(exist_ok=True)
+    audio_dir.mkdir(exist_ok=True)
+    print("Directories created/verified")
 
-    # hf_api_key = os.getenv("HF_API_KEY")
-
-    # For each section, generate image and set imageUrl
+    # Process each section
+    print("\n=== Processing Sections ===")
     for idx, section in enumerate(summary.sections):
+        print(f"\n--- Processing Section {idx + 1} ---")
+        
+        # Generate image
+        print("Generating Image...")
         image_filename = f"{unique_tag}_section_{idx+1}.png"
         image_path = images_dir / image_filename
-        # Generate image prompt for this section
         image_prompt = generate_image_prompt(section.text)
-        # Generate image using E2E
+        print(f"Image Prompt: {image_prompt}")
+        print(f"Image Path: {image_path}")
+        
         success = generate_image_e2e(image_prompt, image_path)
+        print(f"Image Generation {'Successful' if success else 'Failed'}")
         sleep(5)
-        if not success:
-            # If image generation fails, create an empty placeholder
-            with open(image_path, "wb") as f:
-                f.write(b"")
+        
         section.imageUrl = f"{image_filename}"
-        section.audioUrl = ""  # Ensure audioUrl is blank
+        print(f"Image URL set: {section.imageUrl}")
 
-    with open('visual_summary.json', 'w') as f:
-        f.write(summary.model_dump_json(indent=4))
+        # Generate audio if requested
+        if generate_audio:
+            print("\nGenerating Audio...")
+            audio_filename = f"{unique_tag}_section_{idx+1}.wav"
+            audio_path = audio_dir / audio_filename
+            try:
+                tts.generate_audio(
+                    text=section.text,
+                    output_path=str(audio_path),
+                    speaker="male",
+                    language=language  # Use the requested language
+                )
+                section.audioUrl = f"{audio_filename}"
+                print(f"Audio Generation Successful")
+                print(f"Audio URL set: {section.audioUrl}")
+            except Exception as e:
+                print(f"!!! Error generating audio: {e}")
+                section.audioUrl = ""
+        else:
+            print("Skipping Audio Generation")
+            section.audioUrl = ""
+
+    print("\n=== Summary Generation Complete ===")
+    print(f"Final Summary: {json.dumps(summary.model_dump(), indent=2)}")
     return summary
 
 if __name__ == "__main__":
