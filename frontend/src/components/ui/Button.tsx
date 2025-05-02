@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type ButtonVariant = 'primary' | 'secondary';
 type ButtonSize = 'sm' | 'md' | 'lg';
@@ -7,6 +8,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   children: React.ReactNode;
+  navigateTo?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -14,8 +16,25 @@ const Button: React.FC<ButtonProps> = ({
   size = 'md',
   children,
   className = '',
+  navigateTo,
+  onClick,
   ...props
 }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    console.log('Button clicked. navigateTo:', navigateTo);
+
+    if (navigateTo) {
+      event.preventDefault();
+      navigate(navigateTo);
+    }
+
+    if (onClick) {
+      onClick(event);
+    }
+  };
+
   const baseClasses = "font-medium rounded-lg transition-all";
   
   const variantClasses = {
@@ -32,7 +51,11 @@ const Button: React.FC<ButtonProps> = ({
   const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
 
   return (
-    <button className={classes} {...props}>
+    <button 
+      className={classes} 
+      onClick={handleClick} 
+      {...props}
+    >
       {children}
     </button>
   );

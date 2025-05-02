@@ -9,7 +9,7 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ loaded }) => {
-  const { t, i18n } = useTranslation('hero'); // Use 'hero' namespace
+  const { t } = useTranslation('hero');
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const Hero: React.FC<HeroProps> = ({ loaded }) => {
       if (heroRef.current) {
         const scrollPosition = window.scrollY;
         const parallaxElements = heroRef.current.querySelectorAll('.parallax');
-        
+
         parallaxElements.forEach((element, index) => {
           const speed = index * 0.05 + 0.1;
           (element as HTMLElement).style.transform = `translateY(${scrollPosition * speed}px)`;
@@ -31,34 +31,18 @@ const Hero: React.FC<HeroProps> = ({ loaded }) => {
 
   return (
     <div ref={heroRef} className="relative overflow-hidden min-h-screen">
-      {/* Background elements */}
       <ParticleBackground />
-      
+
       <div className="absolute inset-0 z-0">
         <div className="h-full w-full bg-[radial-gradient(circle_at_center,rgba(38,38,38,0.3)_1px,transparent_1px)] bg-[length:24px_24px]"></div>
       </div>
-      
-      {/* Gradient overlay */}
+
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 z-10"></div>
-      
-      {/* Accent lights */}
+
       <div className="parallax absolute -top-24 -left-24 w-96 h-96 bg-purple-600 rounded-full filter blur-[128px] opacity-20 z-0"></div>
       <div className="parallax absolute -bottom-32 -right-32 w-96 h-96 bg-blue-600 rounded-full filter blur-[128px] opacity-20 z-0"></div>
-      
-      {/* Main content */}
-      <div className="relative z-20 max-w-7xl mx-auto px-6 py-32">
-        {/* Language Switcher */}
-        <div className="absolute top-4 right-4">
-          <select
-            className="p-2 border border-white/20 bg-black/50 text-white rounded focus:outline-none [&>option]:bg-gray-900"
-            value={i18n.language}
-            onChange={(e) => i18n.changeLanguage(e.target.value)}
-          >
-            <option value="en">English</option>
-            <option value="hi">Hindi</option>
-          </select>
-        </div>
 
+      <div className="relative z-20 max-w-7xl mx-auto px-6 py-32">
         <div className="flex flex-col md:flex-row items-center gap-16 mt-16">
           <div className={`w-full md:w-1/2 transform transition-all duration-1000 ${loaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
             <h1 className="text-5xl md:text-7xl font-bold leading-tight">
@@ -71,14 +55,17 @@ const Hero: React.FC<HeroProps> = ({ loaded }) => {
               {t('description')}
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
-              <Button size="lg">{t('buttons.getStarted')}</Button>
-              <Button variant="secondary" size="lg">{t('buttons.learnMore')}</Button>
+              <Button size="lg" navigateTo="/profile">
+                {t('buttons.getStarted')}
+              </Button>
+              <Button variant="secondary" size="lg">
+                {t('buttons.learnMore')}
+              </Button>
             </div>
           </div>
-          
+
           <div className={`w-full md:w-1/2 transform transition-all duration-1000 delay-300 ${loaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
             <div className="relative aspect-square max-w-lg mx-auto">
-              {/* Abstract 3D shape representation */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="relative w-64 h-64">
                   <div className="absolute top-0 left-0 w-48 h-48 bg-gradient-to-r from-purple-500 to-blue-500 rounded-3xl transform rotate-12 animate-pulse"></div>
