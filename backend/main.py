@@ -6,6 +6,7 @@ from api.routes_business import router as business_router
 from api.routes_scheme import router as scheme_router
 from api.routes_jobs import router as jobs_router
 from api.translation import router as translation_router
+from api.routes_audio import router as audio_router
 
 app = FastAPI(title="GramUdyogAI API")
 
@@ -25,6 +26,7 @@ app.include_router(business_router,tags=["business"])
 app.include_router(scheme_router, tags=["schemes"])
 app.include_router(jobs_router, prefix="/api", tags=["jobs"])
 app.include_router(translation_router, tags=["translation"])
+app.include_router(audio_router, prefix="/api", tags=["audio"])
 
 if __name__ == "__main__":
     import uvicorn

@@ -76,14 +76,20 @@
       "contextPlaceholder": "Enter additional context...",
       "cancel": "Cancel",
       "create": "Create",
-      "creating": "Creating..."
+      "creating": "Creating...",
+      "audioOptions": "Audio Generation Options",
+      "audioNone": "No audio generation",
+      "audioOnDemand": "Generate audio on demand (faster)",
+      "audioAll": "Generate all audio now (takes longer)"
     },
     "visualSummaryModal": {
       "close": "Close",
       "previous": "Previous",
       "next": "Next",
       "sectionInfo": "Section {sectionIdx} of {sectionsLength}",
-      "goToSection": "Go to section {sectionIdx}"
+      "goToSection": "Go to section {sectionIdx}",
+      "generateAudio": "Generate Audio",
+      "generatingAudio": "Generating Audio..."
     }
   },
   "provider": {

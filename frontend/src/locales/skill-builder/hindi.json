@@ -76,14 +76,20 @@
         "contextPlaceholder": "अतिरिक्त संदर्भ दर्ज करें...",
         "cancel": "रद्द करें",
         "create": "बनाएं",
-        "creating": "बनाया जा रहा है..."
+        "creating": "बनाया जा रहा है...",
+        "audioOptions": "ऑडियो जनरेशन विकल्प",
+        "audioNone": "कोई ऑडियो जनरेशन नहीं",
+        "audioOnDemand": "मांग पर ऑडियो बनाएं (तेज)",
+        "audioAll": "अभी सभी ऑडियो बनाएं (समय लेगा)"
       },
       "visualSummaryModal": {
         "close": "बंद करें",
         "previous": "पिछला",
         "next": "अगला",
         "sectionInfo": "खंड {sectionIdx} का {sectionsLength}",
-        "goToSection": "खंड {sectionIdx} पर जाएं"
+        "goToSection": "खंड {sectionIdx} पर जाएं",
+        "generateAudio": "ऑडियो बनाएं",
+        "generatingAudio": "ऑडियो बन रहा है..."
       }
     },
     "provider": {
