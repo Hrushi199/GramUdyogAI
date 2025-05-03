@@ -1,0 +1,67 @@
+{
+    "create_profile": {
+      "title": "Create Your Profile",
+      "language_selection": {
+        "header": "Select Your Preferred Language",
+        "description": "Please select the language you're most comfortable with. We'll use this for voice input and communication.",
+        "specify_language": "Specify Your Language",
+        "custom_language_placeholder": "Enter your preferred language",
+        "continue_button": "Continue"
+      },
+      "voice_input": {
+        "header": "Tell Us About Yourself",
+        "description": "Please speak naturally in {{language}} about the following information:",
+        "instructions": {
+          "title": "Please mention:",
+          "name": "Your full name", 
+          "location": "Your state and district",
+          "skills": "Skills you have (e.g., weaving, cooking, teaching)",
+          "job_types": "Types of jobs you're looking for (e.g., remote, part-time)",
+          "mentor": "Whether you need a mentor"
+        },
+        "browser_not_supported": "Audio recording is not supported in this browser. Please try Chrome, Edge, or Safari.",
+        "mic_error": "Unable to access microphone. Please check your browser permissions.",
+        "audio_error": "An error occurred while processing your voice input.",
+        "listening": "Listening... Click to stop",
+        "processing": "Processing your input...",
+        "start_speaking": "Click to start speaking",
+        "back_button": "Back",
+        "skip_button": "Skip Voice Input"
+      },
+      "review": {
+        "header": "Review Your Information",
+        "description": "Please review and edit your information if needed before submitting your profile.",
+        "name_label": "Full Name",
+        "name_placeholder": "Enter your full name",
+        "state_label": "State",
+        "state_placeholder": "Select State",
+        "district_label": "District",
+        "district_placeholder": "Enter your district",
+        "skills_label": "Your Skills",
+        "custom_skills_label": "Add Custom Skills",
+        "custom_skill_placeholder": "Enter a custom skill",
+        "add_button": "Add",
+        "job_types_label": "Preferred Job Types",
+        "custom_job_types_label": "Add Custom Job Types",
+        "custom_job_type_placeholder": "Enter a custom job type",
+        "mentor_label": "I'm looking for a mentor",
+        "back_button": "Back",
+        "submit_button": "Submit Profile",
+        "saving": "Saving...",
+        "validation": {
+          "name_required": "Please enter your full name.",
+          "state_required": "Please select your state.",
+          "district_required": "Please enter your district.",
+          "language_required": "Please select a language.",
+          "custom_language_required": "Please specify your custom language.",
+          "custom_skills_required": "Please add at least one custom skill or deselect 'Other'.",
+          "custom_job_types_required": "Please add at least one custom job type or deselect 'Other'.",
+          "save_error": "Failed to save profile. Please try again."
+        }
+      },
+      "completed": {
+        "header": "Profile Created Successfully!",
+        "description": "Your profile has been saved. You will be redirected to the dashboard shortly."
+      }
+    }
+  }
