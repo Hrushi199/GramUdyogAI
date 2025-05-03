@@ -1,0 +1,35 @@
+{
+    "community": {
+      "title": "ਕਮਿਊਨਿਟੀ ਨੈੱਟਵਰਕ",
+      "subtitle": "ਸਾਥੀ ਉਦਯੋਗੀਆਂ, ਸਲਾਹਕਾਰਾਂ ਅਤੇ ਮੌਕਿਆਂ ਨਾਲ ਜੁੜੋ",
+      "tabs": {
+        "feed": "ਫੀਡ",
+        "connections": "ਸੰਪਰਕ",
+        "mentors": "ਸਲਾਹਕਾਰ",
+        "groups": "ਗਰੁੱਪ"
+      },
+      "loading": "ਕਮਿਊਨਿਟੀ ਲੋਡ ਹੋ ਰਹੀ ਹੈ...",
+      "feed": {
+        "create_post_placeholder": "ਇੱਕ ਅਪਡੇਟ ਸਾਂਝਾ ਕਰੋ ਜਾਂ ਸਵਾਲ ਪੁੱਛੋ...",
+        "post_button": "ਪੋਸਟ",
+        "likes": "ਲਾਈਕਸ",
+        "comments": "ਟਿੱਪਣੀਆਂ"
+      },
+      "connections": {
+        "find_more": "ਹੋਰ ਸੰਪਰਕ ਲੱਭੋ"
+      },
+      "mentors": {
+        "available": "ਸਲਾਹ ਲਈ ਉਪਲਬਧ",
+        "unavailable": "ਇਸ ਸਮੇਂ ਉਪਲਬਧ ਨਹੀਂ",
+        "expertise": "ਮੁਹਾਰਤ:",
+        "request_mentorship": "ਸਲਾਹ ਲਈ ਬੇਨਤੀ ਕਰੋ",
+        "find_more": "ਹੋਰ ਸਲਾਹਕਾਰ ਲੱਭੋ"
+      },
+      "groups": {
+        "members": "{{count}} ਮੈਂਬਰ",
+        "posts": "{{count}} ਪੋਸਟਾਂ",
+        "join_group": "ਗਰੁੱਪ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ",
+        "create_new": "ਨਵਾਂ ਗਰੁੱਪ ਬਣਾਓ"
+      }
+    }
+  } 

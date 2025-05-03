@@ -1,0 +1,35 @@
+{
+    "community": {
+      "title": "समुदाय नेटवर्क",
+      "subtitle": "सह उद्यमियों, सलाहकारों और अवसरों से जुड़ें",
+      "tabs": {
+        "feed": "फ़ीड",
+        "connections": "संपर्क",
+        "mentors": "सलाहकार",
+        "groups": "समूह"
+      },
+      "loading": "समुदाय लोड हो रहा है...",
+      "feed": {
+        "create_post_placeholder": "कोई अपडेट साझा करें या सवाल पूछें...",
+        "post_button": "पोस्ट करें",
+        "likes": "पसंद",
+        "comments": "टिप्पणियाँ"
+      },
+      "connections": {
+        "find_more": "और संपर्क खोजें"
+      },
+      "mentors": {
+        "available": "सलाह के लिए उपलब्ध",
+        "unavailable": "वर्तमान में अनुपलब्ध",
+        "expertise": "विशेषज्ञता:",
+        "request_mentorship": "सलाह अनुरोध करें",
+        "find_more": "और सलाहकार खोजें"
+      },
+      "groups": {
+        "members": "{{count}} सदस्य",
+        "posts": "{{count}} पोस्ट",
+        "join_group": "समूह में शामिल हों",
+        "create_new": "नया समूह बनाएं"
+      }
+    }
+  }

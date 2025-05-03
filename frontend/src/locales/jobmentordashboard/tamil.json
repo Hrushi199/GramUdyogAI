@@ -1,0 +1,43 @@
+{
+    "job_mentor_dashboard": {
+      "title": "{{name}} டாஷ்போர்டு",
+      "recreate_dashboard": "டாஷ்போர்டை மீண்டும் உருவாக்கு",
+      "loading_error": "டாஷ்போர்டை ஏற்றுவதில் தோல்வி.",
+      "go_to_profile": "சுயவிவரத்திற்கு செல்",
+      "visual_summary": {
+        "title": "புலப்படும் சுருக்கம்",
+        "click_to_view_all": "அனைத்து பிரிவுகளையும் பார்க்க கிளிக் செய்யவும்",
+        "modal": {
+          "section_label": "பிரிவு {{current}} மொத்தம் {{total}}",
+          "close_aria_label": "மூடு",
+          "previous_aria_label": "முந்தைய",
+          "next_aria_label": "அடுத்தது",
+          "go_to_section_aria_label": "பிரிவு {{section}} க்கு செல்"
+        }
+      },
+      "csr_courses": {
+        "title": "பரிந்துரைக்கப்பட்ட CSR படிப்புகள்",
+        "view_course": "படிப்பை பார்"
+      },
+      "jobs": {
+        "title": "பரிந்துரைக்கப்பட்ட வேலைகள்",
+        "contact": "தொடர்பு கொள்"
+      },
+      "business_suggestions": {
+        "title": "வணிக பரிந்துரைகள்",
+        "default_idea_name": "வணிக யோசனை #{{index}}",
+        "business_type": "வணிக வகை",
+        "required_resources": "தேவையான வளங்கள்",
+        "initial_steps": "ஆரம்ப படிகள்",
+        "why_it_suits": "இது உங்களுக்கு ஏன் பொருத்தமானது"
+      },
+      "schemes": {
+        "title": "பரிந்துரைக்கப்பட்ட திட்டங்கள்",
+        "goal": "குறிக்கோள்",
+        "benefits": "பலன்கள்",
+        "eligibility": "தகுதி",
+        "how_to_apply": "விண்ணப்பிக்கும் முறை",
+        "special_features": "சிறப்பு அம்சங்கள்"
+      }
+    }
+  }

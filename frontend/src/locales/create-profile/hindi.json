@@ -8,6 +8,7 @@
         "custom_language_placeholder": "अपनी पसंदीदा भाषा दर्ज करें",
         "continue_button": "जारी रखें"
       },
+
       "voice_input": {
         "header": "अपने बारे में बताएं",
         "description": "{{language}} में निम्नलिखित जानकारी के बारे में स्वाभाविक रूप से बोलें:",
