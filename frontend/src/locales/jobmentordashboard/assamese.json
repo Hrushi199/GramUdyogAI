@@ -1,0 +1,43 @@
+{
+    "job_mentor_dashboard": {
+      "title": "{{name}} ডেশব’ৰ্ড",
+      "recreate_dashboard": "ডেশব’ৰ্ড পুনৰ সৃষ্টি কৰক",
+      "loading_error": "ডেশব’ৰ্ড ল’ড কৰাত ব্যৰ্থ হৈছে।",
+      "go_to_profile": "প্ৰ’ফাইললৈ যাওক",
+      "visual_summary": {
+        "title": "দৃশ্যমান সাৰাংশ",
+        "click_to_view_all": "সকলো খণ্ড চাবলৈ ক্লিক কৰক",
+        "modal": {
+          "section_label": "খণ্ড {{current}} মুঠ {{total}}",
+          "close_aria_label": "বন্ধ কৰক",
+          "previous_aria_label": "পূৰ্বৱৰ্তী",
+          "next_aria_label": "পৰৱৰ্তী",
+          "go_to_section_aria_label": "খণ্ড {{section}} লৈ যাওক"
+        }
+      },
+      "csr_courses": {
+        "title": "পৰামৰ্শ দিয়া CSR পাঠ্যক্ৰম",
+        "view_course": "পাঠ্যক্ৰম চাওক"
+      },
+      "jobs": {
+        "title": "পৰামৰ্শ দিয়া চাকৰি",
+        "contact": "যোগাযোগ কৰক"
+      },
+      "business_suggestions": {
+        "title": "ব্যৱসায়িক পৰামৰ্শ",
+        "default_idea_name": "ব্যৱসায়িক ধাৰণা #{{index}}",
+        "business_type": "ব্যৱসায়ৰ প্ৰকাৰ",
+        "required_resources": "প্ৰয়োজনীয় সম্পদ",
+        "initial_steps": "প্ৰাৰম্ভিক পদক্ষেপ",
+        "why_it_suits": "ই আপোনাক কিয় উপযুক্ত"
+      },
+      "schemes": {
+        "title": "পৰামৰ্শ দিয়া পৰিকল্পনা",
+        "goal": "লক্ষ্য",
+        "benefits": "লাভ",
+        "eligibility": "যোগ্যতা",
+        "how_to_apply": "আবেদন কেনেকৈ কৰিব",
+        "special_features": "বিশেষ বৈশিষ্ট্য"
+      }
+    }
+  }

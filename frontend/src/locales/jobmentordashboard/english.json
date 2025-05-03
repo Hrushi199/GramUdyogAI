@@ -1,0 +1,43 @@
+{
+    "job_mentor_dashboard": {
+      "title": "{{name}} Dashboard",
+      "recreate_dashboard": "Recreate Dashboard",
+      "loading_error": "Failed to load dashboard.",
+      "go_to_profile": "Go to Profile",
+      "visual_summary": {
+        "title": "Visual Summary",
+        "click_to_view_all": "Click to view all sections",
+        "modal": {
+          "section_label": "Section {{current}} of {{total}}",
+          "close_aria_label": "Close",
+          "previous_aria_label": "Previous",
+          "next_aria_label": "Next",
+          "go_to_section_aria_label": "Go to section {{section}}"
+        }
+      },
+      "csr_courses": {
+        "title": "Recommended CSR Courses",
+        "view_course": "View Course"
+      },
+      "jobs": {
+        "title": "Recommended Jobs",
+        "contact": "Contact"
+      },
+      "business_suggestions": {
+        "title": "Business Suggestions",
+        "default_idea_name": "Business Idea #{{index}}",
+        "business_type": "Business Type",
+        "required_resources": "Required Resources",
+        "initial_steps": "Initial Steps",
+        "why_it_suits": "Why it suits you"
+      },
+      "schemes": {
+        "title": "Recommended Schemes",
+        "goal": "Goal",
+        "benefits": "Benefits",
+        "eligibility": "Eligibility",
+        "how_to_apply": "How to Apply",
+        "special_features": "Special Features"
+      }
+    }
+  }

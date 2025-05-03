@@ -1,0 +1,35 @@
+{
+    "community": {
+      "title": "समुदाय नेटवर्क",
+      "subtitle": "सह उद्योजक, सल्लागार आणि संधींसह जोडा",
+      "tabs": {
+        "feed": "फीड",
+        "connections": "जोडण्या",
+        "mentors": "सल्लागार",
+        "groups": "गट"
+      },
+      "loading": "समुदाय लोड होत आहे...",
+      "feed": {
+        "create_post_placeholder": "अपडेट शेअर करा किंवा प्रश्न विचारा...",
+        "post_button": "पोस्ट",
+        "likes": "लाइक्स",
+        "comments": "टिप्पण्या"
+      },
+      "connections": {
+        "find_more": "आणखी जोडण्या शोधा"
+      },
+      "mentors": {
+        "available": "सल्ल्यासाठी उपलब्ध",
+        "unavailable": "सध्या अनुपलब्ध",
+        "expertise": "कौशल्य:",
+        "request_mentorship": "सल्ला मागवा",
+        "find_more": "आणखी सल्लागार शोधा"
+      },
+      "groups": {
+        "members": "{{count}} सदस्य",
+        "posts": "{{count}} पोस्ट",
+        "join_group": "गटात सामील व्हा",
+        "create_new": "नवीन गट तयार करा"
+      }
+    }
+  }

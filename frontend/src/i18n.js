@@ -225,6 +225,21 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+// Import job_mentor_dashboard translations
+import jobMentorDashboardEn from './locales/jobmentordashboard/english.json';
+import jobMentorDashboardHi from './locales/jobmentordashboard/hindi.json';
+import jobMentorDashboardBn from './locales/jobmentordashboard/bengali.json';
+import jobMentorDashboardMr from './locales/jobmentordashboard/marathi.json';
+import jobMentorDashboardTe from './locales/jobmentordashboard/telugu.json';
+import jobMentorDashboardTa from './locales/jobmentordashboard/tamil.json';
+import jobMentorDashboardGu from './locales/jobmentordashboard/gujarati.json';
+import jobMentorDashboardUr from './locales/jobmentordashboard/urdu.json';
+import jobMentorDashboardKn from './locales/jobmentordashboard/kannada.json';
+import jobMentorDashboardOr from './locales/jobmentordashboard/odia.json';
+import jobMentorDashboardMl from './locales/jobmentordashboard/malayalam.json';
+import jobMentorDashboardPa from './locales/jobmentordashboard/punjabi.json';
+import jobMentorDashboardAs from './locales/jobmentordashboard/assamese.json';
+
 // Existing namespace translations
 import enSkillBuilder from './locales/skill-builder/english.json';
 import hiSkillBuilder from './locales/skill-builder/hindi.json';
@@ -296,6 +311,21 @@ import mlBusinessSuggestion from './locales/business-suggestions/malayalam.json'
 import paBusinessSuggestion from './locales/business-suggestions/punjabi.json';
 import asBusinessSuggestion from './locales/business-suggestions/assamese.json';
 
+// Import community translations
+import communityEn from './locales/community/english.json';
+import communityHi from './locales/community/hindi.json';
+import communityBn from './locales/community/bengali.json';
+import communityMr from './locales/community/marathi.json';
+import communityTe from './locales/community/telugu.json';
+import communityTa from './locales/community/tamil.json';
+import communityGu from './locales/community/gujarati.json';
+import communityUr from './locales/community/urdu.json';
+import communityKn from './locales/community/kannada.json';
+import communityOr from './locales/community/odia.json';
+import communityMl from './locales/community/malayalam.json';
+import communityPa from './locales/community/punjabi.json';
+import communityAs from './locales/community/assamese.json';
+
 import enCTA from './locales/cta/english.json';
 import hiCTA from './locales/cta/hindi.json';
 import bnCTA from './locales/cta/bengali.json';
@@ -336,7 +366,9 @@ i18n
         'scheme-recommender': enSchemeRecommender,
         'business-suggestions': enBusinessSuggestion,
         cta: enCTA,
-        create_profile: enCreateProfile, // Added create_profile namespace
+        create_profile: enCreateProfile, // Added create_profile namespacee
+        jobmentordashboard: jobMentorDashboardEn, // Added job_mentor_dashboard namespac
+        community: communityEn, // Added community namespace
       },
       hi: {
         skillbuilder: hiSkillBuilder,
@@ -346,6 +378,8 @@ i18n
         'business-suggestions': hiBusinessSuggestion,
         cta: hiCTA,
         create_profile: hiCreateProfile, // Added create_profile namespace
+        jobmentordashboard: jobMentorDashboardHi, // Added job_mentor_dashboard namespace
+        community: communityHi, // Added community namespace
       },
       bn: {
         skillbuilder: bnSkillBuilder,
@@ -355,6 +389,8 @@ i18n
         'business-suggestions': bnBusinessSuggestion,
         cta: bnCTA,
         create_profile: bnCreateProfile, // Added create_profile namespace
+        jobmentordashboard: jobMentorDashboardBn, // Added job_mentor_dashboard namespace
+        community: communityBn, // Added community namespace
       },
       mr: {
         skillbuilder: mrSkillBuilder,
@@ -364,6 +400,8 @@ i18n
         'business-suggestions': mrBusinessSuggestion,
         cta: mrCTA,
         create_profile: mrCreateProfile, // Added create_profile namespace
+        jobmentordashboard: jobMentorDashboardMr, // Added job_mentor_dashboard namespace
+        community: communityMr, // Added community namespace
       },
       te: {
         skillbuilder: teSkillBuilder,
@@ -373,6 +411,8 @@ i18n
         'business-suggestions': teBusinessSuggestion,
         cta: teCTA,
         create_profile: teCreateProfile, // Added create_profile namespace
+        jobmentordashboard: jobMentorDashboardTe, // Added job_mentor_dashboard namespace
+        community: communityTe, // Added community namespace
       },
       ta: {
         skillbuilder: taSkillBuilder,
@@ -382,6 +422,8 @@ i18n
         'business-suggestions': taBusinessSuggestion,
         cta: taCTA,
         create_profile: taCreateProfile, // Added create_profile namespace
+        jobmentordashboard: jobMentorDashboardTa, // Added job_mentor_dashboard namespace
+        community: communityTa, // Added community namespace
       },
       gu: {
         skillbuilder: guSkillBuilder,
@@ -391,6 +433,8 @@ i18n
         'business-suggestions': guBusinessSuggestion,
         cta: guCTA,
         create_profile: guCreateProfile, // Added create_profile namespace
+        jobmentordashboard: jobMentorDashboardGu, // Added job_mentor_dashboard namespace
+        community: communityGu, // Added community namespace
       },
       ur: {
         skillbuilder: urSkillBuilder,
@@ -400,6 +444,8 @@ i18n
         'business-suggestions': urBusinessSuggestion,
         cta: urCTA,
         create_profile: urCreateProfile, // Added create_profile namespace
+        jobmentordashboard: jobMentorDashboardUr, // Added job_mentor_dashboard namespace
+        community: communityUr, // Added community namespace
       },
       kn: {
         skillbuilder: knSkillBuilder,
@@ -409,6 +455,8 @@ i18n
         'business-suggestions': knBusinessSuggestion,
         cta: knCTA,
         create_profile: knCreateProfile, // Added create_profile namespace
+        jobmentordashboard: jobMentorDashboardKn, // Added job_mentor_dashboard namespace
+        community: communityKn, // Added community namespace
       },
       or: {
         skillbuilder: orSkillBuilder,
@@ -418,6 +466,8 @@ i18n
         'business-suggestions': orBusinessSuggestion,
         cta: orCTA,
         create_profile: orCreateProfile, // Added create_profile namespace
+        jobmentordashboard: jobMentorDashboardOr, // Added job_mentor_dashboard namespace
+        community: communityOr, // Added community namespace  
       },
       ml: {
         skillbuilder: mlSkillBuilder,
@@ -427,6 +477,8 @@ i18n
         'business-suggestions': mlBusinessSuggestion,
         cta: mlCTA,
         create_profile: mlCreateProfile, // Added create_profile namespace
+        jobmentordashboard: jobMentorDashboardMl, // Added job_mentor_dashboard namespace
+        community: communityMl, // Added community namespace
       },
       pa: {
         skillbuilder: paSkillBuilder,
@@ -436,6 +488,8 @@ i18n
         'business-suggestions': paBusinessSuggestion,
         cta: paCTA,
         create_profile: paCreateProfile, // Added create_profile namespace
+        jobmentordashboard: jobMentorDashboardPa, // Added job_mentor_dashboard namespace
+        community: communityPa, // Added community namespace  
       },
       as: {
         skillbuilder: asSkillBuilder,
@@ -445,6 +499,8 @@ i18n
         'business-suggestions': asBusinessSuggestion,
         cta: asCTA,
         create_profile: asCreateProfile, // Added create_profile namespace
+        jobmentordashboard: jobMentorDashboardAs, // Added job_mentor_dashboard namespace
+        community: communityAs, // Added community namespace
       },
     },
     lng: 'en',
@@ -456,7 +512,9 @@ i18n
       'scheme-recommender',
       'business-suggestions',
       'cta',
-      'create_profile' // Added create_profile to namespaces list
+      'create_profile', // Added create_profile to namespaces list
+      'jobmentordashboard', // Added job_mentor_dashboard to namespaces list
+      'community', // Added community to namespaces list
     ],
     defaultNS: 'translation',
     interpolation: {
