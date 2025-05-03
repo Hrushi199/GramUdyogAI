@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-def get_course_recommendations(user: Dict, courses: List[Dict]) -> List[Dict]:
+async def get_course_recommendations(user: Dict, courses: List[Dict]) -> List[Dict]:
     # Create prompt with user profile and courses
     prompt = f"""
     Given a user profile and list of available CSR courses, recommend the top 3 most relevant courses.

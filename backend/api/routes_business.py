@@ -39,12 +39,11 @@ class SchemeResponse(BaseModel):
     explanation: List[SchemeExplanation]
 
 @router.post('/suggest-business')
-def suggest_business(data: Recommendation):
+async def suggest_business(data: Recommendation):
     skills_text = data.skills
     prompt = generate_prompt_from_skills(skills_text)
-    suggestions = get_business_suggestions(prompt)
+    suggestions = await get_business_suggestions(prompt)
     if isinstance(suggestions, dict) and "error" in suggestions:
         return suggestions
-    # suggestions is a Pydantic model
     return suggestions.dict()
 

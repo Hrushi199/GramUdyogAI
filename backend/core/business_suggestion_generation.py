@@ -62,7 +62,7 @@ Return your response STRICTLY as a JSON object in the following format:
 }}
 """
 
-def get_business_suggestions(prompt):
+async def get_business_suggestions(prompt):
     try:
         response = groq_client.chat.completions.create(
             model="llama3-8b-8192",
@@ -75,9 +75,6 @@ def get_business_suggestions(prompt):
         content = response.choices[0].message.content
         print(content)
         try:
-            # Parse and validate with Pydantic
-            # The LLM returns a JSON object, but we want a list under "suggestions"
-            # If the LLM returns a list directly, wrap it
             parsed = json.loads(content)
             if isinstance(parsed, list):
                 parsed = {"suggestions": parsed}

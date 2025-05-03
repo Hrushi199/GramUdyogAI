@@ -30,7 +30,7 @@ class JobRecommendationResponse(BaseModel):
     best_job: JobDetails
 
 
-def get_all_job_names() -> List[str]:
+async def get_all_job_names() -> List[str]:
     """
     Fetch all job names from the database.
     """
@@ -44,7 +44,7 @@ def get_all_job_names() -> List[str]:
     return job_names
 
 
-def get_relevant_jobs(user_info: str, job_names: List[str]) -> List[str]:
+async def get_relevant_jobs(user_info: str, job_names: List[str]) -> List[str]:
     """
     Use Groq to select the most relevant jobs for the user based on their information.
     """
@@ -57,14 +57,15 @@ def get_relevant_jobs(user_info: str, job_names: List[str]) -> List[str]:
         f"- ONLY select jobs from the provided list.\n"
         f"- DO NOT suggest new jobs or modify job titles.\n"
         f"- The names in your response MUST match exactly how they appear in the original list (case-sensitive, no typos, no changes).\n"
-        f"- Return only the names of the 3 relevant jobs strictly as a JSON list."
+        f"- Return only the names of the 3 relevant jobs strictly as a JSON list, with key 'relevant_jobs'.\n"
     )
     response = client.chat.completions.create(
         model="llama3-8b-8192",
         messages=[
             {"role": "system", "content": "You are a smart assistant that selects relevant jobs based on user information. Respond only with a JSON list of job titles from the provided list, without any modifications."},
             {"role": "user", "content": prompt}
-        ]
+        ],
+        response_format={"type": "json_object"}
     )
     content = response.choices[0].message.content
     try:
@@ -73,7 +74,7 @@ def get_relevant_jobs(user_info: str, job_names: List[str]) -> List[str]:
         return []
 
 
-def load_selected_jobs(selected_names: List[str]) -> List[Dict]:
+async def load_selected_jobs(selected_names: List[str]) -> List[Dict]:
     """
     Load the details of the selected jobs from the database.
     """
@@ -103,7 +104,7 @@ def load_selected_jobs(selected_names: List[str]) -> List[Dict]:
     return jobs
 
 
-def find_best_job(user_info: str, selected_jobs: List[Dict]) -> Dict:
+async def find_best_job(user_info: str, selected_jobs: List[Dict]) -> Dict:
     """
     Use Groq to find the best job from the selected relevant jobs.
     """
@@ -117,13 +118,15 @@ def find_best_job(user_info: str, selected_jobs: List[Dict]) -> Dict:
         messages=[
             {"role": "system", "content": "You are a JSON API that selects the best job for a user based on their information."},
             {"role": "user", "content": prompt}
-        ]
+        ],
+        response_format={"type": "json_object"}
     )
     content = response.choices[0].message.content
     try:
         # Validate the response using Pydantic
-        best_job = JobDetails.parse_raw(content)
-        return best_job.dict()
+        best_job = JobDetails.model_validate_json(content)
+        print(f"Best job found: {best_job}")
+        return best_job.model_dump(mode="json")
     except Exception as e:
         print(f"Error parsing/validating JSON: {e}")
         print(f"Raw response: {content}")

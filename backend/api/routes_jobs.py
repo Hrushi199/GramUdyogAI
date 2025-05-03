@@ -80,10 +80,12 @@ async def recommend_job(user_info: UserInfo):
     Recommend the best job for a user based on their information.
     """
     try:
-        all_job_names = get_all_job_names()
-        relevant_job_names = get_relevant_jobs(user_info.user_info, all_job_names)
-        relevant_jobs = load_selected_jobs(relevant_job_names)
-        best_job = find_best_job(user_info.user_info, relevant_jobs)
+        all_job_names = await get_all_job_names()
+        relevant_job_names = await get_relevant_jobs(user_info.user_info, all_job_names)
+        print('Got relevant job names:', relevant_job_names)
+        relevant_jobs = await load_selected_jobs(relevant_job_names['relevant_jobs'])
+        best_job = await find_best_job(user_info.user_info, relevant_jobs)
+        print(best_job)
         return {"best_job": best_job}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

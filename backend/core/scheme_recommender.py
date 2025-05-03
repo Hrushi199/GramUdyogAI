@@ -14,7 +14,7 @@ client = Groq(api_key=api_key)
 
 SCHEME_DIR = "schemes"
 
-def get_all_scheme_names() -> List[str]:
+async def get_all_scheme_names() -> List[str]:
     scheme_names = []
     for file in glob.glob(f"{SCHEME_DIR}/*.json"):
         try:
@@ -25,7 +25,7 @@ def get_all_scheme_names() -> List[str]:
             continue
     return scheme_names
 
-def get_relevant_scheme_names(occupation: str, scheme_names: List[str]) -> List[str]:
+async def get_relevant_scheme_names(occupation: str, scheme_names: List[str]) -> List[str]:
     prompt = (
         f"You are helping a user who works as a '{occupation}'.\n\n"
         f"Below is a list of government scheme names:\n"
@@ -59,7 +59,7 @@ def get_relevant_scheme_names(occupation: str, scheme_names: List[str]) -> List[
     except:
         return []
 
-def load_selected_schemes(selected_names: List[str]) -> List[Dict]:
+async def load_selected_schemes(selected_names: List[str]) -> List[Dict]:
     schemes = []
     for file in glob.glob(f"{SCHEME_DIR}/*.json"):
         try:
@@ -83,7 +83,7 @@ class SchemeExplanation(BaseModel):
 class SchemeResponse(BaseModel):
     schemes: List[SchemeExplanation]
 
-def explain_schemes(occupation: str, selected_schemes: List[Dict]) -> List[Dict]:
+async def explain_schemes(occupation: str, selected_schemes: List[Dict]) -> List[Dict]:
     prompt = (
         f"Parse and explain these government schemes for a {occupation}.\n\n"
         f"Input schemes: {json.dumps(selected_schemes, indent=2)}\n\n"

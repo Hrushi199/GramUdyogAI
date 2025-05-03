@@ -189,7 +189,7 @@ async def get_recommended_courses(user_id: int):
     conn.close()
     
     # Use LLM to get personalized recommendations
-    recommended = get_course_recommendations(user_dict, courses)
+    recommended = await get_course_recommendations(user_dict, courses)
     return recommended
 
 # Admin Routes 

@@ -102,14 +102,23 @@ const JobBoard = () => {
         body: JSON.stringify({ user_info: userInfo }),
       });
 
+      const responseText = await response.text();
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error(`Error: ${errorData.detail}`);
+        try {
+          const errorData = JSON.parse(responseText);
+          console.error(`Error: ${errorData.detail}`);
+        } catch (err) {
+          console.error("Error processing error response:", responseText);
+        }
         return;
       }
 
-      const data = await response.json();
-      setRecommendedJob(data.best_job);
+      try {
+        const data = JSON.parse(responseText);
+        setRecommendedJob(data.best_job);
+      } catch (err) {
+        console.error("Error parsing job recommendation JSON:", err, "Raw response:", responseText);
+      }
     } catch (error) {
       console.error("Error fetching job recommendation:", error);
     } finally {
