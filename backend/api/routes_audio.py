@@ -17,12 +17,22 @@ class TTSRequest(BaseModel):
 LANGUAGE_MAP = {
     "en": "en",  # English
     "hi": "hi",  # Hindi
+    "bn": "bn",  # Bengali
+    "mr": "mr",  # Marathi
+    "te": "te",  # Telugu
     "ta": "ta",  # Tamil
-    # Add more mappings as needed
+    "gu": "gu",  # Gujarati
+    "ur": "ur",  # Urdu
+    "kn": "kn",  # Kannada
+    "or": "or",  # Odia
+    "ml": "ml",  # Malayalam
+    "pa": "pa",  # Punjabi
+    "as": "as",  # Assamese
 }
 
 @router.post("/generate")
 async def generate_audio(request: TTSRequest):
+    # TTS is sync, but endpoint is async for FastAPI concurrency
     try:
         audio_data = tts.generate_audio(
             text=request.text,

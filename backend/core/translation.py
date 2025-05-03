@@ -9,7 +9,7 @@ api_key = os.getenv("GROQ_API_KEY")
 
 client = Groq(api_key=api_key)
 
-LLAMA_MODEL = "meta-llama/llama-4-maverick-17b-128e-instruct"
+LLAMA_MODEL = "llama-3.3-70b-versatile"
 
 def llama_chat_completion(messages, temperature=1, max_tokens=1500):
     # Ensure at least one message contains "json"

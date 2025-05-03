@@ -2,89 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
-// Dummy data for tutorials, courses, and live sessions
-const dummyContent = [
-  {
-    id: 1,
-    titleKey: 'dummyData.content.tailoring',
-    type: 'Tutorial',
-    format: 'Video',
-    language: 'Hindi',
-    provider: 'Local Trainer',
-    uploader: null,
-    isCSR: false,
-    duration: '15 min',
-    tokens: 10,
-    url: 'https://example.com/tailoring-video.mp4',
-    deliveryMode: 'Online',
-    enrollments: 120,
-    completions: 80,
-    skills: [],
-  },
-  {
-    id: 2,
-    titleKey: 'dummyData.content.digitalMarketing',
-    type: 'Course',
-    format: 'Text + Audio',
-    language: 'English',
-    provider: null,
-    uploader: 'Infosys',
-    isCSR: true,
-    duration: '1 hr',
-    tokens: 20,
-    url: 'https://example.com/digital-marketing.pdf',
-    deliveryMode: 'Online',
-    enrollments: 200,
-    completions: 150,
-    skills: [],
-  },
-  {
-    id: 3,
-    titleKey: 'dummyData.content.farming',
-    type: 'Course',
-    format: 'Video + Physical',
-    language: 'Tamil',
-    provider: 'NSDC',
-    uploader: 'NSDC',
-    isCSR: false,
-    duration: '2 hrs',
-    tokens: 30,
-    url: 'https://example.com/farming-video.mp4',
-    deliveryMode: 'Hybrid',
-    physicalDetails: { location: 'Chennai Community Center', date: '2025-05-01' },
-    enrollments: 90,
-    completions: 60,
-    skills: [],
-  },
-];
-
-const dummyLiveSessions = [
-  {
-    id: 1,
-    titleKey: 'dummyData.liveSessions.tailoringQna',
-    provider: 'Local Trainer',
-    uploader: null,
-    date: '2025-04-30',
-    time: '14:00 IST',
-    meetingLink: 'https://zoom.us/j/123456789',
-    chat: [],
-    qna: [],
-    participants: 50,
-  },
-  {
-    id: 2,
-    titleKey: 'dummyData.liveSessions.digitalMarketingWorkshop',
-    provider: null,
-    uploader: 'Infosys (CSR)',
-    date: '2025-05-02',
-    time: '10:00 IST',
-    meetingLink: 'https://meet.google.com/abc-def-ghi',
-    chat: [],
-    qna: [],
-    participants: 100,
-  },
-];
-
 interface VisualSummary {
   id: number;
   topic: string;
@@ -115,6 +32,7 @@ interface CSRCourse {
   status: string;
   created_at: string;
   updated_at: string;
+  content_url?: string;
   enrollments?: number;
   completions?: number;
 }
@@ -128,18 +46,138 @@ interface CSREnrollment {
   feedback?: string;
 }
 
+interface ContentItem {
+  id: number;
+  titleKey: string;
+  type: string;
+  format: string;
+  language: string;
+  provider: string | null;
+  uploader: string | null;
+  isCSR: boolean;
+  duration: string;
+  tokens: number;
+  content_url: string;
+  deliveryMode: string;
+  enrollments: number;
+  completions: number;
+  skills: string[];
+  description?: string;
+  certification?: boolean;
+  max_seats?: number;
+  start_date?: string;
+  status?: string;
+  physicalDetails?: { location: string; date: string };
+}
+
+interface LiveSession {
+  id: number;
+  titleKey: string;
+  provider: string | null;
+  uploader: string | null;
+  date: string;
+  time: string;
+  meetingLink: string;
+  chat: { user: string; message: string; timestamp: string }[];
+  qna: { user: string; question: string; timestamp: string }[];
+  participants: number;
+}
+
+// Dummy data for non-CSR content and live sessions
+const dummyContent: ContentItem[] = [
+  {
+    id: 1,
+    titleKey: 'Tailoring Basics',
+    type: 'Tutorial',
+    format: 'Video',
+    language: 'Hindi',
+    provider: 'Local Trainer',
+    uploader: null,
+    isCSR: false,
+    duration: '15 min',
+    tokens: 10,
+    content_url: 'https://example.com/tailoring-video.mp4',
+    deliveryMode: 'Online',
+    enrollments: 120,
+    completions: 80,
+    skills: [],
+  },
+  {
+    id: 2,
+    titleKey: 'Digital Marketing',
+    type: 'Course',
+    format: 'Text + Audio',
+    language: 'English',
+    provider: null,
+    uploader: 'Infosys',
+    isCSR: true,
+    duration: '1 hr',
+    tokens: 20,
+    content_url: 'https://example.com/digital-marketing.pdf',
+    deliveryMode: 'Online',
+    enrollments: 200,
+    completions: 150,
+    skills: [],
+  },
+  {
+    id: 3,
+    titleKey: 'Organic Farming',
+    type: 'Course',
+    format: 'Video + Physical',
+    language: 'Tamil',
+    provider: 'NSDC',
+    uploader: 'NSDC',
+    isCSR: false,
+    duration: '2 hrs',
+    tokens: 30,
+    content_url: 'https://example.com/farming-video.mp4',
+    deliveryMode: 'Hybrid',
+    physicalDetails: { location: 'Chennai Community Center', date: '2025-05-01' },
+    enrollments: 90,
+    completions: 60,
+    skills: [],
+  },
+];
+
+const dummyLiveSessions: LiveSession[] = [
+  {
+    id: 1,
+    titleKey: 'Tailoring Q&A',
+    provider: 'Local Trainer',
+    uploader: null,
+    date: '2025-04-30',
+    time: '14:00 IST',
+    meetingLink: 'https://zoom.us/j/123456789',
+    chat: [],
+    qna: [],
+    participants: 50,
+  },
+  {
+    id: 2,
+    titleKey: 'Digital Marketing Workshop',
+    provider: null,
+    uploader: 'Infosys (CSR)',
+    date: '2025-05-02',
+    time: '10:00 IST',
+    meetingLink: 'https://meet.google.com/abc-def-ghi',
+    chat: [],
+    qna: [],
+    participants: 100,
+  },
+];
+
 // Main Component
 const SkillBuilder = () => {
   const { t, i18n } = useTranslation('skillbuilder');
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const USER_ID = 1; // Simulated user ID for demo purposes
-  const COMPANY_ID = 1; // Simulated company ID for demo purposes
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+  const USER_ID = 1; // Simulated user ID
+  const COMPANY_ID = 1; // Simulated company ID
 
   const [role, setRole] = useState('Consumer');
-  const [content, setContent] = useState(dummyContent);
-  const [liveSessions, setLiveSessions] = useState(dummyLiveSessions);
-  const [selectedContent, setSelectedContent] = useState<CSRCourse | null>(null);
-  const [selectedSession, setSelectedSession] = useState(null);
+  const [content, setContent] = useState<ContentItem[]>(dummyContent);
+  const [liveSessions, setLiveSessions] = useState<LiveSession[]>(dummyLiveSessions);
+  const [selectedContent, setSelectedContent] = useState<ContentItem | null>(null);
+  const [selectedSession, setSelectedSession] = useState<LiveSession | null>(null);
   const [chatMessage, setChatMessage] = useState('');
   const [qnaQuestion, setQnaQuestion] = useState('');
   const [filterLanguage, setFilterLanguage] = useState('All');
@@ -154,7 +192,7 @@ const SkillBuilder = () => {
     format: 'Video',
     language: 'Hindi',
     duration: '',
-    url: '',
+    content_url: '',
     deliveryMode: 'Online',
     physicalDetails: { location: '', date: '' },
     certification: false,
@@ -162,7 +200,6 @@ const SkillBuilder = () => {
     start_date: '',
     status: 'active',
   });
-
   const [showSummaryCreator, setShowSummaryCreator] = useState(false);
   const [summaries, setSummaries] = useState<VisualSummary[]>([]);
   const [currentSummary, setCurrentSummary] = useState<VisualSummary | null>(null);
@@ -176,6 +213,8 @@ const SkillBuilder = () => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').then(() => {
         console.log('Service Worker registered for offline caching');
+      }).catch((error) => {
+        console.error('Service Worker registration failed:', error);
       });
     }
   }, []);
@@ -188,6 +227,7 @@ const SkillBuilder = () => {
   const fetchSummaries = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/api/visual-summaries`);
+      if (!response.ok) throw new Error('Failed to fetch summaries');
       const data = await response.json();
       setSummaries(data);
     } catch (error) {
@@ -203,37 +243,41 @@ const SkillBuilder = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic, context }),
       });
+      if (!response.ok) throw new Error('Failed to create summary');
       const data = await response.json();
       setSummaries([data, ...summaries]);
       setCurrentSummary(data);
       setShowSummaryCreator(false);
     } catch (error) {
       console.error('Error creating summary:', error);
+      alert(t('consumer.summaryCreatorModal.error'));
+    } finally {
+      setIsCreating(false);
     }
-    setIsCreating(false);
   };
 
   const handleTranslateSummary = async (summary: VisualSummary) => {
     setTranslatingSummaryId(summary.id);
     try {
-      const tr = await fetch(`${API_BASE_URL}/api/translate`, {
+      const response = await fetch(`${API_BASE_URL}/api/translate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ json: summary, target_language: i18n.language }),
       });
-      if (tr.ok) {
-        const translated = await tr.json();
-        setSummaries((prev) =>
-          prev.map((s) => (s.id === summary.id ? { ...s, ...translated, id: s.id } : s))
-        );
-        if (currentSummary && currentSummary.id === summary.id) {
-          setCurrentSummary({ ...currentSummary, ...translated, id: summary.id });
-        }
+      if (!response.ok) throw new Error('Translation failed');
+      const translated = await response.json();
+      setSummaries((prev) =>
+        prev.map((s) => (s.id === summary.id ? { ...s, ...translated, id: s.id } : s))
+      );
+      if (currentSummary && currentSummary.id === summary.id) {
+        setCurrentSummary({ ...currentSummary, ...translated, id: summary.id });
       }
-    } catch (e) {
-      alert('Translation failed.');
+    } catch (error) {
+      console.error('Error translating summary:', error);
+      alert(t('consumer.visualSummaryModal.translateError'));
+    } finally {
+      setTranslatingSummaryId(null);
     }
-    setTranslatingSummaryId(null);
   };
 
   const generateSectionAudio = async (text: string, language: string, summaryId: number, sectionIndex: number) => {
@@ -259,46 +303,62 @@ const SkillBuilder = () => {
       if (!updateResponse.ok) throw new Error('Failed to update summary');
       return data.filename;
     } catch (error) {
-      console.error('Error in generateSectionAudio:', error);
+      console.error('Error generating audio:', error);
       return null;
     }
   };
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/csr/courses`);
-      const csrCourses = await response.json();
+      const [coursesResponse, enrollmentsResponse] = await Promise.all([
+        fetch(`${API_BASE_URL}/api/csr/courses`),
+        fetch(`${API_BASE_URL}/api/csr/enrollments`),
+      ]);
 
-      const csrContent = csrCourses.map((course: CSRCourse) => ({
-        id: course.id,
-        titleKey: course.title,
-        type: 'Course',
-        format: 'CSR Course',
-        language: course.language,
-        provider: null,
-        uploader: `CSR Provider ${course.company_id}`,
-        isCSR: true,
-        duration: course.duration,
-        tokens: 0,
-        url: '#',
-        deliveryMode: 'Online',
-        enrollments: course.enrollments || 0,
-        completions: course.completions || 0,
-        certification: course.certification,
-        max_seats: course.max_seats,
-        start_date: course.start_date,
-        skills: course.skills,
-        description: course.description,
-        status: course.status,
-      }));
+      if (!coursesResponse.ok || !enrollmentsResponse.ok) {
+        throw new Error('Failed to fetch courses or enrollments');
+      }
+
+      const csrCourses: CSRCourse[] = await coursesResponse.json();
+      const enrollments: CSREnrollment[] = await enrollmentsResponse.json();
+
+      const csrContent: ContentItem[] = csrCourses.map((course) => {
+        const courseEnrollments = enrollments.filter((e) => e.course_id === course.id);
+        const enrollmentCount = courseEnrollments.length;
+        const completionCount = courseEnrollments.filter((e) => e.status === 'completed').length;
+
+        return {
+          id: course.id,
+          titleKey: course.title,
+          type: 'Course',
+          format: 'CSR Course',
+          language: course.language,
+          provider: null,
+          uploader: `CSR Provider ${course.company_id}`,
+          isCSR: true,
+          duration: course.duration,
+          tokens: 0,
+          content_url: course.content_url || '#',
+          deliveryMode: 'Online',
+          enrollments: enrollmentCount,
+          completions: completionCount,
+          certification: course.certification,
+          max_seats: course.max_seats,
+          start_date: course.start_date,
+          skills: course.skills,
+          description: course.description,
+          status: course.status,
+        };
+      });
 
       setContent([...dummyContent, ...csrContent]);
     } catch (error) {
       console.error('Error fetching CSR courses:', error);
+      alert(t('consumer.contentList.fetchError'));
     }
   };
 
-  const createCourse = async (courseData: any) => {
+  const createCourse = async (courseData: typeof newContent) => {
     try {
       const response = await fetch(`${API_BASE_URL}/api/csr/courses`, {
         method: 'POST',
@@ -314,12 +374,16 @@ const SkillBuilder = () => {
           max_seats: courseData.max_seats,
           start_date: courseData.start_date,
           status: courseData.status,
+          content_url: courseData.content_url,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         }),
       });
-      if (!response.ok) throw new Error('Failed to create course');
-      const newCourse = await response.json();
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Failed to create course');
+      }
+      const newCourse: CSRCourse = await response.json();
       setContent([
         ...content,
         {
@@ -333,7 +397,7 @@ const SkillBuilder = () => {
           isCSR: true,
           duration: newCourse.duration,
           tokens: 0,
-          url: '#',
+          content_url: newCourse.content_url || '#',
           deliveryMode: 'Online',
           enrollments: 0,
           completions: 0,
@@ -345,9 +409,10 @@ const SkillBuilder = () => {
           status: newCourse.status,
         },
       ]);
-    } catch (error) {
+      alert(t('uploader.contentUpload.success'));
+    } catch (error: any) {
       console.error('Error creating course:', error);
-      alert('Failed to create course.');
+      alert(t('uploader.contentUpload.error') + ': ' + error.message);
     }
   };
 
@@ -357,7 +422,7 @@ const SkillBuilder = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          course_id: courseId, // Added course_id to the request body
+          course_id: courseId,
           user_id: USER_ID,
           status: 'pending',
           progress: 0,
@@ -373,11 +438,37 @@ const SkillBuilder = () => {
         throw new Error(errorMessage);
       }
       alert(t('consumer.enrollment.success'));
-      setTokens(tokens + selectedContent?.tokens || 0);
+      setTokens(tokens + (selectedContent?.tokens || 0));
       setProgress(progress + 10);
+      await fetchCourses(); // Refresh to update metrics
     } catch (error: any) {
       console.error('Error enrolling in course:', error);
-      alert(t('consumer.enrollment.failure') + ' ' + error.message);
+      alert(t('consumer.enrollment.failure') + ': ' + error.message);
+    }
+  };
+
+  const completeCourse = async (courseId: number) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/csr/courses/${courseId}/complete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          course_id: courseId,
+          user_id: USER_ID,
+          status: 'completed',
+          progress: 100,
+          updated_at: new Date().toISOString(),
+        }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Failed to mark course as completed');
+      }
+      alert(t('consumer.completion.success'));
+      await fetchCourses(); // Refresh to update metrics
+    } catch (error: any) {
+      console.error('Error completing course:', error);
+      alert(t('consumer.completion.failure') + ': ' + error.message);
     }
   };
 
@@ -393,11 +484,11 @@ const SkillBuilder = () => {
     return false;
   });
 
-  const handleContentSelect = (item: any) => {
+  const handleContentSelect = (item: ContentItem) => {
     setSelectedContent(item);
   };
 
-  const handleSessionSelect = (session: any) => {
+  const handleSessionSelect = (session: LiveSession) => {
     setSelectedSession(session);
   };
 
@@ -443,6 +534,10 @@ const SkillBuilder = () => {
 
   const handleContentUpload = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!newContent.content_url.match(/^https?:\/\/[^\s$.?#].[^\s]*$/)) {
+      alert(t('uploader.contentUpload.invalidUrl'));
+      return;
+    }
     await createCourse(newContent);
     setNewContent({
       title: '',
@@ -452,7 +547,7 @@ const SkillBuilder = () => {
       format: 'Video',
       language: 'Hindi',
       duration: '',
-      url: '',
+      content_url: '',
       deliveryMode: 'Online',
       physicalDetails: { location: '', date: '' },
       certification: false,
@@ -467,12 +562,12 @@ const SkillBuilder = () => {
       .map((item) => {
         const completionRate = item.enrollments > 0 ? ((item.completions / item.enrollments) * 100).toFixed(2) : '0.00';
         const seatsAvailable = item.max_seats ? item.max_seats - item.enrollments : 'N/A';
-        return `${item.titleKey},${item.language},${item.duration},${item.enrollments},${item.completions},${completionRate}%,${item.max_seats || 'N/A'},${seatsAvailable},${item.start_date || 'N/A'},${item.status || 'N/A'}`;
+        return `${item.titleKey},${item.language},${item.duration},${item.enrollments},${item.completions},${completionRate}%,${item.max_seats || 'N/A'},${seatsAvailable},${item.start_date || 'N/A'},${item.status || 'N/A'},${item.content_url || 'N/A'}`;
       })
       .join('\n');
     const blob = new Blob(
       [
-        `Title,Language,Duration,Enrollments,Completions,Completion Rate,Max Seats,Seats Available,Start Date,Status\n${csvContent}`,
+        `Title,Language,Duration,Enrollments,Completions,Completion Rate,Max Seats,Seats Available,Start Date,Status,Content URL\n${csvContent}`,
       ],
       { type: 'text/csv' }
     );
@@ -765,6 +860,12 @@ const SkillBuilder = () => {
                       <p className="text-sm text-gray-200">
                         {t('consumer.contentList.startDate')}{item.start_date}
                       </p>
+                      <p className="text-sm text-gray-200">
+                        {t('consumer.contentList.enrollments')}{item.enrollments || 0}
+                      </p>
+                      <p className="text-sm text-gray-200">
+                        {t('consumer.contentList.completions')}{item.completions || 0}
+                      </p>
                     </>
                   )}
                   <button
@@ -810,24 +911,29 @@ const SkillBuilder = () => {
                   </>
                 )}
                 <div className="mt-4">
-                  {selectedContent.format.includes('Video') ? (
-                    <video controls className="w-full rounded-lg border border-white/10">
-                      <source src={selectedContent.url} type="video/mp4" />
-                      {t('consumer.selectedContent.videoError')}
-                    </video>
-                  ) : (
+                  {selectedContent.content_url && selectedContent.content_url !== '#' ? (
                     <a
-                      href={selectedContent.url}
+                      href={selectedContent.content_url}
                       className="text-blue-400 underline"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {t('consumer.selectedContent.viewContent')}
+                      {t('consumer.selectedContent.accessCourse')}
                     </a>
+                  ) : (
+                    <p className="text-gray-400">{t('consumer.selectedContent.noContentAvailable')}</p>
                   )}
                 </div>
+                {selectedContent.isCSR && (
+                  <button
+                    className="mt-4 bg-gradient-to-r from-green-500 to-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:from-green-600 hover:to-blue-600 transition"
+                    onClick={() => completeCourse(selectedContent.id)}
+                  >
+                    {t('consumer.selectedContent.markComplete')}
+                  </button>
+                )}
                 <button
-                  className="mt-4 bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
+                  className="mt-4 ml-4 bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
                   onClick={() => setSelectedContent(null)}
                 >
                   {t('consumer.selectedContent.close')}
@@ -987,7 +1093,9 @@ const SkillBuilder = () => {
                         }}
                         disabled={translatingSummaryId === summary.id}
                       >
-                        {translatingSummaryId === summary.id ? t('consumer.visualSummaryModal.translating') : t('consumer.visualSummaryModal.translate')}
+                        {translatingSummaryId === summary.id
+                          ? t('consumer.visualSummaryModal.translating')
+                          : t('consumer.visualSummaryModal.translate')}
                       </button>
                     </div>
                   );
@@ -1017,11 +1125,12 @@ const SkillBuilder = () => {
                             language: i18n.language,
                           }),
                         });
+                        if (!response.ok) throw new Error('Failed to create summary with audio');
                         const data = await response.json();
                         setSummaries([data, ...summaries]);
                         setCurrentSummary(data);
                       } else {
-                        createVisualSummary(topic, context);
+                        await createVisualSummary(topic, context);
                       }
                       setShowSummaryCreator(false);
                     }}
@@ -1093,7 +1202,9 @@ const SkillBuilder = () => {
                         disabled={isCreating}
                         className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg disabled:opacity-50"
                       >
-                        {isCreating ? t('consumer.summaryCreatorModal.creating') : t('consumer.summaryCreatorModal.create')}
+                        {isCreating
+                          ? t('consumer.summaryCreatorModal.creating')
+                          : t('consumer.summaryCreatorModal.create')}
                       </button>
                     </div>
                   </form>
@@ -1162,12 +1273,24 @@ const SkillBuilder = () => {
                     />
                   </div>
                   <div>
+                    <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.contentUrlLabel')}</label>
+                    <input
+                      type="url"
+                      className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
+                      value={newContent.content_url}
+                      onChange={(e) => setNewContent({ ...newContent, content_url: e.target.value })}
+                      placeholder="https://example.com/course-content"
+                      required
+                    />
+                  </div>
+                  <div>
                     <label className="block text-sm font-medium text-gray-200">{t('uploader.contentUpload.maxSeatsLabel')}</label>
                     <input
                       type="number"
                       className="mt-1 block w-full p-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none"
                       value={newContent.max_seats}
                       onChange={(e) => setNewContent({ ...newContent, max_seats: parseInt(e.target.value) })}
+                      min="1"
                       required
                     />
                   </div>
@@ -1215,6 +1338,8 @@ const SkillBuilder = () => {
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-semibold text-blue-200">{t('uploader.analytics.title')}</h2>
                 <button
+                  onClick={handleExportAnalytics}
+                  className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-blue-600 transition"
                 >
                   {t('uploader.analytics.exportButton')}
                 </button>
@@ -1233,6 +1358,7 @@ const SkillBuilder = () => {
                       <th className="py-2">{t('uploader.analytics.table.seatsAvailable')}</th>
                       <th className="py-2">{t('uploader.analytics.table.startDate')}</th>
                       <th className="py-2">{t('uploader.analytics.table.status')}</th>
+                      <th className="py-2">{t('uploader.analytics.table.contentUrl')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1251,6 +1377,11 @@ const SkillBuilder = () => {
                           <td className="py-2">{seatsAvailable}</td>
                           <td className="py-2">{item.start_date || 'N/A'}</td>
                           <td className="py-2">{item.status || 'N/A'}</td>
+                          <td className="py-2">
+                            <a href={item.content_url} className="text-blue-400 underline" target="_blank" rel="noopener noreferrer">
+                              {item.content_url || 'N/A'}
+                            </a>
+                          </td>
                         </tr>
                       );
                     })}

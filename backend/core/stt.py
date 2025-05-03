@@ -200,7 +200,7 @@ def transcribe_audio_and_extract_profile(audio_file, language="en"):
         f"Return a JSON object with these fields in English. If a field is not mentioned, leave it empty or as an empty list."
     )
     llm_response = client.chat.completions.create(
-        model="meta-llama/llama-4-maverick-17b-128e-instruct",
+        model="llama-3.3-70b-versatile",
         messages=[
             {"role": "system", "content": "You are an assistant that extracts structured user profile information into english from a transcript and outputs valid JSON."},
             {"role": "user", "content": extract_prompt}
