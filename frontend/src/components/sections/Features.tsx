@@ -21,7 +21,7 @@ const Features: React.FC<FeaturesProps> = ({ loaded }) => {
     });
   }, [t]);
 
-  // Define features with correct array key syntax
+  // Define features with correct array key syntax, reordered to place YouTube Audio Summary in the middle
   const features = [
     {
       titleKey: 'features.0.title',
@@ -40,6 +40,14 @@ const Features: React.FC<FeaturesProps> = ({ loaded }) => {
       onClick: () => navigate('/schemes'),
     },
     {
+      titleKey: 'features.4.title',
+      descriptionKey: 'features.4.description',
+      fallbackTitle: 'YouTube Audio Summary',
+      fallbackDescription: 'Summarize any YouTube video into actionable audio insights in your language.',
+      icon: Youtube,
+      onClick: () => navigate('/youtube-audio-summary'),
+    },
+    {
       titleKey: 'features.2.title',
       descriptionKey: 'features.2.description',
       fallbackTitle: 'Networking Opportunities',
@@ -54,14 +62,6 @@ const Features: React.FC<FeaturesProps> = ({ loaded }) => {
       fallbackDescription: 'Access targeted training resources to build the exact skills you need for your business',
       icon: GraduationCap,
       onClick: () => navigate('/skill-builder'),
-    },
-    {
-      titleKey: 'features.4.title',
-      descriptionKey: 'features.4.description',
-      fallbackTitle: 'YouTube Audio Summary',
-      fallbackDescription: 'Summarize any YouTube video into actionable audio insights in your language.',
-      icon: Youtube,
-      onClick: () => navigate('/youtube-audio-summary'),
     },
   ];
 
@@ -82,7 +82,7 @@ const Features: React.FC<FeaturesProps> = ({ loaded }) => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
           {features.map((feature, index) => (
             <div
               key={index}
