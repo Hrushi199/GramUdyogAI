@@ -7,3 +7,6 @@ __pycache__
 *.pyd
 __pycache__/*
 backend/database.db
+*.db
+backend/images/*.png
+backebnd/audio/*.wav

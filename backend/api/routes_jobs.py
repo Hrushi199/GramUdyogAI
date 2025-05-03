@@ -2,8 +2,9 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 import sqlite3
 from core.job_recommender import *
+from core.initialize_db import *
 router = APIRouter()
-
+initialize_database()
 class JobPosting(BaseModel):
     title: str
     description: str
@@ -26,6 +27,8 @@ def create_jobs_table():
             description TEXT NOT NULL,
             company TEXT NOT NULL,
             location TEXT NOT NULL,
+            company_contact TEXT NOT NULL,
+            pay TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)

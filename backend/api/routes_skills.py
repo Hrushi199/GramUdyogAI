@@ -16,7 +16,25 @@ import sqlite3
 from datetime import datetime
 import json
 from core.audio_generation import TextToSpeech
+def initialize_visual_summaries_table():
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+    
+    # Create the visual_summaries table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS visual_summaries (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            topic TEXT NOT NULL,
+            summary_data TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    
+    conn.commit()
+    conn.close()
 
+# Call the initialization function
+initialize_visual_summaries_table()
 class VisualSummaryRequest(BaseModel):
     topic: str
     context: str
