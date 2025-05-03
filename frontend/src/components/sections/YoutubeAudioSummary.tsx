@@ -53,9 +53,18 @@ export default function YoutubeAudioSummary() {
           value={language}
           onChange={e => setLanguage(e.target.value)}
         >
-          <option value="en">English</option>
-          <option value="hi">Hindi</option>
-          <option value="ta">Tamil</option>
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+            <option value="ta">தமிழ்</option>
+            <option value="bn">বাংলা</option>
+            <option value="gu">ગુજરાતી</option>
+            <option value="kn">ಕನ್ನಡ</option>
+            <option value="ml">മലയാളം</option>
+            <option value="mr">मराठी</option>
+            <option value="or">ଓଡ଼ିଆ</option>
+            <option value="pa">ਪੰਜਾਬੀ</option>
+            <option value="te">తెలుగు</option>
+            <option value="ur">اردو</option>
         </select>
         <button
           type="submit"

@@ -19,6 +19,10 @@
       {
         "title": "Skills Development",
         "description": "Access targeted training resources to build the exact skills you need for your business"
+      },
+      {
+        "title": "YouTube Audio Summary",
+        "description": "Summarize any YouTube video into actionable audio insights in your language."
       }
     ]
-  }
+}
