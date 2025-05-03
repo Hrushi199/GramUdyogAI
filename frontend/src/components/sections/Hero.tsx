@@ -58,9 +58,6 @@ const Hero: React.FC<HeroProps> = ({ loaded }) => {
               <Button size="lg" navigateTo="/profile">
                 {t('buttons.getStarted')}
               </Button>
-              <Button variant="secondary" size="lg">
-                {t('buttons.learnMore')}
-              </Button>
             </div>
           </div>
 

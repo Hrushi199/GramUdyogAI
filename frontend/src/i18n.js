@@ -355,6 +355,21 @@ import mlCreateProfile from './locales/create-profile/malayalam.json';
 import paCreateProfile from './locales/create-profile/punjabi.json';
 import asCreateProfile from './locales/create-profile/assamese.json';
 
+// Import translation files for stats namespace
+import statsEn from './locales/stats/english.json';
+import statsHi from './locales/stats/hindi.json';
+import statsBn from './locales/stats/bengali.json';
+import statsMr from './locales/stats/marathi.json';
+import statsTe from './locales/stats/telugu.json';
+import statsTa from './locales/stats/tamil.json';
+import statsGu from './locales/stats/gujarati.json';
+import statsUr from './locales/stats/urdu.json';
+import statsKn from './locales/stats/kannada.json';
+import statsOr from './locales/stats/odia.json';
+import statsMl from './locales/stats/malayalam.json';
+import statsPa from './locales/stats/punjabi.json';
+import statsAs from './locales/stats/assamese.json';
+
 i18n
   .use(initReactI18next)
   .init({
@@ -369,6 +384,7 @@ i18n
         create_profile: enCreateProfile, // Added create_profile namespacee
         jobmentordashboard: jobMentorDashboardEn, // Added job_mentor_dashboard namespac
         community: communityEn, // Added community namespace
+        stats: statsEn, // Added stats namespace
       },
       hi: {
         skillbuilder: hiSkillBuilder,
@@ -380,6 +396,7 @@ i18n
         create_profile: hiCreateProfile, // Added create_profile namespace
         jobmentordashboard: jobMentorDashboardHi, // Added job_mentor_dashboard namespace
         community: communityHi, // Added community namespace
+        stats: statsHi, // Added stats namespace
       },
       bn: {
         skillbuilder: bnSkillBuilder,
@@ -391,6 +408,7 @@ i18n
         create_profile: bnCreateProfile, // Added create_profile namespace
         jobmentordashboard: jobMentorDashboardBn, // Added job_mentor_dashboard namespace
         community: communityBn, // Added community namespace
+        stats: statsBn, // Added stats namespace
       },
       mr: {
         skillbuilder: mrSkillBuilder,
@@ -402,6 +420,7 @@ i18n
         create_profile: mrCreateProfile, // Added create_profile namespace
         jobmentordashboard: jobMentorDashboardMr, // Added job_mentor_dashboard namespace
         community: communityMr, // Added community namespace
+        stats: statsMr, // Added stats namespace
       },
       te: {
         skillbuilder: teSkillBuilder,
@@ -413,6 +432,7 @@ i18n
         create_profile: teCreateProfile, // Added create_profile namespace
         jobmentordashboard: jobMentorDashboardTe, // Added job_mentor_dashboard namespace
         community: communityTe, // Added community namespace
+        stats: statsTe, // Added stats namespace
       },
       ta: {
         skillbuilder: taSkillBuilder,
@@ -424,6 +444,7 @@ i18n
         create_profile: taCreateProfile, // Added create_profile namespace
         jobmentordashboard: jobMentorDashboardTa, // Added job_mentor_dashboard namespace
         community: communityTa, // Added community namespace
+        stats: statsTa, // Added stats namespace
       },
       gu: {
         skillbuilder: guSkillBuilder,
@@ -435,6 +456,7 @@ i18n
         create_profile: guCreateProfile, // Added create_profile namespace
         jobmentordashboard: jobMentorDashboardGu, // Added job_mentor_dashboard namespace
         community: communityGu, // Added community namespace
+        stats: statsGu, // Added stats namespace
       },
       ur: {
         skillbuilder: urSkillBuilder,
@@ -446,6 +468,7 @@ i18n
         create_profile: urCreateProfile, // Added create_profile namespace
         jobmentordashboard: jobMentorDashboardUr, // Added job_mentor_dashboard namespace
         community: communityUr, // Added community namespace
+        stats: statsUr, // Added stats namespace
       },
       kn: {
         skillbuilder: knSkillBuilder,
@@ -456,7 +479,8 @@ i18n
         cta: knCTA,
         create_profile: knCreateProfile, // Added create_profile namespace
         jobmentordashboard: jobMentorDashboardKn, // Added job_mentor_dashboard namespace
-        community: communityKn, // Added community namespace
+        community: communityKn, // Added community 
+        stats: statsKn, // Added stats namespace
       },
       or: {
         skillbuilder: orSkillBuilder,
@@ -467,7 +491,8 @@ i18n
         cta: orCTA,
         create_profile: orCreateProfile, // Added create_profile namespace
         jobmentordashboard: jobMentorDashboardOr, // Added job_mentor_dashboard namespace
-        community: communityOr, // Added community namespace  
+        community: communityOr, // Added community namespace
+        stats: statsOr, // Added stats namespace
       },
       ml: {
         skillbuilder: mlSkillBuilder,
@@ -478,7 +503,8 @@ i18n
         cta: mlCTA,
         create_profile: mlCreateProfile, // Added create_profile namespace
         jobmentordashboard: jobMentorDashboardMl, // Added job_mentor_dashboard namespace
-        community: communityMl, // Added community namespace
+        community: communityMl, // Added community 
+        stats: statsMl, // Added stats namespace
       },
       pa: {
         skillbuilder: paSkillBuilder,
@@ -489,7 +515,8 @@ i18n
         cta: paCTA,
         create_profile: paCreateProfile, // Added create_profile namespace
         jobmentordashboard: jobMentorDashboardPa, // Added job_mentor_dashboard namespace
-        community: communityPa, // Added community namespace  
+        community: communityPa, // Added community namespace
+        stats: statsPa, // Added stats namespace
       },
       as: {
         skillbuilder: asSkillBuilder,
@@ -501,6 +528,7 @@ i18n
         create_profile: asCreateProfile, // Added create_profile namespace
         jobmentordashboard: jobMentorDashboardAs, // Added job_mentor_dashboard namespace
         community: communityAs, // Added community namespace
+        stats: statsAs, // Added stats namespace
       },
     },
     lng: 'en',
@@ -515,6 +543,7 @@ i18n
       'create_profile', // Added create_profile to namespaces list
       'jobmentordashboard', // Added job_mentor_dashboard to namespaces list
       'community', // Added community to namespaces list
+      'stats', // Added stats to namespaces list
     ],
     defaultNS: 'translation',
     interpolation: {
