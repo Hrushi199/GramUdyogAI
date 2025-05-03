@@ -17,8 +17,8 @@ from core.audio_generation import TextToSpeech
 # import torch
 # import torchvision.transforms as transforms
 # Load environment variables from the .env file
-os.environ.pop("GROQ_API_KEY", None)
-load_dotenv(find_dotenv())
+# os.environ.pop("GROQ_API_KEY", None)
+# load_dotenv(find_dotenv())
 api_key = os.getenv("GROQ_API_KEY")
 e2e_token = os.getenv("E2E_TIR_ACCESS_TOKEN")
 e2e_api_key = os.getenv("E2E_TIR_API_KEY")

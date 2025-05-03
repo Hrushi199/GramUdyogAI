@@ -7,7 +7,7 @@ import sqlite3
 from pydantic import BaseModel
 
 # Load environment variables from the .env file
-load_dotenv(find_dotenv())
+# load_dotenv(find_dotenv())
 api_key = os.getenv("GROQ_API_KEY")
 client = Groq(api_key=api_key)
 

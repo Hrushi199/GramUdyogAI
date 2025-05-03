@@ -7,7 +7,7 @@ from core.audio_generation import TextToSpeech
 import json
 import re
 from dotenv import load_dotenv, find_dotenv
-load_dotenv(find_dotenv())
+# load_dotenv(find_dotenv())
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 groq_client = Groq(api_key=GROQ_API_KEY)
 tts = TextToSpeech()

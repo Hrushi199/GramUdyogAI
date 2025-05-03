@@ -7,8 +7,8 @@ from dotenv import load_dotenv, find_dotenv
 from pydantic import BaseModel
 
 # Load environment variables from the .env file
-os.environ.pop("GROQ_API_KEY", None)
-load_dotenv("./.env")
+# os.environ.pop("GROQ_API_KEY", None)
+# load_dotenv("./.env")
 api_key = os.getenv("GROQ_API_KEY")
 client = Groq(api_key=api_key)
 

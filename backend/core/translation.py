@@ -3,8 +3,8 @@ import os
 from dotenv import load_dotenv, find_dotenv
 import json
 import time
-os.environ.pop("GROQ_API_KEY", None)
-load_dotenv(find_dotenv())
+# os.environ.pop("GROQ_API_KEY", None)
+# load_dotenv(find_dotenv())
 api_key = os.getenv("GROQ_API_KEY")
 
 client = Groq(api_key=api_key)

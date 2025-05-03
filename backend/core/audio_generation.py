@@ -10,7 +10,7 @@ from scipy.io.wavfile import write as scipy_wav_write
 from dotenv import load_dotenv, find_dotenv
 
 # Load environment variables
-load_dotenv(find_dotenv())
+# load_dotenv(find_dotenv())
 
 class TextToSpeech:
     def __init__(self):

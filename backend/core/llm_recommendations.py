@@ -3,7 +3,7 @@ import os
 from typing import List, Dict
 from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 async def get_course_recommendations(user: Dict, courses: List[Dict]) -> List[Dict]:

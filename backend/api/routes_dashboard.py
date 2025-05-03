@@ -11,7 +11,7 @@ from datetime import datetime
 from groq import Groq
 import os
 from dotenv import load_dotenv, find_dotenv
-load_dotenv(find_dotenv())
+# load_dotenv(find_dotenv())
 router = APIRouter()
 
 # Language mapping (from routes_stt)
