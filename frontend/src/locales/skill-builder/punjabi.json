@@ -1,0 +1,238 @@
+{
+    "header": {
+      "title": "ਹੁਨਰ ਨਿਰਮਾਣ ਅਤੇ ਅਨੁਕੂਲ ਸਿੱਖਣ"
+    },
+    "roleSwitcher": {
+      "label": "ਰੋਲ ਚੁਣੋ",
+      "consumer": "ਗਾਹਕ",
+      "provider": "ਪ੍ਰਦਾਤਾ",
+      "uploader": "ਅਪਲੋਡਰ",
+      "languageLabel": "ਭਾਸ਼ਾ ਚੁਣੋ"
+    },
+    "consumer": {
+      "progressDashboard": {
+        "title": "ਤੁਹਾਡੀ ਤਰੱਕੀ",
+        "progress": "ਤਰੱਕੀ: ",
+        "tokens": "ਸਿੱਖਿਆ ਟੋਕਨ: "
+      },
+      "searchBar": {
+        "placeholder": "ਸਮੱਗਰੀ ਖੋਜੋ..."
+      },
+      "filters": {
+        "languageLabel": "ਭਾਸ਼ਾ",
+        "languageAll": "ਸਭ",
+        "languageHindi": "ਹਿੰਦੀ",
+        "languageEnglish": "ਅੰਗਰੇਜ਼ੀ",
+        "languageTamil": "ਤਮਿਲ",
+        "languageTelugu": "ਤੇਲਗੂ",
+        "languageMarathi": "ਮਰਾਠੀ",
+        "languageBengali": "ਬੰਗਾਲੀ",
+        "languageGujarati": "ਗੁਜਰਾਤੀ",
+        "languageKannada": "ਕੰਨੜ",
+        "languageMalayalam": "ਮਲਿਆਲਮ",
+        "languagePunjabi": "ਪੰਜਾਬੀ",
+        "languageUrdu": "ਉਰਦੂ",
+        "languageOdia": "ਓਡੀਆ",
+        "languageAssamese": "ਅਸਾਮੀ",
+        "deliveryModeLabel": "ਡਿਲੀਵਰੀ ਮੋਡ",
+        "deliveryModeAll": "ਸਭ",
+        "deliveryModeOnline": "ਆਨਲਾਈਨ",
+        "deliveryModeHybrid": "ਹਾਈਬ੍ਰਿਡ"
+      },
+      "contentList": {
+        "type": "ਕਿਸਮ: ",
+        "format": "ਫਾਰਮੈਟ: ",
+        "language": "ਭਾਸ਼ਾ: ",
+        "source": "ਸਰੋਤ: ",
+        "duration": "ਅਵਧੀ: ",
+        "tokens": "ਟੋਕਨ: ",
+        "mode": "ਮੋਡ: ",
+        "physical": "ਸਰੀਰਕ: ",
+        "seats": "ਸੀਟਾਂ: ",
+        "startDate": "ਸ਼ੁਰੂਆਤੀ ਮਿਤੀ: ",
+        "startLearning": "ਸਿੱਖਣਾ ਸ਼ੁਰੂ ਕਰੋ",
+        "enroll": "ਨਾਮांकਣ ਕਰੋ"
+      },
+      "selectedContent": {
+        "source": "ਸਰੋਤ: ",
+        "format": "ਫਾਰਮੈਟ: ",
+        "language": "ਭਾਸ਼ਾ: ",
+        "videoError": "ਤੁਹਾਡਾ ਬ੍ਰਾਊਜ਼ਰ ਵੀਡੀਓ ਟੈਗ ਨੂੰ ਸਮਰਥਨ ਨਹੀਂ ਕਰਦਾ।",
+        "viewContent": "ਸਮੱਗਰੀ ਵੇਖੋ",
+        "close": "ਬੰਦ ਕਰੋ",
+        "description": "ਵੇਰਵਾ: ",
+        "certification": "ਸਰਟੀਫਿਕੇਸ਼ਨ: ",
+        "seats": "ਸੀਟਾਂ: ",
+        "startDate": "ਸ਼ੁਰੂਆਤੀ ਮਿਤੀ: "
+      },
+      "liveSessions": {
+        "title": "ਲਾਈਵ ਸੈਸ਼ਨ",
+        "source": "ਸਰੋਤ: ",
+        "date": "ਮਿਤੀ: ",
+        "time": "ਸਮਾਂ: ",
+        "joinMeeting": "ਮੀਟਿੰਗ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ",
+        "viewChatQna": "ਚੈਟ ਅਤੇ Q&A ਵੇਖੋ"
+      },
+      "chatQna": {
+        "interaction": "ਪਰਸਪਰ ਕ੍ਰਿਆ",
+        "chatTitle": "ਚੈਟ",
+        "chatPlaceholder": "ਆਪਣਾ ਸੁਨੇਹਾ ਟਾਈਪ ਕਰੋ...",
+        "chatSend": "ਭੇਜੋ",
+        "qnaTitle": "Q&A",
+        "qnaPlaceholder": "ਇੱਕ ਸਵਾਲ ਪੁੱਛੋ...",
+        "qnaSubmit": "ਜਮ੍ਹਾ ਕਰੋ",
+        "close": "ਬੰਦ ਕਰੋ"
+      },
+      "visualSummaries": {
+        "title": "ਦ੍ਰਿਸ਼ਟੀ ਸਾਰ",
+        "createNew": "ਨਵਾਂ ਸਾਰ ਬਣਾਓ"
+      },
+      "summaryCreatorModal": {
+        "title": "ਦ੍ਰਿਸ਼ਟੀ ਸਾਰ ਬਣਾਓ",
+        "topicPlaceholder": "ਵਿਸ਼ਾ ਦਰਜ ਕਰੋ...",
+        "contextPlaceholder": "ਵਾਧੂ ਸੰਦਰਭ ਦਰਜ ਕਰੋ...",
+        "cancel": "ਰੱਦ ਕਰੋ",
+        "create": "ਬਣਾਓ",
+        "creating": "ਬਣਾਇਆ ਜਾ ਰਿਹਾ ਹੈ...",
+        "audioOptions": "ਆਡੀਓ ਜਨਰੇਸ਼ਨ ਵਿਕਲਪ",
+        "audioNone": "ਕੋਈ ਆਡੀਓ ਜਨਰੇਸ਼ਨ ਨਹੀਂ",
+        "audioOnDemand": "ਮੰਗ 'ਤੇ ਆਡੀਓ ਜਨਰੇਟ ਕਰੋ (ਤੇਜ਼)",
+        "audioAll": "ਸਾਰੇ ਆਡੀਓ ਹੁਣ ਜਨਰੇਟ ਕਰੋ (ਜ਼ਿਆਦਾ ਸਮਾਂ ਲੱਗਦਾ ਹੈ)"
+      },
+      "visualSummaryModal": {
+        "close": "ਬੰਦ ਕਰੋ",
+        "previous": "ਪਿਛਲਾ",
+        "next": "ਅਗਲਾ",
+        "sectionInfo": "ਭਾਗ {sectionIdx} / {sectionsLength}",
+        "goToSection": "ਭਾਗ {sectionIdx} 'ਤੇ ਜਾਓ",
+        "generateAudio": "ਆਡੀਓ ਜਨਰੇਟ ਕਰੋ",
+        "generatingAudio": "ਆਡੀਓ ਜਨਰੇਟ ਹੋ ਰਿਹਾ ਹੈ..."
+      },
+      "enrollment": {
+        "success": "ਕੋਰਸ ਸਫਲਤਾਪੂਰਵਕ ਨਾਮਾਂਕਿਤ ਹੋਇਆ!",
+        "failure": "ਕੋਰਸ ਵਿੱਚ ਨਾਮਾਂਕਣ ਅਸਫਲ ਹੋਇਆ:"
+      }
+    },
+    "provider": {
+      "contentUpload": {
+        "title": "ਨਵੀਂ ਸਮੱਗਰੀ ਅਪਲੋਡ ਕਰੋ",
+        "titleLabel": "ਸਿਰਲੇਖ",
+        "typeLabel": "ਕਿਸਮ",
+        "typeTutorial": "ਟਿਊਟੋਰੀਅਲ",
+        "typeCourse": "ਕੋਰਸ",
+        "formatLabel": "ਫਾਰਮੈਟ",
+        "formatVideo": "ਵੀਡੀਓ",
+        "formatTextAudio": "ਟੈਕਸਟ + ਆਡੀਓ",
+        "formatVideoPhysical": "ਵੀਡੀਓ + ਸਰੀਰਕ",
+        "languageLabel": "ਭਾਸ਼ਾ",
+        "languageHindi": "ਹਿੰਦੀ",
+        "languageEnglish": "ਅੰਗਰੇਜ਼ੀ",
+        "languageTamil": "ਤਮਿਲ",
+        "durationLabel": "ਅਵਧੀ",
+        "urlLabel": "ਸਮੱਗਰੀ URL",
+        "deliveryModeLabel": "ਡਿਲੀਵਰੀ ਮੋਡ",
+        "deliveryModeOnline": "ਆਨਲਾਈਨ",
+        "deliveryModeHybrid": "ਹਾਈਬ੍ਰਿਡ",
+        "physicalLocationLabel": "ਸਰੀਰਕ ਸਥਾਨ",
+        "physicalDateLabel": "ਸਰੀਰਕ ਮਿਤੀ",
+        "uploadButton": "ਸਮੱਗਰੀ ਅਪਲੋਡ ਕਰੋ"
+      },
+      "contentList": {
+        "title": "ਤੁਹਾਡੀ ਸਮੱਗਰੀ",
+        "type": "ਕਿਸਮ: ",
+        "enrollments": "ਨਾਮਾਂਕਣ: ",
+        "completions": "ਪੂਰਤੀ: "
+      },
+      "liveSessions": {
+        "title": "ਤੁਹਾਡੇ ਲਾਈਵ ਸੈਸ਼ਨ",
+        "date": "ਮਿਤੀ: ",
+        "time": "ਸਮਾਂ: ",
+        "participants": "ਭਾਗੀਦਾਰ: ",
+        "hostMeeting": "ਮੀਟਿੰਗ ਹੋਸਟ ਕਰੋ"
+      }
+    },
+    "uploader": {
+      "contentUpload": {
+        "title": "CSR-ਬ੍ਰਾਂਡਡ ਸਮੱਗਰੀ ਅਪਲੋਡ ਕਰੋ",
+        "titleLabel": "ਸਿਰਲੇਖ",
+        "descriptionLabel": "ਵੇਰਵਾ",
+        "skillsLabel": "ਹੁਨਰ",
+        "maxSeatsLabel": "ਵੱਧ ਤੋਂ ਵੱਧ ਸੀਟਾਂ",
+        "startDateLabel": "ਸ਼ੁਰੂਆਤੀ ਮਿਤੀ",
+        "certificationLabel": "ਸਰਟੀਫਿਕੇਸ਼ਨ",
+        "statusLabel": "ਸਥਿਤੀ",
+        "typeLabel": "ਕਿਸਮ",
+        "typeTutorial": "ਟਿਊਟੋਰੀਅਲ",
+        "typeCourse": "ਕੋਰਸ",
+        "formatLabel": "ਫਾਰਮੈਟ",
+        "formatVideo": "ਵੀਡੀਓ",
+        "formatTextAudio": "ਟੈਕਸਟ + ਆਡੀਓ",
+        "formatVideoPhysical": "ਵੀਡੀਓ + ਸਰੀਰਕ",
+        "languageLabel": "ਭਾਸ਼ਾ",
+        "languageHindi": "ਹਿੰਦੀ",
+        "languageEnglish": "ਅੰਗਰੇਜ਼ੀ",
+        "languageTamil": "ਤਮਿਲ",
+        "durationLabel": "ਅਵਧੀ",
+        "urlLabel": "ਸਮੱਗਰੀ URL",
+        "deliveryModeLabel": "ਡਿਲੀਵਰੀ ਮੋਡ",
+        "deliveryModeOnline": "ਆਨਲਾਈਨ",
+        "deliveryModeHybrid": "ਹਾਈਬ੍ਰਿਡ",
+        "physicalLocationLabel": "ਸਰੀਰਕ ਸਥਾਨ",
+        "physicalDateLabel": "ਸਰੀਰਕ ਮਿਤੀ",
+        "uploadButton": "ਸਮੱਗਰੀ ਅਪਲੋਡ ਕਰੋ",
+        "statusActive": "ਸਰਗਰਮ",
+        "statusInactive": "ਨਾ-ਸਰਗਰਮ"
+      },
+      "analyticsDashboard": {
+        "title": "ਵਿਸ਼ਲੇਸ਼ਣ ਡੈਸ਼ਬੋਰਡ",
+        "exportCsv": "ਵਿਸ਼ਲੇਸ਼ਣ ਨਿਰਯਾਤ (CSV)",
+        "enrollments": "ਨਾਮਾਂਕਣ: ",
+        "completions": "ਪੂਰਤੀ: ",
+        "completionRate": "ਪੂਰਤੀ ਦਰ: "
+      },
+      "liveSessions": {
+        "title": "ਤੁਹਾਡੇ ਲਾਈਵ ਸੈਸ਼ਨ",
+        "date": "ਮਿਤੀ: ",
+        "time": "ਸਮਾਂ: ",
+        "participants": "ਭਾਗੀਦਾਰ: ",
+        "hostMeeting": "ਮੀਟਿੰਗ ਹੋਸਟ ਕਰੋ"
+      },
+      "analytics": {
+        "title": "ਵਿਸ਼ਲੇਸ਼ਣ ਡੈਸ਼ਬੋਰਡ",
+        "exportButton": "ਵਿਸ਼ਲੇਸ਼ਣ ਨਿਰਯਾਤ (CSV)",
+        "table": {
+          "title": "ਸਿਰਲੇਖ",
+          "language": "ਭਾਸ਼ਾ",
+          "duration": "ਅਵਧੀ",
+          "enrollments": "ਨਾਮਾਂਕਣ",
+          "completions": "ਪੂਰਤੀ",
+          "completionRate": "ਪੂਰਤੀ ਦਰ",
+          "maxSeats": "ਵੱਧ ਤੋਂ ਵੱਧ ਸੀਟਾਂ",
+          "seatsAvailable": "ਉਪਲਬਧ ਸੀਟਾਂ",
+          "startDate": "ਸ਼ੁਰੂਆਤੀ ਮਿਤੀ",
+          "status": "ਸਥਿਤੀ"
+        }
+      }
+    },
+    "dummyData": {
+      "content": {
+        "tailoring": "ਟੇਲਰਿੰਗ ਦੀ ਸ਼ੁਰੂਆਤ",
+        "digitalMarketing": "ਡਿਜੀਟਲ ਮਾਰਕੀਟਿੰਗ ਮੁਢਲੀ ਜਾਣਕਾਰੀ",
+        "farming": "ਜੈਵਿਕ ਖੇਤੀ ਵਰਕਸ਼ਾਪ"
+      },
+      "liveSessions": {
+        "tailoringQna": "ਟੇਲਰਿੰਗ ਤਕਨੀਕਾਂ 'ਤੇ Q&A",
+        "digitalMarketingWorkshop": "ਡਿਜੀਟਲ ਮਾਰਕੀਟਿੰਗ ਲਾਈਵ ਵਰਕਸ਼ਾਪ"
+      }
+    },
+    "navbar": {
+      "features": "ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ",
+      "about": "ਬਾਰੇ",
+      "contact": "ਸੰਪਰਕ",
+      "profile": "ਪ੍ਰੋਫਾਈਲ",
+      "dashboard": "ਡੈਸ਼ਬੋਰਡ",
+      "community": "ਭਾਈਚਾਰਾ",
+      "skills": "ਹੁਨਰ",
+      "signUp": "ਸਾਈਨ ਅੱਪ"
+    }
+  }

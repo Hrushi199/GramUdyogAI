@@ -1,0 +1,238 @@
+{
+    "header": {
+      "title": "ಕೌಶಲ್ಯ ನಿರ್ಮಾಣ ಮತ್ತು ಅನುಕೂಲಕ ಶಿಕ್ಷಣ"
+    },
+    "roleSwitcher": {
+      "label": "ಪಾತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+      "consumer": "ಗ್ರಾಹಕ",
+      "provider": "ಪೂರೈಕೆದಾರ",
+      "uploader": "ಅಪ್‌ಲೋಡರ್",
+      "languageLabel": "ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ"
+    },
+    "consumer": {
+      "progressDashboard": {
+        "title": "ನಿಮ್ಮ ಪ್ರಗತಿ",
+        "progress": "ಪ್ರಗತಿ: ",
+        "tokens": "ಶಿಕ್ಷಾ ಟೋಕನ್‌ಗಳು: "
+      },
+      "searchBar": {
+        "placeholder": "ವಿಷಯವನ್ನು ಹುಡುಕಿ..."
+      },
+      "filters": {
+        "languageLabel": "ಭಾಷೆ",
+        "languageAll": "ಎಲ್ಲಾ",
+        "languageHindi": "ಹಿಂದಿ",
+        "languageEnglish": "ಇಂಗ್ಲಿಷ್",
+        "languageTamil": "ತಮಿಳು",
+        "languageTelugu": "ತೆಲುಗು",
+        "languageMarathi": "ಮರಾಠಿ",
+        "languageBengali": "ಬಂಗಾಳಿ",
+        "languageGujarati": "ಗುಜರಾತಿ",
+        "languageKannada": "ಕನ್ನಡ",
+        "languageMalayalam": "ಮಲಯಾಳಂ",
+        "languagePunjabi": "ಪಂಜಾಬಿ",
+        "languageUrdu": "ಉರ್ದು",
+        "languageOdia": "ಒಡಿಯಾ",
+        "languageAssamese": "ಅಸ್ಸಾಮಿ",
+        "deliveryModeLabel": "ವಿತರಣೆ ಮೋಡ್",
+        "deliveryModeAll": "ಎಲ್ಲಾ",
+        "deliveryModeOnline": "ಆನ್‌ಲೈನ್",
+        "deliveryModeHybrid": "ಹೈಬ್ರಿಡ್"
+      },
+      "contentList": {
+        "type": "ಪ್ರಕಾರ: ",
+        "format": "ಸ್ವರೂಪ: ",
+        "language": "ಭಾಷೆ: ",
+        "source": "ಮೂಲ: ",
+        "duration": "ಅವಧಿ: ",
+        "tokens": "ಟೋಕನ್‌ಗಳು: ",
+        "mode": "ಮೋಡ್: ",
+        "physical": "ಭೌತಿಕ: ",
+        "seats": "ಆಸನಗಳು: ",
+        "startDate": "ಪ್ರಾರಂಭ ದಿನಾಂಕ: ",
+        "startLearning": "ಕಲಿಕೆಯನ್ನು ಪ್ರಾರಂಭಿಸಿ",
+        "enroll": "ನೋಂದಾಯಿಸಿ"
+      },
+      "selectedContent": {
+        "source": "ಮೂಲ: ",
+        "format": "ಸ್ವರೂಪ: ",
+        "language": "ಭಾಷೆ: ",
+        "videoError": "ನಿಮ್ಮ ಬ್ರೌಸರ್ ವಿಡಿಯೋ ಟ್ಯಾಗ್ ಅನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.",
+        "viewContent": "ವಿಷಯವನ್ನು ವೀಕ್ಷಿಸಿ",
+        "close": "ಮುಚ್ಚಿ",
+        "description": "ವಿವರಣೆ: ",
+        "certification": "ಪ್ರಮಾಣಪತ್ರ: ",
+        "seats": "ಆಸನಗಳು: ",
+        "startDate": "ಪ್ರಾರಂಭ ದಿನಾಂಕ: "
+      },
+      "liveSessions": {
+        "title": "ನೇರ ಸೆಷನ್‌ಗಳು",
+        "source": "ಮೂಲ: ",
+        "date": "ದಿನಾಂಕ: ",
+        "time": "ಸಮಯ: ",
+        "joinMeeting": "ಸಭೆಗೆ ಸೇರಿ",
+        "viewChatQna": "ಚಾಟ್ ಮತ್ತು Q&A ವೀಕ್ಷಿಸಿ"
+      },
+      "chatQna": {
+        "interaction": "ಸಂವಾದ",
+        "chatTitle": "ಚಾಟ್",
+        "chatPlaceholder": "ನಿಮ್ಮ ಸಂದೇಶವನ್ನು ಟೈಪ್ ಮಾಡಿ...",
+        "chatSend": "ಕಳುಹಿಸಿ",
+        "qnaTitle": "Q&A",
+        "qnaPlaceholder": "ಪ್ರಶ್ನೆಯನ್ನು ಕೇಳಿ...",
+        "qnaSubmit": "ಸಲ್ಲಿಸಿ",
+        "close": "ಮುಚ್ಚಿ"
+      },
+      "visualSummaries": {
+        "title": "ದೃಶ್ಯ ಸಾರಾಂಶಗಳು",
+        "createNew": "ಹೊಸ ಸಾರಾಂಶವನ್ನು ರಚಿಸಿ"
+      },
+      "summaryCreatorModal": {
+        "title": "ದೃಶ್ಯ ಸಾರಾಂಶವನ್ನು ರಚಿಸಿ",
+        "topicPlaceholder": "ವಿಷಯವನ್ನು ನಮೂದಿಸಿ...",
+        "contextPlaceholder": "ಹೆಚ್ಚುವರಿ ಸಂದರ್ಭವನ್ನು ನಮೂದಿಸಿ...",
+        "cancel": "ರದ್ದುಮಾಡಿ",
+        "create": "ರಚಿಸಿ",
+        "creating": "ರಚಿಸಲಾಗುತ್ತಿದೆ...",
+        "audioOptions": "ಆಡಿಯೋ ಉತ್ಪಾದನೆ ಆಯ್ಕೆಗಳು",
+        "audioNone": "ಯಾವುದೇ ಆಡಿಯೋ ಉತ್ಪಾದನೆ ಇಲ್ಲ",
+        "audioOnDemand": "ಬೇಡಿಕೆಯ ಮೇರೆಗೆ ಆಡಿಯೋ ಉತ್ಪಾದಿಸಿ (ವೇಗವಾಗಿ)",
+        "audioAll": "ಎಲ್ಲಾ ಆಡಿಯೋ ಈಗ ಉತ್ಪಾದಿಸಿ (ಹೆಚ್ಚು ಸಮಯ ತೆಗೆದುಕೊಳ್ಳುತ್ತದೆ)"
+      },
+      "visualSummaryModal": {
+        "close": "ಮುಚ್ಚಿ",
+        "previous": "ಹಿಂದಿನ",
+        "next": "ಮುಂದಿನ",
+        "sectionInfo": "ವಿಭಾಗ {sectionIdx} / {sectionsLength}",
+        "goToSection": "ವಿಭಾಗ {sectionIdx} ಗೆ ಹೋಗಿ",
+        "generateAudio": "ಆಡಿಯೋ ಉತ್ಪಾದಿಸಿ",
+        "generatingAudio": "ಆಡಿಯೋ ಉತ್ಪಾದಿಸಲಾಗುತ್ತಿದೆ..."
+      },
+      "enrollment": {
+        "success": "ಕೋರ್ಸ್ ಸಫಲವಾಗಿ ನೋಂದಾಯಿತು!",
+        "failure": "ಕೋರ್ಸ್‌ಗೆ ನೋಂದಾಯಿಸಲು ವಿಫಲವಾಯಿತು:"
+      }
+    },
+    "provider": {
+      "contentUpload": {
+        "title": "ಹೊಸ ವಿಷಯವನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
+        "titleLabel": "ಶೀರ್ಷಿಕೆ",
+        "typeLabel": "ಪ್ರಕಾರ",
+        "typeTutorial": "ಟ್ಯುಟೋರಿಯಲ್",
+        "typeCourse": "ಕೋರ್ಸ್",
+        "formatLabel": "ಸ್ವರೂಪ",
+        "formatVideo": "ವಿಡಿಯೋ",
+        "formatTextAudio": "ಪಠ್ಯ + ಆಡಿಯೋ",
+        "formatVideoPhysical": "ವಿಡಿಯೋ + ಭೌತಿಕ",
+        "languageLabel": "ಭಾಷೆ",
+        "languageHindi": "ಹಿಂದಿ",
+        "languageEnglish": "ಇಂಗ್ಲಿಷ್",
+        "languageTamil": "ತಮಿಳು",
+        "durationLabel": "ಅವಧಿ",
+        "urlLabel": "ವಿಷಯ URL",
+        "deliveryModeLabel": "ವಿತರಣೆ ಮೋಡ್",
+        "deliveryModeOnline": "ಆನ್‌ಲೈನ್",
+        "deliveryModeHybrid": "ಹೈಬ್ರಿಡ್",
+        "physicalLocationLabel": "ಭೌತಿಕ ಸ್ಥಳ",
+        "physicalDateLabel": "ಭೌತಿಕ ದಿನಾಂಕ",
+        "uploadButton": "ವಿಷಯವನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ"
+      },
+      "contentList": {
+        "title": "ನಿಮ್ಮ ವಿಷಯ",
+        "type": "ಪ್ರಕಾರ: ",
+        "enrollments": "ನೋಂದಣಿಗಳು: ",
+        "completions": "ಪೂರ್ಣಗೊಳಿಸುವಿಕೆಗಳು: "
+      },
+      "liveSessions": {
+        "title": "ನಿಮ್ಮ ನೇರ ಸೆಷನ್‌ಗಳು",
+        "date": "ದಿನಾಂಕ: ",
+        "time": "ಸಮಯ: ",
+        "participants": "ಭಾಗವಹಿಸುವವರು: ",
+        "hostMeeting": "ಸಭೆಯನ್ನು ಆಯೋಜಿಸಿ"
+      }
+    },
+    "uploader": {
+      "contentUpload": {
+        "title": "CSR-ಬ್ರಾಂಡೆಡ್ ವಿಷಯವನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
+        "titleLabel": "ಶೀರ್ಷಿಕೆ",
+        "descriptionLabel": "ವಿವರಣೆ",
+        "skillsLabel": "ಕೌಶಲ್ಯಗಳು",
+        "maxSeatsLabel": "ಗರಿಷ್ಠ ಆಸನಗಳು",
+        "startDateLabel": "ಪ್ರಾರಂಭ ದಿನಾಂಕ",
+        "certificationLabel": "ಪ್ರಮಾಣಪತ್ರ",
+        "statusLabel": "ಸ್ಥಿತಿ",
+        "typeLabel": "ಪ್ರಕಾರ",
+        "typeTutorial": "ಟ್ಯುಟೋರಿಯಲ್",
+        "typeCourse": "ಕೋರ್ಸ್",
+        "formatLabel": "ಸ್ವರೂಪ",
+        "formatVideo": "ವಿಡಿಯೋ",
+        "formatTextAudio": "ಪಠ್ಯ + ಆಡಿಯೋ",
+        "formatVideoPhysical": "ವಿಡಿಯೋ + ಭೌತಿಕ",
+        "languageLabel": "ಭಾಷೆ",
+        "languageHindi": "ಹಿಂದಿ",
+        "languageEnglish": "ಇಂಗ್ಲಿಷ್",
+        "languageTamil": "ತಮಿಳು",
+        "durationLabel": "ಅವಧಿ",
+        "urlLabel": "ವಿಷಯ URL",
+        "deliveryModeLabel": "ವಿತರಣೆ ಮೋಡ್",
+        "deliveryModeOnline": "ಆನ್‌ಲೈನ್",
+        "deliveryModeHybrid": "ಹೈಬ್ರಿಡ್",
+        "physicalLocationLabel": "ಭೌತಿಕ ಸ್ಥಳ",
+        "physicalDateLabel": "ಭೌತಿಕ ದಿನಾಂಕ",
+        "uploadButton": "ವಿಷಯವನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
+        "statusActive": "ಸಕ್ರಿಯ",
+        "statusInactive": "ನಿಷ್ಕ್ರಿಯ"
+      },
+      "analyticsDashboard": {
+        "title": "ವಿಶ್ಲೇಷಣೆ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+        "exportCsv": "ವಿಶ್ಲೇಷಣೆಯನ್ನು ರಫ್ತು ಮಾಡಿ (CSV)",
+        "enrollments": "ನೋಂದಣಿಗಳು: ",
+        "completions": "ಪೂರ್ಣಗೊಳಿಸುವಿಕೆಗಳು: ",
+        "completionRate": "ಪೂರ್ಣಗೊಳಿಕೆ ದರ: "
+      },
+      "liveSessions": {
+        "title": "ನಿಮ್ಮ ನೇರ ಸೆಷನ್‌ಗಳು",
+        "date": "ದಿನಾಂಕ: ",
+        "time": "ಸಮಯ: ",
+        "participants": "ಭಾಗವಹಿಸುವವರು: ",
+        "hostMeeting": "ಸಭೆಯನ್ನು ಆಯೋಜಿಸಿ"
+      },
+      "analytics": {
+        "title": "ವಿಶ್ಲೇಷಣೆ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+        "exportButton": "ವಿಶ್ಲೇಷಣೆಯನ್ನು ರಫ್ತು ಮಾಡಿ (CSV)",
+        "table": {
+          "title": "ಶೀರ್ಷಿಕೆ",
+          "language": "ಭಾಷೆ",
+          "duration": "ಅವಧಿ",
+          "enrollments": "ನೋಂದಣಿಗಳು",
+          "completions": "ಪೂರ್ಣಗೊಳಿಸುವಿಕೆಗಳು",
+          "completionRate": "ಪೂರ್ಣಗೊಳಿಕೆ ದರ",
+          "maxSeats": "ಗರಿಷ್ಠ ಆಸನಗಳು",
+          "seatsAvailable": "ಲಭ್ಯವಿರುವ ಆಸನಗಳು",
+          "startDate": "ಪ್ರಾರಂಭ ದಿನಾಂಕ",
+          "status": "ಸ್ಥಿತಿ"
+        }
+      }
+    },
+    "dummyData": {
+      "content": {
+        "tailoring": "ಟೈಲರಿಂಗ್‌ಗೆ ಪರಿಚಯ",
+        "digitalMarketing": "ಡಿಜಿಟಲ್ ಮಾರ್ಕೆಟಿಂಗ್ ಮೂಲಭೂತ",
+        "farming": "ಆರ್ಗಾನಿಕ್ ಫಾರ್ಮಿಂಗ್ ವರ್ಕ್‌ಶಾಪ್"
+      },
+      "liveSessions": {
+        "tailoringQna": "ಟೈಲರಿಂಗ್ ತಂತ್ರಗಳ ಬಗ್ಗೆ Q&A",
+        "digitalMarketingWorkshop": "ಡಿಜಿಟಲ್ ಮಾರ್ಕೆಟಿಂಗ್ ನೇರ ವರ್ಕ್‌ಶಾಪ್"
+      }
+    },
+    "navbar": {
+      "features": "ವೈಶಿಷ್ಟ್ಯಗಳು",
+      "about": "ಬಗ್ಗೆ",
+      "contact": "ಸಂಪರ್ಕ",
+      "profile": "ಪ್ರೊಫೈಲ್",
+      "dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+      "community": "ಸಮುದಾಯ",
+      "skills": "ಕೌಶಲ್ಯಗಳು",
+      "signUp": "ಸೈನ್ ಅಪ್"
+    }
+  }

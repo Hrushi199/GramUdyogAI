@@ -1,0 +1,238 @@
+{
+    "header": {
+      "title": "ଦକ୍ଷତା ନିର୍ମାଣ ଏବଂ ଅନୁକୂଳ ଶିକ୍ଷଣ"
+    },
+    "roleSwitcher": {
+      "label": "ଭୂମିକା ଚୟନ କରନ୍ତୁ",
+      "consumer": "ଗ୍ରାହକ",
+      "provider": "ପ୍ରଦାତା",
+      "uploader": "ଅପଲୋଡର",
+      "languageLabel": "ଭାଷା ଚୟନ କରନ୍ତୁ"
+    },
+    "consumer": {
+      "progressDashboard": {
+        "title": "ତୁମର ପ୍ରଗତି",
+        "progress": "ପ୍ରଗତି: ",
+        "tokens": "ଶିକ୍ଷା ଟୋକନ୍ସ: "
+      },
+      "searchBar": {
+        "placeholder": "ବିଷୟବସ୍ତୁ ଖୋଜନ୍ତୁ..."
+      },
+      "filters": {
+        "languageLabel": "ଭାଷା",
+        "languageAll": "ସମସ୍ତ",
+        "languageHindi": "ହିନ୍ଦୀ",
+        "languageEnglish": "ଇଂରାଜୀ",
+        "languageTamil": "ତାମିଲ",
+        "languageTelugu": "ତେଲୁଗୁ",
+        "languageMarathi": "ମରାଠୀ",
+        "languageBengali": "ବଙ୍ଗଳା",
+        "languageGujarati": "ଗୁଜରାଟୀ",
+        "languageKannada": "କନ୍ନଡ",
+        "languageMalayalam": "ମାଲୟାଲମ",
+        "languagePunjabi": "ପଞ୍ଜାବୀ",
+        "languageUrdu": "ଉର୍ଦୁ",
+        "languageOdia": "ଓଡ଼ିଆ",
+        "languageAssamese": "ଆସାମୀୟା",
+        "deliveryModeLabel": "ବିତରଣ ମୋଡ୍",
+        "deliveryModeAll": "ସମସ୍ତ",
+        "deliveryModeOnline": "ଅନଲାଇନ",
+        "deliveryModeHybrid": "ହାଇବ୍ରିଡ"
+      },
+      "contentList": {
+        "type": "ପ୍ରକାର: ",
+        "format": "ଫର୍ମାଟ: ",
+        "language": "ଭାଷା: ",
+        "source": "ଉତ୍ସ: ",
+        "duration": "ଅବଧି: ",
+        "tokens": "ଟୋକନ୍ସ: ",
+        "mode": "ମୋଡ୍: ",
+        "physical": "ଶାରୀରିକ: ",
+        "seats": "ଆସନ: ",
+        "startDate": "ଆରମ୍ଭ ତାରିଖ: ",
+        "startLearning": "ଶିଖିବା ଆରମ୍ଭ କରନ୍ତୁ",
+        "enroll": "ନାମାଙ୍କନ କରନ୍ତୁ"
+      },
+      "selectedContent": {
+        "source": "ଉତ୍ସ: ",
+        "format": "ଫର୍ମାଟ: ",
+        "language": "ଭାଷା: ",
+        "videoError": "ତୁମର ବ୍ରାଉଜର ଭିଡିଓ ଟ୍ୟାଗକୁ ସମର୍ଥନ କରୁନାହିଁ।",
+        "viewContent": "ବିଷୟବସ୍ତୁ ଦେଖନ୍ତୁ",
+        "close": "ବନ୍ଦ କରନ୍ତୁ",
+        "description": "ବର୍ଣ୍ଣନା: ",
+        "certification": "ପ୍ରମାଣପତ୍ର: ",
+        "seats": "ଆସନ: ",
+        "startDate": "ଆରମ୍ଭ ତାରିଖ: "
+      },
+      "liveSessions": {
+        "title": "ସଜୀବ ସେସନସ",
+        "source": "ଉତ୍ସ: ",
+        "date": "ତାରିଖ: ",
+        "time": "ସମୟ: ",
+        "joinMeeting": "ମିଟିଂରେ ଯୋଗଦିଅନ୍ତୁ",
+        "viewChatQna": "ଚାଟ ଏବଂ Q&A ଦେଖନ୍ତୁ"
+      },
+      "chatQna": {
+        "interaction": "ପାରସ୍ପରିକ କ୍ରିୟା",
+        "chatTitle": "ଚାଟ",
+        "chatPlaceholder": "ତୁମର ସନ୍ଦେଶ ଟାଇପ କରନ୍ତୁ...",
+        "chatSend": "ପଠାନ୍ତୁ",
+        "qnaTitle": "Q&A",
+        "qnaPlaceholder": "ଏକ ପ୍ରଶ୍ନ ପଚାରନ୍ତୁ...",
+        "qnaSubmit": "ଦାଖଲ କରନ୍ତୁ",
+        "close": "ବନ୍ଦ କରନ୍ତୁ"
+      },
+      "visualSummaries": {
+        "title": "ଦୃଶ୍ୟମାନ ସାରାଂଶ",
+        "createNew": "ନୂଆ ସାରାଂଶ ସୃଷ୍ଟି କରନ୍ତୁ"
+      },
+      "summaryCreatorModal": {
+        "title": "ଦୃଶ୍ୟମାନ ସାରାଂଶ ସୃଷ୍ଟି କରନ୍ତୁ",
+        "topicPlaceholder": "ବିଷୟ ପ୍ରବେଶ କରନ୍ତୁ...",
+        "contextPlaceholder": "ଅତିରିକ୍ତ ପ୍ରସଙ୍ଗ ପ୍ରବେଶ କରନ୍ତୁ...",
+        "cancel": "ବାତିଲ କରନ୍ତୁ",
+        "create": "ସୃଷ୍ଟି କରନ୍ତୁ",
+        "creating": "ସୃଷ୍ଟି ହେଉଛି...",
+        "audioOptions": "ଅଡିଓ ଉତ୍ପାଦନ ବିକଳ୍ପ",
+        "audioNone": "କୌଣସି ଅଡିଓ ଉତ୍ପାଦନ ନାହିଁ",
+        "audioOnDemand": "ମାଗଣା ଅନୁସାରେ ଅଡିଓ ଉତ୍ପାଦନ କରନ୍ତୁ (ତୁରନ୍ତ)",
+        "audioAll": "ସମସ୍ତ ଅଡିଓ ଏବେ ଉତ୍ପାଦନ କରନ୍ତୁ (ଅଧିକ ସମୟ ନେଇଥାଏ)"
+      },
+      "visualSummaryModal": {
+        "close": "ବନ୍ଦ କରନ୍ତୁ",
+        "previous": "ପୂର୍ବବର୍ତ୍ତୀ",
+        "next": "ପରବର୍ତ୍ତୀ",
+        "sectionInfo": "ବିଭାଗ {sectionIdx} / {sectionsLength}",
+        "goToSection": "ବିଭାଗ {sectionIdx} କୁ ଯାଆନ୍ତୁ",
+        "generateAudio": "ଅଡିଓ ଉତ୍ପାଦନ କରନ୍ତୁ",
+        "generatingAudio": "ଅଡିଓ ଉତ୍ପାଦନ ହେଉଛି..."
+      },
+      "enrollment": {
+        "success": "କୋର୍ସ ସଫଳତାର ସହିତ ନାମାଙ୍କନ ହେଲା!",
+        "failure": "କୋର୍ସରେ ନାମାଙ୍କନ ବିଫଳ ହେଲା:"
+      }
+    },
+    "provider": {
+      "contentUpload": {
+        "title": "ନୂଆ ବିଷୟବସ୍ତୁ ଅପଲୋଡ କରନ୍ତୁ",
+        "titleLabel": "ଶୀର୍ଷକ",
+        "typeLabel": "ପ୍ରକାର",
+        "typeTutorial": "ଟ୍ୟୁଟୋରିଆଲ",
+        "typeCourse": "କୋର୍ସ",
+        "formatLabel": "ଫର୍ମାଟ",
+        "formatVideo": "ଭିଡିଓ",
+        "formatTextAudio": "ଟେକ୍ସଟ + ଅଡିଓ",
+        "formatVideoPhysical": "ଭିଡିଓ + ଶାରୀରିକ",
+        "languageLabel": "ଭାଷା",
+        "languageHindi": "ହିନ୍ଦୀ",
+        "languageEnglish": "ଇଂରାଜୀ",
+        "languageTamil": "ତାମିଲ",
+        "durationLabel": "ଅବଧି",
+        "urlLabel": "ବିଷୟବସ୍ତୁ URL",
+        "deliveryModeLabel": "ବିତରଣ ମୋଡ୍",
+        "deliveryModeOnline": "ଅନଲାଇନ",
+        "deliveryModeHybrid": "ହାଇବ୍ରିଡ",
+        "physicalLocationLabel": "ଶାରୀରିକ ସ୍ଥାନ",
+        "physicalDateLabel": "ଶାରୀରିକ ତାରିଖ",
+        "uploadButton": "ବିଷୟବସ୍ତୁ ଅପଲୋଡ କରନ୍ତୁ"
+      },
+      "contentList": {
+        "title": "ତୁମର ବିଷୟବସ୍ତୁ",
+        "type": "ପ୍ରକାର: ",
+        "enrollments": "ନାମାଙ୍କନ: ",
+        "completions": "ସମାପ୍ତି: "
+      },
+      "liveSessions": {
+        "title": "ତୁମର ସଜୀବ ସେସନସ",
+        "date": "ତାରିଖ: ",
+        "time": "ସମୟ: ",
+        "participants": "ଅଂଶଗ୍ରହଣକାରୀ: ",
+        "hostMeeting": "ମିଟିଂ ହୋଷ୍ଟ କରନ୍ତୁ"
+      }
+    },
+    "uploader": {
+      "contentUpload": {
+        "title": "CSR-ବ୍ରାଣ୍ଡେଡ ବିଷୟବସ୍ତୁ ଅପଲୋଡ କରନ୍ତୁ",
+        "titleLabel": "ଶୀର୍ଷକ",
+        "descriptionLabel": "ବର୍ଣ୍ଣନା",
+        "skillsLabel": "ଦକ୍ଷତା",
+        "maxSeatsLabel": "ସର୍ବାଧିକ ଆସନ",
+        "startDateLabel": "ଆରମ୍ଭ ତାରିଖ",
+        "certificationLabel": "ପ୍ରମାଣପତ୍ର",
+        "statusLabel": "ସ୍ଥିତି",
+        "typeLabel": "ପ୍ରକାର",
+        "typeTutorial": "ଟ୍ୟୁଟୋରିଆଲ",
+        "typeCourse": "କୋର୍ସ",
+        "formatLabel": "ଫର୍ମାଟ",
+        "formatVideo": "ଭିଡିଓ",
+        "formatTextAudio": "ଟେକ୍ସଟ + ଅଡିଓ",
+        "formatVideoPhysical": "ଭିଡିଓ + ଶାରୀରିକ",
+        "languageLabel": "ଭାଷା",
+        "languageHindi": "ହିନ୍ଦୀ",
+        "languageEnglish": "ଇଂରାଜୀ",
+        "languageTamil": "ତାମିଲ",
+        "durationLabel": "ଅବଧି",
+        "urlLabel": "ବିଷୟବସ୍ତୁ URL",
+        "deliveryModeLabel": "ବିତରଣ ମୋଡ୍",
+        "deliveryModeOnline": "ଅନଲାଇନ",
+        "deliveryModeHybrid": "ହାଇବ୍ରିଡ",
+        "physicalLocationLabel": "ଶାରୀରିକ ସ୍ଥାନ",
+        "physicalDateLabel": "ଶାରୀରିକ ତାରିଖ",
+        "uploadButton": "ବିଷୟବସ୍ତୁ ଅପଲୋଡ କରନ୍ତୁ",
+        "statusActive": "ସକ୍ରିୟ",
+        "statusInactive": "ନିଷ୍କ୍ରିୟ"
+      },
+      "analyticsDashboard": {
+        "title": "ବିଶ୍ଳେଷଣ ଡ୍ୟାଶବୋର୍ଡ",
+        "exportCsv": "ବିଶ୍ଳେଷଣ ରପ୍ତାନୀ (CSV)",
+        "enrollments": "ନାମାଙ୍କନ: ",
+        "completions": "ସମାପ୍ତି: ",
+        "completionRate": "ସମାପ୍ତି ହାର: "
+      },
+      "liveSessions": {
+        "title": "ତୁମର ସଜୀବ ସେସନସ",
+        "date": "ତାରିଖ: ",
+        "time": "ସମୟ: ",
+        "participants": "ଅଂଶଗ୍ରହଣକାରୀ: ",
+        "hostMeeting": "ମିଟିଂ ହୋଷ୍ଟ କରନ୍ତୁ"
+      },
+      "analytics": {
+        "title": "ବିଶ୍ଳେଷଣ ଡ୍ୟାଶବୋର୍ଡ",
+        "exportButton": "ବିଶ୍ଳେଷଣ ରପ୍ତାନୀ (CSV)",
+        "table": {
+          "title": "ଶୀର୍ଷକ",
+          "language": "ଭାଷା",
+          "duration": "ଅବଧି",
+          "enrollments": "ନାମାଙ୍କନ",
+          "completions": "ସମାପ୍ତି",
+          "completionRate": "ସମାପ୍ତି ହାର",
+          "maxSeats": "ସର୍ବାଧିକ ଆସନ",
+          "seatsAvailable": "ଉପଲବ୍ଧ ଆସନ",
+          "startDate": "ଆରମ୍ଭ ତାରିଖ",
+          "status": "ସ୍ଥିତି"
+        }
+      }
+    },
+    "dummyData": {
+      "content": {
+        "tailoring": "ଟେଲରିଂର ପରିଚୟ",
+        "digitalMarketing": "ଡିଜିଟାଲ ମାର୍କେଟିଂ ମୌଳିକ",
+        "farming": "ଜୈବିକ ଚାଷ କର୍ମଶାଳା"
+      },
+      "liveSessions": {
+        "tailoringQna": "ଟେଲରିଂ ଟେକନିକ ଉପରେ Q&A",
+        "digitalMarketingWorkshop": "ଡିଜିଟାଲ ମାର୍କେଟିଂ ସଜୀବ କର୍ମଶାଳା"
+      }
+    },
+    "navbar": {
+      "features": "ବୈଶିଷ୍ଟ୍ୟ",
+      "about": "ବିଷୟରେ",
+      "contact": "ଯୋଗାଯୋଗ",
+      "profile": "ପ୍ରୋଫାଇଲ",
+      "dashboard": "ଡ୍ୟାଶବୋର୍ଡ",
+      "community": "ସମୁଦାୟ",
+      "skills": "ଦକ୍ଷତା",
+      "signUp": "ସାଇନ ଅପ"
+    }
+  }

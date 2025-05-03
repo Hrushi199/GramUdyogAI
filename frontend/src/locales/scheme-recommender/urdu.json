@@ -1,0 +1,81 @@
+{
+    "pageTitle": "سرکاری اسکیمیں دریافت کریں",
+    "pageDescription": "اپنی پیشہ ورانہ مہارت کو رجسٹر کریں اور ایسی سرکاری اسکیموں کو تلاش کریں جو آپ کی ترقی اور کامیابی میں مدد دے سکیں۔",
+    "form": {
+      "occupationLabel": "اپنا پیشہ درج کریں:",
+      "occupationPlaceholder": "مثال کے طور پر: کسان، استاد",
+      "submitButton": "رائے حاصل کریں"
+    },
+    "loading": "رائے لوڈ ہو رہی ہے...",
+    "recommendedSchemes": "تجویز کردہ اسکیمیں",
+    "scheme": {
+      "goal": "مقصد",
+      "benefits": "فوائد",
+      "eligibility": "اہلیت",
+      "howToApply": "کیسے درخواست دیں",
+      "specialFeatures": "خصوصی خصوصیات",
+      "viewFullDetails": "مکمل تفصیلات دیکھیں"
+    },
+    "noExplanation": "کوئی وضاحت دستیاب نہیں ہے۔",
+    "noData": "اب تک کوئی ڈیٹا موصول نہیں ہوا۔ براہ کرم تجاویز حاصل کرنے کے لیے فارم جمع کروائیں۔",
+    "modal": {
+      "schemeDetails": "اسکیم کی تفصیلات",
+      "fields": {
+        "scheme_name": "اسکیم کا نام",
+        "goal": "مقصد",
+        "benefit": "فائدہ",
+        "eligibility": "اہلیت",
+        "application_process": "درخواست دینے کا عمل",
+        "special_features": "خصوصی خصوصیات",
+        "description": "تفصیل",
+        "website": "ویب سائٹ",
+        "contact": "رابطہ",
+        "location": "مقام",
+        "tags": "ٹیگ",
+        "key_features": "اہم خصوصیات",
+        "benefits_details": {
+          "interest_subsidy": "سود سبسڈی",
+          "maximum_loan_amount": "زیادہ سے زیادہ قرض کی رقم",
+          "moratorium_period": "وقفہ مدت",
+          "knowledge_transfer": "علم کی منتقلی",
+          "productivity_improvement": "پیداواری بہتری"
+        },
+        "eligibility_details": {
+          "education_criteria": "تعلیمی معیار",
+          "additional_criteria": "اضافی معیار",
+          "admission_requirement": "داخلے کی ضروریات",
+          "institution_criteria": "ادارے کے معیار",
+          "criteria": "معیار"
+        },
+        "eligible_courses": "اہل کورسز",
+        "application_details": {
+          "mode": "طریقہ",
+          "steps": "مراحل",
+          "note": "نوٹ"
+        },
+        "required_documents": "ضروری دستاویزات",
+        "document_fields": {
+          "document": "دستاویز",
+          "mandatory": "ضروری",
+          "note": "نوٹ"
+        },
+        "special_notes": "خصوصی نوٹس",
+        "document": "دستاویز",
+        "mandatory": "ضروری",
+        "note": "نوٹ",
+        "mode": "طریقہ",
+        "steps": "مراحل",
+        "interest_subsidy": "سود سبسڈی",
+        "maximum_loan_amount": "زیادہ سے زیادہ قرض کی رقم",
+        "moratorium_period": "وقفہ مدت",
+        "knowledge_transfer": "علم کی منتقلی",
+        "productivity_improvement": "پیداواری بہتری",
+        "education_criteria": "تعلیمی معیار",
+        "additional_criteria": "اضافی معیار",
+        "admission_requirement": "داخلے کی ضروریات",
+        "institution_criteria": "ادارے کے معیار",
+        "criteria": "معیار"
+      }
+    }
+  }
+  

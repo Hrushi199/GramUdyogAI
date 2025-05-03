@@ -1,0 +1,238 @@
+{
+    "header": {
+      "title": "നൈപുണ്യ നിർമ്മാണവും അനുയോജ്യ പഠനവും"
+    },
+    "roleSwitcher": {
+      "label": "വേഷം തിരഞ്ഞെടുക്കുക",
+      "consumer": "ഉപഭോക്താവ്",
+      "provider": "ദാതാവ്",
+      "uploader": "അപ്‌ലോഡർ",
+      "languageLabel": "ഭാഷ തിരഞ്ഞെടുക്കുക"
+    },
+    "consumer": {
+      "progressDashboard": {
+        "title": "നിന്റെ പുരോഗതി",
+        "progress": "പുരോഗതി: ",
+        "tokens": "ശിക്ഷ ടോക്കണുകൾ: "
+      },
+      "searchBar": {
+        "placeholder": "ഉള്ളടക്കം തിരയുക..."
+      },
+      "filters": {
+        "languageLabel": "ഭാഷ",
+        "languageAll": "എല്ലാം",
+        "languageHindi": "ഹിന്ദി",
+        "languageEnglish": "ഇംഗ്ലീഷ്",
+        "languageTamil": "തമിഴ്",
+        "languageTelugu": "തെലുഗു",
+        "languageMarathi": "മറാഠി",
+        "languageBengali": "ബംഗാളി",
+        "languageGujarati": "ഗുജറാത്തി",
+        "languageKannada": "കന്നഡ",
+        "languageMalayalam": "മലയാളം",
+        "languagePunjabi": "പഞ്ചാബി",
+        "languageUrdu": "ഉറുദു",
+        "languageOdia": "ഒഡിയ",
+        "languageAssamese": "അസമീസ്",
+        "deliveryModeLabel": "വിതരണ രീതി",
+        "deliveryModeAll": "എല്ലാം",
+        "deliveryModeOnline": "ഓൺലൈൻ",
+        "deliveryModeHybrid": "ഹൈബ്രിഡ്"
+      },
+      "contentList": {
+        "type": "തരം: ",
+        "format": "ഫോർമാറ്റ്: ",
+        "language": "ഭാഷ: ",
+        "source": "ഉറവിടം: ",
+        "duration": "ദൈർഘ്യം: ",
+        "tokens": "ടോക്കണുകൾ: ",
+        "mode": "മോഡ്: ",
+        "physical": "ഫിസിക്കൽ: ",
+        "seats": "സീറ്റുകൾ: ",
+        "startDate": "തുടക്ക തീയതി: ",
+        "startLearning": "പഠനം ആരംഭിക്കുക",
+        "enroll": "എൻറോൾ ചെയ്യുക"
+      },
+      "selectedContent": {
+        "source": "ഉറവിടം: ",
+        "format": "ഫോർമാറ്റ്: ",
+        "language": "ഭാഷ: ",
+        "videoError": "നിന്റെ ബ്രൗസർ വീഡിയോ ടാഗിനെ പിന്തുണയ്ക്കുന്നില്ല.",
+        "viewContent": "ഉള്ളടക്കം കാണുക",
+        "close": "അടയ്ക്കുക",
+        "description": "വിവരണം: ",
+        "certification": "സർട്ടിഫിക്കേഷൻ: ",
+        "seats": "സീറ്റുകൾ: ",
+        "startDate": "തുടക്ക തീയതി: "
+      },
+      "liveSessions": {
+        "title": "ലൈവ് സെഷനുകൾ",
+        "source": "ഉറവിടം: ",
+        "date": "തീയതി: ",
+        "time": "സമയം: ",
+        "joinMeeting": "മീറ്റിംഗിൽ ചേരുക",
+        "viewChatQna": "ചാറ്റും Q&A യും കാണുക"
+      },
+      "chatQna": {
+        "interaction": "ഇന്ററാക്ഷൻ",
+        "chatTitle": "ചാറ്റ്",
+        "chatPlaceholder": "നിന്റെ സന്ദേശം ടൈപ്പ് ചെയ്യുക...",
+        "chatSend": "അയയ്ക്കുക",
+        "qnaTitle": "Q&A",
+        "qnaPlaceholder": "ഒരു ചോദ്യം ചോദിക്കുക...",
+        "qnaSubmit": "സമർപ്പിക്കുക",
+        "close": "അടയ്ക്കുക"
+      },
+      "visualSummaries": {
+        "title": "വിഷ്വൽ സംഗ്രഹങ്ങൾ",
+        "createNew": "പുതിയ സംഗ്രഹം സൃഷ്ടിക്കുക"
+      },
+      "summaryCreatorModal": {
+        "title": "വിഷ്വൽ സംഗ്രഹം സൃഷ്ടിക്കുക",
+        "topicPlaceholder": "വിഷയം നൽകുക...",
+        "contextPlaceholder": "അധിക സന്ദർഭം നൽകുക...",
+        "cancel": "റദ്ദാക്കുക",
+        "create": "സൃഷ്ടിക്കുക",
+        "creating": "സൃഷ്ടിക്കുന്നു...",
+        "audioOptions": "ഓഡിയോ ജനറേഷൻ ഓപ്ഷനുകൾ",
+        "audioNone": "ഓഡിയോ ജനറേഷൻ ഇല്ല",
+        "audioOnDemand": "ഡിമാൻഡിൽ ഓഡിയോ ജനറേറ്റ് ചെയ്യുക (വേഗത്തിൽ)",
+        "audioAll": "എല്ലാ ഓഡിയോയും ഇപ്പോൾ ജനറേറ്റ് ചെയ്യുക (കൂടുതൽ സമയം എടുക്കും)"
+      },
+      "visualSummaryModal": {
+        "close": "അടയ്ക്കുക",
+        "previous": "മുൻപത്തെ",
+        "next": "അടുത്തത്",
+        "sectionInfo": "വിഭാഗം {sectionIdx} / {sectionsLength}",
+        "goToSection": "വിഭാഗം {sectionIdx} ലേക്ക് പോകുക",
+        "generateAudio": "ഓഡിയോ ജനറേറ്റ് ചെയ്യുക",
+        "generatingAudio": "ഓഡിയോ ജനറേറ്റ് ചെയ്യുന്നു..."
+      },
+      "enrollment": {
+        "success": "കോഴ്സ് വിജയകരമായി എൻറോൾ ചെയ്തു!",
+        "failure": "കോഴ്സിൽ എൻറോൾ ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു:"
+      }
+    },
+    "provider": {
+      "contentUpload": {
+        "title": "പുതിയ ഉള്ളടക്കം അപ്‌ലോഡ് ചെയ്യുക",
+        "titleLabel": "ശീർഷകം",
+        "typeLabel": "തരം",
+        "typeTutorial": "ട്യൂട്ടോറിയൽ",
+        "typeCourse": "കോഴ്സ്",
+        "formatLabel": "ഫോർമാറ്റ്",
+        "formatVideo": "വീഡിയോ",
+        "formatTextAudio": "ടെക്സ്റ്റ് + ഓഡിയോ",
+        "formatVideoPhysical": "വീഡിയോ + ഫിസിക്കൽ",
+        "languageLabel": "ഭാഷ",
+        "languageHindi": "ഹിന്ദി",
+        "languageEnglish": "ഇംഗ്ലീഷ്",
+        "languageTamil": "തമിഴ്",
+        "durationLabel": "ദൈർഘ്യം",
+        "urlLabel": "ഉള്ളടക്ക URL",
+        "deliveryModeLabel": "വിതരണ രീതി",
+        "deliveryModeOnline": "ഓൺലൈൻ",
+        "deliveryModeHybrid": "ഹൈബ്രിഡ്",
+        "physicalLocationLabel": "ഫിസിക്കൽ ലൊക്കേഷൻ",
+        "physicalDateLabel": "ഫിസിക്കൽ തീയതി",
+        "uploadButton": "ഉള്ളടക്കം അപ്‌ലോഡ് ചെയ്യുക"
+      },
+      "contentList": {
+        "title": "നിന്റെ ഉള്ളടക്കം",
+        "type": "തരം: ",
+        "enrollments": "എൻറോൾമെന്റുകൾ: ",
+        "completions": "പൂർത്തീകരണങ്ങൾ: "
+      },
+      "liveSessions": {
+        "title": "നിന്റെ ലൈവ് സെഷനുകൾ",
+        "date": "തീയതി: ",
+        "time": "സമയം: ",
+        "participants": "പങ്കെടുക്കുന്നവർ: ",
+        "hostMeeting": "മീറ്റിംഗ് ഹോസ്റ്റ് ചെയ്യുക"
+      }
+    },
+    "uploader": {
+      "contentUpload": {
+        "title": "CSR-ബ്രാൻഡഡ് ഉള്ളടക്കം അപ്‌ലോഡ് ചെയ്യുക",
+        "titleLabel": "ശീർഷകം",
+        "descriptionLabel": "വിവരണം",
+        "skillsLabel": "നൈപുണ്യങ്ങൾ",
+        "maxSeatsLabel": "പരമാവധി സീറ്റുകൾ",
+        "startDateLabel": "തുടക്ക തീയതി",
+        "certificationLabel": "സർട്ടിഫിക്കേഷൻ",
+        "statusLabel": "സ്റ്റാറ്റസ്",
+        "typeLabel": "തരം",
+        "typeTutorial": "ട്യൂട്ടോറിയൽ",
+        "typeCourse": "കോഴ്സ്",
+        "formatLabel": "ഫോർമാറ്റ്",
+        "formatVideo": "വീഡിയോ",
+        "formatTextAudio": "ടെക്സ്റ്റ് + ഓഡിയോ",
+        "formatVideoPhysical": "വീഡിയോ + ഫിസിക്കൽ",
+        "languageLabel": "ഭാഷ",
+        "languageHindi": "ഹിന്ദി",
+        "languageEnglish": "ഇംഗ്ലീഷ്",
+        "languageTamil": "തമിഴ്",
+        "durationLabel": "ദൈർഘ്യം",
+        "urlLabel": "ഉള്ളടക്ക URL",
+        "deliveryModeLabel": "വിതരണ രീതി",
+        "deliveryModeOnline": "ഓൺലൈൻ",
+        "deliveryModeHybrid": "ഹൈബ്രിഡ്",
+        "physicalLocationLabel": "ഫിസിക്കൽ ലൊക്കേഷൻ",
+        "physicalDateLabel": "ഫിസിക്കൽ തീയതി",
+        "uploadButton": "ഉള്ളടക്കം അപ്‌ലോഡ് ചെയ്യുക",
+        "statusActive": "സജീവം",
+        "statusInactive": "നിഷ്ക്രിയ"
+      },
+      "analyticsDashboard": {
+        "title": "അനലിറ്റിക്സ് ഡാഷ്‌ബോർഡ്",
+        "exportCsv": "അനലിറ്റിക്സ് എക്സ്പോർട്ട് ചെയ്യുക (CSV)",
+        "enrollments": "എൻറോൾമെന്റുകൾ: ",
+        "completions": "പൂർത്തീകരണങ്ങൾ: ",
+        "completionRate": "പൂർത്തീകരണ നിരക്ക്: "
+      },
+      "liveSessions": {
+        "title": "നിന്റെ ലൈവ് സെഷനുകൾ",
+        "date": "തീയതി: ",
+        "time": "സമയം: ",
+        "participants": "പങ്കെടുക്കുന്നവർ: ",
+        "hostMeeting": "മീറ്റിംഗ് ഹോസ്റ്റ് ചെയ്യുക"
+      },
+      "analytics": {
+        "title": "അനലിറ്റിക്സ് ഡാഷ്‌ബോർഡ്",
+        "exportButton": "അനലിറ്റിക്സ് എക്സ്പോർട്ട് ചെയ്യുക (CSV)",
+        "table": {
+          "title": "ശീർഷകം",
+          "language": "ഭാഷ",
+          "duration": "ദൈർഘ്യം",
+          "enrollments": "എൻറോൾമെന്റുകൾ",
+          "completions": "പൂർത്തീകരണങ്ങൾ",
+          "completionRate": "പൂർത്തീകരണ നിരക്ക്",
+          "maxSeats": "പരമാവധി സീറ്റുകൾ",
+          "seatsAvailable": "ലഭ്യമായ സീറ്റുകൾ",
+          "startDate": "തുടക്ക തീയതി",
+          "status": "സ്റ്റാറ്റസ്"
+        }
+      }
+    },
+    "dummyData": {
+      "content": {
+        "tailoring": "ടൈലറിംഗിന്റെ ആമുഖം",
+        "digitalMarketing": "ഡിജിറ്റൽ മാർക്കറ്റിംഗ് അടിസ്ഥാനങ്ങൾ",
+        "farming": "ഓർഗാനിക് ഫാമിംഗ് വർക്ക്ഷോപ്പ്"
+      },
+      "liveSessions": {
+        "tailoringQna": "ടൈലറിംഗ് ടെക്നിക്കുകളെക്കുറിച്ചുള്ള Q&A",
+        "digitalMarketingWorkshop": "ഡിജിറ്റൽ മാർക്കറ്റിംഗ് ലൈവ് വർക്ക്ഷോപ്പ്"
+      }
+    },
+    "navbar": {
+      "features": "സവിശേഷതകൾ",
+      "about": "കുറിച്ച്",
+      "contact": "ബന്ധപ്പെടുക",
+      "profile": "പ്രൊഫൈൽ",
+      "dashboard": "ഡാഷ്‌ബോർഡ്",
+      "community": "സമൂഹം",
+      "skills": "നൈപുണ്യങ്ങൾ",
+      "signUp": "സൈൻ അപ്പ്"
+    }
+  }

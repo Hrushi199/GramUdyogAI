@@ -1,0 +1,238 @@
+{
+    "header": {
+      "title": "দক্ষতা নির্মাণ এবং অভিযোজনশীল শিক্ষণ"
+    },
+    "roleSwitcher": {
+      "label": "ভূমিকা নির্বাচন করুন",
+      "consumer": "গ্রাহক",
+      "provider": "প্রদানকারী",
+      "uploader": "আপলোডকারী",
+      "languageLabel": "ভাষা নির্বাচন করুন"
+    },
+    "consumer": {
+      "progressDashboard": {
+        "title": "আপনার অগ্রগতি",
+        "progress": "অগ্রগতি: ",
+        "tokens": "শিক্ষা টোকেন: "
+      },
+      "searchBar": {
+        "placeholder": "বিষয়বস্তু অনুসন্ধান করুন..."
+      },
+      "filters": {
+        "languageLabel": "ভাষা",
+        "languageAll": "সব",
+        "languageHindi": "হিন্দী",
+        "languageEnglish": "ইংরেজি",
+        "languageTamil": "তামিল",
+        "languageTelugu": "তেলুগু",
+        "languageMarathi": "মারাঠি",
+        "languageBengali": "বাংলা",
+        "languageGujarati": "গুজরাটি",
+        "languageKannada": "কন্নড়",
+        "languageMalayalam": "মালয়ালম",
+        "languagePunjabi": "পাঞ্জাবি",
+        "languageUrdu": "উর্দু",
+        "languageOdia": "ওড়িয়া",
+        "languageAssamese": "অসমীয়া",
+        "deliveryModeLabel": "প্রদানের ধরন",
+        "deliveryModeAll": "সব",
+        "deliveryModeOnline": "অনলাইন",
+        "deliveryModeHybrid": "হাইব্রিড"
+      },
+      "contentList": {
+        "type": "প্রকার: ",
+        "format": "বিন্যাস: ",
+        "language": "ভাষা: ",
+        "source": "উৎস: ",
+        "duration": "সময়কাল: ",
+        "tokens": "টোকেন: ",
+        "mode": "ধরন: ",
+        "physical": "শারীরিক: ",
+        "seats": "আসন: ",
+        "startDate": "শুরুর তারিখ: ",
+        "startLearning": "শিক্ষণ শুরু করুন",
+        "enroll": "নথিভুক্ত করুন"
+      },
+      "selectedContent": {
+        "source": "উৎস: ",
+        "format": "বিন্যাস: ",
+        "language": "ভাষা: ",
+        "videoError": "আপনার ব্রাউজার ভিডিও ট্যাগ সমর্থন করে না।",
+        "viewContent": "বিষয়বস্তু দেখুন",
+        "close": "বন্ধ করুন",
+        "description": "বিবরণ: ",
+        "certification": "সার্টিফিকেশন: ",
+        "seats": "আসন: ",
+        "startDate": "শুরুর তারিখ: "
+      },
+      "liveSessions": {
+        "title": "লাইভ সেশন",
+        "source": "উৎস: ",
+        "date": "তারিখ: ",
+        "time": "সময়: ",
+        "joinMeeting": "মিটিংয়ে যোগ দিন",
+        "viewChatQna": "চ্যাট এবং প্রশ্নোত্তর দেখুন"
+      },
+      "chatQna": {
+        "interaction": "পারস্পরিক ক্রিয়া",
+        "chatTitle": "চ্যাট",
+        "chatPlaceholder": "আপনার বার্তা টাইপ করুন...",
+        "chatSend": "পাঠান",
+        "qnaTitle": "প্রশ্নোত্তর",
+        "qnaPlaceholder": "একটি প্রশ্ন জিজ্ঞাসা করুন...",
+        "qnaSubmit": "জমা দিন",
+        "close": "বন্ধ করুন"
+      },
+      "visualSummaries": {
+        "title": "দৃশ্যমান সারাংশ",
+        "createNew": "নতুন সারাংশ তৈরি করুন"
+      },
+      "summaryCreatorModal": {
+        "title": "দৃশ্যমান সারাংশ তৈরি করুন",
+        "topicPlaceholder": "বিষয় লিখুন...",
+        "contextPlaceholder": "অতিরিক্ত প্রসঙ্গ লিখুন...",
+        "cancel": "বাতিল করুন",
+        "create": "তৈরি করুন",
+        "creating": "তৈরি করা হচ্ছে...",
+        "audioOptions": "অডিও উৎপাদন বিকল্প",
+        "audioNone": "কোনও অডিও উৎপাদন নেই",
+        "audioOnDemand": "চাহিদা অনুযায়ী অডিও উৎপাদন (দ্রুত)",
+        "audioAll": "এখনই সব অডিও উৎপাদন করুন (বেশি সময় লাগে)"
+      },
+      "visualSummaryModal": {
+        "close": "বন্ধ করুন",
+        "previous": "পূর্ববর্তী",
+        "next": "পরবর্তী",
+        "sectionInfo": "{sectionsLength} এর মধ্যে {sectionIdx} বিভাগ",
+        "goToSection": "{sectionIdx} বিভাগে যান",
+        "generateAudio": "অডিও উৎপাদন করুন",
+        "generatingAudio": "অডিও উৎপাদন করা হচ্ছে..."
+      },
+      "enrollment": {
+        "success": "কোর্সে সফলভাবে নথিভুক্ত হয়েছে!",
+        "failure": "কোর্সে নথিভুক্ত করতে ব্যর্থ:"
+      }
+    },
+    "provider": {
+      "contentUpload": {
+        "title": "নতুন বিষয়বস্তু আপলোড করুন",
+        "titleLabel": "শিরোনাম",
+        "typeLabel": "প্রকার",
+        "typeTutorial": "টিউটোরিয়াল",
+        "typeCourse": "কোর্স",
+        "formatLabel": "বিন্যাস",
+        "formatVideo": "ভিডিও",
+        "formatTextAudio": "টেক্সট + অডিও",
+        "formatVideoPhysical": "ভিডিও + শারীরিক",
+        "languageLabel": "ভাষা",
+        "languageHindi": "হিন্দী",
+        "languageEnglish": "ইংরেজি",
+        "languageTamil": "তামিল",
+        "durationLabel": "সময়কাল",
+        "urlLabel": "বিষয়বস্তুর URL",
+        "deliveryModeLabel": "প্রদানের ধরন",
+        "deliveryModeOnline": "অনলাইন",
+        "deliveryModeHybrid": "হাইব্রিড",
+        "physicalLocationLabel": "শারীরিক স্থান",
+        "physicalDateLabel": "শারীরিক তারিখ",
+        "uploadButton": "বিষয়বস্তু আপলোড করুন"
+      },
+      "contentList": {
+        "title": "আপনার বিষয়বস্তু",
+        "type": "প্রকার: ",
+        "enrollments": "নথিভুক্তি: ",
+        "completions": "সম্পূর্ণতা: "
+      },
+      "liveSessions": {
+        "title": "আপনার লাইভ সেশন",
+        "date": "তারিখ: ",
+        "time": "সময়: ",
+        "participants": "অংশগ্রহণকারী: ",
+        "hostMeeting": "মিটিং আয়োজন করুন"
+      }
+    },
+    "uploader": {
+      "contentUpload": {
+        "title": "CSR-ব্র্যান্ডেড বিষয়বস্তু আপলোড করুন",
+        "titleLabel": "শিরোনাম",
+        "descriptionLabel": "বিবরণ",
+        "skillsLabel": "দক্ষতা",
+        "maxSeatsLabel": "সর্বাধিক আসন",
+        "startDateLabel": "শুরুর তারিখ",
+        "certificationLabel": "সার্টিফিকেশন",
+        "statusLabel": "স্থিতি",
+        "typeLabel": "প্রকার",
+        "typeTutorial": "টিউটোরিয়াল",
+        "typeCourse": "কোর্স",
+        "formatLabel": "বিন্যাস",
+        "formatVideo": "ভিডিও",
+        "formatTextAudio": "টেক্সট + অডিও",
+        "formatVideoPhysical": "ভিডিও + শারীরিক",
+        "languageLabel": "ভাষা",
+        "languageHindi": "হিন্দী",
+        "languageEnglish": "ইংরেজি",
+        "languageTamil": "তামিল",
+        "durationLabel": "সময়কাল",
+        "urlLabel": "বিষয়বস্তুর URL",
+        "deliveryModeLabel": "প্রদানের ধরন",
+        "deliveryModeOnline": "অনলাইন",
+        "deliveryModeHybrid": "হাইব্রিড",
+        "physicalLocationLabel": "শারীরিক স্থান",
+        "physicalDateLabel": "শারীরিক তারিখ",
+        "uploadButton": "বিষয়বস্তু আপলোড করুন",
+        "statusActive": "সক্রিয়",
+        "statusInactive": "নিষ্ক্রিয়"
+      },
+      "analyticsDashboard": {
+        "title": "বিশ্লেষণ ড্যাশবোর্ড",
+        "exportCsv": "বিশ্লেষণ রপ্তানি করুন (CSV)",
+        "enrollments": "নথিভুক্তি: ",
+        "completions": "সম্পূর্ণতা: ",
+        "completionRate": "সম্পূর্ণতার হার: "
+      },
+      "liveSessions": {
+        "title": "আপনার লাইভ সেশন",
+        "date": "তারিখ: ",
+        "time": "সময়: ",
+        "participants": "অংশগ্রহণকারী: ",
+        "hostMeeting": "মিটিং আয়োজন করুন"
+      },
+      "analytics": {
+        "title": "বিশ্লেষণ ড্যাশবোর্ড",
+        "exportButton": "বিশ্লেষণ রপ্তানি করুন (CSV)",
+        "table": {
+          "title": "শিরোনাম",
+          "language": "ভাষা",
+          "duration": "সময়কাল",
+          "enrollments": "নথিভুক্তি",
+          "completions": "সম্পূর্ণতা",
+          "completionRate": "সম্পূর্ণতার হার",
+          "maxSeats": "সর্বাধিক আসন",
+          "seatsAvailable": "উপলব্ধ আসন",
+          "startDate": "শুরুর তারিখ",
+          "status": "স্থিতি"
+        }
+      }
+    },
+    "dummyData": {
+      "content": {
+        "tailoring": "Introduction to Tailoring",
+        "digitalMarketing": "Digital Marketing Basics",
+        "farming": "Organic Farming Workshop"
+      },
+      "liveSessions": {
+        "tailoringQna": "Q&A on Tailoring Techniques",
+        "digitalMarketingWorkshop": "Digital Marketing Live Workshop"
+      }
+    },
+    "navbar": {
+      "features": "বৈশিষ্ট্য",
+      "about": "পরিচিতি",
+      "contact": "যোগাযোগ",
+      "profile": "প্রোফাইল",
+      "dashboard": "ড্যাশবোর্ড",
+      "community": "সম্প্রদায়",
+      "skills": "দক্ষতা",
+      "signUp": "সাইন আপ"
+    }
+  }

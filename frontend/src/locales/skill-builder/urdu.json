@@ -1,0 +1,238 @@
+{
+    "header": {
+      "title": "ہنر سازی اور موافقت پذیر سیکھنا"
+    },
+    "roleSwitcher": {
+      "label": "کردار منتخب کریں",
+      "consumer": "صارف",
+      "provider": "فراہم کنندہ",
+      "uploader": "اپلوڈر",
+      "languageLabel": "زبان منتخب کریں"
+    },
+    "consumer": {
+      "progressDashboard": {
+        "title": "آپ کی ترقی",
+        "progress": "ترقی: ",
+        "tokens": "شکشا ٹوکنز: "
+      },
+      "searchBar": {
+        "placeholder": "مواد تلاش کریں..."
+      },
+      "filters": {
+        "languageLabel": "زبان",
+        "languageAll": "سب",
+        "languageHindi": "ہندی",
+        "languageEnglish": "انگریزی",
+        "languageTamil": "تمل",
+        "languageTelugu": "تیلگو",
+        "languageMarathi": "مراٹھی",
+        "languageBengali": "بنگالی",
+        "languageGujarati": "گجراتی",
+        "languageKannada": "کنڑ",
+        "languageMalayalam": "مالایالم",
+        "languagePunjabi": "پنجابی",
+        "languageUrdu": "اردو",
+        "languageOdia": "اوڑیا",
+        "languageAssamese": "آسامی",
+        "deliveryModeLabel": "ترسیل کا طریقہ",
+        "deliveryModeAll": "سب",
+        "deliveryModeOnline": "آن لائن",
+        "deliveryModeHybrid": "ہائبرڈ"
+      },
+      "contentList": {
+        "type": "قسم: ",
+        "format": "فارمیٹ: ",
+        "language": "زبان: ",
+        "source": "ماخذ: ",
+        "duration": "دورانیہ: ",
+        "tokens": "ٹوکنز: ",
+        "mode": "موڈ: ",
+        "physical": "جسمانی: ",
+        "seats": "نشستیں: ",
+        "startDate": "شروعات کی تاریخ: ",
+        "startLearning": "سیکھنا شروع کریں",
+        "enroll": "انرول کریں"
+      },
+      "selectedContent": {
+        "source": "ماخذ: ",
+        "format": "فارمیٹ: ",
+        "language": "زبان: ",
+        "videoError": "آپ کا براؤزر ویڈیو ٹیگ کو سپورٹ نہیں کرتا۔",
+        "viewContent": "مواد دیکھیں",
+        "close": "بند کریں",
+        "description": "تفصیل: ",
+        "certification": "سرٹیفیکیشن: ",
+        "seats": "نشستیں: ",
+        "startDate": "شروعات کی تاریخ: "
+      },
+      "liveSessions": {
+        "title": "لائیو سیشنز",
+        "source": "ماخذ: ",
+        "date": "تاریخ: ",
+        "time": "وقت: ",
+        "joinMeeting": "میٹنگ میں شامل ہوں",
+        "viewChatQna": "چیٹ اور Q&A دیکھیں"
+      },
+      "chatQna": {
+        "interaction": "باہمی تعامل",
+        "chatTitle": "چیٹ",
+        "chatPlaceholder": "اپنا پیغام ٹائپ کریں...",
+        "chatSend": "بھیجیں",
+        "qnaTitle": "Q&A",
+        "qnaPlaceholder": "ایک سوال پوچھیں...",
+        "qnaSubmit": "جمع کریں",
+        "close": "بند کریں"
+      },
+      "visualSummaries": {
+        "title": "بصری خلاصے",
+        "createNew": "نیا خلاصہ بنائیں"
+      },
+      "summaryCreatorModal": {
+        "title": "بصری خلاصہ بنائیں",
+        "topicPlaceholder": "موضوع درج کریں...",
+        "contextPlaceholder": "اضافی سیاق و سباق درج کریں...",
+        "cancel": "منسوخ کریں",
+        "create": "بنائیں",
+        "creating": "بنا رہا ہے...",
+        "audioOptions": "آڈیو جنریشن کے اختیارات",
+        "audioNone": "کوئی آڈیو جنریشن نہیں",
+        "audioOnDemand": "طلب پر آڈیو جنریٹ کریں (تیز)",
+        "audioAll": "اب تمام آڈیو جنریٹ کریں (زیادہ وقت لیتا ہے)"
+      },
+      "visualSummaryModal": {
+        "close": "بند کریں",
+        "previous": "پچھلا",
+        "next": "اگلا",
+        "sectionInfo": "سیکشن {sectionIdx} / {sectionsLength}",
+        "goToSection": "سیکشن {sectionIdx} پر جائیں",
+        "generateAudio": "آڈیو جنریٹ کریں",
+        "generatingAudio": "آڈیو جنریٹ ہو رہا ہے..."
+      },
+      "enrollment": {
+        "success": "کورس کامیابی سے انرول ہو گیا!",
+        "failure": "کورس میں انرول کرنے میں ناکامی:"
+      }
+    },
+    "provider": {
+      "contentUpload": {
+        "title": "نیا مواد اپلوڈ کریں",
+        "titleLabel": "عنوان",
+        "typeLabel": "قسم",
+        "typeTutorial": "ٹیوٹوریل",
+        "typeCourse": "کورس",
+        "formatLabel": "فارمیٹ",
+        "formatVideo": "ویڈیو",
+        "formatTextAudio": "متن + آڈیو",
+        "formatVideoPhysical": "ویڈیو + جسمانی",
+        "languageLabel": "زبان",
+        "languageHindi": "ہندی",
+        "languageEnglish": "انگریزی",
+        "languageTamil": "تمل",
+        "durationLabel": "دورانیہ",
+        "urlLabel": "مواد کا URL",
+        "deliveryModeLabel": "ترسیل کا طریقہ",
+        "deliveryModeOnline": "آن لائن",
+        "deliveryModeHybrid": "ہائبرڈ",
+        "physicalLocationLabel": "جسمانی مقام",
+        "physicalDateLabel": "جسمانی تاریخ",
+        "uploadButton": "مواد اپلوڈ کریں"
+      },
+      "contentList": {
+        "title": "آپ کا مواد",
+        "type": "قسم: ",
+        "enrollments": "انرولمنٹس: ",
+        "completions": "مکمل: "
+      },
+      "liveSessions": {
+        "title": "آپ کے لائیو سیشنز",
+        "date": "تاریخ: ",
+        "time": "وقت: ",
+        "participants": "شرکاء: ",
+        "hostMeeting": "میٹنگ کی میزبانی کریں"
+      }
+    },
+    "uploader": {
+      "contentUpload": {
+        "title": "CSR-برینڈڈ مواد اپلوڈ کریں",
+        "titleLabel": "عنوان",
+        "descriptionLabel": "تفصیل",
+        "skillsLabel": "ہنر",
+        "maxSeatsLabel": "زیادہ سے زیادہ نشستیں",
+        "startDateLabel": "شروعات کی تاریخ",
+        "certificationLabel": "سرٹیفیکیشن",
+        "statusLabel": "حالت",
+        "typeLabel": "قسم",
+        "typeTutorial": "ٹیوٹوریل",
+        "typeCourse": "کورس",
+        "formatLabel": "فارمیٹ",
+        "formatVideo": "ویڈیو",
+        "formatTextAudio": "متن + آڈیو",
+        "formatVideoPhysical": "ویڈیو + جسمانی",
+        "languageLabel": "زبان",
+        "languageHindi": "ہندی",
+        "languageEnglish": "انگریزی",
+        "languageTamil": "تمل",
+        "durationLabel": "دورانیہ",
+        "urlLabel": "مواد کا URL",
+        "deliveryModeLabel": "ترسیل کا طریقہ",
+        "deliveryModeOnline": "آن لائن",
+        "deliveryModeHybrid": "ہائبرڈ",
+        "physicalLocationLabel": "جسمانی مقام",
+        "physicalDateLabel": "جسمانی تاریخ",
+        "uploadButton": "مواد اپلوڈ کریں",
+        "statusActive": "فعال",
+        "statusInactive": "غیر فعال"
+      },
+      "analyticsDashboard": {
+        "title": "تجزیاتی ڈیش بورڈ",
+        "exportCsv": "تجزیات برآمد کریں (CSV)",
+        "enrollments": "انرولمنٹس: ",
+        "completions": "مکمل: ",
+        "completionRate": "مکمل ہونے کی شرح: "
+      },
+      "liveSessions": {
+        "title": "آپ کے لائیو سیشنز",
+        "date": "تاریخ: ",
+        "time": "وقت: ",
+        "participants": "شرکاء: ",
+        "hostMeeting": "میٹنگ کی میزبانی کریں"
+      },
+      "analytics": {
+        "title": "تجزیاتی ڈیش بورڈ",
+        "exportButton": "تجزیات برآمد کریں (CSV)",
+        "table": {
+          "title": "عنوان",
+          "language": "زبان",
+          "duration": "دورانیہ",
+          "enrollments": "انرولمنٹس",
+          "completions": "مکمل",
+          "completionRate": "مکمل ہونے کی شرح",
+          "maxSeats": "زیادہ سے زیادہ نشستیں",
+          "seatsAvailable": "دستیاب نشستیں",
+          "startDate": "شروعات کی تاریخ",
+          "status": "حالت"
+        }
+      }
+    },
+    "dummyData": {
+      "content": {
+        "tailoring": "درزی کا تعارف",
+        "digitalMarketing": "ڈیجیٹل مارکیٹنگ کی بنیادی باتیں",
+        "farming": "نامیاتی کاشتکاری ورکشاپ"
+      },
+      "liveSessions": {
+        "tailoringQna": "درزی کی تکنیکوں پر Q&A",
+        "digitalMarketingWorkshop": "ڈیجیٹل مارکیٹنگ لائیو ورکشاپ"
+      }
+    },
+    "navbar": {
+      "features": "خصوصیات",
+      "about": "کے بارے میں",
+      "contact": "رابطہ",
+      "profile": "پروفائل",
+      "dashboard": "ڈیش بورڈ",
+      "community": "برادری",
+      "skills": "ہنر",
+      "signUp": "سائن اپ"
+    }
+  }

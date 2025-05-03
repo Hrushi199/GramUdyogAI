@@ -1,0 +1,81 @@
+{
+    "pageTitle": "அரசு திட்டங்களை கண்டறியவும்",
+    "pageDescription": "உங்கள் தொழிலை பதிவு செய்யவும் மற்றும் உங்கள் வளர்ச்சிக்கு உதவும் அரசுத் திட்டங்களை கண்டறியவும்.",
+    "form": {
+      "occupationLabel": "உங்கள் தொழிலை உள்ளிடவும்:",
+      "occupationPlaceholder": "உதாரணம்: விவசாயி, ஆசிரியர்",
+      "submitButton": " பரிந்துரைகளை பெறுங்கள்"
+    },
+    "loading": "பரிந்துரைகள் ஏற்றுகிறது...",
+    "recommendedSchemes": "பரிந்துரைக்கப்பட்ட திட்டங்கள்",
+    "scheme": {
+      "goal": "நோக்கம்",
+      "benefits": "கோட்கள்",
+      "eligibility": "தகுதி",
+      "howToApply": "எப்படி விண்ணப்பிக்க வேண்டும்",
+      "specialFeatures": "பிரத்யேக அம்சங்கள்",
+      "viewFullDetails": "முழு விவரங்களைப் பார்க்கவும்"
+    },
+    "noExplanation": "விவரங்கள் இல்லை.",
+    "noData": "இப்போது எந்த தகவலும் பெறவில்லை. பரிந்துரைகளைப் பெறுவதற்காக படிவத்தை சமர்ப்பிக்கவும்.",
+    "modal": {
+      "schemeDetails": "திட்ட விவரங்கள்",
+      "fields": {
+        "scheme_name": "திட்டத்தின் பெயர்",
+        "goal": "நோக்கம்",
+        "benefit": "கோட்கள்",
+        "eligibility": "தகுதி",
+        "application_process": "விண்ணப்ப செயல்முறை",
+        "special_features": "பிரத்யேக அம்சங்கள்",
+        "description": "விவரம்",
+        "website": "வலைத்தளம்",
+        "contact": "தொடர்பு",
+        "location": "இடம்",
+        "tags": "ட்டேக்கள்",
+        "key_features": "முக்கிய அம்சங்கள்",
+        "benefits_details": {
+          "interest_subsidy": "வட்டி சலுகை",
+          "maximum_loan_amount": "அதிகபட்ச கடன் தொகை",
+          "moratorium_period": "நிலைத் திட்ட காலம்",
+          "knowledge_transfer": "அறிவு பரிமாற்றம்",
+          "productivity_improvement": "திறன் மேம்பாடு"
+        },
+        "eligibility_details": {
+          "education_criteria": "கல்வி விதிகள்",
+          "additional_criteria": "கூடுதல் விதிகள்",
+          "admission_requirement": "சரிபார்க்க வேண்டியவை",
+          "institution_criteria": "அரசு திட்ட அடிப்படை",
+          "criteria": "விதிகள்"
+        },
+        "eligible_courses": "தகுதியான பாடங்கள்",
+        "application_details": {
+          "mode": "பதிவு முறை",
+          "steps": "படி",
+          "note": "குறிப்பு"
+        },
+        "required_documents": "தேவையான ஆவணங்கள்",
+        "document_fields": {
+          "document": "ஆவணங்கள்",
+          "mandatory": "அவசியம்",
+          "note": "குறிப்பு"
+        },
+        "special_notes": "பிரத்யேக குறிப்புகள்",
+        "document": "ஆவணங்கள்",
+        "mandatory": "அவசியம்",
+        "note": "குறிப்பு",
+        "mode": "முறை",
+        "steps": "படி",
+        "interest_subsidy": "வட்டி சலுகை",
+        "maximum_loan_amount": "அதிகபட்ச கடன் தொகை",
+        "moratorium_period": "நிலைத் திட்ட காலம்",
+        "knowledge_transfer": "அறிவு பரிமாற்றம்",
+        "productivity_improvement": "திறன் மேம்பாடு",
+        "education_criteria": "கல்வி விதிகள்",
+        "additional_criteria": "கூடுதல் விதிகள்",
+        "admission_requirement": "சரிபார்க்க வேண்டியவை",
+        "institution_criteria": "அரசு திட்ட அடிப்படை",
+        "criteria": "விதிகள்"
+      }
+    }
+  }
+  

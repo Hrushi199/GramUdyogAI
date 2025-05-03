@@ -1,0 +1,81 @@
+{
+    "pageTitle": "সরকারি স্কিমগুলি আবিষ্কার করুন",
+    "pageDescription": "আপনার পেশা নিবন্ধন করুন এবং এমন সরকারি স্কিমগুলি খুঁজুন যা আপনাকে বৃদ্ধি ও সফল হতে সাহায্য করতে পারে।",
+    "form": {
+      "occupationLabel": "আপনার পেশা লিখুন:",
+      "occupationPlaceholder": "উদাহরণ: কৃষক, শিক্ষক",
+      "submitButton": "সুপারিশ পান"
+    },
+    "loading": "সুপারিশগুলি লোড হচ্ছে...",
+    "recommendedSchemes": "সুপারিশকৃত স্কিমগুলি",
+    "scheme": {
+      "goal": "লক্ষ্য",
+      "benefits": "সুবিধাসমূহ",
+      "eligibility": "যোগ্যতা",
+      "howToApply": "আবেদন করার পদ্ধতি",
+      "specialFeatures": "বিশেষ বৈশিষ্ট্য",
+      "viewFullDetails": "সম্পূর্ণ বিবরণ দেখুন"
+    },
+    "noExplanation": "কোনও ব্যাখ্যা প্রদান করা হয়নি।",
+    "noData": "এখনও কোনও ডেটা পাওয়া যায়নি। সুপারিশের জন্য ফর্ম জমা দিন।",
+    "modal": {
+      "schemeDetails": "স্কিমের বিবরণ",
+      "fields": {
+        "scheme_name": "স্কিমের নাম",
+        "goal": "লক্ষ্য",
+        "benefit": "সুবিধা",
+        "eligibility": "যোগ্যতা",
+        "application_process": "আবেদন প্রক্রিয়া",
+        "special_features": "বিশেষ বৈশিষ্ট্য",
+        "description": "বর্ণনা",
+        "website": "ওয়েবসাইট",
+        "contact": "যোগাযোগ",
+        "location": "অবস্থান",
+        "tags": "ট্যাগসমূহ",
+        "key_features": "মূল বৈশিষ্ট্যসমূহ",
+        "benefits_details": {
+          "interest_subsidy": "সুদ ভর্তুকি",
+          "maximum_loan_amount": "সর্বাধিক ঋণের পরিমাণ",
+          "moratorium_period": "মোরাটোরিয়াম সময়কাল",
+          "knowledge_transfer": "জ্ঞান স্থানান্তর",
+          "productivity_improvement": "উৎপাদনশীলতা উন্নতি"
+        },
+        "eligibility_details": {
+          "education_criteria": "শিক্ষাগত মানদণ্ড",
+          "additional_criteria": "অতিরিক্ত মানদণ্ড",
+          "admission_requirement": "ভর্তি প্রয়োজনীয়তা",
+          "institution_criteria": "প্রতিষ্ঠানের মানদণ্ড",
+          "criteria": "মানদণ্ড"
+        },
+        "eligible_courses": "যোগ্য কোর্সসমূহ",
+        "application_details": {
+          "mode": "পদ্ধতি",
+          "steps": "ধাপসমূহ",
+          "note": "নোট"
+        },
+        "required_documents": "প্রয়োজনীয় ডকুমেন্টসমূহ",
+        "document_fields": {
+          "document": "ডকুমেন্ট",
+          "mandatory": "আবশ্যিক",
+          "note": "নোট"
+        },
+        "special_notes": "বিশেষ নোটসমূহ",
+        "document": "ডকুমেন্ট",
+        "mandatory": "আবশ্যিক",
+        "note": "নোট",
+        "mode": "পদ্ধতি",
+        "steps": "ধাপসমূহ",
+        "interest_subsidy": "সুদ ভর্তুকি",
+        "maximum_loan_amount": "সর্বাধিক ঋণের পরিমাণ",
+        "moratorium_period": "মোরাটোরিয়াম সময়কাল",
+        "knowledge_transfer": "জ্ঞান স্থানান্তর",
+        "productivity_improvement": "উৎপাদনশীলতা উন্নতি",
+        "education_criteria": "শিক্ষাগত মানদণ্ড",
+        "additional_criteria": "অতিরিক্ত মানদণ্ড",
+        "admission_requirement": "ভর্তি প্রয়োজনীয়তা",
+        "institution_criteria": "প্রতিষ্ঠানের মানদণ্ড",
+        "criteria": "মানদণ্ড"
+      }
+    }
+  }
+  

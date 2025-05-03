@@ -1,0 +1,81 @@
+{
+    "pageTitle": "सरकारी योजना शोधा",
+    "pageDescription": "आपला व्यवसाय नोंदवा आणि वाढ व यशासाठी उपयुक्त सरकारी योजना शोधा.",
+    "form": {
+      "occupationLabel": "आपला व्यवसाय प्रविष्ट करा:",
+      "occupationPlaceholder": "उदाहरण: शेतकरी, शिक्षक",
+      "submitButton": "शिफारसी मिळवा"
+    },
+    "loading": "शिफारसी लोड होत आहेत...",
+    "recommendedSchemes": "शिफारस केलेल्या योजना",
+    "scheme": {
+      "goal": "उद्दिष्ट",
+      "benefits": "फायदे",
+      "eligibility": "पात्रता",
+      "howToApply": "अर्ज कसा करावा",
+      "specialFeatures": "विशेष वैशिष्ट्ये",
+      "viewFullDetails": "पूर्ण तपशील पहा"
+    },
+    "noExplanation": "कोणतीही स्पष्टीकरण उपलब्ध नाही.",
+    "noData": "अद्याप कोणताही डेटा प्राप्त झाला नाही. कृपया शिफारसींसाठी फॉर्म सबमिट करा.",
+    "modal": {
+      "schemeDetails": "योजनेचे तपशील",
+      "fields": {
+        "scheme_name": "योजनेचे नाव",
+        "goal": "उद्दिष्ट",
+        "benefit": "फायदा",
+        "eligibility": "पात्रता",
+        "application_process": "अर्ज प्रक्रिया",
+        "special_features": "विशेष वैशिष्ट्ये",
+        "description": "वर्णन",
+        "website": "वेबसाइट",
+        "contact": "संपर्क",
+        "location": "स्थान",
+        "tags": "टॅग्स",
+        "key_features": "मुख्य वैशिष्ट्ये",
+        "benefits_details": {
+          "interest_subsidy": "व्याज अनुदान",
+          "maximum_loan_amount": "कमाल कर्ज रक्कम",
+          "moratorium_period": "मॉरॅटोरियम कालावधी",
+          "knowledge_transfer": "ज्ञान हस्तांतरण",
+          "productivity_improvement": "उत्पादकता सुधारणा"
+        },
+        "eligibility_details": {
+          "education_criteria": "शैक्षणिक निकष",
+          "additional_criteria": "अतिरिक्त निकष",
+          "admission_requirement": "प्रवेश आवश्यकता",
+          "institution_criteria": "संस्था निकष",
+          "criteria": "निकष"
+        },
+        "eligible_courses": "पात्र अभ्यासक्रम",
+        "application_details": {
+          "mode": "पद्धत",
+          "steps": "पायऱ्या",
+          "note": "नोंद"
+        },
+        "required_documents": "आवश्यक कागदपत्रे",
+        "document_fields": {
+          "document": "कागदपत्र",
+          "mandatory": "अनिवार्य",
+          "note": "नोंद"
+        },
+        "special_notes": "विशेष नोंदी",
+        "document": "कागदपत्र",
+        "mandatory": "अनिवार्य",
+        "note": "नोंद",
+        "mode": "पद्धत",
+        "steps": "पायऱ्या",
+        "interest_subsidy": "व्याज अनुदान",
+        "maximum_loan_amount": "कमाल कर्ज रक्कम",
+        "moratorium_period": "मॉरॅटोरियम कालावधी",
+        "knowledge_transfer": "ज्ञान हस्तांतरण",
+        "productivity_improvement": "उत्पादकता सुधारणा",
+        "education_criteria": "शैक्षणिक निकष",
+        "additional_criteria": "अतिरिक्त निकष",
+        "admission_requirement": "प्रवेश आवश्यकता",
+        "institution_criteria": "संस्था निकष",
+        "criteria": "निकष"
+      }
+    }
+  }
+  

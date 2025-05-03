@@ -1,0 +1,238 @@
+{
+    "header": {
+      "title": "कौशल्य निर्मिती आणि अनुकूल शिक्षण"
+    },
+    "roleSwitcher": {
+      "label": "भूमिका निवडा",
+      "consumer": "ग्राहक",
+      "provider": "प्रदाता",
+      "uploader": "अपलोडर",
+      "languageLabel": "भाषा निवडा"
+    },
+    "consumer": {
+      "progressDashboard": {
+        "title": "तुमची प्रगती",
+        "progress": "प्रगती: ",
+        "tokens": "शिक्षा टोकन्स: "
+      },
+      "searchBar": {
+        "placeholder": "सामग्री शोधा..."
+      },
+      "filters": {
+        "languageLabel": "भाषा",
+        "languageAll": "सर्व",
+        "languageHindi": "हिंदी",
+        "languageEnglish": "इंग्रजी",
+        "languageTamil": "तामिळ",
+        "languageTelugu": "तेलुगु",
+        "languageMarathi": "मराठी",
+        "languageBengali": "बंगाली",
+        "languageGujarati": "गुजराती",
+        "languageKannada": "कन्नड",
+        "languageMalayalam": "मल्याळम",
+        "languagePunjabi": "पंजाबी",
+        "languageUrdu": "उर्दू",
+        "languageOdia": "ओडिया",
+        "languageAssamese": "आसामी",
+        "deliveryModeLabel": "वितरण मोड",
+        "deliveryModeAll": "सर्व",
+        "deliveryModeOnline": "ऑनलाइन",
+        "deliveryModeHybrid": "हायब्रिड"
+      },
+      "contentList": {
+        "type": "प्रकार: ",
+        "format": "स्वरूप: ",
+        "language": "भाषा: ",
+        "source": "स्रोत: ",
+        "duration": "कालावधी: ",
+        "tokens": "टोकन्स: ",
+        "mode": "मोड: ",
+        "physical": "शारीरिक: ",
+        "seats": "सीट्स: ",
+        "startDate": "प्रारंभ तारीख: ",
+        "startLearning": "शिकणे सुरू करा",
+        "enroll": "नोंदणी करा"
+      },
+      "selectedContent": {
+        "source": "स्रोत: ",
+        "format": "स्वरूप: ",
+        "language": "भाषा: ",
+        "videoError": "तुमचा ब्राउझर व्हिडिओ टॅगला सपोर्ट करत नाही.",
+        "viewContent": "सामग्री पहा",
+        "close": "बंद करा",
+        "description": "वर्णन: ",
+        "certification": "प्रमाणपत्र: ",
+        "seats": "सीट्स: ",
+        "startDate": "प्रारंभ तारीख: "
+      },
+      "liveSessions": {
+        "title": "थेट सत्रे",
+        "source": "स्रोत: ",
+        "date": "तारीख: ",
+        "time": "वेळ: ",
+        "joinMeeting": "मीटिंगमध्ये सामील व्हा",
+        "viewChatQna": "चॅट आणि Q&A पहा"
+      },
+      "chatQna": {
+        "interaction": "संवाद",
+        "chatTitle": "चॅट",
+        "chatPlaceholder": "तुमचा संदेश टाइप करा...",
+        "chatSend": "पाठवा",
+        "qnaTitle": "Q&A",
+        "qnaPlaceholder": "प्रश्न विचारा...",
+        "qnaSubmit": "सबमिट करा",
+        "close": "बंद करा"
+      },
+      "visualSummaries": {
+        "title": "व्हिज्युअल सारांश",
+        "createNew": "नवीन सारांश तयार करा"
+      },
+      "summaryCreatorModal": {
+        "title": "व्हिज्युअल सारांश तयार करा",
+        "topicPlaceholder": "विषय प्रविष्ट करा...",
+        "contextPlaceholder": "अतिरिक्त संदर्भ प्रविष्ट करा...",
+        "cancel": "रद्द करा",
+        "create": "तयार करा",
+        "creating": "तयार होत आहे...",
+        "audioOptions": "ऑडिओ निर्मिती पर्याय",
+        "audioNone": "ऑडिओ निर्मिती नाही",
+        "audioOnDemand": "मागणीनुसार ऑडिओ तयार करा (जलद)",
+        "audioAll": "सर्व ऑडिओ आता तयार करा (जास्त वेळ लागतो)"
+      },
+      "visualSummaryModal": {
+        "close": "बंद करा",
+        "previous": "मागील",
+        "next": "पुढील",
+        "sectionInfo": "विभाग {sectionIdx} / {sectionsLength}",
+        "goToSection": "विभाग {sectionIdx} वर जा",
+        "generateAudio": "ऑडिओ तयार करा",
+        "generatingAudio": "ऑडिओ तयार होत आहे..."
+      },
+      "enrollment": {
+        "success": "कोर्स यशस्वीरित्या नोंदणीकृत!",
+        "failure": "कोर्समध्ये नोंदणी करण्यात अयशस्वी:"
+      }
+    },
+    "provider": {
+      "contentUpload": {
+        "title": "नवीन सामग्री अपलोड करा",
+        "titleLabel": "शीर्षक",
+        "typeLabel": "प्रकार",
+        "typeTutorial": "ट्युटोरियल",
+        "typeCourse": "कोर्स",
+        "formatLabel": "स्वरूप",
+        "formatVideo": "व्हिडिओ",
+        "formatTextAudio": "मजकूर + ऑडिओ",
+        "formatVideoPhysical": "व्हिडिओ + शारीरिक",
+        "languageLabel": "भाषा",
+        "languageHindi": "हिंदी",
+        "languageEnglish": "इंग्रजी",
+        "languageTamil": "तामिळ",
+        "durationLabel": "कालावधी",
+        "urlLabel": "सामग्री URL",
+        "deliveryModeLabel": "वितरण मोड",
+        "deliveryModeOnline": "ऑनलाइन",
+        "deliveryModeHybrid": "हायब्रिड",
+        "physicalLocationLabel": "शारीरिक स्थान",
+        "physicalDateLabel": "शारीरिक तारीख",
+        "uploadButton": "सामग्री अपलोड करा"
+      },
+      "contentList": {
+        "title": "तुमची सामग्री",
+        "type": "प्रकार: ",
+        "enrollments": "नोंदण्या: ",
+        "completions": "पूर्णता: "
+      },
+      "liveSessions": {
+        "title": "तुमची थेट सत्रे",
+        "date": "तारीख: ",
+        "time": "वेळ: ",
+        "participants": "सहभागी: ",
+        "hostMeeting": "मीटिंग होस्ट करा"
+      }
+    },
+    "uploader": {
+      "contentUpload": {
+        "title": "CSR-ब्रँडेड सामग्री अपलोड करा",
+        "titleLabel": "शीर्षक",
+        "descriptionLabel": "वर्णन",
+        "skillsLabel": "कौशल्ये",
+        "maxSeatsLabel": "कमाल सीट्स",
+        "startDateLabel": "प्रारंभ तारीख",
+        "certificationLabel": "प्रमाणपत्र",
+        "statusLabel": "स्थिती",
+        "typeLabel": "प्रकार",
+        "typeTutorial": "ट्युटोरियल",
+        "typeCourse": "कोर्स",
+        "formatLabel": "स्वरूप",
+        "formatVideo": "व्हिडिओ",
+        "formatTextAudio": "मजकूर + ऑडिओ",
+        "formatVideoPhysical": "व्हिडिओ + शारीरिक",
+        "languageLabel": "भाषा",
+        "languageHindi": "हिंदी",
+        "languageEnglish": "इंग्रजी",
+        "languageTamil": "तामिळ",
+        "durationLabel": "कालावधी",
+        "urlLabel": "सामग्री URL",
+        "deliveryModeLabel": "वितरण मोड",
+        "deliveryModeOnline": "ऑनलाइन",
+        "deliveryModeHybrid": "हायब्रिड",
+        "physicalLocationLabel": "शारीरिक स्थान",
+        "physicalDateLabel": "शारीरिक तारीख",
+        "uploadButton": "सामग्री अपलोड करा",
+        "statusActive": "सक्रिय",
+        "statusInactive": "निष्क्रिय"
+      },
+      "analyticsDashboard": {
+        "title": "विश्लेषण डॅशबोर्ड",
+        "exportCsv": "विश्लेषण निर्यात (CSV)",
+        "enrollments": "नोंदण्या: ",
+        "completions": "पूर्णता: ",
+        "completionRate": "पूर्णता दर: "
+      },
+      "liveSessions": {
+        "title": "तुमची थेट सत्रे",
+        "date": "तारीख: ",
+        "time": "वेळ: ",
+        "participants": "सहभागी: ",
+        "hostMeeting": "मीटिंग होस्ट करा"
+      },
+      "analytics": {
+        "title": "विश्लेषण डॅशबोर्ड",
+        "exportButton": "विश्लेषण निर्यात (CSV)",
+        "table": {
+          "title": "शीर्षक",
+          "language": "भाषा",
+          "duration": "कालावधी",
+          "enrollments": "नोंदण्या",
+          "completions": "पूर्णता",
+          "completionRate": "पूर्णता दर",
+          "maxSeats": "कमाल सीट्स",
+          "seatsAvailable": "उपलब्ध सीट्स",
+          "startDate": "प्रारंभ तारीख",
+          "status": "स्थिती"
+        }
+      }
+    },
+    "dummyData": {
+      "content": {
+        "tailoring": "टेलरिंगचा परिचय",
+        "digitalMarketing": "डिजिटल मार्केटिंग मूलभूत",
+        "farming": "सेंद्रिय शेती कार्यशाळा"
+      },
+      "liveSessions": {
+        "tailoringQna": "टेलरिंग तंत्रांवर Q&A",
+        "digitalMarketingWorkshop": "डिजिटल मार्केटिंग थेट कार्यशाळा"
+      }
+    },
+    "navbar": {
+      "features": "वैशिष्ट्ये",
+      "about": "बद्दल",
+      "contact": "संपर्क",
+      "profile": "प्रोफाइल",
+      "dashboard": "डॅशबोर्ड",
+      "community": "समुदाय",
+      "skills": "कौशल्ये",
+      "signUp": "साइन अप"
+    }
+  }

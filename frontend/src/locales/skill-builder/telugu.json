@@ -1,0 +1,238 @@
+{
+    "header": {
+      "title": "నైపుణ్య నిర్మాణం మరియు అనుకూల శిక్షణ"
+    },
+    "roleSwitcher": {
+      "label": "పాత్రను ఎంచుకోండి",
+      "consumer": "వినియోగదారు",
+      "provider": "ప్రొవైడర్",
+      "uploader": "అప్‌లోడర్",
+      "languageLabel": "భాషను ఎంచుకోండి"
+    },
+    "consumer": {
+      "progressDashboard": {
+        "title": "మీ పురోగతి",
+        "progress": "పురోగతి: ",
+        "tokens": "శిక్షా టోకెన్లు: "
+      },
+      "searchBar": {
+        "placeholder": "కంటెంట్‌ను శోధించండి..."
+      },
+      "filters": {
+        "languageLabel": "భాష",
+        "languageAll": "అన్నీ",
+        "languageHindi": "హిందీ",
+        "languageEnglish": "ఇంగ్లీష్",
+        "languageTamil": "తమిళం",
+        "languageTelugu": "తెలుగు",
+        "languageMarathi": "మరాఠీ",
+        "languageBengali": "బెంగాలీ",
+        "languageGujarati": "గుజరాతీ",
+        "languageKannada": "కన్నడ",
+        "languageMalayalam": "మలయాళం",
+        "languagePunjabi": "పంజాబీ",
+        "languageUrdu": "ఉర్దూ",
+        "languageOdia": "ఒడియా",
+        "languageAssamese": "అస్సామీ",
+        "deliveryModeLabel": "డెలివరీ మోడ్",
+        "deliveryModeAll": "అన్నీ",
+        "deliveryModeOnline": "ఆన్‌లైన్",
+        "deliveryModeHybrid": "హైబ్రిడ్"
+      },
+      "contentList": {
+        "type": "రకం: ",
+        "format": "ఫార్మాట్: ",
+        "language": "భాష: ",
+        "source": "మూలం: ",
+        "duration": "వ్యవధి: ",
+        "tokens": "టోకెన్లు: ",
+        "mode": "మోడ్: ",
+        "physical": "ఫిజికల్: ",
+        "seats": "సీట్లు: ",
+        "startDate": "ప్రారంభ తేదీ: ",
+        "startLearning": "శిక్షణ ప్రారంభించండి",
+        "enroll": "నమోదు చేయండి"
+      },
+      "selectedContent": {
+        "source": "మూలం: ",
+        "format": "ఫార్మాట్: ",
+        "language": "భాష: ",
+        "videoError": "మీ బ్రౌజర్ వీడియో ట్యాగ్‌ను సపోర్ట్ చేయదు.",
+        "viewContent": "కంటెంట్‌ను వీక్షించండి",
+        "close": "మూసివేయండి",
+        "description": "వివరణ: ",
+        "certification": "సర్టిఫికేషన్: ",
+        "seats": "సీట్లు: ",
+        "startDate": "ప్రారంభ తేదీ: "
+      },
+      "liveSessions": {
+        "title": "లైవ్ సెషన్లు",
+        "source": "మూలం: ",
+        "date": "తేదీ: ",
+        "time": "సమయం: ",
+        "joinMeeting": "మీటింగ్‌లో చేరండి",
+        "viewChatQna": "చాట్ & Q&A వీక్షించండి"
+      },
+      "chatQna": {
+        "interaction": "పరస్పర చర్య",
+        "chatTitle": "చాట్",
+        "chatPlaceholder": "మీ సందేశాన్ని టైప్ చేయండి...",
+        "chatSend": "పంపండి",
+        "qnaTitle": "Q&A",
+        "qnaPlaceholder": "ఒక ప్రశ్న అడగండి...",
+        "qnaSubmit": "సమర్పించండి",
+        "close": "మూసివేయండి"
+      },
+      "visualSummaries": {
+        "title": "విజువల్ సారాంశాలు",
+        "createNew": "కొత్త సారాంశాన్ని సృష్టించండి"
+      },
+      "summaryCreatorModal": {
+        "title": "విజువల్ సారాంశాన్ని సృష్టించండి",
+        "topicPlaceholder": "విషయాన్ని నమోదు చేయండి...",
+        "contextPlaceholder": "అదనపు సందర్భాన్ని నమోదు చేయండి...",
+        "cancel": "రద్దు చేయండి",
+        "create": "సృష్టించండి",
+        "creating": "సృష్టిస్తోంది...",
+        "audioOptions": "ఆడియో జనరేషన్ ఎంపికలు",
+        "audioNone": "ఆడియో జనరేషన్ లేదు",
+        "audioOnDemand": "డిమాండ్‌పై ఆడియో జనరేట్ చేయండి (వేగంగా)",
+        "audioAll": "ఇప్పుడు అన్ని ఆడియోలను జనరేట్ చ aptitude (ఎక్కువ సమయం పడుతుంది)"
+      },
+      "visualSummaryModal": {
+        "close": "మూసివేయండి",
+        "previous": "మునుపటి",
+        "next": "తదుపరి",
+        "sectionInfo": "విభాగం {sectionIdx} / {sectionsLength}",
+        "goToSection": "విభాగం {sectionIdx} కి వెళ్ళండి",
+        "generateAudio": "ఆడియో జనరేట్ చేయండి",
+        "generatingAudio": "ఆడియో జనరేట్ అవుతోంది..."
+      },
+      "enrollment": {
+        "success": "కోర్సు విజయవంతంగా నమోదైంది!",
+        "failure": "కోర్సులో నమోదు విఫలమైంది:"
+      }
+    },
+    "provider": {
+      "contentUpload": {
+        "title": "కొత్త కంటెంట్‌ను అప్‌లోడ్ చేయండి",
+        "titleLabel": "శీర్షిక",
+        "typeLabel": "రకం",
+        "typeTutorial": "ట్యుటోరియల్",
+        "typeCourse": "కోర్సు",
+        "formatLabel": "ఫార్మాట్",
+        "formatVideo": "వీడియో",
+        "formatTextAudio": "టెక్స్ట్ + ఆడియో",
+        "formatVideoPhysical": "వీడియో + ఫిజికల్",
+        "languageLabel": "భాష",
+        "languageHindi": "హిందీ",
+        "languageEnglish": "ఇంగ్లీష్",
+        "languageTamil": "తమిళం",
+        "durationLabel": "వ్యవధి",
+        "urlLabel": "కంటెంట్ URL",
+        "deliveryModeLabel": "డెలివరీ మోడ్",
+        "deliveryModeOnline": "ఆన్‌లైన్",
+        "deliveryModeHybrid": "హైబ్రిడ్",
+        "physicalLocationLabel": "ఫిజికల్ లొకేషన్",
+        "physicalDateLabel": "ఫిజికల్ తేదీ",
+        "uploadButton": "కంటెంట్‌ను అప్‌లోడ్ చేయండి"
+      },
+      "contentList": {
+        "title": "మీ కంటెంట్",
+        "type": "రకం: ",
+        "enrollments": "నమోదులు: ",
+        "completions": "పూర్తయినవి: "
+      },
+      "liveSessions": {
+        "title": "మీ లైవ్ సెషన్లు",
+        "date": "తేదీ: ",
+        "time": "సమయం: ",
+        "participants": "పాల్గొనేవారు: ",
+        "hostMeeting": "మీటింగ్ హోస్ట్ చేయండి"
+      }
+    },
+    "uploader": {
+      "contentUpload": {
+        "title": "CSR-బ్రాండెడ్ కంటెంట్‌ను అప్‌లోడ్ చేయండి",
+        "titleLabel": "శీర్షిక",
+        "descriptionLabel": "వివరణ",
+        "skillsLabel": "నైపుణ్యాలు",
+        "maxSeatsLabel": "గరిష్ట సీట్లు",
+        "startDateLabel": "ప్రారంభ తేదీ",
+        "certificationLabel": "సర్టిఫికేషన్",
+        "statusLabel": "స్థితి",
+        "typeLabel": "రకం",
+        "typeTutorial": "ట్యుటోరియల్",
+        "typeCourse": "కోర్సు",
+        "formatLabel": "ఫార్మాట్",
+        "formatVideo": "వీడియో",
+        "formatTextAudio": "టెక్స్ట్ + ఆడియో",
+        "formatVideoPhysical": "వీడియో + ఫిజికల్",
+        "languageLabel": "భాష",
+        "languageHindi": "హిందీ",
+        "languageEnglish": "ఇంగ్లీష్",
+        "languageTamil": "తమిళం",
+        "durationLabel": "వ్యవధి",
+        "urlLabel": "కంటెంట్ URL",
+        "deliveryModeLabel": "డెలివరీ మోడ్",
+        "deliveryModeOnline": "ఆన్‌లైన్",
+        "deliveryModeHybrid": "హైబ్రిడ్",
+        "physicalLocationLabel": "ఫిజికల్ లొకేషన్",
+        "physicalDateLabel": "ఫిజికల్ తేదీ",
+        "uploadButton": "కంటెంట్‌ను అప్‌లోడ్ చేయండి",
+        "statusActive": "ఆక్టివ్",
+        "statusInactive": "ఇనాక్టివ్"
+      },
+      "analyticsDashboard": {
+        "title": "విశ్లేషణ డాష్‌బోర్డ్",
+        "exportCsv": "విశ్లేషణను ఎగుమతి చేయండి (CSV)",
+        "enrollments": "నమోదులు: ",
+        "completions": "పూర్తయినవి: ",
+        "completionRate": "పూర్తి రేటు: "
+      },
+      "liveSessions": {
+        "title": "మీ లైవ్ సెషన్లు",
+        "date": "తేదీ: ",
+        "time": "సమయం: ",
+        "participants": "పాల్గొనేవారు: ",
+        "hostMeeting": "మీటింగ్ హోస్ట్ చేయండి"
+      },
+      "analytics": {
+        "title": "విశ్లేషణ డాష్‌బోర్డ్",
+        "exportButton": "విశ్లేషణను ఎగుమతి చేయండి (CSV)",
+        "table": {
+          "title": "శీర్షిక",
+          "language": "భాష",
+          "duration": "వ్యవధి",
+          "enrollments": "నమోదులు",
+          "completions": "పూర్తయినవి",
+          "completionRate": "పూర్తి రేటు",
+          "maxSeats": "గరిష్ట సీట్లు",
+          "seatsAvailable": "అందుబాటులో ఉన్న సీట్లు",
+          "startDate": "ప్రారంభ తేదీ",
+          "status": "స్థితి"
+        }
+      }
+    },
+    "dummyData": {
+      "content": {
+        "tailoring": "టైలరింగ్ పరిచయం",
+        "digitalMarketing": "డిజిటల్ మార్కెటింగ్ బేసిక్స్",
+        "farming": "ఆర్గానిక్ ఫార్మింగ్ వర్క్‌షాప్"
+      },
+      "liveSessions": {
+        "tailoringQna": "టైలరింగ్ టెక్నిక్స్ పై Q&A",
+        "digitalMarketingWorkshop": "డిజిటల్ మార్కెటింగ్ లైవ్ వర్క్‌షాప్"
+      }
+    },
+    "navbar": {
+      "features": "ఫీచర్లు",
+      "about": "గురించి",
+      "contact": "సంప్రదించండి",
+      "profile": "ప్రొఫైల్",
+      "dashboard": "డాష్‌బోర్డ్",
+      "community": "సముదాయం",
+      "skills": "నైపుణ్యాలు",
+      "signUp": "సైన్ అప్"
+    }
+  }

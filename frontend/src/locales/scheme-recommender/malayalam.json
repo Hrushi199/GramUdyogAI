@@ -1,0 +1,81 @@
+{
+    "pageTitle": "സർക്കാർ പദ്ധതികൾ കണ്ടെത്തുക",
+    "pageDescription": "നിങ്ങളുടെ തൊഴിൽ രജിസ്റ്റർ ചെയ്ത് വളർച്ചക്കും വിജയത്തിനും സഹായിക്കുന്ന സർക്കാർ പദ്ധതികൾ കണ്ടെത്തുക.",
+    "form": {
+      "occupationLabel": "നിങ്ങളുടെ തൊഴിൽ നൽകുക:",
+      "occupationPlaceholder": "ഉദാഹരണം: കർഷകൻ, അധ്യാപകൻ",
+      "submitButton": "ശുപാർശകൾ നേടുക"
+    },
+    "loading": "ശുപാർശകൾ ലോഡിംഗ്...",
+    "recommendedSchemes": "ശുപാർശ ചെയ്ത പദ്ധതികൾ",
+    "scheme": {
+      "goal": "ലക്ഷ്യം",
+      "benefits": "ലാഭങ്ങൾ",
+      "eligibility": "യോഗ്യത",
+      "howToApply": "അപേക്ഷിക്കാനുള്ള വിധം",
+      "specialFeatures": "പ്രത്യേക സവിശേഷതകൾ",
+      "viewFullDetails": "പൂർണ്ണ വിവരങ്ങൾ കാണുക"
+    },
+    "noExplanation": "വിവരണം ലഭ്യമല്ല.",
+    "noData": "ഇതുവരെ ഡാറ്റ ലഭിച്ചിട്ടില്ല. ശുപാർശകൾക്കായി ഫോം സമർപ്പിക്കുക.",
+    "modal": {
+      "schemeDetails": "പദ്ധതി വിശദാംശങ്ങൾ",
+      "fields": {
+        "scheme_name": "പദ്ധതിയുടെ പേര്",
+        "goal": "ലക്ഷ്യം",
+        "benefit": "ലാഭം",
+        "eligibility": "യോഗ്യത",
+        "application_process": "അപേക്ഷ പ്രക്രിയ",
+        "special_features": "പ്രത്യേക സവിശേഷതകൾ",
+        "description": "വിവരണം",
+        "website": "വെബ്സൈറ്റ്",
+        "contact": "ബന്ധപ്പെടുക",
+        "location": "സ്ഥാനം",
+        "tags": "ടാഗുകൾ",
+        "key_features": "പ്രധാന സവിശേഷതകൾ",
+        "benefits_details": {
+          "interest_subsidy": "പലിശ സബ്സിഡി",
+          "maximum_loan_amount": "പരമാവധി വായ്പ തുക",
+          "moratorium_period": "മോറട്ടോറിയം കാലാവധി",
+          "knowledge_transfer": "ജ്ഞാന കൈമാറ്റം",
+          "productivity_improvement": "ഉൽപ്പാദനക്ഷമത മെച്ചപ്പെടുത്തൽ"
+        },
+        "eligibility_details": {
+          "education_criteria": "വിദ്യാഭ്യാസ മാനദണ്ഡങ്ങൾ",
+          "additional_criteria": "അധിക മാനദണ്ഡങ്ങൾ",
+          "admission_requirement": "അഡ്മിഷൻ ആവശ്യകത",
+          "institution_criteria": "സ്ഥാപന മാനദണ്ഡങ്ങൾ",
+          "criteria": "മാനദണ്ഡങ്ങൾ"
+        },
+        "eligible_courses": "യോഗ്യമായ കോഴ്സുകൾ",
+        "application_details": {
+          "mode": "മോഡ്",
+          "steps": "ചുവടുകൾ",
+          "note": "കുറിപ്പ്"
+        },
+        "required_documents": "ആവശ്യമായ രേഖകൾ",
+        "document_fields": {
+          "document": "രേഖ",
+          "mandatory": "ബന്ധിതം",
+          "note": "കുറിപ്പ്"
+        },
+        "special_notes": "പ്രത്യേക കുറിപ്പുകൾ",
+        "document": "രേഖ",
+        "mandatory": "ബന്ധിതം",
+        "note": "കുറിപ്പ്",
+        "mode": "മോഡ്",
+        "steps": "ചുവടുകൾ",
+        "interest_subsidy": "പലിശ സബ്സിഡി",
+        "maximum_loan_amount": "പരമാവധി വായ്പ തുക",
+        "moratorium_period": "മോറട്ടോറിയം കാലാവധി",
+        "knowledge_transfer": "ജ്ഞാന കൈമാറ്റം",
+        "productivity_improvement": "ഉൽപ്പാദനക്ഷമത മെച്ചപ്പെടുത്തൽ",
+        "education_criteria": "വിദ്യാഭ്യാസ മാനദണ്ഡങ്ങൾ",
+        "additional_criteria": "അധിക മാനദണ്ഡങ്ങൾ",
+        "admission_requirement": "അഡ്മിഷൻ ആവശ്യകത",
+        "institution_criteria": "സ്ഥാപന മാനദണ്ഡങ്ങൾ",
+        "criteria": "മാനദണ്ഡങ്ങൾ"
+      }
+    }
+  }
+  

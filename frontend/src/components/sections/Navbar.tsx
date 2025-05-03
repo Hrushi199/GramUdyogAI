@@ -76,6 +76,17 @@ const Navbar: React.FC = () => {
             >
               <option value="en">{t('consumer.filters.languageEnglish')}</option>
               <option value="hi">{t('consumer.filters.languageHindi')}</option>
+              <option value="bn">{t('consumer.filters.languageBengali')}</option> {/* Bengali */}
+              <option value="mr">{t('consumer.filters.languageMarathi')}</option> {/* Marathi */}
+              <option value="te">{t('consumer.filters.languageTelugu')}</option> {/* Telugu */}
+              <option value="ta">{t('consumer.filters.languageTamil')}</option> {/* Tamil */}
+              <option value="gu">{t('consumer.filters.languageGujarati')}</option> {/* Gujarati */}
+              <option value="ur">{t('consumer.filters.languageUrdu')}</option> {/* Urdu */}
+              <option value="kn">{t('consumer.filters.languageKannada')}</option> {/* Kannada */}
+              <option value="or">{t('consumer.filters.languageOdia')}</option> {/* Odia */}
+              <option value="ml">{t('consumer.filters.languageMalayalam')}</option> {/* Malayalam */}
+              <option value="pa">{t('consumer.filters.languagePunjabi')}</option> {/* Punjabi */}
+              <option value="as">{t('consumer.filters.languageAssamese')}</option> {/* Assamese */}
             </select>
           </div>
 
@@ -88,6 +99,17 @@ const Navbar: React.FC = () => {
             >
               <option value="en">{t('consumer.filters.languageEnglish')}</option>
               <option value="hi">{t('consumer.filters.languageHindi')}</option>
+              <option value="bn">{t('consumer.filters.languageBengali')}</option> {/* Bengali */}
+              <option value="mr">{t('consumer.filters.languageMarathi')}</option> {/* Marathi */}
+              <option value="te">{t('consumer.filters.languageTelugu')}</option> {/* Telugu */}
+              <option value="ta">{t('consumer.filters.languageTamil')}</option> {/* Tamil */}
+              <option value="gu">{t('consumer.filters.languageGujarati')}</option> {/* Gujarati */}
+              <option value="ur">{t('consumer.filters.languageUrdu')}</option> {/* Urdu */}
+              <option value="kn">{t('consumer.filters.languageKannada')}</option> {/* Kannada */}
+              <option value="or">{t('consumer.filters.languageOdia')}</option> {/* Odia */}
+              <option value="ml">{t('consumer.filters.languageMalayalam')}</option> {/* Malayalam */}
+              <option value="pa">{t('consumer.filters.languagePunjabi')}</option> {/* Punjabi */}
+              <option value="as">{t('consumer.filters.languageAssamese')}</option> {/* Assamese */}
             </select>
             <button
               onClick={toggleMenu}

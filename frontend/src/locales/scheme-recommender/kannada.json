@@ -1,0 +1,81 @@
+{
+    "pageTitle": "ರಾಜ್ಯ ಯೋಜನೆಗಳನ್ನು ಅನ್ವೇಷಿಸಿ",
+    "pageDescription": "ನಿಮ್ಮ ವೃತ್ತಿಯನ್ನು ನೋಂದಾಯಿಸಿ ಮತ್ತು ನಿಮ್ಮ ಬೆಳವಣಿಗೆ ಮತ್ತು ಯಶಸ್ಸಿಗೆ ಸಹಾಯ ಮಾಡುವ ರಾಜ್ಯ ಯೋಜನೆಗಳನ್ನು ಅನ್ವೇಷಿಸಿ.",
+    "form": {
+      "occupationLabel": "ನಿಮ್ಮ ವೃತ್ತಿಯನ್ನು ನಮೂದಿಸಿ:",
+      "occupationPlaceholder": "ಉದಾಹರಣೆ: ರೈತ, ಶಿಕ್ಷಕ",
+      "submitButton": "ನಿರ್ದೇಶಗಳನ್ನು ಪಡೆಯಿರಿ"
+    },
+    "loading": "ನಿರ್ದೇಶಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ...",
+    "recommendedSchemes": "ಸೂಚಿಸಲಾಗಿದ ಯೋಜನೆಗಳು",
+    "scheme": {
+      "goal": "ಗೋಲ",
+      "benefits": "ಪ್ರಯೋಜನಗಳು",
+      "eligibility": "ಅರ್ಹತೆ",
+      "howToApply": "ಹೇಗೆ ಅರ್ಜಿ ಹಾಕಬೇಕು",
+      "specialFeatures": "ವಿಶೇಷ ವೈಶಿಷ್ಟ್ಯಗಳು",
+      "viewFullDetails": "ಪೂರ್ಣ ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಿ"
+    },
+    "noExplanation": "ಏನೂ ವಿವರ ನೀಡಲಾಗಿಲ್ಲ.",
+    "noData": "ಇನ್ನೂ ಯಾವುದೇ ಡೇಟಾ ದೊರಕಿದಿಲ್ಲ. ದಯವಿಟ್ಟು ಸೂಚನೆಗಳನ್ನು ಪಡೆಯಲು ಫಾರ್ಮ್ ಸಲ್ಲಿಸಿ.",
+    "modal": {
+      "schemeDetails": "ಯೋಜನೆಯ ವಿವರಗಳು",
+      "fields": {
+        "scheme_name": "ಯೋಜನೆಯ ಹೆಸರು",
+        "goal": "ಗೋಲ",
+        "benefit": "ಪ್ರಯೋಜನ",
+        "eligibility": "ಅರ್ಹತೆ",
+        "application_process": "ಅರ್ಜಿಯ ಪ್ರಕ್ರಿಯೆ",
+        "special_features": "ವಿಶೇಷ ವೈಶಿಷ್ಟ್ಯಗಳು",
+        "description": "ವಿವರಣೆ",
+        "website": "ವೆಬ್‌ಸೈಟ್",
+        "contact": "ಸಂಪರ್ಕ",
+        "location": "ಸ್ಥಳ",
+        "tags": "ಟ್ಯಾಗ್ಗಳು",
+        "key_features": "ಪ್ರಮುಖ ವೈಶಿಷ್ಟ್ಯಗಳು",
+        "benefits_details": {
+          "interest_subsidy": "ವಡ್ಡಿ ಉಪಾದಿ",
+          "maximum_loan_amount": "ಅಧಿಕೃತ ಸಾಲ ಮೊತ್ತ",
+          "moratorium_period": "ವಿತ್ತಪೂರ್ವಾವಧಿ",
+          "knowledge_transfer": "ಅರಿವು ಹಸ್ತಾಂತರ",
+          "productivity_improvement": "ಉತ್ಪಾದಕತೆ ಸುಧಾರಣೆ"
+        },
+        "eligibility_details": {
+          "education_criteria": "ಶೈಕ್ಷಣಿಕ ಮಾನದಂಡ",
+          "additional_criteria": "ಹೆಚ್ಚುವರಿ ಮಾನದಂಡ",
+          "admission_requirement": "ಪ್ರವೇಶ ಅಗತ್ಯತೆ",
+          "institution_criteria": "ಸಂಸ್ಥೆ ಮಾನದಂಡ",
+          "criteria": "ಮಾನದಂಡ"
+        },
+        "eligible_courses": "ಅರ್ಹತೆ ಹೊಂದಿರುವ ಕೋರ್ಸುಗಳು",
+        "application_details": {
+          "mode": "ಮೋಡ್",
+          "steps": "ಹಂತಗಳು",
+          "note": "ಗಮನಿಸು"
+        },
+        "required_documents": "ಅವಶ್ಯಕ ದಸ್ತಾವೇಜುಗಳು",
+        "document_fields": {
+          "document": "ದಸ್ತಾವೇಜು",
+          "mandatory": "ಅವಶ್ಯಕ",
+          "note": "ಗಮನಿಸು"
+        },
+        "special_notes": "ವಿಶೇಷ ಟಿಪ್ಪಣಿಗಳು",
+        "document": "ದಸ್ತಾವೇಜು",
+        "mandatory": "ಅವಶ್ಯಕ",
+        "note": "ಗಮನಿಸು",
+        "mode": "ಮೋಡ್",
+        "steps": "ಹಂತಗಳು",
+        "interest_subsidy": "ವಡ್ಡಿ ಉಪಾದಿ",
+        "maximum_loan_amount": "ಅಧಿಕೃತ ಸಾಲ ಮೊತ್ತ",
+        "moratorium_period": "ವಿತ್ತಪೂರ್ವಾವಧಿ",
+        "knowledge_transfer": "ಅರಿವು ಹಸ್ತಾಂತರ",
+        "productivity_improvement": "ಉತ್ಪಾದಕತೆ ಸುಧಾರಣೆ",
+        "education_criteria": "ಶೈಕ್ಷಣಿಕ ಮಾನದಂಡ",
+        "additional_criteria": "ಹೆಚ್ಚುವರಿ ಮಾನದಂಡ",
+        "admission_requirement": "ಪ್ರವೇಶ ಅಗತ್ಯತೆ",
+        "institution_criteria": "ಸಂಸ್ಥೆ ಮಾನದಂಡ",
+        "criteria": "ಮಾನದಂಡ"
+      }
+    }
+  }
+  

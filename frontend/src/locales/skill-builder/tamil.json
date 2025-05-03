@@ -1,0 +1,238 @@
+{
+    "header": {
+      "title": "திறன் கட்டமைப்பு மற்றும் தகவமைப்பு கற்றல்"
+    },
+    "roleSwitcher": {
+      "label": "பாத்திரத்தைத் தேர்ந்தெடு",
+      "consumer": "நுகர்வோர்",
+      "provider": "வழங்குபவர்",
+      "uploader": "பதிவேற்றுபவர்",
+      "languageLabel": "மொழியைத் தேர்ந்தெடு"
+    },
+    "consumer": {
+      "progressDashboard": {
+        "title": "உங்கள் முன்னேற்றம்",
+        "progress": "முன்னேற்றம்: ",
+        "tokens": "சிக்ஷா டோக்கன்கள்: "
+      },
+      "searchBar": {
+        "placeholder": "உள்ளடக்கத்தைத் தேடு..."
+      },
+      "filters": {
+        "languageLabel": "மொழி",
+        "languageAll": "அனைத்தும்",
+        "languageHindi": "ஹிந்தி",
+        "languageEnglish": "ஆங்கிலம்",
+        "languageTamil": "தமிழ்",
+        "languageTelugu": "தெலுங்கு",
+        "languageMarathi": "மராத்தி",
+        "languageBengali": "வங்காளம்",
+        "languageGujarati": "குஜராத்தி",
+        "languageKannada": "கன்னடம்",
+        "languageMalayalam": "மலையாளம்",
+        "languagePunjabi": "பஞ்சாபி",
+        "languageUrdu": "உருது",
+        "languageOdia": "ஒடியா",
+        "languageAssamese": "அசாமி",
+        "deliveryModeLabel": "விநியோக முறை",
+        "deliveryModeAll": "அனைத்தும்",
+        "deliveryModeOnline": "ஆன்லைன்",
+        "deliveryModeHybrid": "கலப்பு"
+      },
+      "contentList": {
+        "type": "வகை: ",
+        "format": "வடிவம்: ",
+        "language": "மொழி: ",
+        "source": "மூலம்: ",
+        "duration": "காலம்: ",
+        "tokens": "டோக்கன்கள்: ",
+        "mode": "முறை: ",
+        "physical": "உடல்: ",
+        "seats": "இருக்கைகள்: ",
+        "startDate": "தொடக்க தேதி: ",
+        "startLearning": "கற்றலைத் தொடங்கு",
+        "enroll": "பதிவு செய்"
+      },
+      "selectedContent": {
+        "source": "மூலம்: ",
+        "format": "வடிவம்: ",
+        "language": "மொழி: ",
+        "videoError": "உங்கள் உலாவி வீடியோ குறிச்சொல்லை ஆதரிக்கவில்லை.",
+        "viewContent": "உள்ளடக்கத்தைப் பார்",
+        "close": "மூடு",
+        "description": "விளக்கம்: ",
+        "certification": "சான்றிதழ்: ",
+        "seats": "இருக்கைகள்: ",
+        "startDate": "தொடக்க தேதி: "
+      },
+      "liveSessions": {
+        "title": "நேரடி அமர்வுகள்",
+        "source": "மூலம்: ",
+        "date": "தேதி: ",
+        "time": "நேரம்: ",
+        "joinMeeting": "கூட்டத்தில் சேர்",
+        "viewChatQna": "அரட்டை மற்றும் கேள்வி-பதிலைப் பார்"
+      },
+      "chatQna": {
+        "interaction": "தொடர்பு",
+        "chatTitle": "அரட்டை",
+        "chatPlaceholder": "உங்கள் செய்தியை தட்டச்சு செய்யவும்...",
+        "chatSend": "அனுப்பு",
+        "qnaTitle": "கேள்வி-பதில்",
+        "qnaPlaceholder": "ஒரு கேள்வியைக் கேளுங்கள்...",
+        "qnaSubmit": "சமர்ப்பி",
+        "close": "மூடு"
+      },
+      "visualSummaries": {
+        "title": "காட்சி சுருக்கங்கள்",
+        "createNew": "புதிய சுருக்கத்தை உருவாக்கு"
+      },
+      "summaryCreatorModal": {
+        "title": "காட்சி சுருக்கத்தை உருவாக்கு",
+        "topicPlaceholder": "தலைப்பை உள்ளிடவும்...",
+        "contextPlaceholder": "கூடுதல் சூழலை உள்ளிடவும்...",
+        "cancel": "ரத்து செய்",
+        "create": "உருவாக்கு",
+        "creating": "உருவாக்கப்படுகிறது...",
+        "audioOptions": "ஆடியோ உருவாக்க விருப்பங்கள்",
+        "audioNone": "ஆடியோ உருவாக்கம் இல்லை",
+        "audioOnDemand": "தேவைப்படும்போது ஆடியோ உருவாக்கு (வேகமாக)",
+        "audioAll": "எல்லா ஆடியோவையும் இப்போது உருவாக்கு (நீண்ட நேரம் எடுக்கும்)"
+      },
+      "visualSummaryModal": {
+        "close": "மூடு",
+        "previous": "முந்தைய",
+        "next": "அடுத்தது",
+        "sectionInfo": "பிரிவு {sectionIdx} / {sectionsLength}",
+        "goToSection": "பிரிவு {sectionIdx} க்கு செல்",
+        "generateAudio": "ஆடியோ உருவாக்கு",
+        "generatingAudio": "ஆடியோ உருவாக்கப்படுகிறது..."
+      },
+      "enrollment": {
+        "success": "பாடநெறி வெற்றிகரமாக பதிவு செய்யப்பட்டது!",
+        "failure": "பாடநெறியில் பதிவு செய்ய முடியவில்லை:"
+      }
+    },
+    "provider": {
+      "contentUpload": {
+        "title": "புதிய உள்ளடக்கத்தை பதிவேற்று",
+        "titleLabel": "தலைப்பு",
+        "typeLabel": "வகை",
+        "typeTutorial": "பயிற்சி",
+        "typeCourse": "பாடநெறி",
+        "formatLabel": "வடிவம்",
+        "formatVideo": "வீடியோ",
+        "formatTextAudio": "உரை + ஆடியோ",
+        "formatVideoPhysical": "வீடியோ + உடல்",
+        "languageLabel": "மொழி",
+        "languageHindi": "ஹிந்தி",
+        "languageEnglish": "ஆங்கிலம்",
+        "languageTamil": "தமிழ்",
+        "durationLabel": "காலம்",
+        "urlLabel": "உள்ளடக்க URL",
+        "deliveryModeLabel": "விநியோக முறை",
+        "deliveryModeOnline": "ஆன்லைன்",
+        "deliveryModeHybrid": "கலப்பு",
+        "physicalLocationLabel": "உடல் இடம்",
+        "physicalDateLabel": "உடல் தேதி",
+        "uploadButton": "உள்ளடக்கத்தை பதிவேற்று"
+      },
+      "contentList": {
+        "title": "உங்கள் உள்ளடக்கம்",
+        "type": "வகை: ",
+        "enrollments": "பதிவுகள்: ",
+        "completions": "முடித்தல்: "
+      },
+      "liveSessions": {
+        "title": "உங்கள் நேரடி அமர்வுகள்",
+        "date": "தேதி: ",
+        "time": "நேரம்: ",
+        "participants": "பங்கேற்பாளர்கள்: ",
+        "hostMeeting": "கூட்டத்தை நடத்து"
+      }
+    },
+    "uploader": {
+      "contentUpload": {
+        "title": "CSR-பிராண்டட் உள்ளடக்கத்தை பதிவேற்று",
+        "titleLabel": "தலைப்பு",
+        "descriptionLabel": "விளக்கம்",
+        "skillsLabel": "திறன்கள்",
+        "maxSeatsLabel": "அதிகபட்ச இருக்கைகள்",
+        "startDateLabel": "தொடக்க தேதி",
+        "certificationLabel": "சான்றிதழ்",
+        "statusLabel": "நிலை",
+        "typeLabel": "வகை",
+        "typeTutorial": "பயிற்சி",
+        "typeCourse": "பாடநெறி",
+        "formatLabel": "வடிவம்",
+        "formatVideo": "வீடியோ",
+        "formatTextAudio": "உரை + ஆடியோ",
+        "formatVideoPhysical": "வீடியோ + உடல்",
+        "languageLabel": "மொழி",
+        "languageHindi": "ஹிந்தி",
+        "languageEnglish": "ஆங்கிலம்",
+        "languageTamil": "தமிழ்",
+        "durationLabel": "காலம்",
+        "urlLabel": "உள்ளடக்க URL",
+        "deliveryModeLabel": "விநியோக முறை",
+        "deliveryModeOnline": "ஆன்லைன்",
+        "deliveryModeHybrid": "கலப்பு",
+        "physicalLocationLabel": "உடல் இடம்",
+        "physicalDateLabel": "உடல் தேதி",
+        "uploadButton": "உள்ளடக்கத்தை பதிவேற்று",
+        "statusActive": "செயலில்",
+        "statusInactive": "செயலற்ற"
+      },
+      "analyticsDashboard": {
+        "title": "பகுப்பாய்வு டாஷ்போர்டு",
+        "exportCsv": "பகுப்பாய்வை ஏற்றுமதி செய் (CSV)",
+        "enrollments": "பதிவுகள்: ",
+        "completions": "முடித்தல்: ",
+        "completionRate": "முடித்தல் விகிதம்: "
+      },
+      "liveSessions": {
+        "title": "உங்கள் நேரடி அமர்வுகள்",
+        "date": "தேதி: ",
+        "time": "நேரம்: ",
+        "participants": "பங்கேற்பாளர்கள்: ",
+        "hostMeeting": "கூட்டத்தை நடத்து"
+      },
+      "analytics": {
+        "title": "பகுப்பாய்வு டாஷ்போர்டு",
+        "exportButton": "பகுப்பாய்வை ஏற்றுமதி செய் (CSV)",
+        "table": {
+          "title": "தலைப்பு",
+          "language": "மொழி",
+          "duration": "காலம்",
+          "enrollments": "பதிவுகள்",
+          "completions": "முடித்தல்",
+          "completionRate": "முடித்தல் விகிதம்",
+          "maxSeats": "அதிகபட்ச இருக்கைகள்",
+          "seatsAvailable": "கிடைக்கும் இருக்கைகள்",
+          "startDate": "தொடக்க தேதி",
+          "status": "நிலை"
+        }
+      }
+    },
+    "dummyData": {
+      "content": {
+        "tailoring": "தையல் அறிமுகம்",
+        "digitalMarketing": "டிஜிட்டல் மார்க்கெட்டிங் அடிப்படைகள்",
+        "farming": "கரிம விவசாய பயிலரங்கு"
+      },
+      "liveSessions": {
+        "tailoringQna": "தையல் நுட்பங்கள் பற்றிய கேள்வி-பதில்",
+        "digitalMarketingWorkshop": "டிஜிட்டல் மார்க்கெட்டிங் நேரடி பயிலரங்கு"
+      }
+    },
+    "navbar": {
+      "features": "அம்சங்கள்",
+      "about": "பற்றி",
+      "contact": "தொடர்பு",
+      "profile": "சுயவிவரம்",
+      "dashboard": "டாஷ்போர்டு",
+      "community": "சமூகம்",
+      "skills": "திறன்கள்",
+      "signUp": "பதிவு செய்"
+    }
+  }
