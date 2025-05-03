@@ -39,10 +39,10 @@ class SchemeResponse(BaseModel):
 
 @router.post("/schemes", response_model=SchemeResponse)
 async def recommend_schemes(data: UserRequest):
-    all_names = get_all_scheme_names()
-    relevant_names = get_relevant_scheme_names(data.occupation, all_names)
-    selected_schemes = load_selected_schemes(relevant_names)
-    explanation = explain_schemes(data.occupation, selected_schemes)
+    all_names = await get_all_scheme_names()
+    relevant_names = await get_relevant_scheme_names(data.occupation, all_names)
+    selected_schemes = await load_selected_schemes(relevant_names)
+    explanation = await explain_schemes(data.occupation, selected_schemes)
     print(explanation)
     return {
         "relevant_schemes": relevant_names,

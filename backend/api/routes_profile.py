@@ -100,6 +100,24 @@ async def get_profile(profile_id: int):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.get("/users/profile")
+async def get_latest_profile():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        result = cursor.execute(
+            'SELECT * FROM user_profiles ORDER BY created_at DESC LIMIT 1'
+        ).fetchone()
+        conn.close()
+        if result is None:
+            return {}
+        profile_dict = dict(result)
+        profile_dict['skills'] = profile_dict['skills'].split(',') if profile_dict['skills'] else []
+        profile_dict['job_types'] = profile_dict['job_types'].split(',') if profile_dict['job_types'] else []
+        return profile_dict
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.put("/users/profile/{profile_id}")
 async def update_profile(profile_id: int, profile: UserProfile):
     try:

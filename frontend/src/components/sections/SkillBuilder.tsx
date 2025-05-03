@@ -987,7 +987,7 @@ const SkillBuilder = () => {
                         }}
                         disabled={translatingSummaryId === summary.id}
                       >
-                        {translatingSummaryId === summary.id ? 'Translating...' : 'Translate'}
+                        {translatingSummaryId === summary.id ? t('consumer.visualSummaryModal.translating') : t('consumer.visualSummaryModal.translate')}
                       </button>
                     </div>
                   );

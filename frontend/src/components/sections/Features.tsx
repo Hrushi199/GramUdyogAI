@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Cpu, Building2, Users, GraduationCap } from 'lucide-react';
+import { Cpu, Building2, Users, GraduationCap, Youtube } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -54,6 +54,14 @@ const Features: React.FC<FeaturesProps> = ({ loaded }) => {
       fallbackDescription: 'Access targeted training resources to build the exact skills you need for your business',
       icon: GraduationCap,
       onClick: () => navigate('/skill-builder'),
+    },
+    {
+      titleKey: 'features.4.title',
+      descriptionKey: 'features.4.description',
+      fallbackTitle: 'YouTube Audio Summary',
+      fallbackDescription: 'Summarize any YouTube video into actionable audio insights in your language.',
+      icon: Youtube,
+      onClick: () => navigate('/youtube-audio-summary'),
     },
   ];
 

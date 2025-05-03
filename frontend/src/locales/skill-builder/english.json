@@ -96,7 +96,9 @@
       "sectionInfo": "Section {sectionIdx} of {sectionsLength}",
       "goToSection": "Go to section {sectionIdx}",
       "generateAudio": "Generate Audio",
-      "generatingAudio": "Generating Audio..."
+      "generatingAudio": "Generating Audio...",
+      "translate": "Translate",
+      "translating": "Translating..."
     },
     "enrollment": {
       "success": "Course enrolled successfully!",
