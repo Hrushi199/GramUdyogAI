@@ -1,5 +1,6 @@
-from groq import Groq
 import os
+import json
+from groq import Groq
 from pydantic import BaseModel, ValidationError
 
 # Define the Pydantic model
@@ -43,3 +44,28 @@ User request: "{user_text_en}"
     except ValidationError as e:
         print(f"Validation error: {e}")
         return None, None
+
+async def llama_summarize_items(items, user_info, item_type="job"):
+    """
+    Use Llama to turn a list of dicts into a friendly, natural language summary for the user.
+    """
+    prompt = (
+        f"You are an AI assistant. The user is looking for a {item_type}. "
+        f"Here is the user's info: {user_info}\n"
+        f"Here are some {item_type} options as JSON:\n{json.dumps(items, indent=2)}\n\n"
+        f"Write a friendly, conversational script (max 150 words) that will be spoken aloud to the user. "
+        f"Structure your response as follows:\n"
+        f"-Greet the user and briefly mention what you found.\n"
+        f"-For each {item_type}, mention its title/name and summarize its most important details (such as company, location, pay for jobs; benefits, eligibility for schemes; idea, steps for business suggestions).\n"
+        f"-End with an encouraging or helpful closing line.\n"
+        f"Do not invent any data. If the list is empty, say you couldn't find any suitable {item_type}s. "
+        f"Keep your language clear, natural, and easy to understand. Your response will be spoken aloud, so avoid long sentences and keep it concise."
+    )
+    response = client.chat.completions.create(
+        model="llama3-8b-8192",
+        messages=[
+            {"role": "system", "content": f"You are a helpful assistant that summarizes {item_type} options for users."},
+            {"role": "user", "content": prompt}
+        ]
+    )
+    return response.choices[0].message.content.strip()

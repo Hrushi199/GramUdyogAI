@@ -4,7 +4,7 @@ from core.translation import llama_translate_string as translate_text
 from core.job_recommender import get_all_job_names, get_relevant_jobs, load_selected_jobs, find_best_job
 from core.scheme_recommender import get_all_scheme_names, get_relevant_scheme_names, load_selected_schemes
 from core.business_suggestion_generation import generate_prompt_from_skills, get_business_suggestions
-from core.llm_function_selector import select_function_and_args
+from core.llm_function_selector import select_function_and_args, llama_summarize_items
 
 router = APIRouter()
 
@@ -37,9 +37,11 @@ async def ai_assistant(req: AssistantRequest):
         if isinstance(relevant_job_names, dict) and "relevant_jobs" in relevant_job_names:
             relevant_jobs = await load_selected_jobs(relevant_job_names["relevant_jobs"])
             print("Loaded relevant jobs:", relevant_jobs)
-            result = await find_best_job(args, relevant_jobs)
-            print("Best job result:", result)
-            output = result.get("title", "No suitable job found.")
+            if relevant_jobs:
+                # Summarize all job details
+                output = await llama_summarize_items(relevant_jobs, user_text_en, item_type="job")
+            else:
+                output = "No suitable job found."
         else:
             print("Error: 'relevant_jobs' key missing or invalid format in response.")
             output = "No suitable job found."
@@ -50,13 +52,21 @@ async def ai_assistant(req: AssistantRequest):
         print("Relevant scheme names:", relevant_scheme_names)
         relevant_schemes = await load_selected_schemes(relevant_scheme_names)
         print("Loaded relevant schemes:", relevant_schemes)
-        output = relevant_schemes[0]["scheme_name"] if relevant_schemes else "No suitable scheme found."
+        if relevant_schemes:
+            # Summarize all scheme details
+            output = await llama_summarize_items(relevant_schemes, user_text_en, item_type="scheme")
+        else:
+            output = "No suitable scheme found."
     elif func_name == "business_suggestion":
         prompt = generate_prompt_from_skills(args)
         print("Generated prompt for business suggestions:", prompt)
         suggestions = await get_business_suggestions(prompt)
         print("Business suggestions:", suggestions)
-        output = suggestions.suggestions[0].idea_name if hasattr(suggestions, "suggestions") else "No suggestion found."
+        if hasattr(suggestions, "suggestions"):
+            # Summarize all business suggestion details
+            output = await llama_summarize_items([s.dict() for s in suggestions.suggestions], user_text_en, item_type="business suggestion")
+        else:
+            output = "No suggestion found."
     else:
         print("Unknown function name:", func_name)
         output = "Sorry, I couldn't understand your request."
