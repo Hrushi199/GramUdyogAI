@@ -1,5 +1,5 @@
 import json
-from typing import List, Dict
+from typing import List, Dict, Optional
 from groq import Groq
 from dotenv import load_dotenv, find_dotenv
 import os
@@ -23,7 +23,7 @@ class JobDetails(BaseModel):
     location: str
     company_contact: str
     pay: str
-    created_at: str
+    created_at: Optional[str]  # Made optional to handle missing field
 
 
 class JobRecommendationResponse(BaseModel):

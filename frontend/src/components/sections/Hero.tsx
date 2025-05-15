@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Button from '../ui/Button';
 import ParticleBackground from '../ui/ParticleBackground';
+import VirtualAssistantModal from '../ui/VirtualAssistantModal';
 
 interface HeroProps {
   loaded: boolean;
@@ -11,6 +12,7 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ loaded }) => {
   const { t } = useTranslation('hero');
   const heroRef = useRef<HTMLDivElement>(null);
+  const [showAssistant, setShowAssistant] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,6 +60,13 @@ const Hero: React.FC<HeroProps> = ({ loaded }) => {
               <Button size="lg" navigateTo="/profile">
                 {t('buttons.getStarted')}
               </Button>
+              <button
+                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg text-xl font-bold shadow-lg hover:scale-105 transition"
+                onClick={() => setShowAssistant(true)}
+                type="button"
+              >
+                Ask GramUdyog AI Assistant
+              </button>
             </div>
           </div>
 
@@ -76,6 +85,10 @@ const Hero: React.FC<HeroProps> = ({ loaded }) => {
           </div>
         </div>
       </div>
+
+      {showAssistant && (
+        <VirtualAssistantModal onClose={() => setShowAssistant(false)} />
+      )}
     </div>
   );
 };
