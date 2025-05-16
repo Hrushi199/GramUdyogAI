@@ -1,25 +1,34 @@
 import React, { useState, useRef, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF } from "@react-three/drei";
+import { Leva, useControls } from "leva";
 
 // Avatar with head movement when speaking
 function AvatarModel({ url, isSpeaking }: { url: string; isSpeaking: boolean }) {
   const { scene } = useGLTF(url);
   const ref = useRef<any>();
 
+  // Leva controls for avatar position and rotation
+  const { posY, rotX, scale } = useControls("Avatar", {
+    posY: { value: -33.32, min: -100, max: 5, step: 0.01 },
+    rotX: { value: -0.16, min: -Math.PI, max: Math.PI, step: 0.01 },
+    scale: { value: 19.8, min: 0, max:105, step: 0.1 },
+  });
+
   useFrame((state) => {
     if (ref.current) {
       if (isSpeaking) {
-        ref.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 6) * 0.07;
-        ref.current.position.y = Math.sin(state.clock.getElapsedTime() * 3) * 0.05;
+        ref.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 6) * 0.07 + rotX;
+        ref.current.position.y = Math.sin(state.clock.getElapsedTime() * 3) * 0.05 + posY;
       } else {
-        ref.current.rotation.x = 0;
-        ref.current.position.y = 0;
+        ref.current.rotation.x = rotX;
+        ref.current.position.y = posY;
       }
+      ref.current.scale.set(scale, scale, scale);
     }
   });
 
-  return <primitive ref={ref} object={scene} scale={2.2} />;
+  return <primitive ref={ref} object={scene} />;
 }
 
 export default function AIAssistant({ lang }: { lang: string }) {
@@ -31,7 +40,7 @@ export default function AIAssistant({ lang }: { lang: string }) {
   const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   // Path to your .glb file in public/avatars/my-avatar.glb
-  const modelUrl = "../public/readyplayerme.glb";
+  const modelUrl = "../public/female2.glb";
 
   // Basic browser STT
   const handleStartListening = () => {
@@ -87,10 +96,11 @@ export default function AIAssistant({ lang }: { lang: string }) {
         alignItems: "center"
       }}
     >
+      <Leva collapsed />
       <div className="flex flex-col items-center">
         {/* 3D Avatar */}
-        <div style={{ width: 320, height: 520 }}>
-          <Canvas camera={{ position: [0, 1.5, 8] }}>
+        <div style={{ width: 300, height: 200 }}>
+          <Canvas camera={{ position: [0, 5, 5] }}>
             <ambientLight intensity={0.7} />
             <directionalLight position={[2, 5, 2]} intensity={1} />
             <Suspense fallback={null}>
@@ -145,4 +155,4 @@ export default function AIAssistant({ lang }: { lang: string }) {
 }
 
 // Required for GLTF loading
-useGLTF.preload("../public/readyplayerme.glb");
+useGLTF.preload("../public/female2.glb");
