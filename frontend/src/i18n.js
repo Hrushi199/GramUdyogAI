@@ -370,6 +370,21 @@ import statsMl from './locales/stats/malayalam.json';
 import statsPa from './locales/stats/punjabi.json';
 import statsAs from './locales/stats/assamese.json';
 
+// Import translation files for ai-assistant namespace
+import aiAssistantEn from './locales/ai-assistant/english.json';
+import aiAssistantHi from './locales/ai-assistant/hindi.json';
+import aiAssistantBn from './locales/ai-assistant/bengali.json';
+import aiAssistantMr from './locales/ai-assistant/marathi.json';
+import aiAssistantTe from './locales/ai-assistant/telugu.json';
+import aiAssistantTa from './locales/ai-assistant/tamil.json';
+import aiAssistantGu from './locales/ai-assistant/gujarati.json';
+import aiAssistantUr from './locales/ai-assistant/urdu.json';
+import aiAssistantKn from './locales/ai-assistant/kannada.json';
+import aiAssistantOr from './locales/ai-assistant/odia.json';
+import aiAssistantMl from './locales/ai-assistant/malayalam.json';
+import aiAssistantPa from './locales/ai-assistant/punjabi.json';
+import aiAssistantAs from './locales/ai-assistant/assamese.json';
+
 i18n
   .use(initReactI18next)
   .init({
@@ -385,6 +400,7 @@ i18n
         jobmentordashboard: jobMentorDashboardEn, // Added job_mentor_dashboard namespac
         community: communityEn, // Added community namespace
         stats: statsEn, // Added stats namespace
+        'ai-assistant': aiAssistantEn, // Added ai-assistant namespace
       },
       hi: {
         skillbuilder: hiSkillBuilder,
@@ -397,6 +413,7 @@ i18n
         jobmentordashboard: jobMentorDashboardHi, // Added job_mentor_dashboard namespace
         community: communityHi, // Added community namespace
         stats: statsHi, // Added stats namespace
+        'ai-assistant': aiAssistantHi, // Added ai-assistant namespace
       },
       bn: {
         skillbuilder: bnSkillBuilder,
@@ -409,6 +426,7 @@ i18n
         jobmentordashboard: jobMentorDashboardBn, // Added job_mentor_dashboard namespace
         community: communityBn, // Added community namespace
         stats: statsBn, // Added stats namespace
+        'ai-assistant': aiAssistantBn, // Added ai-assistant namespace
       },
       mr: {
         skillbuilder: mrSkillBuilder,
@@ -421,6 +439,7 @@ i18n
         jobmentordashboard: jobMentorDashboardMr, // Added job_mentor_dashboard namespace
         community: communityMr, // Added community namespace
         stats: statsMr, // Added stats namespace
+        'ai-assistant': aiAssistantMr, // Added ai-assistant namespace
       },
       te: {
         skillbuilder: teSkillBuilder,
@@ -433,6 +452,7 @@ i18n
         jobmentordashboard: jobMentorDashboardTe, // Added job_mentor_dashboard namespace
         community: communityTe, // Added community namespace
         stats: statsTe, // Added stats namespace
+        'ai-assistant': aiAssistantTe, // Added ai-assistant namespace
       },
       ta: {
         skillbuilder: taSkillBuilder,
@@ -445,6 +465,7 @@ i18n
         jobmentordashboard: jobMentorDashboardTa, // Added job_mentor_dashboard namespace
         community: communityTa, // Added community namespace
         stats: statsTa, // Added stats namespace
+        'ai-assistant': aiAssistantTa, // Added ai-assistant namespace
       },
       gu: {
         skillbuilder: guSkillBuilder,
@@ -457,6 +478,7 @@ i18n
         jobmentordashboard: jobMentorDashboardGu, // Added job_mentor_dashboard namespace
         community: communityGu, // Added community namespace
         stats: statsGu, // Added stats namespace
+        'ai-assistant': aiAssistantGu, // Added ai-assistant namespace
       },
       ur: {
         skillbuilder: urSkillBuilder,
@@ -469,6 +491,7 @@ i18n
         jobmentordashboard: jobMentorDashboardUr, // Added job_mentor_dashboard namespace
         community: communityUr, // Added community namespace
         stats: statsUr, // Added stats namespace
+        'ai-assistant': aiAssistantUr, // Added ai-assistant namespace
       },
       kn: {
         skillbuilder: knSkillBuilder,
@@ -481,6 +504,7 @@ i18n
         jobmentordashboard: jobMentorDashboardKn, // Added job_mentor_dashboard namespace
         community: communityKn, // Added community 
         stats: statsKn, // Added stats namespace
+        'ai-assistant': aiAssistantKn, // Added ai-assistant namespace
       },
       or: {
         skillbuilder: orSkillBuilder,
@@ -493,6 +517,7 @@ i18n
         jobmentordashboard: jobMentorDashboardOr, // Added job_mentor_dashboard namespace
         community: communityOr, // Added community namespace
         stats: statsOr, // Added stats namespace
+        'ai-assistant': aiAssistantOr, // Added ai-assistant namespace
       },
       ml: {
         skillbuilder: mlSkillBuilder,
@@ -505,6 +530,7 @@ i18n
         jobmentordashboard: jobMentorDashboardMl, // Added job_mentor_dashboard namespace
         community: communityMl, // Added community 
         stats: statsMl, // Added stats namespace
+        'ai-assistant': aiAssistantMl, // Added ai-assistant namespace
       },
       pa: {
         skillbuilder: paSkillBuilder,
@@ -517,6 +543,7 @@ i18n
         jobmentordashboard: jobMentorDashboardPa, // Added job_mentor_dashboard namespace
         community: communityPa, // Added community namespace
         stats: statsPa, // Added stats namespace
+        'ai-assistant': aiAssistantPa, // Added ai-assistant namespace
       },
       as: {
         skillbuilder: asSkillBuilder,
@@ -529,6 +556,7 @@ i18n
         jobmentordashboard: jobMentorDashboardAs, // Added job_mentor_dashboard namespace
         community: communityAs, // Added community namespace
         stats: statsAs, // Added stats namespace
+        'ai-assistant': aiAssistantAs, // Added ai-assistant namespace
       },
     },
     lng: 'en',
@@ -544,6 +572,7 @@ i18n
       'jobmentordashboard', // Added job_mentor_dashboard to namespaces list
       'community', // Added community to namespaces list
       'stats', // Added stats to namespaces list
+      'ai-assistant', // Added ai-assistant to namespaces list
     ],
     defaultNS: 'translation',
     interpolation: {

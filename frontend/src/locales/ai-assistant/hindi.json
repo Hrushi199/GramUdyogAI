@@ -1,0 +1,21 @@
+{
+  "title": "मदद के लिए पूछें",
+  "buttons": {
+    "speak": "🎤 बोलें",
+    "askAssistant": "सहायक से पूछें"
+  },
+  "labels": {
+    "transcribed": "लिप्यंतरित:",
+    "assistant": "सहायक:",
+    "requestToLLM": "LLM को अनुरोध:"
+  },
+  "placeholders": {
+    "typeOrSpeak": "अपना अनुरोध टाइप करें या बोलें..."
+  },
+  "status": {
+    "processing": "प्रसंस्करण..."
+  },
+  "alerts": {
+    "speechNotSupported": "इस ब्राउज़र में वाक् पहचान समर्थित नहीं है।"
+  }
+}

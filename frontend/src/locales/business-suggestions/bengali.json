@@ -22,6 +22,25 @@
       "translate": "অনুবাদ করুন",
       "translating": "অনুবাদ করা হচ্ছে..."
     },
-    "noSuggestions": "কোনো পরামর্শ পাওয়া যায়নি। দয়া করে ভিন্ন দক্ষতা দিয়ে চেষ্টা করুন।"
+    "noSuggestions": "কোনো পরামর্শ পাওয়া যায়নি। দয়া করে ভিন্ন দক্ষতা দিয়ে চেষ্টা করুন।",
+    "detailedGuide": {
+      "title": "সম্পূর্ণ ধাপে ধাপে গাইড",
+      "totalCost": "মোট আনুমানিক খরচ",
+      "totalTime": "শুরু করার সময়",
+      "difficulty": "কঠিনতার মাত্রা",
+      "profitPotential": "লাভের সম্ভাবনা",
+      "step": "ধাপ",
+      "estimatedTime": "আনুমানিক সময়",
+      "estimatedCost": "আনুমানিক খরচ",
+      "youtubeVideos": "সহায়ক ভিডিও",
+      "shoppingLinks": "কোথায় কিনবেন",
+      "requiredDocuments": "প্রয়োজনীয় নথি",
+      "documentProcess": "নথি প্রক্রিয়া",
+      "tips": "প্রো টিপস",
+      "viewDetails": "বিস্তারিত দেখুন",
+      "hideDetails": "বিস্তারিত লুকান",
+      "openLink": "লিংক খুলুন",
+      "watchVideo": "ভিডিও দেখুন"
+    }
   }
   

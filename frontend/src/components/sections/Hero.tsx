@@ -65,7 +65,7 @@ const Hero: React.FC<HeroProps> = ({ loaded }) => {
                 onClick={() => setShowAssistant(true)}
                 type="button"
               >
-                Ask GramUdyog AI Assistant
+                {t('buttons.askAIAssistant')}
               </button>
             </div>
           </div>

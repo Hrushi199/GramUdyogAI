@@ -22,6 +22,25 @@
       "translate": "અનુવાદ કરો",
       "translating": "અનુવાદ થઈ રહ્યો છે..."
     },
-    "noSuggestions": "કોઈ સૂચનો ઉપલબ્ધ નથી. કૃપા કરીને અલગ કૌશલ્ય સાથે પ્રયાસ કરો."
+    "noSuggestions": "કોઈ સૂચનો ઉપલબ્ધ નથી. કૃપા કરીને અલગ કૌશલ્ય સાથે પ્રયાસ કરો.",
+    "detailedGuide": {
+      "title": "સંપૂર્ણ પગલું-દર-પગલું માર્ગદર્શિકા",
+      "totalCost": "કુલ અનુમાનિત ખર્ચ",
+      "totalTime": "શરૂ કરવાનો સમય",
+      "difficulty": "મુશ્કેલી સ્તર",
+      "profitPotential": "નફાની સંભાવના",
+      "step": "પગલું",
+      "estimatedTime": "અનુમાનિત સમય",
+      "estimatedCost": "અનુમાનિત ખર્ચ",
+      "youtubeVideos": "મદદરૂપ વીડિયો",
+      "shoppingLinks": "ક્યાંથી ખરીદવું",
+      "requiredDocuments": "જરૂરી દસ્તાવેજો",
+      "documentProcess": "દસ્તાવેજ પ્રક્રિયા",
+      "tips": "પ્રો ટિપ્સ",
+      "viewDetails": "વિગતો જુઓ",
+      "hideDetails": "વિગતો છુપાવો",
+      "openLink": "લિંક ખોલો",
+      "watchVideo": "વીડિયો જુઓ"
+    }
   }
   

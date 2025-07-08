@@ -22,5 +22,24 @@
       "translate": "अनुवाद करें",
       "translating": "अनुवाद हो रहा है..."
     },
-    "noSuggestions": "कोई सुझाव उपलब्ध नहीं है। कृपया अलग-अलग कौशल के साथ प्रयास करें।"
+    "noSuggestions": "कोई सुझाव उपलब्ध नहीं है। कृपया अलग-अलग कौशल के साथ प्रयास करें।",
+    "detailedGuide": {
+      "title": "पूर्ण चरणबद्ध गाइड",
+      "totalCost": "कुल अनुमानित लागत",
+      "totalTime": "शुरू करने का समय",
+      "difficulty": "कठिनाई स्तर",
+      "profitPotential": "लाभ की संभावना",
+      "step": "चरण",
+      "estimatedTime": "अनुमानित समय",
+      "estimatedCost": "अनुमानित लागत",
+      "youtubeVideos": "सहायक वीडियो",
+      "shoppingLinks": "कहाँ से खरीदें",
+      "requiredDocuments": "आवश्यक दस्तावेज",
+      "documentProcess": "दस्तावेज प्रक्रिया",
+      "tips": "प्रो टिप्स",
+      "viewDetails": "विवरण देखें",
+      "hideDetails": "विवरण छुपाएं",
+      "openLink": "लिंक खोलें",
+      "watchVideo": "वीडियो देखें"
+    }
   }
