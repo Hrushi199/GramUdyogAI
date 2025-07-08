@@ -40,7 +40,7 @@ class BusinessSuggestionsResponse(BaseModel):
     suggestions: List[BusinessSuggestion]
 
 def generate_prompt_from_skills(skills_text):
-    return f"""You are a business consultant specializing in low-cost, small-scale businesses in India. Generate 3 specific business ideas based on this skill: {skills_text}
+    return f"""You are a business consultant specializing in low-cost, small-scale businesses in India. GENERATE 3 specific business ideas based on this skill: {skills_text}
 
 Each business idea must be:
 - Low investment (under ₹5,000 total startup cost)
@@ -65,6 +65,8 @@ For the detailed guide, provide 4-6 comprehensive steps with:
 - Document process steps specific to India
 - Practical tips and warnings for Indian market
 
+Remember to Generate 3 business ideas based on the skill provided.
+
 Use only Indian Rupees (₹) for all costs. Keep total startup cost under ₹5,000.
 
 Return ONLY valid JSON in this exact format:
@@ -84,16 +86,16 @@ Return ONLY valid JSON in this exact format:
           "estimated_time": "3-5 days",
           "estimated_cost": "₹500-800",
           "youtube_links": ["How to Start Small Business in India 2024", "GST Registration for Small Business", "Udyam Registration Process"],
-          "shopping_links": ["https://www.amazon.in/business-supplies", "https://www.flipkart.com/office-supplies", "Local wholesale market"],
+          "shopping_links": ["https://www.amazon.in/s?k=ProductName", "https://www.flipkart.com/search?q=ProductName", "Local wholesale market"],
           "required_documents": ["Aadhaar Card", "PAN Card", "Bank Account", "Address Proof"],
           "document_process": ["Visit Udyam portal", "Fill basic details", "Upload Aadhaar", "Get registration number"],
           "tips": ["Start as sole proprietorship", "Keep all receipts", "Use digital payment methods"]
         }}
       ],
-      "total_estimated_cost": "₹3,000-5,000",
-      "total_time_to_start": "1-2 weeks",
-      "difficulty_level": "Beginner",
-      "profit_potential": "₹5,000-15,000/month"
+      "total_estimated_cost": "cost",
+      "total_time_to_start": "time",
+      "difficulty_level": "level",
+      "profit_potential": "profit amount"
     }}
   ]
 }}"""
