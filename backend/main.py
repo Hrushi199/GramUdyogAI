@@ -18,6 +18,9 @@ from api.routes_stt import router as stt_router
 from api.routes_youtube_summary import router as youtube_summary_router
 from api.routes_dashboard import router as dashboard_router
 from api.routes_ai_assistant import router as ai_assistant_router
+# --- ADD THIS IMPORT ---
+from api.routes_course_suggestion import router as course_suggestion_router
+
 app = FastAPI(title="GramUdyogAI API")
 
 # Configure CORS
@@ -44,6 +47,7 @@ app.include_router(stt_router, prefix="/api", tags=["stt"])
 app.include_router(dashboard_router, prefix="/api", tags=["dashboard"])
 app.include_router(youtube_summary_router, prefix="/api/youtube-summary", tags=["youtube-summary"])
 app.include_router(ai_assistant_router, prefix="/api", tags=["ai-assistant"])
+app.include_router(course_suggestion_router, prefix="/api")
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

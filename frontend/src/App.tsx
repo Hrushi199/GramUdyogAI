@@ -16,6 +16,8 @@ import Community from './components/sections/Community';
 import JobBoard from './components/sections/job_board';
 import YoutubeAudioSummary from './components/sections/YoutubeAudioSummary';
 import CSRDashboard from './components/sections/CSRDashboard';
+import CourseRecommender from './components/sections/CourseRecommender';
+
 // Wrapper component for the home page to handle scroll behavior
 const HomePage = ({ loaded }: { loaded: boolean }) => {
   const location = useLocation();
@@ -69,6 +71,7 @@ export default function App() {
           <Route path="/business-suggestions" element={<BusinessSuggestions />} />
           <Route path="/youtube-audio-summary" element={<YoutubeAudioSummary />} />
           <Route path="/csr-dashboard" element={<CSRDashboard />} />
+          <Route path="/course-recommender" element={<CourseRecommender />} />
         </Routes>
       </Router>
     </div>

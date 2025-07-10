@@ -16,17 +16,14 @@ const Navbar: React.FC = () => {
 
   const handleFeaturesClick = () => {
     if (location.pathname === '/') {
-      // If on home page, just scroll to features section
       const element = document.getElementById('features');
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      // If on another page, navigate to home page first, then scroll to features
       navigate('/', { state: { scrollToFeatures: true } });
     }
     
-    // Close mobile menu if it's open
     if (isMenuOpen) {
       setIsMenuOpen(false);
     }
@@ -60,6 +57,10 @@ const Navbar: React.FC = () => {
             <Link to="/skill-builder" className="text-gray-300 hover:text-white transition-colors">
               {t('navbar.skills')}
             </Link>
+            {/* --- ADDED THIS LINK --- */}
+            <Link to="/course-recommender" className="text-gray-300 hover:text-white transition-colors">
+              Course Recommender
+            </Link>
 
             <Button
               variant="primary"
@@ -76,17 +77,17 @@ const Navbar: React.FC = () => {
             >
               <option value="en">{t('consumer.filters.languageEnglish')}</option>
               <option value="hi">{t('consumer.filters.languageHindi')}</option>
-              <option value="bn">{t('consumer.filters.languageBengali')}</option> {/* Bengali */}
-              <option value="mr">{t('consumer.filters.languageMarathi')}</option> {/* Marathi */}
-              <option value="te">{t('consumer.filters.languageTelugu')}</option> {/* Telugu */}
-              <option value="ta">{t('consumer.filters.languageTamil')}</option> {/* Tamil */}
-              <option value="gu">{t('consumer.filters.languageGujarati')}</option> {/* Gujarati */}
-              <option value="ur">{t('consumer.filters.languageUrdu')}</option> {/* Urdu */}
-              <option value="kn">{t('consumer.filters.languageKannada')}</option> {/* Kannada */}
-              <option value="or">{t('consumer.filters.languageOdia')}</option> {/* Odia */}
-              <option value="ml">{t('consumer.filters.languageMalayalam')}</option> {/* Malayalam */}
-              <option value="pa">{t('consumer.filters.languagePunjabi')}</option> {/* Punjabi */}
-              <option value="as">{t('consumer.filters.languageAssamese')}</option> {/* Assamese */}
+              <option value="bn">{t('consumer.filters.languageBengali')}</option>
+              <option value="mr">{t('consumer.filters.languageMarathi')}</option>
+              <option value="te">{t('consumer.filters.languageTelugu')}</option>
+              <option value="ta">{t('consumer.filters.languageTamil')}</option>
+              <option value="gu">{t('consumer.filters.languageGujarati')}</option>
+              <option value="ur">{t('consumer.filters.languageUrdu')}</option>
+              <option value="kn">{t('consumer.filters.languageKannada')}</option>
+              <option value="or">{t('consumer.filters.languageOdia')}</option>
+              <option value="ml">{t('consumer.filters.languageMalayalam')}</option>
+              <option value="pa">{t('consumer.filters.languagePunjabi')}</option>
+              <option value="as">{t('consumer.filters.languageAssamese')}</option>
             </select>
           </div>
 
@@ -99,17 +100,17 @@ const Navbar: React.FC = () => {
             >
               <option value="en">{t('consumer.filters.languageEnglish')}</option>
               <option value="hi">{t('consumer.filters.languageHindi')}</option>
-              <option value="bn">{t('consumer.filters.languageBengali')}</option> {/* Bengali */}
-              <option value="mr">{t('consumer.filters.languageMarathi')}</option> {/* Marathi */}
-              <option value="te">{t('consumer.filters.languageTelugu')}</option> {/* Telugu */}
-              <option value="ta">{t('consumer.filters.languageTamil')}</option> {/* Tamil */}
-              <option value="gu">{t('consumer.filters.languageGujarati')}</option> {/* Gujarati */}
-              <option value="ur">{t('consumer.filters.languageUrdu')}</option> {/* Urdu */}
-              <option value="kn">{t('consumer.filters.languageKannada')}</option> {/* Kannada */}
-              <option value="or">{t('consumer.filters.languageOdia')}</option> {/* Odia */}
-              <option value="ml">{t('consumer.filters.languageMalayalam')}</option> {/* Malayalam */}
-              <option value="pa">{t('consumer.filters.languagePunjabi')}</option> {/* Punjabi */}
-              <option value="as">{t('consumer.filters.languageAssamese')}</option> {/* Assamese */}
+              <option value="bn">{t('consumer.filters.languageBengali')}</option>
+              <option value="mr">{t('consumer.filters.languageMarathi')}</option>
+              <option value="te">{t('consumer.filters.languageTelugu')}</option>
+              <option value="ta">{t('consumer.filters.languageTamil')}</option>
+              <option value="gu">{t('consumer.filters.languageGujarati')}</option>
+              <option value="ur">{t('consumer.filters.languageUrdu')}</option>
+              <option value="kn">{t('consumer.filters.languageKannada')}</option>
+              <option value="or">{t('consumer.filters.languageOdia')}</option>
+              <option value="ml">{t('consumer.filters.languageMalayalam')}</option>
+              <option value="pa">{t('consumer.filters.languagePunjabi')}</option>
+              <option value="as">{t('consumer.filters.languageAssamese')}</option>
             </select>
             <button
               onClick={toggleMenu}
@@ -117,15 +118,9 @@ const Navbar: React.FC = () => {
               aria-label="Toggle menu"
             >
               {isMenuOpen ? (
-                // X icon for closing
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
               ) : (
-                // Hamburger icon
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
               )}
             </button>
           </div>
@@ -169,6 +164,14 @@ const Navbar: React.FC = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               {t('navbar.skills')}
+            </Link>
+            {/* --- ADDED THIS LINK --- */}
+            <Link 
+              to="/course-recommender" 
+              className="text-gray-300 hover:text-white transition-colors py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Course Recommender
             </Link>
             <div className="pt-2">
               <Button
