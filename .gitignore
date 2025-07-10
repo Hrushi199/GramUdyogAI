@@ -10,3 +10,5 @@ backend/database.db
 *.db
 backend/images/*.png
 backebnd/audio/*.wav
+/venv/
+/.venv/
