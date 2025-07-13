@@ -235,6 +235,7 @@
     "dashboard": "Dashboard",
     "community": "Community",
     "skills": "Skills",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "courseRecommender": "Course Recommender"
   }
 }

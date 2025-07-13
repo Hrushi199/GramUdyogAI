@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 
 // --- TypeScript Interfaces for the new structured API response ---
 interface RecommendationItem {
@@ -30,6 +31,10 @@ export default function CourseRecommender() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cooldown, setCooldown] = useState(0);
+  const [translatingIdx, setTranslatingIdx] = useState<number | null>(null);
+  
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const { t, i18n } = useTranslation('course-recommender');
 
   useEffect(() => {
     if (cooldown > 0) {
@@ -41,11 +46,11 @@ export default function CourseRecommender() {
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) {
-      setError("Please enter a skill or topic to search for courses.");
+      setError(t('error.emptyQuery'));
       return;
     }
     if (cooldown > 0) {
-      setError(`Please wait ${cooldown} seconds before searching again.`);
+      setError(t('error.cooldown', { seconds: cooldown }));
       return;
     }
 
@@ -54,14 +59,13 @@ export default function CourseRecommender() {
     setData(null);
 
     try {
-      const apiUrl = "http://localhost:8000/api/suggest-courses";
-      const response = await axios.post<SuggestionResponse>(apiUrl, { query });
+      const response = await axios.post<SuggestionResponse>(`${API_BASE_URL}/api/suggest-courses`, { query });
       setData(response.data);
       setCooldown(10); 
     } catch (err: any) {
-      const defaultError = "Could not fetch recommendations. Please ensure the backend server is running.";
+      const defaultError = t('error.connection');
       if (err.response?.status === 503) {
-          setError("The recommendation service is busy. Please wait a moment and try again.");
+          setError(t('error.serviceBusy'));
       } else {
           setError(err.response?.data?.detail || err.message || defaultError);
       }
@@ -69,6 +73,30 @@ export default function CourseRecommender() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleTranslateCourse = async (idx: number, recommendation: RecommendationItem) => {
+    setTranslatingIdx(idx);
+    try {
+      const tr = await fetch(`${API_BASE_URL}/api/translate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ json: recommendation, target_language: i18n.language }),
+      });
+      if (tr.ok) {
+        const translated = await tr.json();
+        setData((prev) => {
+          if (!prev) return prev;
+          const updatedRecommendations = prev.recommendations.map((rec, i) => 
+            i === idx ? { ...rec, ...translated } : rec
+          );
+          return { ...prev, recommendations: updatedRecommendations };
+        });
+      }
+    } catch {
+      alert(t('error.translationFailed'));
+    }
+    setTranslatingIdx(null);
   };
 
   return (
@@ -94,10 +122,10 @@ export default function CourseRecommender() {
                         <Icons.ai className="w-10 h-10 text-white" />
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-cyan-400 mb-4">
-                        AI Course Recommender
+                        {t('pageTitle')}
                     </h1>
                     <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                        Enter a skill you want to learn to discover tailored courses, schemes, and job opportunities.
+                        {t('pageDescription')}
                     </p>
                 </div>
             </motion.div>
@@ -116,7 +144,7 @@ export default function CourseRecommender() {
                                 type="text"
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
-                                placeholder="E.g., 'Sewing and Tailoring', 'Digital Marketing'..."
+                                placeholder={t('form.skillsPlaceholder')}
                                 className="w-full p-4 bg-black/20 border-2 border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 text-white placeholder-gray-500 transition-all backdrop-blur-sm"
                             />
                         </div>
@@ -128,18 +156,18 @@ export default function CourseRecommender() {
                             {loading ? (
                                 <>
                                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                    Searching...
+                                    {t('form.searching')}
                                 </>
-                            ) : cooldown > 0 ? `Wait ${cooldown}s` : "Find Courses"}
+                            ) : cooldown > 0 ? t('form.wait', { seconds: cooldown }) : t('form.submitButton')}
                         </button>
                     </form>
                 </div>
             </motion.div>
 
             <AnimatePresence>
-                {loading && <LoadingSpinner />}
-                {error && <ErrorMessage message={error} />}
-                {data && <ResultsDisplay data={data} />}
+                {loading && <LoadingSpinner t={t} />}
+                {error && <ErrorMessage message={error} t={t} />}
+                {data && <ResultsDisplay data={data} t={t} handleTranslateCourse={handleTranslateCourse} translatingIdx={translatingIdx} />}
             </AnimatePresence>
         </div>
     </div>
@@ -147,7 +175,12 @@ export default function CourseRecommender() {
 }
 
 // --- Sub-components for Display ---
-const ResultsDisplay = ({ data }: { data: SuggestionResponse }) => (
+const ResultsDisplay = ({ data, t, handleTranslateCourse, translatingIdx }: { 
+  data: SuggestionResponse; 
+  t: any; 
+  handleTranslateCourse: (idx: number, recommendation: RecommendationItem) => Promise<void>;
+  translatingIdx: number | null;
+}) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -160,22 +193,35 @@ const ResultsDisplay = ({ data }: { data: SuggestionResponse }) => (
           <Icons.ai className="w-8 h-8 text-white" />
         </div>
         <div>
-          <h2 className="text-3xl font-bold text-white">AI-Powered Suggestions</h2>
-          <p className="text-gray-400">Personalized recommendations for your learning journey</p>
+          <h2 className="text-3xl font-bold text-white">{t('results.title')}</h2>
+          <p className="text-gray-400">{t('results.subtitle')}</p>
         </div>
       </div>
       <p className="text-gray-300 mb-8 text-lg leading-relaxed">{data.introduction}</p>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {data.recommendations.map((rec, i) => (
-            <RecommendationCard key={i} item={rec} index={i} />
+            <RecommendationCard 
+              key={i} 
+              item={rec} 
+              index={i} 
+              t={t} 
+              handleTranslateCourse={handleTranslateCourse} 
+              translatingIdx={translatingIdx} 
+            />
         ))}
       </div>
     </div>
   </motion.div>
 );
 
-const RecommendationCard = ({ item, index }: { item: RecommendationItem; index: number }) => {
+const RecommendationCard = ({ item, index, t, handleTranslateCourse, translatingIdx }: { 
+    item: RecommendationItem; 
+    index: number;
+    t: any;
+    handleTranslateCourse: (idx: number, recommendation: RecommendationItem) => Promise<void>;
+    translatingIdx: number | null;
+}) => {
     const isPlatform = item.type === "Platform Course";
     const typeColor = isPlatform ? "bg-purple-500/20 text-purple-300 border-purple-500/30" : "bg-blue-500/20 text-blue-300 border-blue-500/30";
     const icon = isPlatform ? <Icons.platform className="w-4 h-4" /> : <Icons.live className="w-4 h-4" />;
@@ -189,10 +235,37 @@ const RecommendationCard = ({ item, index }: { item: RecommendationItem; index: 
         >
             <div className="flex justify-between items-start mb-4">
                 <h4 className="font-bold text-lg text-white flex-1 pr-3 group-hover:text-purple-300 transition-colors">{item.course_title}</h4>
-                <span className={`flex-shrink-0 text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 border ${typeColor}`}>
-                    {icon}
-                    {item.type}
-                </span>
+                <div className="flex flex-col items-end gap-2">
+                    <span className={`flex-shrink-0 text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 border ${typeColor}`}>
+                        {icon}
+                        {item.type}
+                    </span>
+                    <button
+                        className="bg-purple-700 text-xs px-3 py-1 rounded-full text-white hover:bg-purple-600 transition-all transform hover:scale-105 shadow-md flex items-center"
+                        onClick={e => {
+                            e.stopPropagation();
+                            handleTranslateCourse(index, item);
+                        }}
+                        disabled={translatingIdx === index}
+                    >
+                        {translatingIdx === index ? (
+                            <>
+                                <svg className="animate-spin -ml-1 mr-1 h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                {t('actions.translating')}
+                            </>
+                        ) : (
+                            <>
+                                <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                                </svg>
+                                {t('actions.translate')}
+                            </>
+                        )}
+                    </button>
+                </div>
             </div>
             <p className="text-gray-400 text-sm flex-grow mb-6 leading-relaxed">{item.reason}</p>
             <a 
@@ -201,13 +274,13 @@ const RecommendationCard = ({ item, index }: { item: RecommendationItem; index: 
                 rel="noopener noreferrer"
                 className="mt-auto block w-full text-center px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 rounded-xl font-semibold text-white transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
             >
-                Know More
+                {t('actions.knowMore')}
             </a>
         </motion.div>
     )
 };
 
-const LoadingSpinner = () => (
+const LoadingSpinner = ({ t }: { t: any }) => (
   <motion.div 
     initial={{ opacity: 0 }} 
     animate={{ opacity: 1 }} 
@@ -219,13 +292,13 @@ const LoadingSpinner = () => (
         <div className="animate-spin rounded-full h-16 w-16 border-4 border-white/20 border-t-purple-500 mx-auto"></div>
         <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/20 to-blue-500/20 blur-xl"></div>
       </div>
-      <h3 className="mt-6 text-xl font-bold text-white">Searching for Resources</h3>
-      <p className="mt-2 text-gray-400">Our AI is finding the best courses for you...</p>
+      <h3 className="mt-6 text-xl font-bold text-white">{t('loading.title')}</h3>
+      <p className="mt-2 text-gray-400">{t('loading.description')}</p>
     </div>
   </motion.div>
 );
 
-const ErrorMessage = ({ message }: { message: string }) => (
+const ErrorMessage = ({ message, t }: { message: string; t: any }) => (
   <motion.div 
     initial={{ opacity: 0, y: 10 }} 
     animate={{ opacity: 1, y: 0 }} 
@@ -239,7 +312,7 @@ const ErrorMessage = ({ message }: { message: string }) => (
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <h3 className="font-bold text-xl text-red-300">Something went wrong</h3>
+        <h3 className="font-bold text-xl text-red-300">{t('error.title')}</h3>
       </div>
       <p className="text-red-200">{message}</p>
     </div>

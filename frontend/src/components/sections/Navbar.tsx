@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
             </Link>
             {/* --- ADDED THIS LINK --- */}
             <Link to="/course-recommender" className="text-gray-300 hover:text-white transition-colors">
-              Course Recommender
+              {t('navbar.courseRecommender')}
             </Link>
 
             <Button

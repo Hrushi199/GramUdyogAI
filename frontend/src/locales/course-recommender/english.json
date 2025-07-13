@@ -1,0 +1,31 @@
+{
+  "pageTitle": "AI Course Advisor",
+  "pageDescription": "Enter the skills you want to learn to discover customized courses, plans, and job opportunities.",
+  "form": {
+    "skillsPlaceholder": "Example: 'Sewing and tailoring', 'Digital marketing'...",
+    "submitButton": "Find Courses",
+    "searching": "Searching...",
+    "wait": "Wait {{seconds}} seconds"
+  },
+  "results": {
+    "title": "AI-Powered Recommendations",
+    "subtitle": "Personalized suggestions for your learning journey"
+  },
+  "actions": {
+    "translate": "Translate",
+    "translating": "Translating...",
+    "knowMore": "Know More"
+  },
+  "loading": {
+    "title": "Searching Resources",
+    "description": "Our AI is finding the best courses for you..."
+  },
+  "error": {
+    "title": "Something went wrong",
+    "emptyQuery": "Please enter a skill or topic to search for courses.",
+    "cooldown": "Please wait {{seconds}} seconds before searching again.",
+    "connection": "Could not fetch recommendations. Please ensure the backend server is running.",
+    "serviceBusy": "Recommendation service is busy. Please wait a moment and try again.",
+    "translationFailed": "Translation failed."
+  }
+}
