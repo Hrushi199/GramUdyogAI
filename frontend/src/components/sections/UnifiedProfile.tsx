@@ -12,44 +12,17 @@ import {
   ArrowRight, Settings, Bell, Crown, Trophy, Mic, Square, X
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import {getUserId} from '../../lib/api.ts';
+import {getUserId, UserProfile, UserProfileUpdate} from '../../lib/api.ts';
 
-interface UserProfile {
-  id: number;
-  user_type: 'individual' | 'company' | 'ngo' | 'investor';
-  name: string;
-  organization?: string;
-  location: string;
-  state: string;
-  skills: string[];
-  experience: string;
-  goals: string;
-  impact_metrics: {
-    events_hosted: number;
-    events_participated: number;
-    projects_created: number;
-    people_impacted: number;
-    revenue_generated: number;
-    jobs_created: number;
-    social_impact_score: number;
-    sustainability_score: number;
-  };
-  achievements: Achievement[];
-  recent_activities: Activity[];
-  recommendations: Recommendation[];
-  networking_suggestions: string[];
-  created_at: string;
-  updated_at: string;
-}
 
-interface Achievement {
-  id: number;
-  title: string;
-  description: string;
-  type: 'event' | 'project' | 'award' | 'certification';
-  date: string;
-  impact_score: number;
-}
+// interface Achievement {
+//   id: number;
+//   title: string;
+//   description: string;
+//   type: 'event' | 'project' | 'award' | 'certification';
+//   date: string;
+//   impact_score: number;
+// }
 
 interface Activity {
   id: number;
@@ -60,26 +33,26 @@ interface Activity {
   impact_score: number;
 }
 
-interface Recommendation {
-  id: number;
-  type: 'skill' | 'event' | 'connection' | 'project';
-  title: string;
-  description: string;
-  priority: 'high' | 'medium' | 'low';
-  action_url?: string;
-}
+// interface Recommendation {
+//   id: number;
+//   type: 'skill' | 'event' | 'connection' | 'project';
+//   title: string;
+//   description: string;
+//   priority: 'high' | 'medium' | 'low';
+//   action_url?: string;
+// }
 
 const UnifiedProfile: React.FC = () => {
   const { i18n } = useTranslation();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
-  const [editForm, setEditForm] = useState({
+  const [editForm, setEditForm] = useState<UserProfileUpdate>({
     name: '',
     organization: '',
     location: '',
     state: '',
-    skills: [] as string[],
+    skills: [],
     experience: '',
     goals: ''
   });
@@ -119,36 +92,44 @@ const fetchProfile = async () => {
     } else {
       // Set default profile data if AI enhancement fails
       setProfile({
-        name: userData?.name || '',
-        organization: null,
+        user_id: parseInt(getUserId() || '0'),
+        user_type: 'individual',
+        name: '',
+        organization: 'None',
         location: '',
         state: '',
         skills: [],
         experience: '',
         goals: '',
         impact_metrics: {
-          events_hosted: 0,
-          events_participated: 0,
+          participants_target: 0,
+          skills_developed: 0,
           projects_created: 0,
-          people_impacted: 0,
+          employment_generated: 0,
           revenue_generated: 0,
+          events_hosted: 0,
           jobs_created: 0,
           social_impact_score: 0,
           sustainability_score: 0
         },
+        achievements: [],
+        recent_activities: [],
         recommendations: [
           {
             id: 1,
             type: 'skill',
             title: 'Complete Your Profile',
             description: 'Add more details to get personalized recommendations',
-            priority: 'high'
+            priority: 'high',
+            estimated_impact: 100,
           }
         ],
         networking_suggestions: [
           'Join relevant events in your area',
           'Connect with professionals in your field'
-        ]
+        ],
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       });
     }
   } catch (error) {
@@ -241,44 +222,41 @@ const fetchProfile = async () => {
       setEditForm({
         name: profile.name,
         organization: profile.organization || '',
-        location: profile.location,
-        state: profile.state,
+        location: profile.location || '',
+        state: profile.state|| '',
         skills: profile.skills,
-        experience: profile.experience,
-        goals: profile.goals
+        experience: profile.experience|| '',
+        goals: profile.goals || ''
       });
     }
     setEditing(true);
   };
 
+  
+
   const handleSave = async () => {
     try {
       setSaving(true);
-      const userId = localStorage.getItem('user_id');
-      const authToken = localStorage.getItem('auth_token');
       
-      const response = await fetch(`${API_BASE_URL}/api/users/unified-profile?user_id=${userId}`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${authToken}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(editForm)
-      });
+      const response = await userAPI.updateProfile(editForm);
       
-      if (response.ok) {
-        const updatedProfile = await response.json();
-        setProfile(updatedProfile);
+      if (response.data) {
+        setProfile(response.data);
         setEditing(false);
-      } else {
-        console.error('Error updating profile:', response.statusText);
+        console.log('Profile updated successfully');
+      } else if (response.error) {
+        console.error('Error updating profile:', response.error);
+        alert('Failed to update profile: ' + response.error);
       }
     } catch (error) {
       console.error('Error updating profile:', error);
+      alert('An unexpected error occurred while updating profile');
     } finally {
       setSaving(false);
     }
   };
+
+
 
   const handleCancel = () => {
     setEditing(false);
@@ -766,7 +744,7 @@ const fetchProfile = async () => {
                     <input
                       type="text"
                       placeholder="Add a skill"
-                      onKeyPress={(e) => {
+                      onKeyDown={(e) => {
                         if (e.key === 'Enter') {
                           addSkill(e.currentTarget.value);
                           e.currentTarget.value = '';
@@ -861,7 +839,7 @@ const fetchProfile = async () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-purple-300 text-sm font-medium">Events Hosted</p>
-                  <p className="text-3xl font-bold text-white">{formatNumber(profile.impact_metrics.events_hosted)}</p>
+                  <p className="text-3xl font-bold text-white">{formatNumber(profile.impact_metrics.events_hosted || 0)}</p>
                 </div>
                 <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
                   <Calendar className="w-6 h-6 text-purple-400" />
@@ -873,7 +851,7 @@ const fetchProfile = async () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-blue-300 text-sm font-medium">People Impacted</p>
-                  <p className="text-3xl font-bold text-white">{formatNumber(profile.impact_metrics.people_impacted)}</p>
+                  <p className="text-3xl font-bold text-white">{formatNumber(profile.impact_metrics.people_impacted|| 0)}</p>
                 </div>
                 <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
                   <Users className="w-6 h-6 text-blue-400" />
@@ -983,7 +961,7 @@ const fetchProfile = async () => {
                           {[...Array(5)].map((_, i) => (
                             <Star 
                               key={i} 
-                              className={`w-4 h-4 ${i < Math.floor(profile.impact_metrics.sustainability_score / 20) ? 'text-yellow-400 fill-current' : 'text-gray-600'}`} 
+                              className={`w-4 h-4 ${i < Math.floor((profile.impact_metrics.sustainability_score || 0) / 20) ? 'text-yellow-400 fill-current' : 'text-gray-600'}`} 
                             />
                           ))}
                         </div>

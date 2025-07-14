@@ -332,27 +332,68 @@ export interface JobUpdate {
 
 
 
-// Add these interfaces to match backend models
-export interface Profile {
+//dont use profile, use userprofile
+
+// Remove the separate Profile interface and use this unified one
+export interface UserProfile {
+  // Core fields (always present)
+  user_id?: number;                // For unified_profiles table reference
   name: string;
+  user_type: 'individual' | 'company' | 'ngo' | 'investor';
+  
+  // Optional profile fields
   organization?: string | null;
-  location: string;
-  state: string;
+  location?: string;
+  state?: string;
   skills: string[];
-  experience: string;
-  goals: string;
-  user_type: string;
+  experience?: string;
+  goals?: string;
+  
+  // JSON stored fields (parsed from database)
+  impact_metrics: {
+    participants_target: number;
+    skills_developed: number;
+    projects_created: number;        // ✅ Match database
+    employment_generated: number;
+    revenue_generated: number;
+    // Add calculated fields if needed
+    events_hosted?: number;
+    events_participated?: number;
+    people_impacted?: number;
+    jobs_created?: number;
+    social_impact_score?: number;
+    sustainability_score?: number;
+  };
+  
+  achievements: Achievement[];
+  recent_activities: Activity[];
+  recommendations: Recommendation[];
+  networking_suggestions: string[];
+  
+  // Metadata
+  notifications_settings?: any;
+  created_at: string;
+  updated_at: string;
 }
 
-export interface ProfileUpdate {
+// For API requests (subset of UserProfile)
+export interface UserProfileUpdate {
   name?: string;
-  organization?: string;
+  organization?: string | null;
   location?: string;
   state?: string;
   skills?: string[];
   experience?: string;
   goals?: string;
+  impact_metrics?: Partial<UserProfile['impact_metrics']>;
+  achievements?: Achievement[];
+  recent_activities?: Activity[];
+  recommendations?: Recommendation[];
+  networking_suggestions?: string[];
 }
+
+// Remove the old Profile interface completely
+// export interface Profile { ... } // ❌ DELETE THIS, DONE
 
 export interface Achievement {
   title: string;
@@ -683,9 +724,9 @@ export class UserAPI {
   private api = new ApiService();
 
   // Add createProfile method
-  async createProfile(profileData: Profile): Promise<ApiResponse<Profile>> {
+  async createProfile(profileData: UserProfile): Promise<ApiResponse<UserProfile>> {
     console.log('sending profile data:', profileData);
-    return this.api.post<Profile>('/api/profile/', profileData);
+    return this.api.post<UserProfile>('/api/profile/', profileData);
   }
 
   // READ methods
@@ -713,8 +754,8 @@ export class UserAPI {
     return this.api.get<User[]>(`/api/users/search?query=${encodeURIComponent(query)}`);
   }
 
-  async getProfile(): Promise<ApiResponse<Profile>> {
-const response = await this.api.get<Profile>('/api/profile/');
+  async getProfile(): Promise<ApiResponse<UserProfile>> {
+const response = await this.api.get<UserProfile>('/api/profile/');
   return response;  }
 
   // UPDATE methods
@@ -722,8 +763,8 @@ const response = await this.api.get<Profile>('/api/profile/');
     return this.api.put<User>(`/api/users/${id}`, userData);
   }
 
-  async updateProfile(profileData: ProfileUpdate): Promise<ApiResponse<Profile>> {
-    return this.api.put<Profile>('/api/profile/', profileData);
+  async updateProfile(profileData: UserProfileUpdate): Promise<ApiResponse<UserProfile>> {
+    return this.api.put<UserProfile>('/api/profile/', profileData);
   }
 
 

@@ -109,53 +109,12 @@ async def create_profile(profile_data: ProfileCreate, current_user: Dict[str, An
 @router.get("/")
 async def get_unified_profile(current_user: Dict[str, Any] = Depends(get_current_user)):
     """Get unified profile for the currently authenticated user"""
-    try:
+    if isinstance(current_user, dict):
         user_id = current_user['id']
-        conn = get_db()
-        cursor = conn.cursor()
-        
-        # Get base profile
-        cursor.execute('''
-            SELECT * FROM unified_profiles WHERE user_id = ?
-        ''', (user_id,))
-        
-        profile_row = cursor.fetchone()
-        
-        if not profile_row:
-            # Create a default profile if none exists
-            return create_default_profile(user_id)
-        
-        # Parse JSON fields
-        profile = {
-            "id": profile_row["id"],
-            "user_id": profile_row["user_id"],
-            "user_type": profile_row["user_type"],
-            "name": profile_row["name"],
-            "organization": profile_row["organization"],
-            "location": profile_row["location"],
-            "state": profile_row["state"],
-            "skills": json.loads(profile_row["skills"] or "[]"),
-            "experience": profile_row["experience"],
-            "goals": profile_row["goals"],
-            "impact_metrics": json.loads(profile_row["impact_metrics"] or "{}"),
-            "achievements": json.loads(profile_row["achievements"] or "[]"),
-            "recent_activities": json.loads(profile_row["recent_activities"] or "[]"),
-            "recommendations": json.loads(profile_row["recommendations"] or "[]"),
-            "networking_suggestions": json.loads(profile_row["networking_suggestions"] or "[]"),
-            "created_at": profile_row["created_at"],
-            "updated_at": profile_row["updated_at"]
-        }
-        
-        # Enhance with real-time data
-        profile = await enhance_profile_with_realtime_data(profile, user_id)
-        
-        conn.close()
-        return profile
-        
-    except Exception as e:
-        logger.error(f"Error fetching unified profile: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
+    else:
+        user_id = current_user
+    
+    return await _get_unified_profile_by_user_id(user_id)
 # @router.post("/profile")
 # async def create_profile(profile_data: ProfileCreate, current_user: Dict[str, Any] = Depends(get_current_user)):
 #     """Create a new user profile from voice input data"""
@@ -405,11 +364,65 @@ async def enhance_profile_with_realtime_data(profile: Dict[str, Any], user_id: i
     except Exception as e:
         logger.error(f"Error enhancing profile: {e}")
         return profile
+    
+    
+#helper function
+async def _get_unified_profile_by_user_id(user_id: int) -> Dict[str, Any]:
+    """Internal helper to get profile by user_id"""
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        
+        # Get base profile
+        cursor.execute('''
+            SELECT * FROM unified_profiles WHERE user_id = ?
+        ''', (user_id,))
+        
+        profile_row = cursor.fetchone()
+        
+        if not profile_row:
+            conn.close()
+            return create_default_profile(user_id)
+        
+        # Parse JSON fields
+        profile = {
+            "id": profile_row["id"],
+            "user_id": profile_row["user_id"],
+            "user_type": profile_row["user_type"],
+            "name": profile_row["name"],
+            "organization": profile_row["organization"],
+            "location": profile_row["location"],
+            "state": profile_row["state"],
+            "skills": json.loads(profile_row["skills"] or "[]"),
+            "experience": profile_row["experience"],
+            "goals": profile_row["goals"],
+            "impact_metrics": json.loads(profile_row["impact_metrics"] or "{}"),
+            "achievements": json.loads(profile_row["achievements"] or "[]"),
+            "recent_activities": json.loads(profile_row["recent_activities"] or "[]"),
+            "recommendations": json.loads(profile_row["recommendations"] or "[]"),
+            "networking_suggestions": json.loads(profile_row["networking_suggestions"] or "[]"),
+            "created_at": profile_row["created_at"],
+            "updated_at": profile_row["updated_at"]
+        }
+        
+        # Enhance with real-time data
+        profile = await enhance_profile_with_realtime_data(profile, user_id)
+        
+        conn.close()
+        return profile
+        
+    except Exception as e:
+        logger.error(f"Error fetching unified profile: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.put("/")
-async def update_unified_profile(profile_update: ProfileUpdate, user_id: int = Query(..., description="User ID")):
+async def update_unified_profile(profile_update: ProfileUpdate, current_user = Depends(get_current_user)):
     """Update unified profile"""
     try:
+        if isinstance(current_user, dict):
+            user_id = current_user['id']
+        else:
+            user_id = current_user  # current_user is already the user_id
         conn = get_db()
         cursor = conn.cursor()
         
@@ -462,7 +475,7 @@ async def update_unified_profile(profile_update: ProfileUpdate, user_id: int = Q
         conn.close()
         
         # Return updated profile
-        return await get_unified_profile(user_id)
+        return await _get_unified_profile_by_user_id(user_id)
         
     except Exception as e:
         logger.error(f"Error updating profile: {e}")
@@ -533,7 +546,7 @@ async def add_achievement(achievement: AchievementCreate, user_id: int = Query(1
 async def get_user_analytics(user_id: int = Query(1)):
     """Get comprehensive user analytics"""
     try:
-        profile = await get_unified_profile(user_id)
+        profile = await _get_unified_profile_by_user_id(user_id)
         
         # Calculate additional analytics
         analytics = {
