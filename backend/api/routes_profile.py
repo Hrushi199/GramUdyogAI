@@ -16,7 +16,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 router = APIRouter(
-    prefix="/api/profile",
+    prefix="/profile",
     tags=["profile"]
 )
 
@@ -55,39 +55,55 @@ def get_db():
 
 @router.post("/")
 async def create_profile(profile_data: ProfileCreate, current_user: Dict[str, Any] = Depends(get_current_user)):
+    conn = None
     try:
-        logger.info("Current user:", current_user)  # See what we get from auth
         user_id = current_user['id']
-        logger.info("User ID:", user_id)  # Check the user_id value
-        logger.info("Profile data:", profile_data.dict())  # See full profile data
-        
-        # Set user_id in profile data
-
-        
-        conn = get_db()
+        conn = sqlite3.connect('gramudyogai.db', timeout=10)
+        conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
-        
-        # Create profile with validated data
-        cursor.execute('''
-            INSERT INTO unified_profiles (
-                user_id, user_type, name, organization, location, state,
-                skills, experience, goals, created_at, updated_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (
-            user_id, profile_data.user_type, profile_data.name,
-            profile_data.organization, profile_data.location, profile_data.state,
-            json.dumps(profile_data.skills), profile_data.experience,
-            profile_data.goals, datetime.now().isoformat(), datetime.now().isoformat()
-        ))
-        
+
+        # Check if profile exists
+        cursor.execute('SELECT id FROM unified_profiles WHERE user_id = ?', (user_id,))
+        existing = cursor.fetchone()
+
+        if existing:
+            # Update existing profile
+            cursor.execute('''
+                UPDATE unified_profiles SET
+                    user_type = ?, name = ?, organization = ?, location = ?, state = ?,
+                    skills = ?, experience = ?, goals = ?, updated_at = ?
+                WHERE user_id = ?
+            ''', (
+                profile_data.user_type, profile_data.name, profile_data.organization,
+                profile_data.location, profile_data.state, json.dumps(profile_data.skills),
+                profile_data.experience, profile_data.goals, datetime.now().isoformat(), user_id
+            ))
+            message = "Profile updated successfully"
+        else:
+            # Insert new profile
+            cursor.execute('''
+                INSERT INTO unified_profiles (
+                    user_id, user_type, name, organization, location, state,
+                    skills, experience, goals, notifications_settings, impact_metrics, achievements,
+                    recent_activities, recommendations, networking_suggestions, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                user_id, profile_data.user_type, profile_data.name,
+                profile_data.organization, profile_data.location, profile_data.state,
+                json.dumps(profile_data.skills), profile_data.experience,
+                profile_data.goals, json.dumps({}), json.dumps({}), json.dumps([]), json.dumps([]), json.dumps([]), json.dumps([]), datetime.now().isoformat(), datetime.now().isoformat()
+            ))
+            message = "Profile created successfully"
+
         conn.commit()
-        conn.close()
-        
-        return {"message": "Profile created successfully", "user_id": user_id}
-        
+        return {"message": message, "user_id": user_id}
+
     except Exception as e:
-        logger.error(f"Errorasd creating profile: {e}")
+        logging.error(f"Error creating/updating profile: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if conn:
+            conn.close()
 
 
 @router.get("/")
@@ -240,6 +256,7 @@ def create_default_profile(user_id: int) -> Dict[str, Any]:
         "skills": ["Problem Solving", "Communication", "Teamwork"],
         "experience": "Beginner",
         "goals": "Learn new skills and build impactful projects",
+        "notifications_settings": {},
         "impact_metrics": {
             "events_hosted": 0,
             "events_participated": 0,
@@ -277,15 +294,16 @@ def create_default_profile(user_id: int) -> Dict[str, Any]:
     cursor.execute('''
         INSERT INTO unified_profiles (
             user_id, user_type, name, organization, location, state,
-            skills, experience, goals, impact_metrics, achievements,
+            skills, experience, goals, notifications_settings, impact_metrics, achievements,
             recent_activities, recommendations, networking_suggestions,
             created_at, updated_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
         user_id, default_profile["user_type"], default_profile["name"],
         default_profile["organization"], default_profile["location"],
         default_profile["state"], json.dumps(default_profile["skills"]),
         default_profile["experience"], default_profile["goals"],
+        json.dumps(default_profile["notifications_settings"]),
         json.dumps(default_profile["impact_metrics"]),
         json.dumps(default_profile["achievements"]),
         json.dumps(default_profile["recent_activities"]),

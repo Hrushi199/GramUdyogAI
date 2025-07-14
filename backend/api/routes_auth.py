@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, EmailStr, validator
 import sqlite3
+from init_db import get_db
 import bcrypt
 import jwt
 import re
@@ -31,7 +32,14 @@ JWT_EXPIRY_HOURS = 24
 PASSWORD_PATTERN = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$')
 PHONE_PATTERN = re.compile(r'^\+?[1-9]\d{1,14}$')
 
-# Pydantic models
+# Fix the get_db function to return dictionary rows
+def get_db_connection():
+    """Get database connection with row factory for dictionary access"""
+    conn = sqlite3.connect('gramudyogai.db')
+    conn.row_factory = sqlite3.Row  # This makes rows accessible by column name
+    return conn
+
+# Pydantic models (keep existing models)
 class UserRegister(BaseModel):
     phone: str
     password: str
@@ -103,62 +111,6 @@ class UserResponse(BaseModel):
     created_at: str
     last_login: Optional[str]
 
-def get_db():
-    """Get database connection"""
-    conn = sqlite3.connect('gramudyogai.db')
-    conn.row_factory = sqlite3.Row
-    return conn
-
-def init_auth_db():
-    """Initialize authentication database tables"""
-    conn = get_db()
-    cursor = conn.cursor()
-    
-    # Create users table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            phone TEXT UNIQUE NOT NULL,
-            password_hash TEXT NOT NULL,
-            user_type TEXT NOT NULL,
-            name TEXT NOT NULL,
-            organization TEXT,
-            is_active BOOLEAN DEFAULT 1,
-            is_verified BOOLEAN DEFAULT 0,
-            created_at TEXT NOT NULL,
-            updated_at TEXT NOT NULL,
-            last_login TEXT
-        )
-    ''')
-    
-    # Create password reset tokens table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS password_reset_tokens (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id INTEGER NOT NULL,
-            token TEXT UNIQUE NOT NULL,
-            expires_at TEXT NOT NULL,
-            used BOOLEAN DEFAULT 0,
-            created_at TEXT NOT NULL,
-            FOREIGN KEY (user_id) REFERENCES users (id)
-        )
-    ''')
-    
-    # Create user sessions table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS user_sessions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id INTEGER NOT NULL,
-            session_token TEXT UNIQUE NOT NULL,
-            expires_at TEXT NOT NULL,
-            created_at TEXT NOT NULL,
-            FOREIGN KEY (user_id) REFERENCES users (id)
-        )
-    ''')
-    
-    conn.commit()
-    conn.close()
-
 def hash_password(password: str) -> str:
     """Hash password using bcrypt"""
     salt = bcrypt.gensalt()
@@ -194,7 +146,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
     payload = verify_jwt_token(token)
     
     # Verify user still exists and is active
-    conn = get_db()
+    conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('SELECT id, phone, user_type, name, organization, is_active FROM users WHERE id = ?', (payload['user_id'],))
     user = cursor.fetchone()
@@ -211,13 +163,11 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
         "organization": user['organization']
     }
 
-# Lockout functionality removed as requested
-
 @router.post("/auth/register", response_model=TokenResponse)
 async def register_user(user_data: UserRegister):
     """Register a new user"""
     try:
-        conn = get_db()
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         # Check if phone number already exists
@@ -271,7 +221,7 @@ async def register_user(user_data: UserRegister):
 async def login_user(login_data: UserLogin):
     """Login user"""
     try:
-        conn = get_db()
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         # Find user by phone
@@ -281,17 +231,27 @@ async def login_user(login_data: UserLogin):
         ''', (login_data.phone,))
         
         user = cursor.fetchone()
-        conn.close()
         
         if not user:
+            conn.close()
             raise HTTPException(status_code=401, detail="Invalid phone number or password")
         
         if not user['is_active']:
+            conn.close()
             raise HTTPException(status_code=401, detail="Account is deactivated")
         
         # Verify password
         if not verify_password(login_data.password, user['password_hash']):
+            conn.close()
             raise HTTPException(status_code=401, detail="Invalid phone number or password")
+        
+        # Update last login
+        cursor.execute('''
+            UPDATE users SET last_login = ? WHERE id = ?
+        ''', (datetime.utcnow().isoformat(), user['id']))
+        
+        conn.commit()
+        conn.close()
         
         # Create JWT token
         access_token = create_jwt_token(user['id'], user['user_type'])
@@ -321,7 +281,7 @@ async def logout_user(current_user: Dict[str, Any] = Depends(get_current_user)):
 @router.get("/auth/me", response_model=UserResponse)
 async def get_current_user_info(current_user: Dict[str, Any] = Depends(get_current_user)):
     """Get current user information"""
-    conn = get_db()
+    conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('''
         SELECT id, phone, user_type, name, organization, created_at, last_login 
@@ -355,7 +315,7 @@ async def change_password(
     if not PASSWORD_PATTERN.match(new_password):
         raise HTTPException(status_code=400, detail="Password must be at least 8 characters long and contain uppercase, lowercase, number, and special character")
     
-    conn = get_db()
+    conn = get_db_connection()
     cursor = conn.cursor()
     
     # Get current password hash
@@ -387,7 +347,7 @@ async def change_password(
 @router.post("/auth/forgot-password")
 async def forgot_password(phone: str):
     """Initiate password reset process"""
-    conn = get_db()
+    conn = get_db_connection()
     cursor = conn.cursor()
     
     cursor.execute('SELECT id FROM users WHERE phone = ?', (phone,))
@@ -414,14 +374,10 @@ async def forgot_password(phone: str):
     # For now, we just securely store the token and confirm initiation.
     return {"message": "If a user with that phone number exists, a password reset has been initiated."}
 
-
-
-# Reset lockout endpoint removed as requested
-
 @router.post("/auth/reset-password")
 async def reset_password(reset_data: PasswordReset, reset_token: str):
     """Reset password using token"""
-    conn = get_db()
+    conn = get_db_connection()
     cursor = conn.cursor()
     
     # Find valid reset token
@@ -471,7 +427,7 @@ async def delete_account(
     current_user: Dict[str, Any] = Depends(get_current_user)
 ):
     """Delete user account"""
-    conn = get_db()
+    conn = get_db_connection()
     cursor = conn.cursor()
     
     # Verify password
@@ -492,6 +448,3 @@ async def delete_account(
     conn.close()
     
     return {"message": "Account deleted successfully"}
-
-# Initialize database on startup
-init_auth_db() 

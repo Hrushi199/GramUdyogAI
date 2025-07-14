@@ -32,16 +32,19 @@ interface ApiResponse<T> {
 class ApiService {
   private async request<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
+    isFormData: boolean = false
   ): Promise<ApiResponse<T>> {
     try {
       const authToken = getAuthToken();
-      const headers = {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      };
+      const headers: Record<string, string> = {};
+
+      if (!isFormData) {
+        headers['Content-Type'] = 'application/json';
+      }
+
       if (authToken) {
-        (headers as any)['Authorization'] = `Bearer ${authToken}`;
+        headers['Authorization'] = `Bearer ${authToken}`;
       }
 
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -67,10 +70,15 @@ class ApiService {
   }
 
   async post<T>(endpoint: string, data: any): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
+    const isFormData = data instanceof FormData;
+    return this.request<T>(
+      endpoint,
+      {
+        method: 'POST',
+        body: isFormData ? data : JSON.stringify(data),
+      },
+      isFormData
+    );
   }
 
   async put<T>(endpoint: string, data: any): Promise<ApiResponse<T>> {
@@ -125,6 +133,9 @@ export interface Event {
     projects_created: number;
     employment_generated: number;
   };
+  marketing_highlights?: string[];
+  success_metrics?: string[];
+  sections?: { title: string; description: string; key_points?: string[]; target_audience?: string; expected_outcome?: string }[];
   social_media_posts: SocialMediaPost[];
   created_at: string;
   updated_at: string;
@@ -145,6 +156,9 @@ export interface EventCreate {
   skills_required: string[];
   tags: string[];
   status?: 'draft' | 'active' | 'ongoing' | 'completed' | 'cancelled' | 'postponed';
+  marketing_highlights?: string[];
+  success_metrics?: string[];
+  sections?: { title: string; description: string; key_points?: string[]; target_audience?: string; expected_outcome?: string }[];
 }
 
 export interface EventUpdate {
@@ -162,6 +176,9 @@ export interface EventUpdate {
   skills_required?: string[];
   tags?: string[];
   status?: 'draft' | 'active' | 'ongoing' | 'completed' | 'cancelled' | 'postponed';
+  marketing_highlights?: string[];
+  success_metrics?: string[];
+  sections?: { title: string; description: string; key_points?: string[]; target_audience?: string; expected_outcome?: string }[];
 }
 
 export interface SocialMediaPost {
@@ -697,8 +714,8 @@ export class UserAPI {
   }
 
   async getProfile(): Promise<ApiResponse<Profile>> {
-    return this.api.get<Profile>(`/api/profile/`);
-  }
+const response = await this.api.get<Profile>('/api/profile/');
+  return response;  }
 
   // UPDATE methods
   async updateUser(id: number, userData: Partial<User>): Promise<ApiResponse<User>> {
@@ -947,6 +964,21 @@ export class YoutubeSummaryAPI {
 }
 
 export const youtubeSummaryAPI = new YoutubeSummaryAPI();
+
+// Speech-to-text API
+export class SttAPI {
+  private api = new ApiService();
+
+  async transcribeAudio(audioBlob: Blob, language: string): Promise<ApiResponse<{ text: string }>> {
+    const formData = new FormData();
+    formData.append('audio', audioBlob, 'audio.webm');
+    formData.append('language', language);
+
+    return this.api.post<{ text: string }>('/api/transcribe', formData);
+  }
+}
+
+export const sttAPI = new SttAPI();
 
 // Export types
 export type { ApiResponse }; 

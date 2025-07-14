@@ -12,6 +12,7 @@ import {
   ArrowRight, Settings, Bell, Crown, Trophy, Mic, Square, X
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import {getUserId} from '../../lib/api.ts';
 
 interface UserProfile {
   id: number;
@@ -111,7 +112,8 @@ const UnifiedProfile: React.FC = () => {
   // Update fetchProfile function
 const fetchProfile = async () => {
   try {
-    const response = await userAPI.getUserProfile(userId);
+    // const userId = getUserId();
+    const response = await userAPI.getProfile();
     if (response.data) {
       setProfile(response.data);
     } else {
@@ -151,6 +153,8 @@ const fetchProfile = async () => {
     }
   } catch (error) {
     console.error('Error fetching profile:', error);
+  } finally {
+    setLoading(false);
   }
 };
 

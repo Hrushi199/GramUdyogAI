@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { 
@@ -9,7 +9,7 @@ import {
   User, Crown, UserPlus
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { eventAPI, projectAPI, userAPI, notificationAPI, Event, EventCreate, EventUpdate, Project, User as ApiUser, SocialMediaPost, TeamInviteCreate } from '../../lib/api';
+import { eventAPI, projectAPI, userAPI, notificationAPI, sttAPI, Event, EventCreate, EventUpdate, Project, User as ApiUser, SocialMediaPost, TeamInviteCreate } from '../../lib/api';
 import { useNavigate } from 'react-router-dom';
 
 interface EventForm {
@@ -26,6 +26,9 @@ interface EventForm {
   prize_pool: number;
   skills_required: string[];
   tags: string[];
+  marketing_highlights?: string[];
+  success_metrics?: string[];
+  sections?: { title: string; description: string; key_points?: string[]; target_audience?: string; expected_outcome?: string }[];
 }
 
 interface ValidationErrors {
@@ -45,14 +48,21 @@ interface ValidationErrors {
 }
 
 const EventManagement: React.FC = () => {
+  const { i18n } = useTranslation();
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState<string>('all');
-  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [filterStatus, setFilterStatus] = useState<string>('all')
+  // AI and translation state
   const [aiGenerating, setAiGenerating] = useState(false);
   const [translating, setTranslating] = useState(false);
   const [translatedEvent, setTranslatedEvent] = useState<any>(null);
+  const [voicePrompt, setVoicePrompt] = useState('');
+  const [isListening, setIsListening] = useState(false);
+  const [speechError, setSpeechError] = useState('');
+  const [speechSupported, setSpeechSupported] = useState(true);
+  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language || 'en');
   const [eventForm, setEventForm] = useState<EventForm>({
     title: '',
     description: '',
@@ -66,14 +76,11 @@ const EventManagement: React.FC = () => {
     budget: 0,
     prize_pool: 0,
     skills_required: [],
-    tags: []
+    tags: [],
+    marketing_highlights: [],
+    success_metrics: [],
+    sections: [],
   });
-  const [voicePrompt, setVoicePrompt] = useState('');
-  const [isListening, setIsListening] = useState(false);
-  const [speechError, setSpeechError] = useState('');
-  const [speechSupported, setSpeechSupported] = useState(true);
-  const { i18n } = useTranslation();
-  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language || 'en');
   
   // Validation state
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
@@ -258,7 +265,94 @@ const EventManagement: React.FC = () => {
     }
   };
 
-  const createEvent = async () => {
+  // Replace useState for audioChunks with useRef
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+
+  const startListening = async () => {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const recorder = new MediaRecorder(stream);
+        mediaRecorderRef.current = recorder;
+        audioChunksRef.current = [];
+
+        recorder.ondataavailable = (event) => {
+          if (event.data.size > 0) {
+            audioChunksRef.current.push(event.data);
+          }
+        };
+
+        recorder.onstop = async () => {
+          const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+          audioChunksRef.current = [];
+          try {
+            // 1. Transcribe audio to text
+            const response = await sttAPI.transcribeAudio(audioBlob, selectedLanguage);
+            let transcript = '';
+            if (response.data && response.data.text) {
+              transcript = response.data.text;
+              setVoicePrompt(transcript);
+              // 2. Use LLM to generate structured event JSON
+              const aiResponse = await fetch(`${API_BASE_URL}/api/events/generate-with-ai`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  prompt: transcript,
+                  event_type: eventForm.event_type,
+                  language: selectedLanguage
+                })
+              });
+              if (aiResponse.ok) {
+                const aiEvent = await aiResponse.json();
+                // Schema validation: only update known fields
+                setEventForm(prev => ({
+                  ...prev,
+                  title: aiEvent.title || prev.title,
+                  description: aiEvent.description || prev.description,
+                  category: aiEvent.category || prev.category,
+                  skills_required: Array.isArray(aiEvent.skills_required) ? aiEvent.skills_required : prev.skills_required,
+                  tags: Array.isArray(aiEvent.tags) ? aiEvent.tags : prev.tags,
+                  marketing_highlights: Array.isArray(aiEvent.marketing_highlights) ? aiEvent.marketing_highlights : prev.marketing_highlights,
+                  success_metrics: Array.isArray(aiEvent.success_metrics) ? aiEvent.success_metrics : prev.success_metrics,
+                  sections: Array.isArray(aiEvent.sections) ? aiEvent.sections : prev.sections,
+                }));
+              } else {
+                setSpeechError('AI event generation failed.');
+              }
+            } else {
+              setSpeechError('No transcript received.');
+            }
+          } catch (error) {
+            setSpeechError('Error transcribing or generating event.');
+          }
+        };
+
+        recorder.start();
+        setIsListening(true);
+      } catch (error) {
+        setSpeechError('Microphone access denied');
+      }
+    } else {
+      setSpeechSupported(false);
+    }
+  };
+
+  const stopListening = () => {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+      mediaRecorderRef.current.stop();
+      setIsListening(false);
+    }
+  };
+
+  const handleToggleListening = () => {
+    if (isListening) {
+      stopListening();
+    } else {
+      startListening();
+    }
+  };
+    const createEvent = async () => {
     // Clear previous validation errors
     clearValidationErrors();
     
@@ -288,7 +382,10 @@ const EventManagement: React.FC = () => {
           budget: 0,
           prize_pool: 0,
           skills_required: [],
-          tags: []
+          tags: [],
+          marketing_highlights: [],
+          success_metrics: [],
+          sections: [],
         });
         clearValidationErrors();
         alert('Event created successfully!');
@@ -497,7 +594,343 @@ const EventManagement: React.FC = () => {
         {/* Create Event Modal */}
         {showCreateModal && (
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-[9999]">
-            {/* Modal content */}
+            <div className="bg-purple-900/10 backdrop-blur-2xl border border-purple-500/20 rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative shadow-2xl shadow-purple-500/20">
+              <button
+                onClick={() => {
+                  setShowCreateModal(false);
+                  setEventForm({
+                    title: '',
+                    description: '',
+                    event_type: 'hackathon',
+                    category: '',
+                    location: '',
+                    state: '',
+                    start_date: '',
+                    end_date: '',
+                    max_participants: 50,
+                    budget: 0,
+                    prize_pool: 0,
+                    skills_required: [],
+                    tags: [],
+                    marketing_highlights: [],
+                    success_metrics: [],
+                    sections: [],
+                  });
+                  clearValidationErrors();
+                }}
+                className="absolute top-6 right-6 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 bg-gray-800/50 hover:bg-gray-700/50 p-2 rounded-full backdrop-blur-sm"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <h2 className="text-2xl font-bold text-white mb-6">Create Event</h2>
+              <form onSubmit={e => { e.preventDefault(); createEvent(); }} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Event Title</label>
+                    <input
+                      type="text"
+                      value={eventForm.title}
+                      onChange={e => setEventForm(prev => ({ ...prev, title: e.target.value }))}
+                      className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white placeholder-gray-400 transition"
+                      required
+                    />
+                    {validationErrors.title && <p className="text-red-400 text-xs mt-1">{validationErrors.title}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Event Type</label>
+                    <select
+                      value={eventForm.event_type}
+                      onChange={e => setEventForm(prev => ({ ...prev, event_type: e.target.value as any }))}
+                      className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white transition"
+                    >
+                      <option value="hackathon">Hackathon</option>
+                      <option value="workshop">Workshop</option>
+                      <option value="competition">Competition</option>
+                      <option value="training">Training</option>
+                      <option value="meetup">Meetup</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Category</label>
+                    <input
+                      type="text"
+                      value={eventForm.category}
+                      onChange={e => setEventForm(prev => ({ ...prev, category: e.target.value }))}
+                      className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white placeholder-gray-400 transition"
+                      required
+                    />
+                    {validationErrors.category && <p className="text-red-400 text-xs mt-1">{validationErrors.category}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Location</label>
+                    <input
+                      type="text"
+                      value={eventForm.location}
+                      onChange={e => setEventForm(prev => ({ ...prev, location: e.target.value }))}
+                      className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white placeholder-gray-400 transition"
+                      required
+                    />
+                    {validationErrors.location && <p className="text-red-400 text-xs mt-1">{validationErrors.location}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">State</label>
+                    <input
+                      type="text"
+                      value={eventForm.state}
+                      onChange={e => setEventForm(prev => ({ ...prev, state: e.target.value }))}
+                      className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white placeholder-gray-400 transition"
+                      required
+                    />
+                    {validationErrors.state && <p className="text-red-400 text-xs mt-1">{validationErrors.state}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Start Date</label>
+                    <input
+                      type="datetime-local"
+                      value={eventForm.start_date}
+                      onChange={e => setEventForm(prev => ({ ...prev, start_date: e.target.value }))}
+                      className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white transition"
+                      required
+                    />
+                    {validationErrors.start_date && <p className="text-red-400 text-xs mt-1">{validationErrors.start_date}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">End Date</label>
+                    <input
+                      type="datetime-local"
+                      value={eventForm.end_date}
+                      onChange={e => setEventForm(prev => ({ ...prev, end_date: e.target.value }))}
+                      className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white transition"
+                      required
+                    />
+                    {validationErrors.end_date && <p className="text-red-400 text-xs mt-1">{validationErrors.end_date}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Max Participants</label>
+                    <input
+                      type="number"
+                      value={eventForm.max_participants}
+                      onChange={e => setEventForm(prev => ({ ...prev, max_participants: parseInt(e.target.value) }))}
+                      className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white transition"
+                      min="1"
+                      required
+                    />
+                    {validationErrors.max_participants && <p className="text-red-400 text-xs mt-1">{validationErrors.max_participants}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Budget</label>
+                    <input
+                      type="number"
+                      value={eventForm.budget}
+                      onChange={e => setEventForm(prev => ({ ...prev, budget: parseInt(e.target.value) }))}
+                      className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white transition"
+                      min="0"
+                    />
+                    {validationErrors.budget && <p className="text-red-400 text-xs mt-1">{validationErrors.budget}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Prize Pool</label>
+                    <input
+                      type="number"
+                      value={eventForm.prize_pool}
+                      onChange={e => setEventForm(prev => ({ ...prev, prize_pool: parseInt(e.target.value) }))}
+                      className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white transition"
+                      min="0"
+                    />
+                    {validationErrors.prize_pool && <p className="text-red-400 text-xs mt-1">{validationErrors.prize_pool}</p>}
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Description</label>
+                  <textarea
+                    value={eventForm.description}
+                    onChange={e => setEventForm(prev => ({ ...prev, description: e.target.value }))}
+                    rows={4}
+                    className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white placeholder-gray-400 transition"
+                    required
+                  />
+                  {validationErrors.description && <p className="text-red-400 text-xs mt-1">{validationErrors.description}</p>}
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Required Skills (comma-separated)</label>
+                    <input
+                      type="text"
+                      value={eventForm.skills_required.join(', ')}
+                      onChange={e => setEventForm(prev => ({ 
+                        ...prev, 
+                        skills_required: e.target.value.split(',').map(s => s.trim()).filter(s => s) 
+                      }))}
+                      className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white placeholder-gray-400 transition"
+                      placeholder="e.g., React, Node.js, Python"
+                    />
+                    {validationErrors.skills_required && <p className="text-red-400 text-xs mt-1">{validationErrors.skills_required}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Tags (comma-separated)</label>
+                    <input
+                      type="text"
+                      value={eventForm.tags.join(', ')}
+                      onChange={e => setEventForm(prev => ({ 
+                        ...prev, 
+                        tags: e.target.value.split(',').map(s => s.trim()).filter(s => s) 
+                      }))}
+                      className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white placeholder-gray-400 transition"
+                      placeholder="e.g., AI, Web Development, Mobile"
+                    />
+                    {validationErrors.tags && <p className="text-red-400 text-xs mt-1">{validationErrors.tags}</p>}
+                  </div>
+                </div>
+                {/* Marketing Highlights */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Marketing Highlights</label>
+                  <textarea
+                    value={eventForm.marketing_highlights?.join('\n') || ''}
+                    onChange={e => setEventForm(prev => ({ ...prev, marketing_highlights: e.target.value.split('\n').filter(Boolean) }))}
+                    className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white placeholder-gray-400 transition min-h-[60px]"
+                    placeholder="One highlight per line"
+                  />
+                </div>
+                {/* Success Metrics */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Success Metrics</label>
+                  <textarea
+                    value={eventForm.success_metrics?.join('\n') || ''}
+                    onChange={e => setEventForm(prev => ({ ...prev, success_metrics: e.target.value.split('\n').filter(Boolean) }))}
+                    className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white placeholder-gray-400 transition min-h-[60px]"
+                    placeholder="One metric per line"
+                  />
+                </div>
+                {/* Sections (Agenda) */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Event Sections / Agenda</label>
+                  {(eventForm.sections || []).map((section, idx) => (
+                    <div key={idx} className="mb-2 border border-purple-700/30 rounded-lg p-2 bg-purple-900/10">
+                      <input
+                        type="text"
+                        value={section.title}
+                        onChange={e => setEventForm(prev => ({
+                          ...prev,
+                          sections: prev.sections?.map((s, i) => i === idx ? { ...s, title: e.target.value } : s)
+                        }))}
+                        className="w-full mb-1 px-2 py-1 rounded bg-purple-900/20 text-white border border-purple-700/30"
+                        placeholder="Section Title"
+                      />
+                      <textarea
+                        value={section.description}
+                        onChange={e => setEventForm(prev => ({
+                          ...prev,
+                          sections: prev.sections?.map((s, i) => i === idx ? { ...s, description: e.target.value } : s)
+                        }))}
+                        className="w-full mb-1 px-2 py-1 rounded bg-purple-900/20 text-white border border-purple-700/30"
+                        placeholder="Section Description"
+                      />
+                      <input
+                        type="text"
+                        value={section.key_points?.join(', ') || ''}
+                        onChange={e => setEventForm(prev => ({
+                          ...prev,
+                          sections: prev.sections?.map((s, i) => i === idx ? { ...s, key_points: e.target.value.split(',').map(k => k.trim()).filter(Boolean) } : s)
+                        }))}
+                        className="w-full mb-1 px-2 py-1 rounded bg-purple-900/20 text-white border border-purple-700/30"
+                        placeholder="Key Points (comma separated)"
+                      />
+                      <input
+                        type="text"
+                        value={section.target_audience || ''}
+                        onChange={e => setEventForm(prev => ({
+                          ...prev,
+                          sections: prev.sections?.map((s, i) => i === idx ? { ...s, target_audience: e.target.value } : s)
+                        }))}
+                        className="w-full mb-1 px-2 py-1 rounded bg-purple-900/20 text-white border border-purple-700/30"
+                        placeholder="Target Audience"
+                      />
+                      <input
+                        type="text"
+                        value={section.expected_outcome || ''}
+                        onChange={e => setEventForm(prev => ({
+                          ...prev,
+                          sections: prev.sections?.map((s, i) => i === idx ? { ...s, expected_outcome: e.target.value } : s)
+                        }))}
+                        className="w-full px-2 py-1 rounded bg-purple-900/20 text-white border border-purple-700/30"
+                        placeholder="Expected Outcome"
+                      />
+                      <button
+                        type="button"
+                        className="mt-1 text-xs text-red-400 hover:text-red-600"
+                        onClick={() => setEventForm(prev => ({
+                          ...prev,
+                          sections: prev.sections?.filter((_, i) => i !== idx)
+                        }))}
+                      >Remove Section</button>
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    className="mt-2 px-3 py-1 bg-purple-700/60 text-white rounded hover:bg-purple-800/80"
+                    onClick={() => setEventForm(prev => ({
+                      ...prev,
+                      sections: [...(prev.sections || []), { title: '', description: '', key_points: [], target_audience: '', expected_outcome: '' }]
+                    }))}
+                  >Add Section</button>
+                </div>
+                {/* AI/Translation/Voice Features */}
+                <div className="flex flex-col md:flex-row md:items-center gap-4 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => generateEventWithAI()}
+                    disabled={aiGenerating}
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center shadow-lg shadow-purple-500/20"
+                  >
+                    {aiGenerating ? (
+                      <span className="animate-spin mr-2 h-4 w-4 border-b-2 border-white rounded-full"></span>
+                    ) : (
+                      <Activity className="h-4 w-4 mr-2" />
+                    )}
+                    Generate with AI
+                  </button>
+                  
+                  {/* Optional: Voice prompt input */}
+                  <button
+                      type="button"
+                      onClick={handleToggleListening}
+                      disabled={!speechSupported}
+                      className={`bg-gradient-to-r text-white px-4 py-2 rounded-lg transition flex items-center shadow-lg ${isListening
+                          ? 'from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 shadow-red-500/20'
+                          : 'from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-purple-500/20'
+                      } disabled:opacity-50 disabled:cursor-not-allowed`}
+                    >
+                      {isListening ? (
+                        <MicOff className="h-4 w-4 mr-2" />
+                      ) : (
+                        <Mic className="h-4 w-4 mr-2" />
+                      )}
+                      {isListening ? 'Stop Listening' : 'Start Voice Input'}
+                    </button>
+                </div>
+                {/* Validation/general errors */}
+                {validationErrors.general && <p className="text-red-400 text-sm mt-2">{validationErrors.general}</p>}
+                {/* Action Buttons */}
+                <div className="flex justify-end space-x-3 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setShowCreateModal(false)}
+                    className="px-6 py-2 border border-gray-600 rounded-lg hover:bg-gray-700/50 transition text-gray-300 hover:text-white"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? 'Creating...' : 'Create Event'}
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         )}
       </div>

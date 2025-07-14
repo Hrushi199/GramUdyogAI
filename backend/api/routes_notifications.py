@@ -10,7 +10,7 @@ def get_db():
     conn = sqlite3.connect('gramudyogai.db')
     conn.row_factory = sqlite3.Row
     return conn
-router = APIRouter(prefix="/api/notifications", tags=["notifications"])
+router = APIRouter(prefix="/notifications", tags=["notifications"])
 
 # Pydantic models
 class NotificationCreate(BaseModel):

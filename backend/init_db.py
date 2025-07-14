@@ -24,7 +24,8 @@ def init_database():
         organization TEXT,
         is_active BOOLEAN DEFAULT 1,
         created_at TEXT NOT NULL,
-        updated_at TEXT NOT NULL
+        updated_at TEXT NOT NULL,
+        last_login TEXT DEFAULT NULL
     )''')
 
     # Events Domain
@@ -50,6 +51,9 @@ def init_database():
         tags TEXT NOT NULL,
         status TEXT DEFAULT 'draft',
         impact_metrics TEXT,
+        marketing_highlights TEXT,
+        success_metrics TEXT,
+        sections TEXT,
         created_at TEXT NOT NULL,
         updated_at TEXT NOT NULL,
         FOREIGN KEY (created_by) REFERENCES users (id)
@@ -115,10 +119,46 @@ def init_database():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         project_id INTEGER NOT NULL,
         user_id INTEGER NOT NULL,
+        event_id INTEGER,  -- Added event_id
         role TEXT NOT NULL,
         skills TEXT NOT NULL,
         joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (project_id) REFERENCES projects (id),
+        FOREIGN KEY (user_id) REFERENCES users (id)
+    )''')
+
+    # Unified Profiles Domain
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS unified_profiles (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER UNIQUE NOT NULL,
+        name TEXT NOT NULL,
+        organization TEXT,
+        location TEXT,
+        state TEXT,
+        skills TEXT,
+        experience TEXT,
+        goals TEXT,
+        user_type TEXT NOT NULL,
+        notifications_settings TEXT,
+        impact_metrics TEXT,
+        achievements TEXT,
+        recent_activities TEXT,
+        recommendations TEXT,
+        networking_suggestions TEXT,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users (id)
+    )''')
+
+    # Profile Activities Domain
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS profile_activities (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        activity_type TEXT NOT NULL,
+        description TEXT,
+        timestamp TEXT NOT NULL,
         FOREIGN KEY (user_id) REFERENCES users (id)
     )''')
 
@@ -178,6 +218,19 @@ def init_database():
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (text_hash, language)
     )''')
+    
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS job_postings (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        description TEXT NOT NULL,
+        company TEXT NOT NULL,
+        location TEXT NOT NULL,
+        company_contact TEXT NOT NULL,
+        pay TEXT NOT NULL,
+        created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    )
+''')
 
     # Additional indexes for performance
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_summary_lang ON summary_translations (language)')
@@ -214,8 +267,8 @@ def seed_db():
     cursor.execute("DELETE FROM users")
     for user in sample_users:
         cursor.execute('''
-            INSERT INTO users (phone, password_hash, user_type, name, organization, is_active, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, 1, ?, ?)
+            INSERT INTO users (phone, password_hash, user_type, name, organization, is_active, created_at, updated_at, last_login)
+            VALUES (?, ?, ?, ?, ?, 1, ?, ?, NULL)
         ''', (*user, now, now))
 
     # Sample Events

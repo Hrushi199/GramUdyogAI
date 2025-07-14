@@ -268,12 +268,18 @@ export default function VoiceBasedUserProfile() {
 const saveProfile = async () => {
   const userId = localStorage.getItem('user_id');
   
+  // Merge customSkills into skills
+  const allSkills = Array.isArray(form.skills) ? [...form.skills] : (form.skills ? form.skills.split(',') : []);
+  if (Array.isArray(form.customSkills)) {
+    allSkills.push(...form.customSkills.filter(s => !!s && !allSkills.includes(s)));
+  }
+
   const profileData: Profile = {
     name: form.name,
     organization: form.organization || null,
     location: form.location,
     state: form.state,
-    skills: Array.isArray(form.skills) ? form.skills : form.skills.split(','),
+    skills: allSkills,
     experience: form.experience || '',  // Ensure required fields have defaults
     goals: form.goals || '',
     user_type: form.userType || 'individual'

@@ -171,14 +171,16 @@ const Auth: React.FC = () => {
     return true;
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
     setError('');
     setSuccess('');
 
     if (!validateForm()) {
-      setLoading(false);
+      setIsLoading(false);
       return;
     }
 
@@ -211,7 +213,8 @@ const Auth: React.FC = () => {
           }
         }
 
-        // Store auth data using the new utility functions
+        // After successful login
+        console.log('Login response:', data);
         setAuthToken(data.access_token);
         setUserId(data.user_id);
         
@@ -262,7 +265,7 @@ const Auth: React.FC = () => {
     } catch (err: any) {
       setError(err.message || 'Authentication failed. Please try again.');
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 

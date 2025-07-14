@@ -57,70 +57,65 @@ export const joinEvent = async (eventId: number, fetchEvent: () => Promise<void>
 };
 
 export const createProjectForEvent = async (eventId: number, selectedEvent: Event | null, fetchTeamMembers: (eventId: number) => Promise<void>, API_BASE_URL: string) => {
+  const user = localStorage.getItem('user');
+  const userData = user ? JSON.parse(user) : null;
+  const userId = userData?.id || localStorage.getItem('user_id');
+  if (!userId) {
+    alert('Please login to create projects');
+    return;
+  }
+  const projectData = {
+    title: `Project for ${selectedEvent?.title || 'Event'}`,
+    description: 'A collaborative project for this event',
+    category: selectedEvent?.category || 'General',
+    event_id: eventId,
+    event_name: selectedEvent?.title || 'Event',
+    event_type: selectedEvent?.event_type || 'hackathon',
+    team_members: [],
+    technologies: [],
+    impact_metrics: {
+      users_reached: 0,
+      revenue_generated: 0,
+      jobs_created: 0,
+      social_impact: 0
+    },
+    funding_status: 'seeking',
+    funding_amount: 0,
+    funding_goal: 0,
+    location: selectedEvent?.location || '',
+    state: selectedEvent?.state || '',
+    created_by: parseInt(userId),
+    status: 'planning',
+    media: {
+      images: [],
+      videos: [],
+      documents: []
+    },
+    testimonials: [],
+    awards: [],
+    tags: selectedEvent?.tags || []
+  };
+
+  const { created_by, ...restProjectData } = projectData;
+
   try {
-    const user = localStorage.getItem('user');
-    const userData = user ? JSON.parse(user) : null;
-    const userId = userData?.id || localStorage.getItem('user_id');
-    if (!userId) {
-      alert('Please login to create projects');
-      return;
-    }
-    const projectData = {
-      title: `Project for ${selectedEvent?.title || 'Event'}`,
-      description: 'A collaborative project for this event',
-      category: selectedEvent?.category || 'General',
-      event_id: eventId,
-      event_name: selectedEvent?.title || 'Event',
-      event_type: selectedEvent?.event_type || 'hackathon',
-      team_members: [],
-      technologies: [],
-      impact_metrics: {
-        users_reached: 0,
-        revenue_generated: 0,
-        jobs_created: 0,
-        social_impact: 0
-      },
-      funding_status: 'seeking',
-      funding_amount: 0,
-      funding_goal: 0,
-      location: selectedEvent?.location || '',
-      state: selectedEvent?.state || '',
-      created_by: parseInt(userId),
-      status: 'planning',
-      media: {
-        images: [],
-        videos: [],
-        documents: []
-      },
-      testimonials: [],
-      awards: [],
-      tags: selectedEvent?.tags || []
-    };
-    const response = await fetch(`${API_BASE_URL}/api/events/${eventId}/create-project`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: projectData.title,
-        description: projectData.description,
-        category: projectData.category,
-        event_id: eventId,
-        created_by: parseInt(userId),
-        team_members: []
-      })
+    const response = await projectAPI.createProject({
+      ...restProjectData,
     });
-    if (response.ok) {
-      const result = await response.json();
-      alert(`Project created successfully! Project ID: ${result.id}`);
+
+    if (response.data) {
+      alert(`Project created successfully! Project ID: ${response.data.id}`);
       if (selectedEvent) {
         await fetchTeamMembers(selectedEvent.id);
       }
     } else {
-      const error = await response.json();
-      alert('Failed to create project: ' + (error.detail || 'Unknown error'));
+      alert('Failed to create project: ' + (response.error || 'Unknown error'));
     }
   } catch (error) {
     console.error('Error creating project for event:', error);
     alert('Failed to create project');
+  } finally {
+    // Optional: Any cleanup or final actions can go here
   }
 };
 
@@ -147,6 +142,9 @@ const EventDetails: React.FC = () => {
   const navigate = useNavigate();
   const { i18n } = useTranslation();
   
+  // Language state
+  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language || 'en');
+
   // Event state
   const [event, setEvent] = useState<Event | null>(null);
   const [loading, setLoading] = useState(true);
@@ -193,7 +191,7 @@ const EventDetails: React.FC = () => {
   const [showSocialMediaModal, setShowSocialMediaModal] = useState(false);
   
   // User search and selection
-  const [availableUsers, setAvailableUsers] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [searchUserQuery, setSearchUserQuery] = useState('');
   const [selectedUser, setSelectedUser] = useState<any>(null);
   const [newMemberRole, setNewMemberRole] = useState('');
@@ -201,15 +199,6 @@ const EventDetails: React.FC = () => {
   const [userProjects, setUserProjects] = useState<any[]>([]);
   const [selectedProject, setSelectedProject] = useState<any>(null);
 
-  // AI and translation state
-  const [aiGenerating, setAiGenerating] = useState(false);
-  const [translating, setTranslating] = useState(false);
-  const [translatedEvent, setTranslatedEvent] = useState<any>(null);
-  const [voicePrompt, setVoicePrompt] = useState('');
-  const [isListening, setIsListening] = useState(false);
-  const [speechError, setSpeechError] = useState('');
-  const [speechSupported, setSpeechSupported] = useState(true);
-  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language || 'en');
 
   const fetchTeamMembers = async (eventId: number) => {
     try {
@@ -243,19 +232,17 @@ const EventDetails: React.FC = () => {
 
   // Search users for adding to team
   const searchUsers = async (query: string) => {
-    if (query.length < 2) return;
-    
-    try {
-      const response = await userAPI.searchUsers(query);
-      if (response.data) {
-        setAvailableUsers(response.data);
-      } else if (response.error) {
-        console.error('Error searching users:', response.error);
-      }
-    } catch (error) {
-      console.error('Error searching users:', error);
+  try {
+    const response = await userAPI.searchUsers(query);
+    if (response.data) {
+      setSearchResults(response.data);
     }
-  };
+  } catch (error) {
+    console.log('Search error details:', error);
+    setSearchResults([]);
+  }
+};
+
 
   // Fetch user's own projects
   const fetchUserProjects = async () => {
@@ -875,9 +862,9 @@ const EventDetails: React.FC = () => {
                   </div>
                   
                   {/* User Results */}
-                  {availableUsers.length > 0 && (
+                  {searchResults.length > 0 && (
                     <div className="mt-2 max-h-40 overflow-y-auto border border-gray-700 rounded-lg">
-                      {availableUsers.map((user) => (
+                      {searchResults.map((user) => (
                         <button
                           key={user.id}
                           onClick={() => setSelectedUser(user)}
@@ -1151,6 +1138,103 @@ const EventDetails: React.FC = () => {
                   />
                 </div>
                 
+                {isEditing && isCreator && (
+                  <>
+                    {/* Marketing Highlights */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">Marketing Highlights</label>
+                      <textarea
+                        value={eventForm.marketing_highlights?.join('\n') || ''}
+                        onChange={e => setEventForm(prev => ({ ...prev, marketing_highlights: e.target.value.split('\n').filter(Boolean) }))}
+                        className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white placeholder-gray-400 transition min-h-[60px]"
+                        placeholder="One highlight per line"
+                      />
+                    </div>
+                    {/* Success Metrics */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">Success Metrics</label>
+                      <textarea
+                        value={eventForm.success_metrics?.join('\n') || ''}
+                        onChange={e => setEventForm(prev => ({ ...prev, success_metrics: e.target.value.split('\n').filter(Boolean) }))}
+                        className="w-full px-3 py-2 border border-green-500/30 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-green-900/20 text-white placeholder-gray-400 transition min-h-[60px]"
+                        placeholder="One metric per line"
+                      />
+                    </div>
+                    {/* Sections (Agenda) */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">Event Sections / Agenda</label>
+                      {(eventForm.sections || []).map((section, idx) => (
+                        <div key={idx} className="mb-2 border border-blue-700/30 rounded-lg p-2 bg-blue-900/10">
+                          <input
+                            type="text"
+                            value={section.title}
+                            onChange={e => setEventForm(prev => ({
+                              ...prev,
+                              sections: prev.sections?.map((s, i) => i === idx ? { ...s, title: e.target.value } : s)
+                            }))}
+                            className="w-full mb-1 px-2 py-1 rounded bg-blue-900/20 text-white border border-blue-700/30"
+                            placeholder="Section Title"
+                          />
+                          <textarea
+                            value={section.description}
+                            onChange={e => setEventForm(prev => ({
+                              ...prev,
+                              sections: prev.sections?.map((s, i) => i === idx ? { ...s, description: e.target.value } : s)
+                            }))}
+                            className="w-full mb-1 px-2 py-1 rounded bg-blue-900/20 text-white border border-blue-700/30"
+                            placeholder="Section Description"
+                          />
+                          <input
+                            type="text"
+                            value={section.key_points?.join(', ') || ''}
+                            onChange={e => setEventForm(prev => ({
+                              ...prev,
+                              sections: prev.sections?.map((s, i) => i === idx ? { ...s, key_points: e.target.value.split(',').map(k => k.trim()).filter(Boolean) } : s)
+                            }))}
+                            className="w-full mb-1 px-2 py-1 rounded bg-blue-900/20 text-white border border-blue-700/30"
+                            placeholder="Key Points (comma separated)"
+                          />
+                          <input
+                            type="text"
+                            value={section.target_audience || ''}
+                            onChange={e => setEventForm(prev => ({
+                              ...prev,
+                              sections: prev.sections?.map((s, i) => i === idx ? { ...s, target_audience: e.target.value } : s)
+                            }))}
+                            className="w-full mb-1 px-2 py-1 rounded bg-blue-900/20 text-white border border-blue-700/30"
+                            placeholder="Target Audience"
+                          />
+                          <input
+                            type="text"
+                            value={section.expected_outcome || ''}
+                            onChange={e => setEventForm(prev => ({
+                              ...prev,
+                              sections: prev.sections?.map((s, i) => i === idx ? { ...s, expected_outcome: e.target.value } : s)
+                            }))}
+                            className="w-full px-2 py-1 rounded bg-blue-900/20 text-white border border-blue-700/30"
+                            placeholder="Expected Outcome"
+                          />
+                          <button
+                            type="button"
+                            className="mt-1 text-xs text-red-400 hover:text-red-600"
+                            onClick={() => setEventForm(prev => ({
+                              ...prev,
+                              sections: prev.sections?.filter((_, i) => i !== idx)
+                            }))}
+                          >Remove Section</button>
+                        </div>
+                      ))}
+                      <button
+                        type="button"
+                        className="mt-2 px-3 py-1 bg-blue-700/60 text-white rounded hover:bg-blue-800/80"
+                        onClick={() => setEventForm(prev => ({
+                          ...prev,
+                          sections: [...(prev.sections || []), { title: '', description: '', key_points: [], target_audience: '', expected_outcome: '' }]
+                        }))}
+                      >Add Section</button>
+                    </div>
+                  </>
+                )}
                 <div className="flex justify-end space-x-3 pt-4">
                   <button
                     type="button"

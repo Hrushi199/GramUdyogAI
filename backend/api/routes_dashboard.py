@@ -5,7 +5,7 @@ from core.llm_recommendations import get_course_recommendations
 from core.job_recommender import get_all_job_names, get_relevant_jobs, load_selected_jobs, find_best_job
 from core.business_suggestion_generation import generate_prompt_from_skills, get_business_suggestions
 from core.scheme_recommender import get_all_scheme_names, get_relevant_scheme_names, load_selected_schemes, explain_schemes
-import sqlite3
+from init_db import get_db
 import json
 from datetime import datetime
 from groq import Groq
@@ -119,10 +119,7 @@ LANGUAGE_MAP = {
     "telugu": "te",
 }
 
-def get_db():
-    conn = sqlite3.connect('gramudyogai.db')
-    conn.row_factory = sqlite3.Row
-    return conn
+
 
 def get_latest_profile_id():
     conn = get_db()
@@ -136,9 +133,7 @@ def get_latest_profile_id():
 def get_dashboard_cache(profile_id):
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute(
-        "CREATE TABLE IF NOT EXISTS dashboard_cache (profile_id INTEGER PRIMARY KEY, dashboard_json TEXT, created_at TIMESTAMP)"
-    )
+    
     result = cursor.execute(
         "SELECT dashboard_json FROM dashboard_cache WHERE profile_id = ?", (profile_id,)
     ).fetchone()

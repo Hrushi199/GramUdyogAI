@@ -1,6 +1,5 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-import sqlite3
 from core.job_recommender import *
 from init_db import get_db
 from core.translation import llama_translate_string as translate_text
@@ -17,27 +16,7 @@ class JobPosting(BaseModel):
 class UserInfo(BaseModel):
     user_info: str  # Input from the user for job recommendation
 
-def create_jobs_table():
-    conn = get_db()
-    cursor = conn.cursor()
-    
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS job_postings (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL,
-            description TEXT NOT NULL,
-            company TEXT NOT NULL,
-            location TEXT NOT NULL,
-            company_contact TEXT NOT NULL,
-            pay TEXT NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    """)
-    
-    conn.commit()
-    conn.close()
 
-create_jobs_table()
 
 @router.post("/jobs")
 async def create_job(job: JobPosting):

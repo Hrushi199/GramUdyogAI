@@ -35,6 +35,9 @@ class EventCreate(BaseModel):
     skills_required: List[str]
     tags: List[str]
     status: str = 'draft'  # Default to draft
+    marketing_highlights: Optional[List[str]] = None
+    success_metrics: Optional[List[str]] = None
+    sections: Optional[List[dict]] = None
 
 class EventUpdate(BaseModel):
     title: Optional[str] = None
@@ -51,6 +54,9 @@ class EventUpdate(BaseModel):
     skills_required: Optional[List[str]] = None
     tags: Optional[List[str]] = None
     status: Optional[str] = None
+    marketing_highlights: Optional[List[str]] = None
+    success_metrics: Optional[List[str]] = None
+    sections: Optional[List[dict]] = None
 
 class EventStatusUpdate(BaseModel):
     status: str
@@ -190,6 +196,9 @@ async def get_events(
                     "projects_created": 0,
                     "employment_generated": 0
                 }),
+                "marketing_highlights": safe_json_loads(row[19], []),
+                "success_metrics": safe_json_loads(row[20], []),
+                "sections": safe_json_loads(row[21], []),
                 "social_media_posts": [],
                 "created_at": row[19],
                 "updated_at": row[20]
@@ -262,8 +271,8 @@ async def create_event(event: EventCreate, current_user: Dict[str, Any] = Depend
                 title, description, event_type, category, location, state,
                 start_date, end_date, max_participants, current_participants, budget, prize_pool,
                 organizer_id, organizer_type, created_by, skills_required, tags, status,
-                impact_metrics, created_at, updated_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                impact_metrics, marketing_highlights, success_metrics, sections, created_at, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             event.title, event.description, event.event_type, event.category,
             event.location, event.state, event.start_date, event.end_date,
@@ -275,7 +284,11 @@ async def create_event(event: EventCreate, current_user: Dict[str, Any] = Depend
                 "skills_developed": 0,
                 "projects_created": 0,
                 "employment_generated": 0
-            }), datetime.now().isoformat(), datetime.now().isoformat()
+            }),
+            json.dumps(event.marketing_highlights) if event.marketing_highlights is not None else json.dumps([]),
+            json.dumps(event.success_metrics) if event.success_metrics is not None else json.dumps([]),
+            json.dumps(event.sections) if event.sections is not None else json.dumps([]),
+            datetime.now().isoformat(), datetime.now().isoformat()
         ))
         
         event_id = cursor.lastrowid
@@ -358,6 +371,9 @@ async def get_event_by_id(event_id: int):
                 "projects_created": 0,
                 "employment_generated": 0
             }),
+            "marketing_highlights": safe_json_loads(row[19], []),
+            "success_metrics": safe_json_loads(row[20], []),
+            "sections": safe_json_loads(row[21], []),
             "social_media_posts": [],
             "created_at": row[19],
             "updated_at": row[20]
@@ -624,6 +640,16 @@ async def update_event(event_id: int, event_update: EventUpdate):
         if event_update.status is not None:
             update_fields.append("status = ?")
             params.append(event_update.status)
+        
+        if event_update.marketing_highlights is not None:
+            update_fields.append("marketing_highlights = ?")
+            params.append(json.dumps(event_update.marketing_highlights))
+        if event_update.success_metrics is not None:
+            update_fields.append("success_metrics = ?")
+            params.append(json.dumps(event_update.success_metrics))
+        if event_update.sections is not None:
+            update_fields.append("sections = ?")
+            params.append(json.dumps(event_update.sections))
         
         if update_fields:
             update_fields.append("updated_at = ?")
@@ -982,6 +1008,9 @@ async def get_user_events(user_id: int):
                     "projects_created": 0,
                     "employment_generated": 0
                 }),
+                "marketing_highlights": safe_json_loads(row[19], []),
+                "success_metrics": safe_json_loads(row[20], []),
+                "sections": safe_json_loads(row[21], []),
                 "created_at": row[19],
                 "updated_at": row[20],
                 "user_role": row[21]  # User's role in this event

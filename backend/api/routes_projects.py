@@ -1,10 +1,11 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Depends
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 import sqlite3
 from datetime import datetime, timedelta
 import json
 import logging
+from api.routes_auth import get_current_user
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -57,6 +58,7 @@ class ProjectCreate(BaseModel):
     testimonials: Optional[List[Testimonial]] = []
     awards: Optional[List[Award]] = []
     tags: List[str]
+    created_by: Optional[int] = None # This will be set by the backend based on the authenticated user
 
 def get_db():
     return sqlite3.connect('gramudyogai.db')
@@ -245,7 +247,7 @@ async def get_project_by_id(project_id: int):
 
 
 @router.post("/projects")
-async def create_project(project: ProjectCreate, created_by: int = Query(1)):
+async def create_project(project: ProjectCreate, current_user: Dict[str, Any] = Depends(get_current_user)):
     """Create a new project"""
     try:
         conn = get_db()
@@ -262,7 +264,7 @@ async def create_project(project: ProjectCreate, created_by: int = Query(1)):
             project.title, project.description, project.category, project.event_id, project.event_name, project.event_type,
              json.dumps(project.technologies), json.dumps(project.impact_metrics),
             project.funding_status, project.funding_amount, project.funding_goal,
-            project.location, project.state, created_by, datetime.now().isoformat(),
+            project.location, project.state, current_user['id'], datetime.now().isoformat(),
             project.completed_at or datetime.now().isoformat(), project.status, json.dumps(project.media),
             json.dumps(project.testimonials), json.dumps(project.awards),
             json.dumps(project.tags)

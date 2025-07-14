@@ -137,6 +137,7 @@ def normalize_language(lang: str) -> str:
     )
     # Safely extract the code from the LLM response, handling possible None values
     code = None
+    
     try:
         content = llm_response.choices[0].message.content
         if content:
@@ -146,6 +147,30 @@ def normalize_language(lang: str) -> str:
     if code and code in SUPPORTED_LANG_CODES.values():
         return code
     return "en"
+
+def transcribe_audio(audio_file, language="en"):
+    # Save uploaded file to a temp file
+    print('Received audio file for transcription')
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".webm") as tmp:
+        tmp.write(audio_file.read())
+        tmp_path = tmp.name
+    print('Transcribing audio file:', tmp_path)
+    # Transcribe using Groq Whisper
+    print('Language code received: ', language)
+    language_code = normalize_language(language)
+    print('Mapped language code:', language_code)
+    with open(tmp_path, "rb") as f:
+        transcription = client.audio.transcriptions.create(
+            file=(tmp_path, f.read()),
+            model="whisper-large-v3",
+            language=language_code,
+            response_format="json",
+            temperature=0.5
+        )
+    text = transcription.text
+    print('Transcription result:', text)
+    os.remove(tmp_path)
+    return {"text": text}
 
 def transcribe_audio_and_extract_profile(audio_file, language="en"):
     # Save uploaded file to a temp file

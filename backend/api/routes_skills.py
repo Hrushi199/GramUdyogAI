@@ -12,7 +12,7 @@ from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import os
 from core.skill_tutorial import generate_visual_summary_json
-import sqlite3
+from init_db import get_db
 from datetime import datetime
 import json
 from core.audio_generation import TextToSpeech
@@ -80,33 +80,7 @@ async def create_visual_summary(request: VisualSummaryRequest):
     
     try:
         # Create tables if they don't exist
-        conn = sqlite3.connect("gramudyogai.db")
-        cursor = conn.cursor()
         
-        # Add translations table
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS summary_translations (
-                summary_id INTEGER,
-                language TEXT,
-                translated_data TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                PRIMARY KEY (summary_id, language),
-                FOREIGN KEY (summary_id) REFERENCES visual_summaries(id)
-            )
-        """)
-        
-        # Add audio files table
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS audio_files (
-                text_hash TEXT,
-                language TEXT,
-                file_path TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                PRIMARY KEY (text_hash, language)
-            )
-        """)
-        
-        conn.commit()
         
         # Generate summary
         summary = generate_visual_summary_json(

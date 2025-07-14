@@ -29,7 +29,10 @@ class UserProfileUpdate(BaseModel):
     goals: Optional[str] = None
 
 def get_db():
-    return sqlite3.connect('gramudyogai.db')
+    """Get database connection with row factory for dictionary access"""
+    conn = sqlite3.connect('gramudyogai.db')
+    conn.row_factory = sqlite3.Row  # This makes rows accessible by column name
+    return conn
 
 @router.get("/users")
 async def get_users(
@@ -63,15 +66,15 @@ async def get_users(
         users = []
         for row in users_data:
             user = {
-                "id": row[0],
-                "phone": row[1],
-                "user_type": row[2],
-                "name": row[3],
-                "organization": row[4],
-                "is_active": bool(row[5]),
-                "is_verified": bool(row[6]),
-                "created_at": row[7],
-                "last_login": row[8]
+                "id": row['id'],
+                "phone": row['phone'],
+                "user_type": row['user_type'],
+                "name": row['name'],
+                "organization": row['organization'],
+                "is_active": bool(row['is_active']),
+                "is_verified": bool(row['is_verified']),
+                "created_at": row['created_at'],
+                "last_login": row['last_login']
             }
             users.append(user)
         
@@ -101,15 +104,15 @@ async def get_user_by_id(user_id: int):
             raise HTTPException(status_code=404, detail="User not found")
         
         user = {
-            "id": row[0],
-            "phone": row[1],
-            "user_type": row[2],
-            "name": row[3],
-            "organization": row[4],
-            "is_active": bool(row[5]),
-            "is_verified": bool(row[6]),
-            "created_at": row[7],
-            "last_login": row[8]
+            "id": row['id'],
+            "phone": row['phone'],
+            "user_type": row['user_type'],
+            "name": row['name'],
+            "organization": row['organization'],
+            "is_active": bool(row['is_active']),
+            "is_verified": bool(row['is_verified']),
+            "created_at": row['created_at'],
+            "last_login": row['last_login']
         }
         
         return user
@@ -205,45 +208,6 @@ async def delete_user(user_id: int, current_user: Dict[str, Any] = Depends(get_c
         logger.error(f"Error deleting user: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.get("/users/search")
-async def search_users(query: str = Query(..., min_length=2)):
-    """Search users by name or organization"""
-    try:
-        conn = get_db()
-        cursor = conn.cursor()
-        
-        cursor.execute("""
-            SELECT id, phone, user_type, name, organization, is_active, is_verified, created_at, last_login 
-            FROM users 
-            WHERE (name LIKE ? OR organization LIKE ?) AND is_active = 1
-            ORDER BY name
-            LIMIT 20
-        """, (f"%{query}%", f"%{query}%"))
-        
-        users_data = cursor.fetchall()
-        conn.close()
-        
-        users = []
-        for row in users_data:
-            user = {
-                "id": row[0],
-                "phone": row[1],
-                "user_type": row[2],
-                "name": row[3],
-                "organization": row[4],
-                "is_active": bool(row[5]),
-                "is_verified": bool(row[6]),
-                "created_at": row[7],
-                "last_login": row[8]
-            }
-            users.append(user)
-        
-        return users
-        
-    except Exception as e:
-        logger.error(f"Error searching users: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
 @router.get("/users/{user_id}/stats")
 async def get_user_stats(user_id: int):
     """Get user statistics and metrics"""
@@ -252,20 +216,20 @@ async def get_user_stats(user_id: int):
         cursor = conn.cursor()
         
         # Get user's projects count
-        cursor.execute("SELECT COUNT(*) FROM projects WHERE created_by = ?", (user_id,))
-        projects_count = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) as count FROM projects WHERE created_by = ?", (user_id,))
+        projects_count = cursor.fetchone()['count']
         
         # Get user's events count (as organizer)
-        cursor.execute("SELECT COUNT(*) FROM events WHERE created_by = ?", (user_id,))
-        events_count = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) as count FROM events WHERE created_by = ?", (user_id,))
+        events_count = cursor.fetchone()['count']
         
         # Get user's event participations
-        cursor.execute("SELECT COUNT(*) FROM event_participants WHERE user_id = ?", (user_id,))
-        participations_count = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) as count FROM event_participants WHERE user_id = ?", (user_id,))
+        participations_count = cursor.fetchone()['count']
         
         # Get user's team memberships
-        cursor.execute("SELECT COUNT(*) FROM project_team_members WHERE user_id = ?", (user_id,))
-        team_memberships_count = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) as count FROM project_team_members WHERE user_id = ?", (user_id,))
+        team_memberships_count = cursor.fetchone()['count']
         
         conn.close()
         
@@ -283,40 +247,26 @@ async def get_user_stats(user_id: int):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/users/search")
-async def search_users(query: str = Query(..., min_length=2)):
-    """Search users by name or organization"""
-    try:
-        conn = get_db()
-        cursor = conn.cursor()
-        
-        cursor.execute("""
-            SELECT id, phone, user_type, name, organization, is_active, is_verified, created_at, last_login 
-            FROM users 
-            WHERE (name LIKE ? OR organization LIKE ?) AND is_active = 1
-            ORDER BY name
-            LIMIT 20
-        """, (f"%{query}%", f"%{query}%"))
-        
-        users_data = cursor.fetchall()
-        conn.close()
-        
-        users = []
-        for row in users_data:
-            user = {
-                "id": row[0],
-                "phone": row[1],
-                "user_type": row[2],
-                "name": row[3],
-                "organization": row[4],
-                "is_active": bool(row[5]),
-                "is_verified": bool(row[6]),
-                "created_at": row[7],
-                "last_login": row[8]
-            }
-            users.append(user)
-        
-        return users
-        
-    except Exception as e:
-        logger.error(f"Error searching users: {e}")
-        raise HTTPException(status_code=500, detail=str(e)) 
+async def search_users(query: str):
+    """Search users by name, phone, or organization"""
+    cleaned_query = query.replace('+91', '')
+    conn = get_db()
+    conn.row_factory = sqlite3.Row  # <-- This is critical!
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT id, phone, name, user_type, organization 
+        FROM users 
+        WHERE phone LIKE ? OR name LIKE ? OR organization LIKE ?
+    """, (f'%{cleaned_query}%', f'%{cleaned_query}%', f'%{cleaned_query}%'))
+    results = cursor.fetchall()
+    conn.close()
+    users = []
+    for row in results:
+        users.append({
+            "id": row['id'],
+            "phone": row['phone'],
+            "name": row['name'],
+            "user_type": row['user_type'],
+            "organization": row['organization']
+        })
+    return users
