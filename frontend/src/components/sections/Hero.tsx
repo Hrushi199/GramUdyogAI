@@ -57,7 +57,11 @@ const Hero: React.FC<HeroProps> = ({ loaded }) => {
               {t('description')}
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
+<<<<<<< HEAD
               <Button size="lg" navigateTo="/auth">
+=======
+              <Button size="lg" navigateTo="/profile">
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
                 {t('buttons.getStarted')}
               </Button>
               <button

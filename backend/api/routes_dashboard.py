@@ -11,7 +11,10 @@ from datetime import datetime
 from groq import Groq
 import os
 from dotenv import load_dotenv, find_dotenv
+<<<<<<< HEAD
 from core.translation import llama_translate_string as translate_text
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 # load_dotenv(find_dotenv())
 router = APIRouter()
 
@@ -120,7 +123,11 @@ LANGUAGE_MAP = {
 }
 
 def get_db():
+<<<<<<< HEAD
     conn = sqlite3.connect('gramudyogai.db')
+=======
+    conn = sqlite3.connect('database.db')
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -128,7 +135,11 @@ def get_latest_profile_id():
     conn = get_db()
     cursor = conn.cursor()
     result = cursor.execute(
+<<<<<<< HEAD
         'SELECT id FROM users ORDER BY created_at DESC LIMIT 1'
+=======
+        'SELECT id FROM user_profiles ORDER BY created_at DESC LIMIT 1'
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     ).fetchone()
     conn.close()
     return result["id"] if result else None
@@ -189,7 +200,11 @@ Language code: {language_code}
     )
     content = response.choices[0].message.content
     try:
+<<<<<<< HEAD
         return json.loads(content) if content else {}
+=======
+        return json.loads(content)
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     except Exception:
         return {}
 
@@ -198,14 +213,21 @@ async def dashboard_recommendations(request: Request):
     body = await request.json()
     force_refresh = body.get("force_refresh", False)
     profile = body if "skills" in body else None
+<<<<<<< HEAD
     lang = body.get("language", "en") or "en"
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 
     # If not profile in POST, try to get latest from DB
     if not profile:
         conn = get_db()
         cursor = conn.cursor()
         result = cursor.execute(
+<<<<<<< HEAD
             'SELECT * FROM users ORDER BY created_at DESC LIMIT 1'
+=======
+            'SELECT * FROM user_profiles ORDER BY created_at DESC LIMIT 1'
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         ).fetchone()
         conn.close()
         if not result:
@@ -296,10 +318,13 @@ async def dashboard_recommendations(request: Request):
             results["business_suggestions"] = [s.model_dump() for s in suggestions.suggestions]
         elif isinstance(suggestions, dict) and "suggestions" in suggestions:
             results["business_suggestions"] = suggestions["suggestions"]
+<<<<<<< HEAD
         elif isinstance(suggestions, dict) and "error" in suggestions:
             results["business_suggestions"] = []
         else:
             results["business_suggestions"] = []
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         print('Business suggestions:', results["business_suggestions"])
     except Exception:
         results["business_suggestions"] = []

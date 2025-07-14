@@ -233,6 +233,11 @@
       "dashboard": "டாஷ்போர்டு",
       "community": "சமூகம்",
       "skills": "திறன்கள்",
+<<<<<<< HEAD
       "signUp": "பதிவு செய்"
+=======
+      "signUp": "பதிவு செய்",
+      "courseRecommender": "பாடநெறி பரிந்துரை"
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     }
   }

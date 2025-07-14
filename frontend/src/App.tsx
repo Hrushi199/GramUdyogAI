@@ -17,6 +17,7 @@ import JobBoard from './components/sections/job_board';
 import YoutubeAudioSummary from './components/sections/YoutubeAudioSummary';
 import CSRDashboard from './components/sections/CSRDashboard';
 import CourseRecommender from './components/sections/CourseRecommender';
+<<<<<<< HEAD
 import EventManagement from './components/sections/EventManagement';
 import PublicProjects from './components/sections/PublicProjects';
 import MyProjects from './components/sections/MyProjects';
@@ -24,6 +25,8 @@ import Auth from './components/sections/Auth';
 import UnifiedProfile from './components/sections/UnifiedProfile';
 import ProtectedRoute from './components/ProtectedRoute';
 import EventDetails from './components/sections/EventDetails';
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 
 // Wrapper component for the home page to handle scroll behavior
 const HomePage = ({ loaded }: { loaded: boolean }) => {
@@ -70,6 +73,7 @@ export default function App() {
           
           {/* Other Pages */}
           <Route path="/job-board" element={<JobBoard />} />
+<<<<<<< HEAD
           <Route path="/auth" element={<Auth />} />
           
           {/* Profile Routes - Clear separation */}
@@ -88,6 +92,17 @@ export default function App() {
           <Route path="/events/:eventId" element={<ProtectedRoute><EventDetails /></ProtectedRoute>} />
           <Route path="/projects" element={<ProtectedRoute><PublicProjects /></ProtectedRoute>} />
           <Route path="/my-projects" element={<ProtectedRoute><MyProjects /></ProtectedRoute>} />
+=======
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/dashboard" element={<JobMentorDashboard />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/schemes" element={<SchemeRecommendation />} />
+          <Route path="/skill-builder" element={<SkillBuilder />} />
+          <Route path="/business-suggestions" element={<BusinessSuggestions />} />
+          <Route path="/youtube-audio-summary" element={<YoutubeAudioSummary />} />
+          <Route path="/csr-dashboard" element={<CSRDashboard />} />
+          <Route path="/course-recommender" element={<CourseRecommender />} />
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         </Routes>
       </Router>
     </div>

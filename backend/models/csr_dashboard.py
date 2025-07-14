@@ -67,7 +67,11 @@ class CSRDashboardMetrics(BaseModel):
 
 def init_csr_dashboard_db():
     """Initialize CSR dashboard database tables"""
+<<<<<<< HEAD
     conn = sqlite3.connect('gramudyogai.db')
+=======
+    conn = sqlite3.connect('database.db')
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     cursor = conn.cursor()
     
     # Create companies table
@@ -136,7 +140,11 @@ def init_csr_dashboard_db():
 
 def populate_dummy_csr_data():
     """Populate database with realistic dummy CSR data"""
+<<<<<<< HEAD
     conn = sqlite3.connect('gramudyogai.db')
+=======
+    conn = sqlite3.connect('database.db')
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     cursor = conn.cursor()
     
     # Sample companies data
@@ -151,6 +159,86 @@ def populate_dummy_csr_data():
             "headquarters": "Pune, Maharashtra",
             "total_employees": 157000,
             "csr_rating": 4.3
+<<<<<<< HEAD
+=======
+        },
+        {
+            "company_name": "Reliance Industries",
+            "industry": "Petrochemicals & Energy",
+            "company_size": "enterprise", 
+            "csr_budget_annual": 120000000.0,
+            "csr_focus_areas": ["healthcare", "education", "rural_development"],
+            "established_year": 1966,
+            "headquarters": "Mumbai, Maharashtra",
+            "total_employees": 236000,
+            "csr_rating": 4.1
+        },
+        {
+            "company_name": "Infosys",
+            "industry": "Information Technology",
+            "company_size": "enterprise",
+            "csr_budget_annual": 75000000.0,
+            "csr_focus_areas": ["education", "healthcare", "environment"],
+            "established_year": 1981,
+            "headquarters": "Bengaluru, Karnataka",
+            "total_employees": 292067,
+            "csr_rating": 4.5
+        },
+        {
+            "company_name": "Tata Consultancy Services",
+            "industry": "Information Technology",
+            "company_size": "enterprise",
+            "csr_budget_annual": 80000000.0,
+            "csr_focus_areas": ["education", "skill_development", "women_empowerment"],
+            "established_year": 1968,
+            "headquarters": "Mumbai, Maharashtra", 
+            "total_employees": 528748,
+            "csr_rating": 4.4
+        },
+        {
+            "company_name": "HDFC Bank",
+            "industry": "Banking & Financial Services",
+            "company_size": "enterprise",
+            "csr_budget_annual": 65000000.0,
+            "csr_focus_areas": ["education", "healthcare", "rural_development"],
+            "established_year": 1994,
+            "headquarters": "Mumbai, Maharashtra",
+            "total_employees": 177000,
+            "csr_rating": 4.2
+        },
+        {
+            "company_name": "Wipro",
+            "industry": "Information Technology",
+            "company_size": "enterprise",
+            "csr_budget_annual": 45000000.0,
+            "csr_focus_areas": ["education", "environment", "healthcare"],
+            "established_year": 1945,
+            "headquarters": "Bengaluru, Karnataka",
+            "total_employees": 258000,
+            "csr_rating": 4.0
+        },
+        {
+            "company_name": "ITC Limited",
+            "industry": "FMCG & Consumer Goods",
+            "company_size": "enterprise",
+            "csr_budget_annual": 55000000.0,
+            "csr_focus_areas": ["environment", "rural_development", "education"],
+            "established_year": 1910,
+            "headquarters": "Kolkata, West Bengal",
+            "total_employees": 25000,
+            "csr_rating": 4.3
+        },
+        {
+            "company_name": "Bharti Airtel",
+            "industry": "Telecommunications",
+            "company_size": "enterprise",
+            "csr_budget_annual": 40000000.0,
+            "csr_focus_areas": ["education", "healthcare", "digital_literacy"],
+            "established_year": 1995,
+            "headquarters": "New Delhi",
+            "total_employees": 20000,
+            "csr_rating": 3.9
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         }
     ]
     
@@ -170,6 +258,122 @@ def populate_dummy_csr_data():
         ))
         company_ids[company["company_name"]] = cursor.lastrowid
     
+<<<<<<< HEAD
+=======
+    # Sample CSR events data
+    indian_states = [
+        "Andhra Pradesh", "Karnataka", "Tamil Nadu", "Maharashtra", "Gujarat", 
+        "Rajasthan", "Uttar Pradesh", "Bihar", "West Bengal", "Odisha",
+        "Madhya Pradesh", "Haryana", "Punjab", "Kerala", "Telangana"
+    ]
+    
+    event_templates = {
+        CSREventType.EDUCATION: [
+            "Digital Learning Centers for Rural Schools",
+            "Scholarship Program for Underprivileged Students", 
+            "Teacher Training and Development Program",
+            "Mobile Education Vans for Remote Areas",
+            "STEM Education Initiative for Girls"
+        ],
+        CSREventType.HEALTHCARE: [
+            "Free Health Camps in Rural Areas",
+            "Mobile Medical Units for Remote Villages",
+            "Mother and Child Healthcare Program",
+            "Mental Health Awareness Campaign",
+            "Vaccination Drive for Children"
+        ],
+        CSREventType.SKILL_DEVELOPMENT: [
+            "Vocational Training for Youth",
+            "Digital Skills Training Program",
+            "Entrepreneurship Development Workshop",
+            "Women's Skill Development Initiative",
+            "Farmer Training and Development Program"
+        ],
+        CSREventType.ENVIRONMENT: [
+            "Tree Plantation Drive",
+            "Waste Management Awareness Program",
+            "Solar Energy Installation in Villages",
+            "Water Conservation Project",
+            "Organic Farming Promotion"
+        ],
+        CSREventType.RURAL_DEVELOPMENT: [
+            "Village Infrastructure Development",
+            "Rural Connectivity Enhancement",
+            "Livelihood Generation Program",
+            "Community Development Initiative",
+            "Rural Housing Project"
+        ]
+    }
+    
+    # Generate events for each company
+    for company_name, company_id in company_ids.items():
+        company_data = next(c for c in companies_data if c["company_name"] == company_name)
+        focus_areas = company_data["csr_focus_areas"]
+        
+        # Generate 8-15 events per company over the last 2 years
+        num_events = random.randint(8, 15)
+        
+        for _ in range(num_events):
+            event_type = random.choice([CSREventType(area) for area in focus_areas if area in [e.value for e in CSREventType]])
+            event_title = random.choice(event_templates.get(event_type, ["CSR Initiative"]))
+            
+            # Random dates within last 2 years
+            start_date = datetime.now() - timedelta(days=random.randint(30, 730))
+            end_date = start_date + timedelta(days=random.randint(1, 180))
+            
+            beneficiaries = random.randint(100, 10000)
+            budget_allocated = random.randint(100000, 5000000)
+            budget_spent = budget_allocated * random.uniform(0.85, 1.0)
+            
+            # Generate realistic impact metrics based on event type
+            impact_metrics = {}
+            if event_type == CSREventType.EDUCATION:
+                impact_metrics = {
+                    "students_enrolled": random.randint(50, beneficiaries),
+                    "completion_rate": random.uniform(75, 95),
+                    "literacy_improvement": random.uniform(15, 40),
+                    "schools_covered": random.randint(5, 50)
+                }
+            elif event_type == CSREventType.HEALTHCARE:
+                impact_metrics = {
+                    "patients_treated": beneficiaries,
+                    "villages_covered": random.randint(10, 100),
+                    "health_improvement_rate": random.uniform(70, 90),
+                    "preventive_care_provided": random.randint(100, 1000)
+                }
+            elif event_type == CSREventType.SKILL_DEVELOPMENT:
+                impact_metrics = {
+                    "people_trained": beneficiaries,
+                    "job_placement_rate": random.uniform(60, 85),
+                    "skills_acquired": random.randint(2, 8),
+                    "certification_completion": random.uniform(70, 95)
+                }
+            elif event_type == CSREventType.ENVIRONMENT:
+                impact_metrics = {
+                    "trees_planted": random.randint(1000, 50000),
+                    "carbon_offset_tons": random.randint(50, 500),
+                    "water_saved_liters": random.randint(10000, 100000),
+                    "communities_benefited": random.randint(5, 50)
+                }
+            
+            location = f"{random.choice(['Rural', 'Urban', 'Semi-urban'])} {random.choice(['District', 'Taluka', 'Block'])}"
+            state = random.choice(indian_states)
+            
+            cursor.execute('''
+                INSERT INTO csr_events 
+                (company_id, company_name, event_title, event_type, description, location, state,
+                 beneficiaries_count, budget_allocated, budget_spent, start_date, end_date,
+                 status, impact_metrics, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                company_id, company_name, event_title, event_type.value,
+                f"Comprehensive {event_type.value.replace('_', ' ').title()} initiative aimed at improving quality of life and creating sustainable impact in the community.",
+                location, state, beneficiaries, budget_allocated, budget_spent,
+                start_date.isoformat(), end_date.isoformat(), "completed",
+                json.dumps(impact_metrics), datetime.now().isoformat(), datetime.now().isoformat()
+            ))
+    
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     conn.commit()
     conn.close()
 

@@ -233,6 +233,11 @@
       "dashboard": "ડેશબોર્ડ",
       "community": "સમુદાય",
       "skills": "કૌશલ્યો",
+<<<<<<< HEAD
       "signUp": "સાઇન અપ"
+=======
+      "signUp": "સાઇન અપ",
+      "courseRecommender": "કોર્સ સૂચક"
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     }
   }

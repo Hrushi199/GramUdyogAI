@@ -11,7 +11,10 @@ from core.scheme_recommender import (
     load_selected_schemes,
     explain_schemes,
 )
+<<<<<<< HEAD
 from core.translation import llama_translate_string as translate_text
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 #from core.government_api import router as government_router
 
 from fastapi.responses import JSONResponse
@@ -44,7 +47,14 @@ async def recommend_schemes(data: UserRequest):
     relevant_names = await get_relevant_scheme_names(data.occupation, all_names)
     selected_schemes = await load_selected_schemes(relevant_names)
     explanation = await explain_schemes(data.occupation, selected_schemes)
+<<<<<<< HEAD
     return {
         "relevant_schemes": relevant_names,
         "explanation": explanation
+=======
+    print(explanation)
+    return {
+        "relevant_schemes": relevant_names,
+        "explanation": explanation  # Now a JSON list/object, not a string
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     }

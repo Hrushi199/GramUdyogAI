@@ -9,7 +9,11 @@ e2enetworks
 yt_dlp
 youtube_transcript_api
 scipy
+<<<<<<< HEAD
 python-multipart
 bcrypt
 PyJWT
 email-validator
+=======
+python-multipart
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48

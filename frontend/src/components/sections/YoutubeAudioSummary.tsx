@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
 import ParticleBackground from "../ui/ParticleBackground";
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

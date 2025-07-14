@@ -11,7 +11,10 @@ from core.scheme_recommender import (
     load_selected_schemes,
     explain_schemes,
 )
+<<<<<<< HEAD
 from core.translation import llama_translate_string as translate_text
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 #from core.government_api import router as government_router
 
 from fastapi.responses import JSONResponse
@@ -46,5 +49,9 @@ async def suggest_business(data: Recommendation):
     suggestions = await get_business_suggestions(prompt)
     if isinstance(suggestions, dict) and "error" in suggestions:
         return suggestions
+<<<<<<< HEAD
     return suggestions.dict() if hasattr(suggestions, 'dict') else suggestions
+=======
+    return suggestions.dict()
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 

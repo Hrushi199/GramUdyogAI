@@ -2,10 +2,16 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 import sqlite3
 from core.job_recommender import *
+<<<<<<< HEAD
 from init_db import get_db
 from core.translation import llama_translate_string as translate_text
 router = APIRouter()
 
+=======
+from core.initialize_db import *
+router = APIRouter()
+initialize_database()
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 class JobPosting(BaseModel):
     title: str
     description: str
@@ -18,7 +24,11 @@ class UserInfo(BaseModel):
     user_info: str  # Input from the user for job recommendation
 
 def create_jobs_table():
+<<<<<<< HEAD
     conn = get_db()
+=======
+    conn = sqlite3.connect("database.db")
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     cursor = conn.cursor()
     
     cursor.execute("""
@@ -41,7 +51,11 @@ create_jobs_table()
 
 @router.post("/jobs")
 async def create_job(job: JobPosting):
+<<<<<<< HEAD
     conn = get_db()
+=======
+    conn = sqlite3.connect("database.db")
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -56,7 +70,11 @@ async def create_job(job: JobPosting):
 
 @router.get("/jobs")
 async def get_jobs():
+<<<<<<< HEAD
     conn = get_db()
+=======
+    conn = sqlite3.connect("database.db")
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     cursor = conn.cursor()
 
     cursor.execute("SELECT id, title, description, company, location, company_contact, pay, created_at FROM job_postings ORDER BY created_at DESC")
@@ -78,6 +96,7 @@ async def get_jobs():
         for job in jobs
     ]
 
+<<<<<<< HEAD
 @router.get("/jobs/{job_id}")
 async def get_job_by_id(job_id: int):
     """Get a specific job by ID"""
@@ -141,6 +160,8 @@ async def delete_job(job_id: int):
 
     return {"message": "Job deleted successfully"}
 
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 @router.post("/recommend-job")
 async def recommend_job(user_info: UserInfo):
     """
@@ -150,9 +171,17 @@ async def recommend_job(user_info: UserInfo):
         all_job_names = await get_all_job_names()
         relevant_job_names = await get_relevant_jobs(user_info.user_info, all_job_names)
         print('Got relevant job names:', relevant_job_names)
+<<<<<<< HEAD
         relevant_jobs = await load_selected_jobs(relevant_job_names.get('relevant_jobs', []) if isinstance(relevant_job_names, dict) else relevant_job_names)
+=======
+        relevant_jobs = await load_selected_jobs(relevant_job_names['relevant_jobs'])
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         best_job = await find_best_job(user_info.user_info, relevant_jobs)
         print(best_job)
         return {"best_job": best_job}
     except Exception as e:
+<<<<<<< HEAD
         raise HTTPException(status_code=500, detail=str(e))
+=======
+        raise HTTPException(status_code=500, detail=str(e))
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48

@@ -26,6 +26,7 @@ e2e_project_id = os.getenv("E2E_TIR_PROJECT_ID")
 e2e_team_id = os.getenv("E2E_TIR_TEAM_ID")
 
 # Initialize e2e networks
+<<<<<<< HEAD
 e2e_client = None
 if all([e2e_token, e2e_api_key, e2e_project_id, e2e_team_id]):
     try:
@@ -43,6 +44,13 @@ if api_key:
         print(f"Warning: Failed to initialize Groq client: {e}")
 else:
     print("Warning: GROQ_API_KEY not set. LLM features will be disabled.")
+=======
+if all([e2e_token, e2e_api_key, e2e_project_id, e2e_team_id]):
+    tir.init()
+    e2e_client = tir.ModelAPIClient()
+
+client = Groq(api_key=api_key)
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 
 LLAMA_MODEL = "llama-3.3-70b-versatile"
 
@@ -69,10 +77,13 @@ class VisualSummary(BaseModel):
 #         pil_img.save(image_path)
 
 def llama_chat_completion(messages, temperature=1, max_tokens=1024):
+<<<<<<< HEAD
     # Check if client is available
     if not client:
         raise ValueError("Groq client not initialized. Please set GROQ_API_KEY environment variable.")
     
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     # Ensure at least one message contains "json"
     if not any("json" in m["content"].lower() for m in messages):
         messages = [{"role": "system", "content": "Please reply in valid JSON format."}] + messages
@@ -100,11 +111,16 @@ def generate_image_prompt(section_content):
     try:
         messages = [{"role": "user", "content": prompt}]
         result = llama_chat_completion(messages, temperature=1, max_tokens=128)
+<<<<<<< HEAD
         if result:
             prompt_json = json.loads(result)
             return prompt_json.get("prompt", "").strip()
         else:
             return f"Create a vivid illustration capturing the mood and themes of '{section_content}' without replicating the text."
+=======
+        prompt_json = json.loads(result)
+        return prompt_json.get("prompt", "").strip()
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     except Exception as e:
         print(f"Error generating image prompt: {e}")
         return f"Create a vivid illustration capturing the mood and themes of '{section_content}' without replicating the text."
@@ -246,9 +262,12 @@ def generate_visual_summary_json(topic: str, rag: str, language: str = "en", gen
     )
     
     print("\n--- Generating Initial Summary ---")
+<<<<<<< HEAD
     if not client:
         raise ValueError("Groq client not initialized. Please set GROQ_API_KEY environment variable.")
     
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     chat_completion = client.chat.completions.create(
         messages=[
             {"role": "system", "content": prompt},
@@ -261,11 +280,15 @@ def generate_visual_summary_json(topic: str, rag: str, language: str = "en", gen
     
     try:
         print("\n--- Validating Summary JSON ---")
+<<<<<<< HEAD
         content = chat_completion.choices[0].message.content
         if content:
             summary = VisualSummary.model_validate_json(content)
         else:
             raise ValueError("Empty response from LLM")
+=======
+        summary = VisualSummary.model_validate_json(chat_completion.choices[0].message.content)
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         print(f"Initial Summary: {json.dumps(summary.model_dump(), indent=2)}")
         
         # If language is not English, translate the content
@@ -313,7 +336,11 @@ def generate_visual_summary_json(topic: str, rag: str, language: str = "en", gen
         print(f"Image Generation {'Successful' if success else 'Failed'}")
         sleep(5)
         
+<<<<<<< HEAD
         section.imageUrl = f"/images/{image_filename}"
+=======
+        section.imageUrl = f"{image_filename}"
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         print(f"Image URL set: {section.imageUrl}")
 
         # Generate audio if requested
@@ -328,7 +355,11 @@ def generate_visual_summary_json(topic: str, rag: str, language: str = "en", gen
                     speaker="male",
                     language=language  # Use the requested language
                 )
+<<<<<<< HEAD
                 section.audioUrl = f"/audio/{audio_filename}"
+=======
+                section.audioUrl = f"{audio_filename}"
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
                 print(f"Audio Generation Successful")
                 print(f"Audio URL set: {section.audioUrl}")
             except Exception as e:
