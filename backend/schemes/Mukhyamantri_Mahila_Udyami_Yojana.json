@@ -1,0 +1,74 @@
+{
+  "scheme_name": "Mukhyamantri Mahila Udyami Yojana",
+  "location": "Bihar",
+  "tags": [
+    "Women Empowerment",
+    "Entrepreneurship",
+    "Financial Assistance",
+    "Self-Employment"
+  ],
+  "description": "The Mukhyamantri Mahila Udyami Yojana in Bihar empowers women by providing financial assistance and training to establish micro-enterprises. The scheme aims to promote women entrepreneurship and economic independence.",
+  "key_features": [
+    "Financial support for micro-enterprise setup",
+    "Free training and skill development",
+    "Encourages women entrepreneurship"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 10 Lakhs per beneficiary, with 50% subsidy and 50% interest-free loan",
+    "training": "Free entrepreneurship and skill training"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women aged 18-50 years"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Bihar"
+    ],
+    "business_criteria": [
+      "Proposed business must be viable and sustainable"
+    ]
+  },
+  "eligible_activities": [
+    "Setting up micro-enterprises in manufacturing, services, or retail",
+    "Purchase of equipment, raw materials, or infrastructure",
+    "Skill development for entrepreneurship"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the Bihar Industries Department portal or scheme website",
+      "Register and submit an online application with a business plan",
+      "Upload required documents, including Aadhaar and residency proof",
+      "Applications are reviewed by a district-level committee",
+      "Approved beneficiaries receive funds and training"
+    ],
+    "note": "Applicants must complete mandatory training before fund disbursement"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Gender Proof (if required)",
+      "mandatory": false
+    },
+    {
+      "document": "Business Plan",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "The loan component is interest-free and repayable over 5 years",
+    "Priority is given to women from economically weaker sections",
+    "Beneficiaries are monitored for proper fund utilization"
+  ]
+}

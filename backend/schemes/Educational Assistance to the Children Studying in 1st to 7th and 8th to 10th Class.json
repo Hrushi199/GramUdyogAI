@@ -1,0 +1,87 @@
+{
+  "scheme_name": "Educational Assistance to the Children Studying in 1st to 7th and 8th to 10th Class",
+  "location": "Maharashtra",
+  "tags": [
+    "Financial Assistance",
+    "Scholarship",
+    "Primary Education",
+    "Secondary Education"
+  ],
+  "description": "This scheme in Maharashtra provides financial assistance to children studying in classes 1st to 7th and 8th to 10th to support their education. The scheme targets economically disadvantaged students to reduce dropout rates and promote primary and secondary education.",
+  "key_features": [
+    "Financial support for students in classes 1st to 10th",
+    "Covers economically weaker sections",
+    "Implemented by the Maharashtra government",
+    "Supports school fees and educational materials"
+  ],
+  "benefits": {
+    "assistance_amount": "Varies based on class and state guidelines",
+    "coverage": "School fees, books, uniforms, and other expenses"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students enrolled in classes 1st to 7th or 8th to 10th",
+      "Must be studying in recognized schools in Maharashtra"
+    ],
+    "additional_criteria": [
+      "Must be a resident of Maharashtra",
+      "Annual family income must not exceed state-specified limit (typically Rs. 2.5 Lakhs)"
+    ],
+    "admission_requirement": "Enrolled in recognized schools",
+    "institution_criteria": [
+      "Government or recognized private schools in Maharashtra"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Primary education (Classes 1-7)",
+    "Secondary education (Classes 8-10)"
+  ],
+  "application_process": {
+    "mode": "Online/Offline",
+    "steps": [
+      "Visit the Maharashtra scholarship portal or school office",
+      "Fill out the application form",
+      "Submit required documents",
+      "Verification by school or state authorities",
+      "Assistance disbursed to eligible students"
+    ],
+    "note": "Check with school or portal for application deadlines"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": true,
+      "note": "To prove family income below state-specified limit"
+    },
+    {
+      "document": "School Enrollment Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Marksheet (Previous class)",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    },
+    {
+      "document": "Domicile Certificate",
+      "mandatory": true,
+      "note": "To prove Maharashtra residency"
+    }
+  ],
+  "special_notes": [
+    "Assistance amount varies based on class level",
+    "Renewal requires proof of continued enrollment",
+    "Limited to students in recognized Maharashtra schools"
+  ]
+}

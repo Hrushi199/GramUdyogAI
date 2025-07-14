@@ -1,0 +1,15 @@
+uvicorn
+fastapi
+pydantic
+groq
+python-dotenv
+requests
+pillow
+e2enetworks
+yt_dlp
+youtube_transcript_api
+scipy
+python-multipart
+bcrypt
+PyJWT
+email-validator

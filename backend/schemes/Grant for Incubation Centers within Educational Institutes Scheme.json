@@ -1,0 +1,71 @@
+{
+  "scheme_name": "Grant for Incubation Centers within Educational Institutes Scheme",
+  "location": "Goa",
+  "tags": [
+    "Financial Grant",
+    "Innovation",
+    "Higher Education",
+    "Incubation Centers"
+  ],
+  "description": "This scheme in Goa provides grants to educational institutions to establish incubation centers to promote innovation and entrepreneurship among students. The scheme aims to foster a startup ecosystem within colleges and universities.",
+  "key_features": [
+    "Grants for setting up incubation centers",
+    "Targets educational institutions in Goa",
+    "Implemented by the Goa government",
+    "Promotes innovation and entrepreneurship"
+  ],
+  "benefits": {
+    "grant_amount": "Varies based on institution and proposal",
+    "coverage": "Infrastructure, equipment, and operational costs for incubation centers"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Educational institutions offering higher education (colleges, universities)",
+      "Must have a proposal for an incubation center"
+    ],
+    "additional_criteria": [
+      "Institution must be located in Goa",
+      "Must be recognized by UGC, AICTE, or equivalent"
+    ],
+    "admission_requirement": "Not applicable (institutional scheme)",
+    "institution_criteria": [
+      "Recognized colleges and universities in Goa"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Not applicable (scheme supports infrastructure, not specific courses)"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain application form from the Goa Department of Education or relevant authority",
+      "Submit detailed proposal for incubation center",
+      "Verification and evaluation by the department",
+      "Grant disbursed to approved institutions"
+    ],
+    "note": "Contact the department for application guidelines"
+  },
+  "required_documents": [
+    {
+      "document": "Institutional Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Incubation Center Proposal",
+      "mandatory": true
+    },
+    {
+      "document": "Recognition Certificate (UGC/AICTE)",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details (Institution)",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Scheme supports institutions, not individual students",
+    "Grant amount depends on the proposed incubation center’s scope",
+    "Aimed at fostering entrepreneurship and innovation"
+  ]
+}

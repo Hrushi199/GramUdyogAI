@@ -1,0 +1,21 @@
+{
+  "title": "Ask for help",
+  "buttons": {
+    "speak": "🎤 Speak",
+    "askAssistant": "Ask Assistant"
+  },
+  "labels": {
+    "transcribed": "Transcribed:",
+    "assistant": "Assistant:",
+    "requestToLLM": "Request to LLM:"
+  },
+  "placeholders": {
+    "typeOrSpeak": "Type or speak your request..."
+  },
+  "status": {
+    "processing": "Processing..."
+  },
+  "alerts": {
+    "speechNotSupported": "Speech recognition not supported in this browser."
+  }
+}

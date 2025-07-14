@@ -1,0 +1,88 @@
+{
+  "scheme_name": "Shaikshanik Chatravriti Yojana",
+  "location": "Madhya Pradesh",
+  "tags": [
+    "Scholarship",
+    "Financial Assistance",
+    "Higher Education",
+    "OBC Students"
+  ],
+  "description": "The Shaikshanik Chatravriti Yojana, implemented by the Backward Classes and Minorities Welfare Department of Madhya Pradesh, provides scholarships to students from Other Backward Classes (OBC) to pursue higher education. The scheme aims to support meritorious OBC students by covering educational expenses, thereby promoting access to quality education.",
+  "key_features": [
+    "Scholarships for OBC students pursuing higher education",
+    "Covers tuition fees and other educational expenses",
+    "Implemented through the state education department",
+    "Aims to reduce dropout rates among OBC students"
+  ],
+  "benefits": {
+    "scholarship_amount": "Varies based on course and institution",
+    "coverage": "Tuition fees, maintenance allowance, and other academic expenses"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students enrolled in recognized higher education courses (graduate/postgraduate)",
+      "Courses must be approved by UGC, AICTE, or equivalent"
+    ],
+    "additional_criteria": [
+      "Applicant must belong to Other Backward Classes (OBC) as per Madhya Pradesh government norms",
+      "Annual family income must not exceed Rs. 3 Lakhs",
+      "Must be a resident of Madhya Pradesh"
+    ],
+    "admission_requirement": "Admission to recognized institutions through merit or entrance tests",
+    "institution_criteria": [
+      "Government or recognized private institutions in India"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Graduate and postgraduate courses in arts, science, commerce, engineering, medical, etc.",
+    "Professional courses like B.Tech, MBBS, MBA, etc.",
+    "Other courses approved by regulatory bodies"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the official Madhya Pradesh scholarship portal",
+      "Register with personal and academic details",
+      "Fill out the scholarship application form",
+      "Upload required documents and submit the application",
+      "Track application status through the portal"
+    ],
+    "note": "Ensure timely submission as per academic year deadlines"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "OBC Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": true,
+      "note": "To prove family income below Rs. 3 Lakhs"
+    },
+    {
+      "document": "Admission Letter",
+      "mandatory": true
+    },
+    {
+      "document": "Marksheets (10th, 12th, or last qualifying exam)",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Scholarship amount varies depending on the course and institution",
+    "Renewal requires submission of academic progress reports",
+    "Applicable only for students studying in recognized institutions"
+  ]
+}

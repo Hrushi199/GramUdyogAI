@@ -1,0 +1,81 @@
+{
+    "pageTitle": "ସରକାରୀ ଯୋଜନାଗୁଡିକୁ ଖୋଜନ୍ତୁ",
+    "pageDescription": "ଆପଣଙ୍କର ବୃତ୍ତିକୁ ପଞ୍ଜୀକରଣ କରନ୍ତୁ ଏବଂ ଆପଣଙ୍କର ବୃଦ୍ଧି ଓ ସଫଳତା ପାଇଁ ସରକାରୀ ଯୋଜନାଗୁଡିକୁ ଖୋଜନ୍ତୁ।",
+    "form": {
+      "occupationLabel": "ଆପଣଙ୍କର ବୃତ୍ତି ଦାଖଲ କରନ୍ତୁ:",
+      "occupationPlaceholder": "ଉଦାହରଣ: କିସାନ, ଶିକ୍ଷକ",
+      "submitButton": "ସୁପରିଶ ପ୍ରାପ୍ତ କରନ୍ତୁ"
+    },
+    "loading": "ସୁପରିଶ ଲୋଡ୍ ହେଉଛି...",
+    "recommendedSchemes": "ସୁପରିଶ କରାଯାଇଥିବା ଯୋଜନାଗୁଡିକ",
+    "scheme": {
+      "goal": "ଲକ୍ଷ୍ୟ",
+      "benefits": "ଫାଇଦା",
+      "eligibility": "ଯୋଗ୍ୟତା",
+      "howToApply": "କିପରି ଆବେଦନ କରିବେ",
+      "specialFeatures": "ବିଶେଷ ବିଶେଷତା",
+      "viewFullDetails": "ପୂର୍ଣ୍ଣ ତଥ୍ୟ ଦେଖନ୍ତୁ"
+    },
+    "noExplanation": "କୌଣସି ବିବରଣୀ ଦିଆଯାଇନି।",
+    "noData": "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ତଥ୍ୟ ମିଳିନି। ଦୟାକରି ସୁପରିଶ ପ୍ରାପ୍ତ କରିବା ପାଇଁ ଫର୍ମ ସମର୍ପିତ କରନ୍ତୁ।",
+    "modal": {
+      "schemeDetails": "ୟୋଜନା ବିବରଣୀ",
+      "fields": {
+        "scheme_name": "ୟୋଜନାର ନାମ",
+        "goal": "ଲକ୍ଷ୍ୟ",
+        "benefit": "ଫାଇଦା",
+        "eligibility": "ଯୋଗ୍ୟତା",
+        "application_process": "ଆବେଦନ ପ୍ରକ୍ରିୟା",
+        "special_features": "ବିଶେଷ ବିଶେଷତା",
+        "description": "ବିବରଣୀ",
+        "website": "ଉଇବସାଇଟ୍",
+        "contact": "ସଂପର୍କ",
+        "location": "ସ୍ଥାନ",
+        "tags": "ଟ୍ୟାଗ୍ସ",
+        "key_features": "ପ୍ରମୁଖ ବିଶେଷତା",
+        "benefits_details": {
+          "interest_subsidy": "ବ୍ୟାଜ ସହାୟତା",
+          "maximum_loan_amount": "ସର୍ବୋଚ୍ଚ ଋଣ ରାଶି",
+          "moratorium_period": "ମୋରେଟୋରିୟମ୍ ସମୟ",
+          "knowledge_transfer": "ଜ୍ଞାନ ସ୍ଥାନାନ୍ତର",
+          "productivity_improvement": "ଉତ୍ପାଦନ ସମ୍ପ୍ରସାରଣ"
+        },
+        "eligibility_details": {
+          "education_criteria": "ଶିକ୍ଷା ପରିମାଣ",
+          "additional_criteria": "ଅତିରିକ୍ତ ପରିମାଣ",
+          "admission_requirement": "ପ୍ରବେଶ ଆବଶ୍ୟକତା",
+          "institution_criteria": "ସଂସ୍ଥା ପରିମାଣ",
+          "criteria": "ପରିମାଣ"
+        },
+        "eligible_courses": "ଯୋଗ୍ୟ ଅଧ୍ୟୟନ କୋର୍ସ",
+        "application_details": {
+          "mode": "ମୋଡ୍",
+          "steps": "ପଦକ୍ଷେପ",
+          "note": "ଟିପ୍ପଣୀ"
+        },
+        "required_documents": "ଆବଶ୍ୟକ ଦସ୍ତାବେଜ",
+        "document_fields": {
+          "document": "ଦସ୍ତାବେଜ",
+          "mandatory": "ଆବଶ୍ୟକ",
+          "note": "ଟିପ୍ପଣୀ"
+        },
+        "special_notes": "ବିଶେଷ ଟିପ୍ପଣୀ",
+        "document": "ଦସ୍ତାବେଜ",
+        "mandatory": "ଆବଶ୍ୟକ",
+        "note": "ଟିପ୍ପଣୀ",
+        "mode": "ମୋଡ୍",
+        "steps": "ପଦକ୍ଷେପ",
+        "interest_subsidy": "ବ୍ୟାଜ ସହାୟତା",
+        "maximum_loan_amount": "ସର୍ବୋଚ୍ଚ ଋଣ ରାଶି",
+        "moratorium_period": "ମୋରେଟୋରିୟମ୍ ସମୟ",
+        "knowledge_transfer": "ଜ୍ଞାନ ସ୍ଥାନାନ୍ତର",
+        "productivity_improvement": "ଉତ୍ପାଦନ ସମ୍ପ୍ରସାରଣ",
+        "education_criteria": "ଶିକ୍ଷା ପରିମାଣ",
+        "additional_criteria": "ଅତିରିକ୍ତ ପରିମାଣ",
+        "admission_requirement": "ପ୍ରବେଶ ଆବଶ୍ୟକତା",
+        "institution_criteria": "ସଂସ୍ଥା ପରିମାଣ",
+        "criteria": "ପରିମାଣ"
+      }
+    }
+  }
+  

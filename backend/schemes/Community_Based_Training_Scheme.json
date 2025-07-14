@@ -1,0 +1,76 @@
+{
+  "scheme_name": "Community Based Training Scheme",
+  "location": "Karnataka",
+  "tags": [
+    "Skill Training",
+    "Women Empowerment",
+    "Vocational Courses",
+    "Self-Employment"
+  ],
+  "description": "The Community Based Training Scheme in Karnataka provides training in various vocational courses for women to promote self-employment and employability. It targets rural and urban women to enhance their economic independence.",
+  "key_features": [
+    "Free vocational training in multiple trades",
+    "Focus on women\u00e2\u20ac\u2122s employability",
+    "Community-based training centers"
+  ],
+  "benefits": {
+    "training": "Free vocational training for 3-6 months",
+    "certification": "Certificate upon course completion",
+    "stipend": "Monthly stipend during training, up to Rs. 1,000"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women aged 18-45 years"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Karnataka"
+    ],
+    "economic_criteria": [
+      "Preference for women from low-income households"
+    ]
+  },
+  "eligible_activities": [
+    "Training in trades like tailoring, computer skills, or beauty services",
+    "Setting up self-employment ventures post-training",
+    "Participating in job placement programs"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the District Women and Child Development Office",
+      "Submit the application with proof of eligibility",
+      "Attach required documents, including Aadhaar and residency proof",
+      "Applications are reviewed by the department",
+      "Selected candidates are enrolled in training programs"
+    ],
+    "note": "Applicants must commit to completing the training program"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": false,
+      "required_when": "For priority consideration"
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Training is conducted at community centers",
+    "Priority is given to women from rural areas",
+    "Attendance is mandatory for certification"
+  ]
+}

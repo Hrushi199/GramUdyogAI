@@ -1,0 +1,76 @@
+{
+  "scheme_name": "Dalit Bandhu",
+  "location": "Telangana",
+  "tags": [
+    "Financial Assistance",
+    "Entrepreneurship",
+    "Dalit Empowerment",
+    "Self-Employment"
+  ],
+  "description": "Dalit Bandhu is a flagship scheme by the Telangana government to empower Dalit families by providing financial assistance for entrepreneurship and self-employment. The scheme aims to promote economic inclusion and uplift Scheduled Caste (SC) communities through sustainable livelihoods.",
+  "key_features": [
+    "One-time financial assistance for business setup",
+    "Support for diverse entrepreneurial activities",
+    "Promotes economic empowerment of Dalit families"
+  ],
+  "benefits": {
+    "financial_assistance": "Rs. 10 Lakhs per beneficiary for business setup",
+    "training": "Free entrepreneurship and skill training",
+    "market_linkages": "Support for market access and business promotion"
+  },
+  "eligibility": {
+    "community_criteria": [
+      "Must belong to the Scheduled Caste (SC) community"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Telangana"
+    ],
+    "business_criteria": [
+      "Proposed business must be viable and sustainable",
+      "Must submit a business plan"
+    ]
+  },
+  "eligible_activities": [
+    "Setting up businesses in agriculture, manufacturing, services, or retail",
+    "Purchase of equipment, raw materials, or infrastructure",
+    "Skill development and capacity building"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the District Collector\u00e2\u20ac\u2122s office or SC Welfare Department",
+      "Submit a detailed business plan with the application",
+      "Attach required documents, including caste certificate and residency proof",
+      "Applications are reviewed by a district-level committee",
+      "Approved beneficiaries receive funds and support"
+    ],
+    "note": "Beneficiaries must attend mandatory training sessions"
+  },
+  "required_documents": [
+    {
+      "document": "Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Business Plan",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "The scheme is limited to one beneficiary per Dalit family",
+    "Funds are disbursed directly to the beneficiary\u00e2\u20ac\u2122s bank account",
+    "Monitoring committees ensure proper utilization of funds"
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "scheme_name": "Education Loan Scheme",
+  "location": "Pan India",
+  "tags": [
+    "Education Loan",
+    "Financial Assistance",
+    "Higher Education",
+    "Vocational Education"
+  ],
+  "description": "The Education Loan Scheme by the National Backward Classes Finance and Development Corporation (NBCFDC) provides financial assistance to students from Other Backward Classes (OBCs) to pursue professional or technical education at graduate and higher levels, including vocational courses. The scheme aims to promote educational advancement among OBC students by offering loans at concessional rates to support their academic pursuits.",
+  "key_features": [
+    "Loans provided at concessional interest rates",
+    "Covers professional, technical, and vocational courses",
+    "Implemented through State Channelising Agencies (SCAs) or Public Sector Banks",
+    "Loan repayment period up to 15 years after a moratorium period"
+  ],
+  "benefits": {
+    "maximum_loan_amount": "Up to Rs. 20 Lakhs for studies in India; Up to Rs. 30 Lakhs for studies abroad",
+    "interest_rate": "4% per annum for male students, 3.5% per annum for female students",
+    "moratorium_period": "6 months after course completion or securing a job, whichever is earlier"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students pursuing professional or technical courses at graduate or higher levels",
+      "Courses must be recognized by appropriate authorities (e.g., UGC, AICTE)"
+    ],
+    "additional_criteria": [
+      "Applicant must belong to Other Backward Classes (OBC) as per Central/State Government lists",
+      "Annual family income must not exceed Rs. 3 Lakhs"
+    ],
+    "admission_requirement": "Admission to recognized professional/technical/vocational courses",
+    "institution_criteria": [
+      "Recognized institutions in India or abroad approved by relevant regulatory bodies"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Professional courses like engineering, medical, law, management, etc.",
+    "Technical courses approved by AICTE, UGC, or equivalent bodies",
+    "Vocational courses leading to employment"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain application form from State Channelising Agency (SCA) or Public Sector Bank",
+      "Submit completed application with required documents to SCA/Bank",
+      "Loan sanction subject to verification and approval by SCA/Bank",
+      "Sign loan agreement upon approval"
+    ],
+    "note": "Contact SCA or nearest Public Sector Bank for detailed application process"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "OBC Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": true,
+      "note": "To prove family income below Rs. 3 Lakhs"
+    },
+    {
+      "document": "Admission Letter",
+      "mandatory": true,
+      "note": "From recognized institution"
+    },
+    {
+      "document": "Fee Structure",
+      "mandatory": true
+    },
+    {
+      "document": "Marksheets (10th, 12th, or last qualifying exam)",
+      "mandatory": true
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Loan covers tuition fees, books, equipment, and living expenses",
+    "Female students receive a 0.5% interest rate concession",
+    "Repayment starts after moratorium period, with flexible terms up to 15 years"
+  ]
+}

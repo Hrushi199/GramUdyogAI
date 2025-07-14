@@ -1,0 +1,35 @@
+{
+    "community": {
+      "title": "ସମୁଦାୟ ନେଟୱାର୍କ",
+      "subtitle": "ସହ ଉଦ୍ୟୋଗୀ, ମାର୍ଗଦର୍ଶକ ଏବଂ ସୁଯୋଗ ସହିତ ସଂଯୋଗ କରନ୍ତୁ",
+      "tabs": {
+        "feed": "ଫିଡ୍",
+        "connections": "ସଂଯୋଗ",
+        "mentors": "ମାର୍ଗଦର୍ଶକ",
+        "groups": "ଗୋଷ୍ଠୀ"
+      },
+      "loading": "ସମୁଦାୟ ଲୋଡ୍ ହେଉଛି...",
+      "feed": {
+        "create_post_placeholder": "ଏକ ଅପଡେଟ୍ ସେୟାର କରନ୍ତୁ କିମ୍ବା ଏକ ପ୍ରଶ୍ନ ପଚାରନ୍ତୁ...",
+        "post_button": "ପୋଷ୍ଟ",
+        "likes": "ଲାଇକ୍",
+        "comments": "ମନ୍ତବ୍ୟ"
+      },
+      "connections": {
+        "find_more": "ଅଧିକ ସଂଯୋଗ ଖୋଜନ୍ତୁ"
+      },
+      "mentors": {
+        "available": "ମାର୍ଗଦର୍ଶନ ପାଇଁ ଉପଲବ୍ଧ",
+        "unavailable": "ବର୍ତ୍ତମାନ ଉପଲବ୍ଧ ନାହିଁ",
+        "expertise": "ଦକ୍ଷତା:",
+        "request_mentorship": "ମାର୍ଗଦର୍ଶନ ପାଇଁ ଅନୁରୋଧ କରନ୍ତୁ",
+        "find_more": "ଅଧିକ ମାର୍ଗଦର୍ଶକ ଖୋଜନ୍ତୁ"
+      },
+      "groups": {
+        "members": "{{count}} ସଦସ୍ୟ",
+        "posts": "{{count}} ପୋଷ୍ଟ",
+        "join_group": "ଗୋଷ୍ଠୀରେ ଯୋଗ ଦିଅନ୍ତୁ",
+        "create_new": "ନୂଆ ଗୋଷ୍ଠୀ ତିଆରି କରନ୍ତୁ"
+      }
+    }
+  }

@@ -1,0 +1,47 @@
+{
+  "scheme_name": "RKVY Soil Health and Fertility - Soil Health Card",
+  "location": "Nationwide",
+  "tags": [
+    "Soil Health",
+    "Farmer Support",
+    "Sustainable Agriculture"
+  ],
+  "description": "The RKVY Soil Health and Fertility - Soil Health Card scheme promotes soil testing and nutrient management to improve soil health and agricultural productivity.",
+  "key_features": [
+    "Free soil testing and issuance of Soil Health Cards",
+    "Recommendations for nutrient management",
+    "Training on balanced fertilizer use"
+  ],
+  "benefits": {
+    "soil_testing": "Free soil analysis",
+    "productivity_improvement": "Optimized fertilizer use and higher yields"
+  },
+  "eligibility": {
+    "criteria": [
+      "Farmers across India",
+      "Priority to small and marginal farmers"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Contact local agriculture department or soil testing lab",
+      "Submit soil samples for testing",
+      "Receive Soil Health Card with recommendations"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Land Ownership Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Cards issued every 2 years",
+    "Promotes organic and bio-fertilizers"
+  ]
+}

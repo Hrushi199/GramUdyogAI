@@ -1,0 +1,75 @@
+{
+  "scheme_name": "Mahila Samriddhi Yojana",
+  "location": "Pan India",
+  "tags": [
+    "Women Entrepreneurs",
+    "Micro-Finance",
+    "SHGs",
+    "Backward Communities"
+  ],
+  "description": "The Mahila Samriddhi Yojana, implemented by the National Backward Classes Finance and Development Corporation, provides micro-finance to women entrepreneurs from backward communities through SHGs, promoting economic empowerment and self-reliance.",
+  "key_features": [
+    "Micro-finance for women\u00e2\u20ac\u2122s SHGs",
+    "Support for backward community women",
+    "Encourages entrepreneurship"
+  ],
+  "benefits": {
+    "loan_amount": "Up to Rs. 1.5 Lakhs per SHG member",
+    "interest_rate": "Subsidized interest rate, max 4% per annum",
+    "training": "Free entrepreneurship training"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women aged 18-55 years"
+    ],
+    "community_criteria": [
+      "Must belong to Other Backward Classes (OBC) or other notified backward communities"
+    ],
+    "group_criteria": [
+      "Members of registered SHGs"
+    ]
+  },
+  "eligible_activities": [
+    "Setting up SHG-based micro-enterprises",
+    "Accessing micro-finance for business activities",
+    "Participating in entrepreneurship training"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Form or join an SHG through the National Backward Classes Finance and Development Corporation",
+      "Submit an application through the SHG with a business plan",
+      "Attach required documents, including OBC certificate and SHG registration",
+      "Applications are reviewed by the corporation",
+      "Approved SHGs receive micro-finance"
+    ],
+    "note": "Applications are processed through SHGs"
+  },
+  "required_documents": [
+    {
+      "document": "OBC Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "SHG Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card (SHG Members)",
+      "mandatory": true
+    },
+    {
+      "document": "Business Plan",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details (SHG Account)",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Loans are provided through SHGs, not individuals",
+    "SHGs must undergo financial literacy training",
+    "Priority is given to viable business plans"
+  ]
+}

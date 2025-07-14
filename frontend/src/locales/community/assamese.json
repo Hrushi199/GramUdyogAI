@@ -1,0 +1,35 @@
+{
+    "community": {
+      "title": "সম্প্ৰদায় নেটৱৰ্ক",
+      "subtitle": "সহ উদ্যোগী, পৰামৰ্শদাতা আৰু সুযোগৰ সৈতে সংযোগ কৰক",
+      "tabs": {
+        "feed": "ফিড",
+        "connections": "সংযোগ",
+        "mentors": "পৰামৰ্শদাতা",
+        "groups": "গোট"
+      },
+      "loading": "সম্প্ৰদায় লোড হৈ আছে...",
+      "feed": {
+        "create_post_placeholder": "এটা আপডেট শ্বেয়াৰ কৰক বা এটা প্ৰশ্ন সুধিব...",
+        "post_button": "পোষ্ট",
+        "likes": "লাইক",
+        "comments": "মন্তব্য"
+      },
+      "connections": {
+        "find_more": "অধিক সংযোগ বিচাৰক"
+      },
+      "mentors": {
+        "available": "পৰামৰ্শৰ বাবে উপলব্ধ",
+        "unavailable": "বৰ্তমান উপলব্ধ নহয়",
+        "expertise": "দক্ষতা:",
+        "request_mentorship": "পৰামৰ্শৰ বাবে অনুৰোধ কৰক",
+        "find_more": "অধিক পৰামৰ্শদাতা বিচাৰক"
+      },
+      "groups": {
+        "members": "{{count}} সদস্য",
+        "posts": "{{count}} পোষ্ট",
+        "join_group": "গোটত যোগদান কৰক",
+        "create_new": "নতুন গোট সৃষ্টি কৰক"
+      }
+    }
+  }

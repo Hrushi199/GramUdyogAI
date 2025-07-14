@@ -1,0 +1,73 @@
+{
+  "scheme_name": "Banglashree for Micro, Small and Medium Enterprises: Subsidy for Work Force Welfare Assistance",
+  "location": "West Bengal",
+  "tags": [
+    "Financial Assistance",
+    "MSME",
+    "Workforce Welfare",
+    "Subsidy"
+  ],
+  "description": "The Banglashree scheme in West Bengal provides subsidies to MSMEs for workforce welfare measures, such as health insurance, safety equipment, and training. It aims to improve employee well-being and productivity in MSMEs.",
+  "key_features": [
+    "Subsidies for workforce welfare initiatives",
+    "Support for employee health and safety",
+    "Enhances MSME productivity"
+  ],
+  "benefits": {
+    "subsidy": "Up to Rs. 2 Lakhs per MSME for workforce welfare measures",
+    "training_support": "Funding for employee skill development"
+  },
+  "eligibility": {
+    "business_criteria": [
+      "Must be a registered MSME as per the MSME Development Act, 2006",
+      "Must be located in West Bengal"
+    ],
+    "operational_criteria": [
+      "Must implement workforce welfare measures like health insurance or safety equipment",
+      "Must have a minimum of 5 employees"
+    ]
+  },
+  "eligible_activities": [
+    "Providing health insurance or medical benefits to employees",
+    "Purchasing safety equipment for workers",
+    "Conducting employee training programs"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the West Bengal MSME portal or Banglashree scheme website",
+      "Submit an online application with details of welfare measures",
+      "Upload required documents, including MSME registration and expense details",
+      "Applications are reviewed by the District Industries Centre (DIC)",
+      "Approved applicants receive the subsidy upon verification"
+    ],
+    "note": "Applicants must provide proof of welfare measure implementation"
+  },
+  "required_documents": [
+    {
+      "document": "Udyam Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Details of Workforce Welfare Measures",
+      "mandatory": true
+    },
+    {
+      "document": "Expense Receipts/Invoices",
+      "mandatory": true
+    },
+    {
+      "document": "Employee Details (Minimum 5)",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "The subsidy is limited to approved welfare measures",
+    "MSMEs must maintain records of employee benefits",
+    "Priority is given to MSMEs with high employee retention"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "scheme_name": "Su-Swastha Yojna - Sikkim",
+  "location": "Sikkim",
+  "tags": [
+    "Health Insurance",
+    "Cashless Treatment",
+    "Family Coverage"
+  ],
+  "description": "Su-Swastha Yojna provides cashless health insurance for residents of Sikkim, covering hospitalization and critical illnesses.",
+  "key_features": [
+    "Coverage up to Rs. 5 lakh per family per year",
+    "Covers secondary and tertiary care",
+    "Cashless treatment in empanelled hospitals"
+  ],
+  "benefits": {
+    "coverage_amount": "Up to Rs. 5 Lakh per family per year",
+    "hospital_types": "Empanelled public and private hospitals"
+  },
+  "eligibility": {
+    "criteria": [
+      "Residents of Sikkim",
+      "Families not covered under other health schemes"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Register at empanelled hospital or health centers",
+      "Submit residency proof and ID",
+      "Receive health card"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Proof",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Focus on uncovered families in Sikkim"
+  ]
+}

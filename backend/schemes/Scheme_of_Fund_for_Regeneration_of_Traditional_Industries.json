@@ -1,0 +1,51 @@
+{
+  "scheme_name": "Scheme of Fund for Regeneration of Traditional Industries",
+  "location": "Nationwide",
+  "tags": [
+    "Traditional Industries",
+    "Financial Assistance",
+    "Cluster Development"
+  ],
+  "description": "The Scheme of Fund for Regeneration of Traditional Industries (SFURTI) supports the development of traditional industry clusters, including agro-based industries, to enhance employment and income.",
+  "key_features": [
+    "Financial support for cluster development",
+    "Infrastructure and marketing support",
+    "Training and capacity building"
+  ],
+  "benefits": {
+    "financial_support": "Up to Rs. 2.5 crore per cluster",
+    "employment_generation": "Increased jobs in traditional industries"
+  },
+  "eligibility": {
+    "criteria": [
+      "Traditional industry clusters and artisans",
+      "NGOs, cooperatives, and institutions supporting clusters"
+    ]
+  },
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Apply through SFURTI portal",
+      "Submit cluster proposal and documents",
+      "Approval by nodal agency"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Cluster Proposal",
+      "mandatory": true
+    },
+    {
+      "document": "Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Focus on agro-based and artisanal products",
+    "Aims for sustainable cluster growth"
+  ]
+}

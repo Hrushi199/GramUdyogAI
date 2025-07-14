@@ -1,0 +1,50 @@
+{
+  "scheme_name": "Sishu Sathi",
+  "location": "West Bengal",
+  "tags": [
+    "Child Health",
+    "Free Surgery",
+    "Pediatric Care"
+  ],
+  "description": "Sishu Sathi provides free surgical treatment for children with congenital anomalies and other serious conditions in empanelled hospitals.",
+  "key_features": [
+    "Free surgeries for children up to 12 years",
+    "Covers congenital anomalies and critical illnesses",
+    "Treatment in empanelled hospitals"
+  ],
+  "benefits": {
+    "treatment_coverage": "Free surgical procedures"
+  },
+  "eligibility": {
+    "criteria": [
+      "Children up to 12 years",
+      "Residents of West Bengal",
+      "Diagnosed with specified conditions"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Approach empanelled hospital",
+      "Submit medical diagnosis and ID",
+      "Treatment upon verification"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Birth Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Medical Diagnosis",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Focus on congenital and critical pediatric conditions"
+  ]
+}

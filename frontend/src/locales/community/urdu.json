@@ -1,0 +1,35 @@
+{
+    "community": {
+      "title": "کمیونٹی نیٹ ورک",
+      "subtitle": "ساتھی کاروباری افراد، مشیروں اور مواقع کے ساتھ رابطہ کریں",
+      "tabs": {
+        "feed": "فیڈ",
+        "connections": "رابطے",
+        "mentors": "مشیر",
+        "groups": "گروپس"
+      },
+      "loading": "کمیونٹی لوڈ ہو رہی ہے...",
+      "feed": {
+        "create_post_placeholder": "ایک اپ ڈیٹ شیئر کریں یا سوال پوچھیں...",
+        "post_button": "پوسٹ",
+        "likes": "لائکس",
+        "comments": "تبصرے"
+      },
+      "connections": {
+        "find_more": "مزید رابطے تلاش کریں"
+      },
+      "mentors": {
+        "available": "مشاورت کے لیے دستیاب",
+        "unavailable": "فی الحال دستیاب نہیں",
+        "expertise": "ماہر:",
+        "request_mentorship": "مشاورت کی درخواست کریں",
+        "find_more": "مزید مشیر تلاش کریں"
+      },
+      "groups": {
+        "members": "{{count}} اراکین",
+        "posts": "{{count}} پوسٹس",
+        "join_group": "گروپ میں شامل ہوں",
+        "create_new": "نیا گروپ بنائیں"
+      }
+    }
+  }

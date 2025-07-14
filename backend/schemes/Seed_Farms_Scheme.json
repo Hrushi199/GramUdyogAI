@@ -1,0 +1,47 @@
+{
+  "scheme_name": "Seed Farms Scheme",
+  "location": "Meghalaya",
+  "tags": [
+    "Seed Production",
+    "Quality Seeds",
+    "Farmer Support"
+  ],
+  "description": "The Seed Farms Scheme in Meghalaya supports the production and distribution of quality seeds to enhance agricultural productivity.",
+  "key_features": [
+    "Development of seed farms for certified seeds",
+    "Subsidized seed distribution to farmers",
+    "Focus on local and high-yielding varieties"
+  ],
+  "benefits": {
+    "seed_access": "Quality certified seeds at subsidized rates",
+    "productivity_improvement": "Enhanced crop yields"
+  },
+  "eligibility": {
+    "criteria": [
+      "Farmers in Meghalaya",
+      "Preference for small and marginal farmers"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Contact local agriculture department",
+      "Apply for subsidized seeds",
+      "Distribution after verification"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Land Ownership Proof",
+      "mandatory": false
+    }
+  ],
+  "special_notes": [
+    "Focus on crops suited to Meghalaya\u2019s climate",
+    "Supports organic seed production"
+  ]
+}

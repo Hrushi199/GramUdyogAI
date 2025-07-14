@@ -1,0 +1,51 @@
+{
+  "scheme_name": "Krishak Bakri Palan Yojna",
+  "location": "Himachal Pradesh",
+  "tags": [
+    "Goat Rearing",
+    "Financial Assistance",
+    "Livelihood Support"
+  ],
+  "description": "Krishak Bakri Palan Yojna in Himachal Pradesh provides financial assistance to farmers for goat rearing to enhance rural livelihoods.",
+  "key_features": [
+    "Subsidies for purchasing goats",
+    "Training on goat management",
+    "Support for fodder and veterinary care"
+  ],
+  "benefits": {
+    "financial_support": "Subsidies for goat purchase and management",
+    "income_generation": "Additional income from goat rearing"
+  },
+  "eligibility": {
+    "criteria": [
+      "Farmers and rural households in Himachal Pradesh",
+      "Preference for small and marginal farmers"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Apply through local animal husbandry department",
+      "Submit identity and land documents",
+      "Approval and subsidy release"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Land Ownership Proof",
+      "mandatory": false
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Focus on local goat breeds",
+    "Veterinary support provided"
+  ]
+}

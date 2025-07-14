@@ -1,0 +1,43 @@
+{
+    "job_mentor_dashboard": {
+      "title": "{{name}} डैशबोर्ड",
+      "recreate_dashboard": "डैशबोर्ड पुनर्जनन करें",
+      "loading_error": "डैशबोर्ड लोड करने में विफल।",
+      "go_to_profile": "प्रोफाइल पर जाएं",
+      "visual_summary": {
+        "title": "दृश्य सारांश",
+        "click_to_view_all": "सभी अनुभाग देखने के लिए क्लिक करें",
+        "modal": {
+          "section_label": "अनुभाग {{current}} का {{total}}",
+          "close_aria_label": "बंद करें",
+          "previous_aria_label": "पिछला",
+          "next_aria_label": "अगला",
+          "go_to_section_aria_label": "अनुभाग {{section}} पर जाएं"
+        }
+      },
+      "csr_courses": {
+        "title": "अनुशंसित सीएसआर कोर्स",
+        "view_course": "कोर्स देखें"
+      },
+      "jobs": {
+        "title": "अनुशंसित नौकरियां",
+        "contact": "संपर्क करें"
+      },
+      "business_suggestions": {
+        "title": "व्यवसाय सुझाव",
+        "default_idea_name": "व्यवसाय विचार #{{index}}",
+        "business_type": "व्यवसाय का प्रकार",
+        "required_resources": "आवश्यक संसाधन",
+        "initial_steps": "प्रारंभिक कदम",
+        "why_it_suits": "यह आपके लिए क्यों उपयुक्त है"
+      },
+      "schemes": {
+        "title": "अनुशंसित योजनाएं",
+        "goal": "लक्ष्य",
+        "benefits": "लाभ",
+        "eligibility": "पात्रता",
+        "how_to_apply": "आवेदन कैसे करें",
+        "special_features": "विशेष सुविधाएं"
+      }
+    }
+  }

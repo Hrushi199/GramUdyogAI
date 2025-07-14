@@ -1,0 +1,52 @@
+{
+  "scheme_name": "Jharkhand Rajya Fasal Rahat Yojana",
+  "location": "Jharkhand",
+  "tags": [
+    "Crop Insurance",
+    "Financial Assistance",
+    "Farmer Welfare"
+  ],
+  "description": "Jharkhand Rajya Fasal Rahat Yojana provides financial assistance to farmers for crop losses due to natural calamities, replacing traditional crop insurance.",
+  "key_features": [
+    "Compensation for crop loss up to Rs. 4000 per acre",
+    "Covers natural calamities like drought and flood",
+    "Direct Benefit Transfer to farmers"
+  ],
+  "benefits": {
+    "compensation": "Up to Rs. 4000 per acre",
+    "coverage": "Crop losses due to natural calamities"
+  },
+  "eligibility": {
+    "criteria": [
+      "Farmers in Jharkhand",
+      "Registered on scheme portal",
+      "Cultivators of notified crops"
+    ]
+  },
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Register on JRFY portal",
+      "Submit crop and land details",
+      "Compensation credited after loss assessment"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Land Ownership Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "No premium payment required by farmers",
+    "Focus on small and marginal farmers"
+  ]
+}

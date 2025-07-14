@@ -1,0 +1,35 @@
+{
+    "community": {
+      "title": "Community Network",
+      "subtitle": "Connect with fellow entrepreneurs, mentors and opportunities",
+      "tabs": {
+        "feed": "Feed",
+        "connections": "Connections",
+        "mentors": "Mentors",
+        "groups": "Groups"
+      },
+      "loading": "Loading community...",
+      "feed": {
+        "create_post_placeholder": "Share an update or ask a question...",
+        "post_button": "Post",
+        "likes": "Likes",
+        "comments": "Comments"
+      },
+      "connections": {
+        "find_more": "Find more connections"
+      },
+      "mentors": {
+        "available": "Available for mentoring",
+        "unavailable": "Currently unavailable",
+        "expertise": "Expertise:",
+        "request_mentorship": "Request Mentorship",
+        "find_more": "Find more mentors"
+      },
+      "groups": {
+        "members": "{{count}} members",
+        "posts": "{{count}} posts",
+        "join_group": "Join Group",
+        "create_new": "Create new group"
+      }
+    }
+  }

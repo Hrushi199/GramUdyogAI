@@ -1,0 +1,52 @@
+{
+  "scheme_name": "Pradhan Mantri Krishi Sinchayee Yojana: Per Drop More Crop",
+  "location": "Nationwide",
+  "tags": [
+    "Micro-Irrigation",
+    "Water Efficiency",
+    "Crop Productivity"
+  ],
+  "description": "The Per Drop More Crop component of PMKSY, launched in 2015, promotes micro-irrigation systems like drip and sprinkler to enhance water use efficiency and crop productivity.",
+  "key_features": [
+    "Financial assistance for drip and sprinkler irrigation systems",
+    "Subsidies up to 55% for small farmers and 45% for others",
+    "Focus on water-scarce and rainfed areas"
+  ],
+  "benefits": {
+    "subsidy": "Up to 55% for small and marginal farmers",
+    "water_efficiency": "Improved water use and crop yield"
+  },
+  "eligibility": {
+    "criteria": [
+      "Farmers owning agricultural land",
+      "Priority to small and marginal farmers",
+      "Land less than 2 hectares for maximum subsidy"
+    ]
+  },
+  "application_process": {
+    "mode": "Online/Offline",
+    "steps": [
+      "Apply through PMKSY portal or state agriculture department",
+      "Submit land and identity documents",
+      "Verification and approval for subsidy"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Land Ownership Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Loan available for installation, interest-free for first two years",
+    "Convergence with state-specific irrigation schemes"
+  ]
+}

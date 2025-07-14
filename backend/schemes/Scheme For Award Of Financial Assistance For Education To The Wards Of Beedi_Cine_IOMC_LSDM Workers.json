@@ -1,0 +1,88 @@
+{
+  "scheme_name": "Scheme For Award Of Financial Assistance For Education To The Wards Of Beedi/Cine/IOMC/LSDM Workers – Pre & Post-Matric",
+  "location": "Pan India",
+  "tags": [
+    "Financial Assistance",
+    "Scholarship",
+    "School Education",
+    "Workers’ Children"
+  ],
+  "description": "This scheme provides financial assistance to the wards of Beedi, Cine, Iron Ore, Manganese Ore, Chrome Ore (IOMC), and Limestone & Dolomite Mines (LSDM) workers for education from pre-matric to post-matric levels. The scheme aims to support the education of children from these worker communities.",
+  "key_features": [
+    "Scholarships for pre-matric and post-matric education",
+    "Covers children of specified workers",
+    "Implemented by the Ministry of Labour and Employment",
+    "Promotes educational access for marginalized worker families"
+  ],
+  "benefits": {
+    "scholarship_amount": "Rs. 250 to Rs. 25,000 per year, depending on class and course",
+    "coverage": "School fees, books, uniforms, and other expenses"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students enrolled in classes 1 to 12 or post-matric courses (including ITI, diploma, degree)",
+      "Must be studying in recognized institutions"
+    ],
+    "additional_criteria": [
+      "Parent must be a Beedi, Cine, IOMC, or LSDM worker with at least 6 months of service",
+      "Annual family income must not exceed Rs. 1.2 Lakhs (Beedi/Cine) or Rs. 2 Lakhs (IOMC/LSDM)"
+    ],
+    "admission_requirement": "Enrolled in recognized schools or institutions",
+    "institution_criteria": [
+      "Government or recognized private schools/colleges in India"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Primary education (Classes 1-8)",
+    "Secondary education (Classes 9-10)",
+    "Higher secondary education (Classes 11-12)",
+    "Post-matric courses (ITI, diploma, degree)"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the National Scholarship Portal (scholarships.gov.in)",
+      "Register and fill out the application form",
+      "Upload required documents",
+      "Submit application and track status",
+      "Scholarship disbursed to eligible students"
+    ],
+    "note": "Apply within the academic year deadlines"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Worker Identity Card",
+      "mandatory": true,
+      "note": "Proof of Beedi/Cine/IOMC/LSDM employment"
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "School/College Enrollment Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Marksheet (Previous class)",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Scholarship amount varies by educational level",
+    "Renewal requires academic progress and reapplication",
+    "Applicable for both school and post-matric education"
+  ]
+}

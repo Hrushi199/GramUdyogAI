@@ -1,0 +1,75 @@
+{
+  "scheme_name": "Karkhandar Scheme For Development Of Craft Sector",
+  "location": "Jammu and Kashmir",
+  "tags": [
+    "Women Artisans",
+    "Skill Upgradation",
+    "Craft Sector",
+    "Self-Employment"
+  ],
+  "description": "The Karkhandar Scheme in Jammu and Kashmir provides skill upgradation training to women artisans in languishing crafts to revive traditional crafts and promote self-employment.",
+  "key_features": [
+    "Skill training in traditional crafts",
+    "Support for women artisans",
+    "Revival of languishing crafts"
+  ],
+  "benefits": {
+    "training": "Free skill upgradation training for 3-6 months",
+    "stipend": "Monthly stipend during training, up to Rs. 2,000",
+    "market_support": "Assistance for marketing craft products"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women aged 18-50 years"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Jammu and Kashmir"
+    ],
+    "occupation_criteria": [
+      "Must be engaged in traditional crafts"
+    ]
+  },
+  "eligible_activities": [
+    "Training in crafts like embroidery, weaving, or woodwork",
+    "Producing and marketing traditional craft products",
+    "Participating in craft exhibitions"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the District Handicrafts Department",
+      "Submit the application with proof of craft experience",
+      "Attach required documents, including Aadhaar and residency proof",
+      "Applications are reviewed by the department",
+      "Selected artisans are enrolled in training programs"
+    ],
+    "note": "Applicants must demonstrate craft skills"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Proof of Craft Experience",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Training focuses on languishing crafts",
+    "Priority is given to artisans from rural areas",
+    "Artisans must participate in exhibitions post-training"
+  ]
+}

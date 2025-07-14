@@ -1,0 +1,43 @@
+{
+    "job_mentor_dashboard": {
+      "title": "{{name}} डॅशबोर्ड",
+      "recreate_dashboard": "डॅशबोर्ड पुन्हा तयार करा",
+      "loading_error": "डॅशबोर्ड लोड करण्यात अयशस्वी.",
+      "go_to_profile": "प्रोफाइलवर जा",
+      "visual_summary": {
+        "title": "दृश्य सारांश",
+        "click_to_view_all": "सर्व विभाग पाहण्यासाठी क्लिक करा",
+        "modal": {
+          "section_label": "विभाग {{current}} पैकी {{total}}",
+          "close_aria_label": "बंद करा",
+          "previous_aria_label": "मागील",
+          "next_aria_label": "पुढील",
+          "go_to_section_aria_label": "विभाग {{section}} वर जा"
+        }
+      },
+      "csr_courses": {
+        "title": "शिफारस केलेले सीएसआर कोर्सेस",
+        "view_course": "कोर्स पहा"
+      },
+      "jobs": {
+        "title": "शिफारस केलेल्या नोकऱ्या",
+        "contact": "संपर्क"
+      },
+      "business_suggestions": {
+        "title": "व्यवसाय सूचना",
+        "default_idea_name": "व्यवसाय कल्पना #{{index}}",
+        "business_type": "व्यवसायाचा प्रकार",
+        "required_resources": "आवश्यक संसाधने",
+        "initial_steps": "प्रारंभिक पायऱ्या",
+        "why_it_suits": "हे तुम्हाला का योग्य आहे"
+      },
+      "schemes": {
+        "title": "शिफारस केलेल्या योजना",
+        "goal": "उद्दिष्ट",
+        "benefits": "लाभ",
+        "eligibility": "पात्रता",
+        "how_to_apply": "अर्ज कसा करावा",
+        "special_features": "विशेष वैशिष्ट्ये"
+      }
+    }
+  }

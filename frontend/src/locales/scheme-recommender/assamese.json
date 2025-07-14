@@ -1,0 +1,81 @@
+{
+    "pageTitle": "চৰকাৰী যোজনাসমূহ আবিষ্কাৰ কৰক",
+    "pageDescription": "আপোনাৰ পেশা নিবন্ধন কৰক আৰু সেই পেশাৰ সহায়ৰ বাবে চৰকাৰী যোজনাসমূহ বিচাৰক।",
+    "form": {
+      "occupationLabel": "আপোনাৰ পেশা সন্নিৱিষ্ট কৰক:",
+      "occupationPlaceholder": "যেনে: কৃষক, শিক্ষক",
+      "submitButton": "সুপাৰিশসমূহ লাভ কৰক"
+    },
+    "loading": "সুপাৰিশসমূহ লোড হ’ব...",
+    "recommendedSchemes": "সুপাৰিশিত যোজনাসমূহ",
+    "scheme": {
+      "goal": "লক্ষ্য",
+      "benefits": "লাভসমূহ",
+      "eligibility": "যোগ্যতা",
+      "howToApply": "কিদৰে আবেদন কৰিব",
+      "specialFeatures": "বিশেষ বৈশিষ্ট্যসমূহ",
+      "viewFullDetails": "পূৰ্ণ বিৱৰণ চাওক"
+    },
+    "noExplanation": "কোনো বিৱৰণ উপলব্ধ নহয়।",
+    "noData": "এটা ডাটা লাভ কৰা হোৱা নাই। দয়া কৰি সুপারিশসমূহৰ বাবে ফৰ্ম দাখিল কৰক।",
+    "modal": {
+      "schemeDetails": "যোজনাৰ বিৱৰণ",
+      "fields": {
+        "scheme_name": "যোজনাৰ নাম",
+        "goal": "লক্ষ্য",
+        "benefit": "লাভ",
+        "eligibility": "যোগ্যতা",
+        "application_process": "আবেদনৰ প্ৰক্ৰিয়া",
+        "special_features": "বিশেষ বৈশিষ্ট্যসমূহ",
+        "description": "বিৱৰণ",
+        "website": "ৱেবছাইট",
+        "contact": "যোগাযোগ",
+        "location": "অৱস্থান",
+        "tags": "টেগছ",
+        "key_features": "মূখ্য বৈশিষ্ট্যসমূহ",
+        "benefits_details": {
+          "interest_subsidy": "ব्यাজ ভৰ্তি",
+          "maximum_loan_amount": "সৰ্বাধিক ঋণ পৰিমাণ",
+          "moratorium_period": "মৰেটৰিয়াম সময়সীমা",
+          "knowledge_transfer": "জ্ঞান সঞ্চাৰ",
+          "productivity_improvement": "উৎপাদনশীলতা উন্নতি"
+        },
+        "eligibility_details": {
+          "education_criteria": "শিক্ষাগত মাপকাঠি",
+          "additional_criteria": "অধিক মাপকাঠি",
+          "admission_requirement": "ভৰ্তিৰ প্ৰয়োজনীয়তা",
+          "institution_criteria": "প্ৰতিষ্ঠানৰ মাপকাঠি",
+          "criteria": "মাপকাঠি"
+        },
+        "eligible_courses": "যোগ্য কোর্সসমূহ",
+        "application_details": {
+          "mode": "পদ্ধতি",
+          "steps": "পদক্ষেপসমূহ",
+          "note": "টিপ্পনী"
+        },
+        "required_documents": "আৱশ্যক কাগজপত্ৰসমূহ",
+        "document_fields": {
+          "document": "কাগজপত্ৰ",
+          "mandatory": "আৱশ্যক",
+          "note": "টিপ্পনী"
+        },
+        "special_notes": "বিশেষ টিপ্পনী",
+        "document": "কাগজপত্ৰ",
+        "mandatory": "আৱশ্যক",
+        "note": "টিপ্পনী",
+        "mode": "পদ্ধতি",
+        "steps": "পদক্ষেপসমূহ",
+        "interest_subsidy": "ব্যাজ ভৰ্তি",
+        "maximum_loan_amount": "সৰ্বাধিক ঋণ পৰিমাণ",
+        "moratorium_period": "মৰেটৰিয়াম সময়সীমা",
+        "knowledge_transfer": "জ্ঞান সঞ্চাৰ",
+        "productivity_improvement": "উৎপাদনশীলতা উন্নতি",
+        "education_criteria": "শিক্ষাগত মাপকাঠি",
+        "additional_criteria": "অধিক মাপকাঠি",
+        "admission_requirement": "ভৰ্তিৰ প্ৰয়োজনীয়তা",
+        "institution_criteria": "প্ৰতিষ্ঠানৰ মাপকাঠি",
+        "criteria": "মাপকাঠি"
+      }
+    }
+  }
+  

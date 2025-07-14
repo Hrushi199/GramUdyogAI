@@ -1,0 +1,35 @@
+{
+    "community": {
+      "title": "সম্প্রদায় নেটওয়ার্ক",
+      "subtitle": "সহ উদ্যোক্তা, পরামর্শদাতা এবং সুযোগগুলির সাথে সংযোগ করুন",
+      "tabs": {
+        "feed": "ফিড",
+        "connections": "সংযোগ",
+        "mentors": "পরামর্শদাতা",
+        "groups": "গোষ্ঠী"
+      },
+      "loading": "সম্প্রদায় লোড হচ্ছে...",
+      "feed": {
+        "create_post_placeholder": "একটি আপডেট শেয়ার করুন বা একটি প্রশ্ন জিজ্ঞাসা করুন...",
+        "post_button": "পোস্ট",
+        "likes": "পছন্দ",
+        "comments": "মন্তব্য"
+      },
+      "connections": {
+        "find_more": "আরও সংযোগ খুঁজুন"
+      },
+      "mentors": {
+        "available": "পরামর্শের জন্য উপলব্ধ",
+        "unavailable": "বর্তমানে অনুপলব্ধ",
+        "expertise": "দক্ষতা:",
+        "request_mentorship": "পরামর্শের জন্য অনুরোধ করুন",
+        "find_more": "আরও পরামর্শদাতা খুঁজুন"
+      },
+      "groups": {
+        "members": "{{count}} সদস্য",
+        "posts": "{{count}} পোস্ট",
+        "join_group": "গোষ্ঠীতে যোগ দিন",
+        "create_new": "নতুন গোষ্ঠী তৈরি করুন"
+      }
+    }
+  }

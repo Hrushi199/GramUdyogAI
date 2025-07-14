@@ -1,0 +1,81 @@
+{
+    "pageTitle": "ਸਰਕਾਰੀ ਯੋਜਨਾਵਾਂ ਦੀ ਖੋਜ ਕਰੋ",
+    "pageDescription": "ਆਪਣਾ ਪੇਸ਼ਾ ਦਰਜ ਕਰੋ ਅਤੇ ਉਹ ਸਰਕਾਰੀ ਯੋਜਨਾਵਾਂ ਲੱਭੋ ਜੋ ਤੁਹਾਡੀ ਵਾਧੂ ਅਤੇ ਸਫਲਤਾ ਵਿੱਚ ਮਦਦ ਕਰ ਸਕਦੀਆਂ ਹਨ।",
+    "form": {
+      "occupationLabel": "ਆਪਣਾ ਪੇਸ਼ਾ ਦਰਜ ਕਰੋ:",
+      "occupationPlaceholder": "ਉਦਾਹਰਨ: ਕਿਸਾਨ, ਅਧਿਆਪਕ",
+      "submitButton": "ਸਿਫਾਰਸ਼ਾਂ ਪ੍ਰਾਪਤ ਕਰੋ"
+    },
+    "loading": "ਸਿਫਾਰਸ਼ਾਂ ਲੋਡ ਹੋ ਰਹੀਆਂ ਹਨ...",
+    "recommendedSchemes": "ਸਿਫਾਰਸ਼ ਕੀਤੀਆਂ ਯੋਜਨਾਵਾਂ",
+    "scheme": {
+      "goal": "ਲਕੜੀ",
+      "benefits": "ਲਾਭ",
+      "eligibility": "ਯੋਗਤਾ",
+      "howToApply": "ਅਰਜ਼ੀ ਕਿਵੇਂ ਦੇਣੀ ਹੈ",
+      "specialFeatures": "ਖਾਸ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ",
+      "viewFullDetails": "ਪੂਰੀ ਜਾਣਕਾਰੀ ਵੇਖੋ"
+    },
+    "noExplanation": "ਕੋਈ ਵਿਆਖਿਆ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।",
+    "noData": "ਹਾਲੇ ਤੱਕ ਕੋਈ ਡਾਟਾ ਪ੍ਰਾਪਤ ਨਹੀਂ ਹੋਇਆ। ਕਿਰਪਾ ਕਰਕੇ ਸਿਫਾਰਸ਼ਾਂ ਲਈ ਫਾਰਮ ਭਰੋ।",
+    "modal": {
+      "schemeDetails": "ਯੋਜਨਾ ਦੀ ਜਾਣਕਾਰੀ",
+      "fields": {
+        "scheme_name": "ਯੋਜਨਾ ਦਾ ਨਾਮ",
+        "goal": "ਲਕੜੀ",
+        "benefit": "ਲਾਭ",
+        "eligibility": "ਯੋਗਤਾ",
+        "application_process": "ਅਰਜ਼ੀ ਦੀ ਪ੍ਰਕਿਰਿਆ",
+        "special_features": "ਖਾਸ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ",
+        "description": "ਵਰਣਨ",
+        "website": "ਵੈੱਬਸਾਈਟ",
+        "contact": "ਸੰਪਰਕ",
+        "location": "ਸਥਾਨ",
+        "tags": "ਟੈਗ",
+        "key_features": "ਮੁੱਖ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ",
+        "benefits_details": {
+          "interest_subsidy": "ਬਿਆਜ ਸਬਸਿਡੀ",
+          "maximum_loan_amount": "ਅਧਿਕਤਮ ਰਣ ਰਕਮ",
+          "moratorium_period": "ਮੋਰੈਟੋਰੀਅਮ ਪੀਰੀਅਡ",
+          "knowledge_transfer": "ਜਾਣਕਾਰੀ ਦਾ ਸਾਂਝਾ",
+          "productivity_improvement": "ਉਤਪਾਦਨਸ਼ੀਲਤਾ ਵਿੱਚ ਸੁਧਾਰ"
+        },
+        "eligibility_details": {
+          "education_criteria": "ਸਿੱਖਿਆ ਮਾਪਦੰਡ",
+          "additional_criteria": "ਵਾਧੂ ਮਾਪਦੰਡ",
+          "admission_requirement": "ਦਾਖਲਾ ਦੀ ਲੋੜ",
+          "institution_criteria": "ਸੰਸਥਾ ਮਾਪਦੰਡ",
+          "criteria": "ਮਾਪਦੰਡ"
+        },
+        "eligible_courses": "ਯੋਗ ਕੋਰਸ",
+        "application_details": {
+          "mode": "ਮੋਡ",
+          "steps": "ਕਦਮ",
+          "note": "ਨੋਟ"
+        },
+        "required_documents": "ਲੋੜੀਂਦੇ ਦਸਤਾਵੇਜ਼",
+        "document_fields": {
+          "document": "ਦਸਤਾਵੇਜ਼",
+          "mandatory": "ਲਾਜ਼ਮੀ",
+          "note": "ਨੋਟ"
+        },
+        "special_notes": "ਖਾਸ ਨੋਟ",
+        "document": "ਦਸਤਾਵੇਜ਼",
+        "mandatory": "ਲਾਜ਼ਮੀ",
+        "note": "ਨੋਟ",
+        "mode": "ਮੋਡ",
+        "steps": "ਕਦਮ",
+        "interest_subsidy": "ਬਿਆਜ ਸਬਸਿਡੀ",
+        "maximum_loan_amount": "ਅਧਿਕਤਮ ਰਣ ਰਕਮ",
+        "moratorium_period": "ਮੋਰੈਟੋਰੀਅਮ ਪੀਰੀਅਡ",
+        "knowledge_transfer": "ਜਾਣਕਾਰੀ ਦਾ ਸਾਂਝਾ",
+        "productivity_improvement": "ਉਤਪਾਦਨਸ਼ੀਲਤਾ ਵਿੱਚ ਸੁਧਾਰ",
+        "education_criteria": "ਸਿੱਖਿਆ ਮਾਪਦੰਡ",
+        "additional_criteria": "ਵਾਧੂ ਮਾਪਦੰਡ",
+        "admission_requirement": "ਦਾਖਲਾ ਦੀ ਲੋੜ",
+        "institution_criteria": "ਸੰਸਥਾ ਮਾਪਦੰਡ",
+        "criteria": "ਮਾਪਦੰਡ"
+      }
+    }
+  }
+  

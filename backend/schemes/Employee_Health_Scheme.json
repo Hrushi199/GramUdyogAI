@@ -1,0 +1,47 @@
+{
+  "scheme_name": "Employee Health Scheme",
+  "location": "Andhra Pradesh",
+  "tags": [
+    "Health Insurance",
+    "Government Employees",
+    "Cashless Treatment"
+  ],
+  "description": "The Employee Health Scheme provides cashless medical treatment for state government employees and their dependents in empanelled hospitals.",
+  "key_features": [
+    "Covers major ailments and hospitalization",
+    "Cashless treatment in empanelled hospitals",
+    "Includes dependents of employees"
+  ],
+  "benefits": {
+    "treatment_coverage": "Major ailments and hospitalization",
+    "hospital_types": "Empanelled public and private hospitals"
+  },
+  "eligibility": {
+    "criteria": [
+      "State government employees",
+      "Pensioners and their dependents",
+      "Residents of Andhra Pradesh"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Register through employer",
+      "Obtain health card",
+      "Avail treatment at empanelled hospitals"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Employee ID",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Health card mandatory for availing benefits"
+  ]
+}

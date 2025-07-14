@@ -1,0 +1,45 @@
+{
+    "pageTitle": "एआई व्यापार सुझाव",
+    "pageDescription": "अपने कौशल साझा करें और अपनी विशेषज्ञता से मेल खाने वाले अनुकूलित व्यापार विचारों की खोज करें।",
+    "form": {
+      "skillsLabel": "अपने कौशल दर्ज करें:",
+      "skillsPlaceholder": "उदाहरण: वेब विकास, मार्केटिंग, खाना बनाना...",
+      "submitButton": "सुझाव प्राप्त करें"
+    },
+    "loading": "सुझाव लोड हो रहे हैं...",
+    "error": {
+      "generic": "कुछ गलत हो गया",
+      "connection": "सर्वर से कनेक्ट करने में त्रुटि।"
+    },
+    "businessIdeas": "व्यापार विचार:",
+    "businessDetails": {
+      "businessType": "व्यापार प्रकार",
+      "requiredResources": "आवश्यक संसाधन",
+      "initialSteps": "प्रारंभिक चरण",
+      "whyItSuits": "यह आपके लिए क्यों उपयुक्त है"
+    },
+    "actions": {
+      "translate": "अनुवाद करें",
+      "translating": "अनुवाद हो रहा है..."
+    },
+    "noSuggestions": "कोई सुझाव उपलब्ध नहीं है। कृपया अलग-अलग कौशल के साथ प्रयास करें।",
+    "detailedGuide": {
+      "title": "पूर्ण चरणबद्ध गाइड",
+      "totalCost": "कुल अनुमानित लागत",
+      "totalTime": "शुरू करने का समय",
+      "difficulty": "कठिनाई स्तर",
+      "profitPotential": "लाभ की संभावना",
+      "step": "चरण",
+      "estimatedTime": "अनुमानित समय",
+      "estimatedCost": "अनुमानित लागत",
+      "youtubeVideos": "सहायक वीडियो",
+      "shoppingLinks": "कहाँ से खरीदें",
+      "requiredDocuments": "आवश्यक दस्तावेज",
+      "documentProcess": "दस्तावेज प्रक्रिया",
+      "tips": "प्रो टिप्स",
+      "viewDetails": "विवरण देखें",
+      "hideDetails": "विवरण छुपाएं",
+      "openLink": "लिंक खोलें",
+      "watchVideo": "वीडियो देखें"
+    }
+  }

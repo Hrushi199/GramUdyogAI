@@ -1,0 +1,79 @@
+{
+  "scheme_name": "Tejaswini-the Radiant",
+  "location": "Jammu and Kashmir",
+  "tags": [
+    "Women Empowerment",
+    "Entrepreneurship",
+    "Financial Assistance",
+    "Self-Help Groups"
+  ],
+  "description": "Tejaswini-the Radiant is a scheme by the Jammu and Kashmir government aimed at empowering women by promoting entrepreneurship and self-employment. It provides financial assistance, training, and market linkages to women entrepreneurs and Self-Help Groups (SHGs) to establish sustainable micro-enterprises.",
+  "key_features": [
+    "Financial support for women to start micro-enterprises",
+    "Training and skill development for entrepreneurship",
+    "Market linkages and support for SHGs"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 5 Lakhs per beneficiary for setting up micro-enterprises",
+    "subsidy": "Up to 50% subsidy on project cost, subject to a maximum limit",
+    "training": "Free skill development and entrepreneurship training"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women aged 18-45 years"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Jammu and Kashmir"
+    ],
+    "group_criteria": [
+      "Individual women entrepreneurs or members of registered Self-Help Groups (SHGs)"
+    ],
+    "business_criteria": [
+      "Proposed micro-enterprise must be viable and sustainable"
+    ]
+  },
+  "eligible_activities": [
+    "Setting up micro-enterprises in sectors like handicrafts, agriculture, food processing, and services",
+    "Skill development and capacity building for entrepreneurship",
+    "Market promotion and networking for SHG products"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the District Development Commissioner\u00e2\u20ac\u2122s office or Jammu and Kashmir Entrepreneurship Development Institute (JKEDI)",
+      "Submit a detailed project proposal with business plan",
+      "Attach required documents, including proof of identity, residency, and SHG registration (if applicable)",
+      "Applications are reviewed by a district-level committee",
+      "Approved applicants receive funding and training support"
+    ],
+    "note": "Applicants must attend a mandatory entrepreneurship training program"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "SHG Registration Certificate",
+      "mandatory": false,
+      "required_when": "For SHG members"
+    },
+    {
+      "document": "Detailed Project Proposal",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Priority is given to women from economically weaker sections",
+    "The scheme encourages group-based enterprises through SHGs",
+    "Beneficiaries must undergo mandatory training before fund disbursement"
+  ]
+}

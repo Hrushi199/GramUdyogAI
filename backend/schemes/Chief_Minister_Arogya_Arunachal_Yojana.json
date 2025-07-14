@@ -1,0 +1,46 @@
+{
+  "scheme_name": "Chief Minister Arogya Arunachal Yojana",
+  "location": "Arunachal Pradesh",
+  "tags": [
+    "Health Insurance",
+    "Cashless Treatment",
+    "Family Coverage"
+  ],
+  "description": "Chief Minister Arogya Arunachal Yojana provides cashless health insurance of up to Rs. 5 lakh per family for hospitalization in empanelled hospitals.",
+  "key_features": [
+    "Coverage up to Rs. 5 lakh per family per year",
+    "Covers secondary and tertiary care",
+    "Cashless treatment in empanelled hospitals"
+  ],
+  "benefits": {
+    "coverage_amount": "Up to Rs. 5 Lakh per family per year",
+    "hospital_types": "Empanelled public and private hospitals"
+  },
+  "eligibility": {
+    "criteria": [
+      "Residents of Arunachal Pradesh",
+      "Families not covered under Ayushman Bharat"
+    ]
+  },
+  "application_process": {
+    "mode": "Online/Offline",
+    "steps": [
+      "Register through scheme portal or health centers",
+      "Submit documents for verification",
+      "Receive health card"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Ration Card",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Complements Ayushman Bharat for uncovered families"
+  ]
+}

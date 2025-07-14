@@ -1,0 +1,51 @@
+{
+  "scheme_name": "Subsidy Scheme On Establishment Of - 25 Kadaknath/R.I.R. Birds Unit To Scheduled Tribes (Gujarat)",
+  "location": "Gujarat",
+  "tags": [
+    "Poultry Farming",
+    "Scheduled Tribes",
+    "Subsidy",
+    "Kadaknath",
+    "RIR Birds"
+  ],
+  "description": "This scheme provides financial assistance to Scheduled Tribe individuals for establishing a poultry unit with 25 Kadaknath or R.I.R. birds to promote self-employment.",
+  "key_features": [
+    "Subsidy of Rs. 6,000 for 25 Kadaknath/R.I.R. birds unit",
+    "Support for Scheduled Tribe individuals"
+  ],
+  "benefits": {
+    "subsidy_amount": "Rs. 6,000",
+    "unit_size": "25 Kadaknath or R.I.R. birds"
+  },
+  "eligibility": {
+    "category_criteria": [
+      "Applicant must belong to Scheduled Tribes"
+    ],
+    "additional_criteria": "Must be a resident of Gujarat"
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Contact the Animal Husbandry Department",
+      "Submit application with required documents",
+      "Verification and approval"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Tribe Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residence Proof",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Option to choose between Kadaknath or R.I.R. birds"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+    "job_mentor_dashboard": {
+      "title": "{{name}} ڈیش بورڈ",
+      "recreate_dashboard": "ڈیش بورڈ دوبارہ بنائیں",
+      "loading_error": "ڈیش بورڈ لوڈ کرنے میں ناکام۔",
+      "go_to_profile": "پروفائل پر جائیں",
+      "visual_summary": {
+        "title": "بصری خلاصہ",
+        "click_to_view_all": "تمام حصوں کو دیکھنے کے لیے کلک کریں",
+        "modal": {
+          "section_label": "سیکشن {{current}} کا {{total}}",
+          "close_aria_label": "بند کریں",
+          "previous_aria_label": "پچھلا",
+          "next_aria_label": "اگلا",
+          "go_to_section_aria_label": "سیکشن {{section}} پر جائیں"
+        }
+      },
+      "csr_courses": {
+        "title": "تجویز کردہ سی ایس آر کورسز",
+        "view_course": "کورس دیکھیں"
+      },
+      "jobs": {
+        "title": "تجویز کردہ نوکریاں",
+        "contact": "رابطہ کریں"
+      },
+      "business_suggestions": {
+        "title": "کاروباری تجاویز",
+        "default_idea_name": "کاروباری خیال #{{index}}",
+        "business_type": "کاروبار کی قسم",
+        "required_resources": "درخواست کردہ وسائل",
+        "initial_steps": "ابتدائی اقدامات",
+        "why_it_suits": "یہ آپ کے لیے کیوں موزوں ہے"
+      },
+      "schemes": {
+        "title": "تجویز کردہ اسکیمیں",
+        "goal": "ہدف",
+        "benefits": "فوائد",
+        "eligibility": "اہلیت",
+        "how_to_apply": "درخواست کیسے کریں",
+        "special_features": "خصوصی خصوصیات"
+      }
+    }
+  }

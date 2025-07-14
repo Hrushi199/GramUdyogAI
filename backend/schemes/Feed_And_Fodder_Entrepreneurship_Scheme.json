@@ -1,0 +1,51 @@
+{
+  "scheme_name": "Feed And Fodder Entrepreneurship Scheme",
+  "location": "Mizoram",
+  "tags": [
+    "Fodder Production",
+    "Entrepreneurship",
+    "Livestock Support"
+  ],
+  "description": "The Feed and Fodder Entrepreneurship Scheme in Mizoram supports entrepreneurs in establishing fodder production units to ensure livestock feed availability.",
+  "key_features": [
+    "Financial assistance for fodder production units",
+    "Training on fodder cultivation and management",
+    "Support for seed and equipment"
+  ],
+  "benefits": {
+    "financial_support": "Subsidies for fodder production",
+    "livestock_support": "Improved feed availability"
+  },
+  "eligibility": {
+    "criteria": [
+      "Farmers, entrepreneurs, and cooperatives in Mizoram",
+      "Interest in fodder production"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Apply through animal husbandry department",
+      "Submit project plan and documents",
+      "Approval and subsidy release"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Project Proposal",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Focus on sustainable fodder production",
+    "Supports local livestock economy"
+  ]
+}

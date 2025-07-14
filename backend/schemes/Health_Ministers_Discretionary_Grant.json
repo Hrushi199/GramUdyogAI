@@ -1,0 +1,50 @@
+{
+  "scheme_name": "Health Minister's Discretionary Grant",
+  "location": "Nationwide",
+  "tags": [
+    "Financial Assistance",
+    "Medical Treatment",
+    "Low-Income Families"
+  ],
+  "description": "Health Minister's Discretionary Grant provides financial assistance for treatment of life-threatening diseases for low-income patients in government hospitals.",
+  "key_features": [
+    "Up to Rs. 1.5 lakh per patient",
+    "Covers hospitalization and treatment",
+    "Applicable in government hospitals"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 1.5 Lakh"
+  },
+  "eligibility": {
+    "criteria": [
+      "Annual family income below Rs. 1.25 lakh",
+      "Treatment in government hospitals",
+      "Diagnosed with life-threatening disease"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Apply through treating government hospital",
+      "Submit income proof and medical estimate",
+      "Approval by Health Ministry"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Income Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Medical Estimate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Discretionary approval by Health Minister"
+  ]
+}

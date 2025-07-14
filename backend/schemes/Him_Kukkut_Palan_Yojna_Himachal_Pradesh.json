@@ -1,0 +1,56 @@
+{
+  "scheme_name": "Him Kukkut Palan Yojna (Himachal Pradesh)",
+  "location": "Himachal Pradesh",
+  "tags": [
+    "Poultry Farming",
+    "Financial Assistance",
+    "Subsidy",
+    "Scheduled Castes"
+  ],
+  "description": "The Him Kukkut Palan Yojna aims to provide financial assistance to Scheduled Caste individuals for establishing poultry units, promoting self-employment and income generation through poultry farming.",
+  "key_features": [
+    "Subsidy of Rs. 12,000 for establishing a poultry unit with 500 broiler birds",
+    "Support for Scheduled Caste individuals to promote poultry farming"
+  ],
+  "benefits": {
+    "subsidy_amount": "Rs. 12,000",
+    "unit_size": "500 broiler birds"
+  },
+  "eligibility": {
+    "category_criteria": [
+      "Applicant must belong to Scheduled Caste"
+    ],
+    "additional_criteria": "Must be a resident of Himachal Pradesh"
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Contact the local Animal Husbandry Department",
+      "Submit application with required documents",
+      "Verification by department officials"
+    ],
+    "note": "Details on application process may vary by district; contact local authorities for specifics"
+  },
+  "required_documents": [
+    {
+      "document": "Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residence Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Scheme is specifically for Scheduled Caste individuals",
+    "Limited to broiler poultry farming"
+  ]
+}

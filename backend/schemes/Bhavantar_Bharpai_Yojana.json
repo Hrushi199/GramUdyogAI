@@ -1,0 +1,52 @@
+{
+  "scheme_name": "Bhavantar Bharpai Yojana",
+  "location": "Haryana",
+  "tags": [
+    "Price Support",
+    "Crop Protection",
+    "Farmer Income"
+  ],
+  "description": "Bhavantar Bharpai Yojana in Haryana compensates farmers for the price difference between the Minimum Support Price (MSP) and market price for specified crops.",
+  "key_features": [
+    "Compensation for price shortfall below MSP",
+    "Covers horticultural crops like tomato, onion, and potato",
+    "Direct Benefit Transfer to farmers\u2019 accounts"
+  ],
+  "benefits": {
+    "compensation": "Difference between MSP and market price",
+    "crop_coverage": "Selected horticultural crops"
+  },
+  "eligibility": {
+    "criteria": [
+      "Farmers registered on Meri Fasal Mera Byora portal",
+      "Growers of notified crops in Haryana",
+      "Residents of Haryana"
+    ]
+  },
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Register on Meri Fasal Mera Byora portal",
+      "Submit crop details and bank account information",
+      "Compensation credited after price verification"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Land Ownership Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Covers seasonal crops with volatile prices",
+    "Requires timely registration on portal"
+  ]
+}

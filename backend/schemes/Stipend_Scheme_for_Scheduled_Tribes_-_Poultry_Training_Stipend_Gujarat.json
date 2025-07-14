@@ -1,0 +1,50 @@
+{
+  "scheme_name": "Stipend Scheme for Scheduled Tribes - Poultry Training Stipend (Gujarat)",
+  "location": "Gujarat",
+  "tags": [
+    "Poultry Training",
+    "Scheduled Tribes",
+    "Skill Development",
+    "Stipend"
+  ],
+  "description": "This scheme provides a stipend to Scheduled Tribe individuals undergoing poultry farming training to develop skills and promote self-employment.",
+  "key_features": [
+    "Stipend of Rs. 4,000 per month during training",
+    "Focus on skill development for poultry farming"
+  ],
+  "benefits": {
+    "stipend_amount": "Rs. 4,000 per month",
+    "training_duration": "As per training program"
+  },
+  "eligibility": {
+    "category_criteria": [
+      "Applicant must belong to Scheduled Tribes"
+    ],
+    "additional_criteria": "Must be a resident of Gujarat"
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Enroll in approved poultry training program",
+      "Submit application for stipend",
+      "Verification by authorities"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Tribe Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residence Proof",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Stipend available only during training"
+  ]
+}

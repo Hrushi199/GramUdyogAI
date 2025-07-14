@@ -1,0 +1,35 @@
+{
+  "scheme_name": "Mamta Taruni Abhiyan",
+  "location": "Gujarat",
+  "tags": [
+    "Adolescent Health",
+    "Nutrition",
+    "Women Health"
+  ],
+  "description": "Mamta Taruni Abhiyan focuses on improving the health and nutrition of adolescent girls through health check-ups, counseling, and supplements.",
+  "key_features": [
+    "Health check-ups and counseling",
+    "Iron and folic acid supplementation",
+    "Nutrition education"
+  ],
+  "benefits": {
+    "health_services": "Free check-ups, counseling, and supplements"
+  },
+  "eligibility": {
+    "criteria": [
+      "Adolescent girls aged 10-19 years",
+      "Residents of Gujarat"
+    ]
+  },
+  "application_process": {
+    "mode": "Automatic",
+    "steps": [
+      "Participate through schools or health centers",
+      "Receive services during Mamta Diwas events"
+    ]
+  },
+  "required_documents": [],
+  "special_notes": [
+    "Implemented through Mamta Diwas at village level"
+  ]
+}

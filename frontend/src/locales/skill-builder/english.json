@@ -1,0 +1,240 @@
+{
+  "header": {
+    "title": "Skill Builder & Adaptive Learning"
+  },
+  "roleSwitcher": {
+    "label": "Select Role",
+    "consumer": "Consumer",
+    "provider": "Provider",
+    "uploader": "Uploader",
+    "languageLabel": "Select Language"
+  },
+  "consumer": {
+    "progressDashboard": {
+      "title": "Your Progress",
+      "progress": "Progress: ",
+      "tokens": "Shiksha Tokens: "
+    },
+    "searchBar": {
+      "placeholder": "Search content..."
+    },
+    "filters": {
+      "languageLabel": "Language",
+      "languageAll": "All",
+      "languageHindi": "हिंदी",
+      "languageEnglish": "English",
+      "languageTamil": "தமிழ்",
+      "languageTelugu": "తెలుగు",
+      "languageMarathi": "मराठी",
+      "languageBengali": "বাংলা",
+      "languageGujarati": "ગુજરાતી",
+      "languageKannada": "ಕನ್ನಡ",
+      "languageMalayalam": "മലയാളം",
+      "languagePunjabi": "ਪੰਜਾਬੀ",
+      "languageUrdu": "اردو",
+      "languageOdia": "ଓଡ଼ିଆ",
+      "languageAssamese": "অসমীয়া",
+      "deliveryModeLabel": "Delivery Mode",
+      "deliveryModeAll": "All",
+      "deliveryModeOnline": "Online",
+      "deliveryModeHybrid": "Hybrid"
+    },
+    "contentList": {
+      "type": "Type: ",
+      "format": "Format: ",
+      "language": "Language: ",
+      "source": "Source: ",
+      "duration": "Duration: ",
+      "tokens": "Tokens: ",
+      "mode": "Mode: ",
+      "physical": "Physical: ",
+      "seats": "Seats: ",
+      "startDate": "Start Date: ",
+      "startLearning": "Start Learning",
+      "enroll": "Enroll"
+    },
+    "selectedContent": {
+      "source": "Source: ",
+      "format": "Format: ",
+      "language": "Language: ",
+      "videoError": "Your browser does not support the video tag.",
+      "viewContent": "View Content",
+      "close": "Close",
+      "description": "Description: ",
+      "certification": "Certification: ",
+      "seats": "Seats: ",
+      "startDate": "Start Date: "
+    },
+    "liveSessions": {
+      "title": "Live Sessions",
+      "source": "Source: ",
+      "date": "Date: ",
+      "time": "Time: ",
+      "joinMeeting": "Join Meeting",
+      "viewChatQna": "View Chat & Q&A"
+    },
+    "chatQna": {
+      "interaction": "Interaction",
+      "chatTitle": "Chat",
+      "chatPlaceholder": "Type your message...",
+      "chatSend": "Send",
+      "qnaTitle": "Q&A",
+      "qnaPlaceholder": "Ask a question...",
+      "qnaSubmit": "Submit",
+      "close": "Close"
+    },
+    "visualSummaries": {
+      "title": "Visual Summaries",
+      "createNew": "Create New Summary"
+    },
+    "summaryCreatorModal": {
+      "title": "Create Visual Summary",
+      "topicPlaceholder": "Enter topic...",
+      "contextPlaceholder": "Enter additional context...",
+      "cancel": "Cancel",
+      "create": "Create",
+      "creating": "Creating...",
+      "audioOptions": "Audio Generation Options",
+      "audioNone": "No audio generation",
+      "audioOnDemand": "Generate audio on demand (faster)",
+      "audioAll": "Generate all audio now (takes longer)"
+    },
+    "visualSummaryModal": {
+      "close": "Close",
+      "previous": "Previous",
+      "next": "Next",
+      "sectionInfo": "Section {sectionIdx} of {sectionsLength}",
+      "goToSection": "Go to section {sectionIdx}",
+      "generateAudio": "Generate Audio",
+      "generatingAudio": "Generating Audio...",
+      "translate": "Translate",
+      "translating": "Translating..."
+    },
+    "enrollment": {
+      "success": "Course enrolled successfully!",
+      "failure": "Failed to enroll in course:"
+    }
+  },
+  "provider": {
+    "contentUpload": {
+      "title": "Upload New Content",
+      "titleLabel": "Title",
+      "typeLabel": "Type",
+      "typeTutorial": "Tutorial",
+      "typeCourse": "Course",
+      "formatLabel": "Format",
+      "formatVideo": "Video",
+      "formatTextAudio": "Text + Audio",
+      "formatVideoPhysical": "Video + Physical",
+      "languageLabel": "Language",
+      "languageHindi": "Hindi",
+      "languageEnglish": "English",
+      "languageTamil": "Tamil",
+      "durationLabel": "Duration",
+      "urlLabel": "Content URL",
+      "deliveryModeLabel": "Delivery Mode",
+      "deliveryModeOnline": "Online",
+      "deliveryModeHybrid": "Hybrid",
+      "physicalLocationLabel": "Physical Location",
+      "physicalDateLabel": "Physical Date",
+      "uploadButton": "Upload Content"
+    },
+    "contentList": {
+      "title": "Your Content",
+      "type": "Type: ",
+      "enrollments": "Enrollments: ",
+      "completions": "Completions: "
+    },
+    "liveSessions": {
+      "title": "Your Live Sessions",
+      "date": "Date: ",
+      "time": "Time: ",
+      "participants": "Participants: ",
+      "hostMeeting": "Host Meeting"
+    }
+  },
+  "uploader": {
+    "contentUpload": {
+      "title": "Upload CSR-Branded Content",
+      "titleLabel": "Title",
+      "descriptionLabel": "Description",
+      "skillsLabel": "Skills",
+      "maxSeatsLabel": "Max Seats",
+      "startDateLabel": "Start Date",
+      "certificationLabel": "Certification",
+      "statusLabel": "Status",
+      "typeLabel": "Type",
+      "typeTutorial": "Tutorial",
+      "typeCourse": "Course",
+      "formatLabel": "Format",
+      "formatVideo": "Video",
+      "formatTextAudio": "Text + Audio",
+      "formatVideoPhysical": "Video + Physical",
+      "languageLabel": "Language",
+      "languageHindi": "Hindi",
+      "languageEnglish": "English",
+      "languageTamil": "Tamil",
+      "durationLabel": "Duration",
+      "urlLabel": "Content URL",
+      "deliveryModeLabel": "Delivery Mode",
+      "deliveryModeOnline": "Online",
+      "deliveryModeHybrid": "Hybrid",
+      "physicalLocationLabel": "Physical Location",
+      "physicalDateLabel": "Physical Date",
+      "uploadButton": "Upload Content",
+      "statusActive": "Active",
+      "statusInactive": "Inactive"
+    },
+    "analyticsDashboard": {
+      "title": "Analytics Dashboard",
+      "exportCsv": "Export Analytics (CSV)",
+      "enrollments": "Enrollments: ",
+      "completions": "Completions: ",
+      "completionRate": "Completion Rate: "
+    },
+    "liveSessions": {
+      "title": "Your Live Sessions",
+      "date": "Date: ",
+      "time": "Time: ",
+      "participants": "Participants: ",
+      "hostMeeting": "Host Meeting"
+    },
+    "analytics": {
+      "title": "Analytics Dashboard",
+      "exportButton": "Export Analytics (CSV)",
+      "table": {
+        "title": "Title",
+        "language": "Language",
+        "duration": "Duration",
+        "enrollments": "Enrollments",
+        "completions": "Completions",
+        "completionRate": "Completion Rate",
+        "maxSeats": "Max Seats",
+        "seatsAvailable": "Seats Available",
+        "startDate": "Start Date",
+        "status": "Status"
+      }
+    }
+  },
+  "dummyData": {
+    "content": {
+      "tailoring": "Introduction to Tailoring",
+      "digitalMarketing": "Digital Marketing Basics",
+      "farming": "Organic Farming Workshop"
+    },
+    "liveSessions": {
+      "tailoringQna": "Q&A on Tailoring Techniques",
+      "digitalMarketingWorkshop": "Digital Marketing Live Workshop"
+    }
+  },
+  "navbar": {
+    "features": "Features",
+    "about": "About",
+    "contact": "Contact",
+    "profile": "Profile",
+    "dashboard": "Dashboard",
+    "community": "Community",
+    "skills": "Skills",
+    "signUp": "Sign Up"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "scheme_name": "Generator Subsidy",
+  "location": "Tamil Nadu",
+  "tags": [
+    "Financial Assistance",
+    "MSME",
+    "Infrastructure",
+    "Subsidy"
+  ],
+  "description": "The Generator Subsidy scheme in Tamil Nadu provides financial assistance to MSMEs for purchasing generators to ensure uninterrupted power supply for their operations. The scheme aims to enhance productivity and operational efficiency.",
+  "key_features": [
+    "Subsidy on generator purchase",
+    "Support for MSMEs to maintain operations",
+    "Promotes industrial efficiency"
+  ],
+  "benefits": {
+    "subsidy": "25% of the cost of the generator, up to a maximum of Rs. 5 Lakhs",
+    "one_time_assistance": "Subsidy provided one time per MSME"
+  },
+  "eligibility": {
+    "business_criteria": [
+      "Must be a registered MSME as per the MSME Development Act, 2006",
+      "Must be located in Tamil Nadu"
+    ],
+    "operational_criteria": [
+      "Must purchase a new generator for business operations",
+      "Generator must meet Tamil Nadu\u00e2\u20ac\u2122s regulatory standards"
+    ]
+  },
+  "eligible_activities": [
+    "Purchase of new generators for MSME operations"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the Tamil Nadu MSME portal or Industries Department website",
+      "Submit an online application with details of the generator purchase",
+      "Upload required documents, including MSME registration and purchase invoices",
+      "Applications are reviewed by the District Industries Centre (DIC)",
+      "Approved applicants receive the subsidy upon verification"
+    ],
+    "note": "Applications must be submitted within one year of purchase"
+  },
+  "required_documents": [
+    {
+      "document": "Udyam Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Invoice/Bill for Generator Purchase",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Loan Sanction Letter",
+      "mandatory": false,
+      "required_when": "If availing loan-based purchase"
+    },
+    {
+      "document": "Aadhaar Card of Proprietor/Partners",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "The subsidy is limited to one generator per MSME",
+    "Generators must comply with environmental and safety norms",
+    "MSMEs must provide proof of installation"
+  ]
+}

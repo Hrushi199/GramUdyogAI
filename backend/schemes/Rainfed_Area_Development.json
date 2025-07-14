@@ -1,0 +1,54 @@
+{
+  "scheme_name": "Rainfed Area Development",
+  "location": "Nationwide",
+  "tags": [
+    "Sustainable Agriculture",
+    "Integrated Farming",
+    "Rainfed Areas",
+    "Climate Resilience"
+  ],
+  "description": "The Rainfed Area Development (RAD) scheme, launched in 2014-15, aims to enhance productivity in rainfed areas through an Integrated Farming System (IFS), minimizing risks from climatic variability and ensuring sustainable livelihoods.",
+  "key_features": [
+    "Promotes Integrated Farming System with crops, horticulture, livestock, fishery, and agro-forestry",
+    "Focuses on soil and water conservation",
+    "Leverages resources from other schemes like MGNREGS, PMKSY, and NFSM",
+    "Capacity building for farmers on climate-resilient practices"
+  ],
+  "benefits": {
+    "productivity_improvement": "Enhanced farm productivity through diversified farming",
+    "risk_mitigation": "Income from allied activities during crop failure"
+  },
+  "eligibility": {
+    "criteria": [
+      "Farmers in rainfed areas",
+      "Priority to small and marginal farmers",
+      "Areas identified under agro-climatic planning"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Contact local agriculture department or Krishi Vigyan Kendra",
+      "Submit application with land details",
+      "Verification and approval by district authorities"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Land Ownership Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Implemented through convergence with other schemes",
+    "Focus on local market-driven value chains"
+  ]
+}

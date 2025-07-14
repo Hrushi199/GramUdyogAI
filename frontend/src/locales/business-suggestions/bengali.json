@@ -1,0 +1,46 @@
+{
+    "pageTitle": "এআই ব্যবসার পরামর্শ",
+    "pageDescription": "আপনার দক্ষতা শেয়ার করুন এবং আপনার অভিজ্ঞতার সাথে মানানসই ব্যবসার ধারণা আবিষ্কার করুন।",
+    "form": {
+      "skillsLabel": "আপনার দক্ষতা লিখুন:",
+      "skillsPlaceholder": "উদাহরণ: ওয়েব ডেভেলপমেন্ট, মার্কেটিং, রান্না...",
+      "submitButton": "পরামর্শ পান"
+    },
+    "loading": "পরামর্শ লোড হচ্ছে...",
+    "error": {
+      "generic": "কিছু ভুল হয়েছে",
+      "connection": "সার্ভারে সংযোগ করতে সমস্যা হয়েছে।"
+    },
+    "businessIdeas": "ব্যবসার ধারণাসমূহ:",
+    "businessDetails": {
+      "businessType": "ব্যবসার ধরন",
+      "requiredResources": "প্রয়োজনীয় সম্পদ",
+      "initialSteps": "প্রাথমিক পদক্ষেপসমূহ",
+      "whyItSuits": "এটি কেন আপনার জন্য উপযুক্ত"
+    },
+    "actions": {
+      "translate": "অনুবাদ করুন",
+      "translating": "অনুবাদ করা হচ্ছে..."
+    },
+    "noSuggestions": "কোনো পরামর্শ পাওয়া যায়নি। দয়া করে ভিন্ন দক্ষতা দিয়ে চেষ্টা করুন।",
+    "detailedGuide": {
+      "title": "সম্পূর্ণ ধাপে ধাপে গাইড",
+      "totalCost": "মোট আনুমানিক খরচ",
+      "totalTime": "শুরু করার সময়",
+      "difficulty": "কঠিনতার মাত্রা",
+      "profitPotential": "লাভের সম্ভাবনা",
+      "step": "ধাপ",
+      "estimatedTime": "আনুমানিক সময়",
+      "estimatedCost": "আনুমানিক খরচ",
+      "youtubeVideos": "সহায়ক ভিডিও",
+      "shoppingLinks": "কোথায় কিনবেন",
+      "requiredDocuments": "প্রয়োজনীয় নথি",
+      "documentProcess": "নথি প্রক্রিয়া",
+      "tips": "প্রো টিপস",
+      "viewDetails": "বিস্তারিত দেখুন",
+      "hideDetails": "বিস্তারিত লুকান",
+      "openLink": "লিংক খুলুন",
+      "watchVideo": "ভিডিও দেখুন"
+    }
+  }
+  

@@ -1,0 +1,51 @@
+{
+  "scheme_name": "Institutional Support for Development and Marketing of Tribal Products/Produce",
+  "location": "Nationwide",
+  "tags": [
+    "Tribal Welfare",
+    "Marketing Support",
+    "Financial Assistance"
+  ],
+  "description": "This scheme provides institutional support for the development and marketing of tribal products, including agricultural and forest produce, to enhance tribal livelihoods.",
+  "key_features": [
+    "Financial assistance for production and marketing",
+    "Support for branding and market linkages",
+    "Training for tribal communities"
+  ],
+  "benefits": {
+    "financial_support": "Grants for production and marketing",
+    "market_access": "Improved sales of tribal products"
+  },
+  "eligibility": {
+    "criteria": [
+      "Tribal communities and cooperatives",
+      "NGOs and institutions working with tribals"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Apply through TRIFED or state tribal department",
+      "Submit project proposal and documents",
+      "Approval and fund release"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Tribal Community Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Project Proposal",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Focus on minor forest produce and agricultural goods",
+    "Promotes Van Dhan Vikas Kendras"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "scheme_name": "AGR 4 (Farm Mechanization) Scheme For SC Farmers",
+  "location": "Gujarat",
+  "tags": [
+    "Farm Mechanization",
+    "Financial Assistance",
+    "SC Farmers"
+  ],
+  "description": "The AGR 4 Scheme in Gujarat provides financial assistance to Scheduled Caste farmers for purchasing farm machinery to enhance productivity.",
+  "key_features": [
+    "Subsidies for tractors, harvesters, and other equipment",
+    "Up to 50% subsidy on machinery cost",
+    "Training on machinery use"
+  ],
+  "benefits": {
+    "subsidy": "Up to 50% of machinery cost",
+    "productivity_improvement": "Increased farming efficiency"
+  },
+  "eligibility": {
+    "criteria": [
+      "Scheduled Caste farmers in Gujarat",
+      "Ownership of agricultural land"
+    ]
+  },
+  "application_process": {
+    "mode": "Online/Offline",
+    "steps": [
+      "Apply through agriculture department or portal",
+      "Submit caste certificate and machinery details",
+      "Approval and subsidy release"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Land Ownership Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Aims to empower SC farmers",
+    "Focus on modern farm equipment"
+  ]
+}

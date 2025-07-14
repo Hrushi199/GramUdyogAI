@@ -1,0 +1,76 @@
+{
+  "scheme_name": "Incubation Scheme",
+  "location": "Pan India",
+  "tags": [
+    "Incubation",
+    "Startups",
+    "Entrepreneurship",
+    "Financial Support"
+  ],
+  "description": "The Incubation Scheme, implemented by the Ministry of Micro, Small and Medium Enterprises, aims to promote innovation and entrepreneurship by providing financial and technical support to incubators and startups. The scheme supports the establishment of business incubators in educational institutions and other organizations to nurture innovative ideas and facilitate the growth of new enterprises.",
+  "key_features": [
+    "Financial assistance for setting up and operating business incubators",
+    "Support for startups in the form of mentorship, infrastructure, and funding",
+    "Encourages collaboration between academia, industry, and government"
+  ],
+  "benefits": {
+    "financial_assistance_host_institutes": "Up to Rs. 15 Lakhs per idea for incubators, with additional support for infrastructure and operations",
+    "startup_support": "Seed funding and mentorship for incubated startups",
+    "maximum_support": "Up to Rs. 1 Crore for establishing an incubator"
+  },
+  "eligibility": {
+    "host_institute_criteria": [
+      "Technical colleges, universities, or other institutions recognized by the Government",
+      "Organizations with proven expertise in promoting entrepreneurship"
+    ],
+    "startup_criteria": [
+      "Innovative business ideas with potential for scalability and commercial viability",
+      "Startups registered as MSMEs or recognized by the Department for Promotion of Industry and Internal Trade (DPIIT)"
+    ]
+  },
+  "eligible_activities": [
+    "Establishment of business incubators",
+    "Support for prototype development, pilot projects, and market entry for startups",
+    "Mentorship, training, and networking for incubated startups"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the official MSME portal or the designated scheme website",
+      "Register and submit an online application with details of the incubator or startup proposal",
+      "Upload required documents, including project proposal and institutional details",
+      "Applications are evaluated by a Project Evaluation Committee",
+      "Approved applicants receive funding and support as per scheme guidelines"
+    ],
+    "note": "Applications are subject to scrutiny, and funding is released in phases based on project milestones"
+  },
+  "required_documents": [
+    {
+      "document": "Detailed Project Proposal",
+      "mandatory": true
+    },
+    {
+      "document": "Proof of Institution Registration/Recognition",
+      "mandatory": true,
+      "required_when": "For host institutes"
+    },
+    {
+      "document": "MSME/DPIIT Registration Certificate",
+      "mandatory": true,
+      "required_when": "For startups"
+    },
+    {
+      "document": "Financial Plan and Budget",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Funding is provided in installments based on project progress",
+    "Host institutes must provide matching contributions as per scheme guidelines",
+    "Startups must demonstrate innovation and commercial potential to receive support"
+  ]
+}

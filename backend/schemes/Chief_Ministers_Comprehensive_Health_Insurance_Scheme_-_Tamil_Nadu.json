@@ -1,0 +1,50 @@
+{
+  "scheme_name": "Chief Minister's Comprehensive Health Insurance Scheme - Tamil Nadu",
+  "location": "Tamil Nadu",
+  "tags": [
+    "Health Insurance",
+    "Cashless Treatment",
+    "Family Coverage"
+  ],
+  "description": "Chief Minister's Comprehensive Health Insurance Scheme provides cashless treatment for critical illnesses for families in Tamil Nadu.",
+  "key_features": [
+    "Coverage up to Rs. 5 lakh per family per year",
+    "Covers 1947 procedures",
+    "Cashless treatment in empanelled hospitals"
+  ],
+  "benefits": {
+    "coverage_amount": "Up to Rs. 5 Lakh per family per year",
+    "procedure_coverage": "1947 medical and surgical procedures"
+  },
+  "eligibility": {
+    "criteria": [
+      "Families with annual income below Rs. 1.2 lakh",
+      "Residents of Tamil Nadu"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Register at empanelled hospital or camp",
+      "Submit income proof and ID",
+      "Receive health card"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Income Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Ration Card",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Includes diagnostic procedures and follow-up care"
+  ]
+}

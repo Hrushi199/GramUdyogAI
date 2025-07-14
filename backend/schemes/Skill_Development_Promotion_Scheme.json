@@ -1,0 +1,77 @@
+{
+  "scheme_name": "Skill Development Promotion Scheme",
+  "location": "Goa",
+  "tags": [
+    "Skill Development",
+    "Training",
+    "Financial Assistance",
+    "Employability"
+  ],
+  "description": "The Skill Development Promotion Scheme in Goa supports skill training programs to enhance employability and entrepreneurship among youth. It provides financial assistance to training institutions and individuals for skill development initiatives.",
+  "key_features": [
+    "Financial support for skill training programs",
+    "Promotes employability and entrepreneurship",
+    "Supports training institutions and individuals"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 10 Lakhs for training programs",
+    "stipend": "Stipends for trainees, max Rs. 5,000 per trainee"
+  },
+  "eligibility": {
+    "institution_criteria": [
+      "Registered training institutions or NGOs in Goa",
+      "Must have experience in skill development"
+    ],
+    "individual_criteria": [
+      "Youth aged 18-35 years",
+      "Must be residents of Goa"
+    ]
+  },
+  "eligible_activities": [
+    "Conducting skill development training programs",
+    "Providing stipends to trainees",
+    "Developing training infrastructure"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the Directorate of Skill Development and Entrepreneurship, Goa",
+      "Submit a detailed training proposal or individual application",
+      "Attach required documents, including institution registration or residency proof",
+      "Applications are reviewed by the Directorate",
+      "Approved applicants receive funding or stipends"
+    ],
+    "note": "Training programs must align with industry needs"
+  },
+  "required_documents": [
+    {
+      "document": "Institution Registration Certificate",
+      "mandatory": true,
+      "required_when": "For training institutions"
+    },
+    {
+      "document": "Training Proposal",
+      "mandatory": true,
+      "required_when": "For institutions"
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true,
+      "required_when": "For individual trainees"
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true,
+      "required_when": "For individual trainees"
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Funding is released based on training outcomes",
+    "Priority is given to programs addressing local industry needs",
+    "Trainees must complete the program to receive stipends"
+  ]
+}

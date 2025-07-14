@@ -1,0 +1,50 @@
+{
+  "scheme_name": "Primary Cooperative Agriculture and Rural Development Bank: For Poultry Development (Tamil Nadu)",
+  "location": "Tamil Nadu",
+  "tags": [
+    "Poultry Farming",
+    "Financial Assistance",
+    "Cooperative Bank",
+    "Loan"
+  ],
+  "description": "This scheme provides loans through Primary Cooperative Agriculture and Rural Development Banks for poultry development to promote poultry farming in Tamil Nadu.",
+  "key_features": [
+    "Loans for establishing poultry units",
+    "Support through cooperative banking system"
+  ],
+  "benefits": {
+    "loan_amount": "As per bank guidelines",
+    "purpose": "Poultry development"
+  },
+  "eligibility": {
+    "category_criteria": [
+      "Open to farmers and residents of Tamil Nadu"
+    ],
+    "additional_criteria": "Must be a member of the cooperative bank"
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Approach the Primary Cooperative Agriculture and Rural Development Bank",
+      "Submit loan application with required documents",
+      "Loan approval after verification"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residence Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Membership Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Loan-based scheme through cooperative banks"
+  ]
+}

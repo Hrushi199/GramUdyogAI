@@ -1,0 +1,46 @@
+{
+  "scheme_name": "Chikitsa Pratipoorti Yojana",
+  "location": "Jharkhand",
+  "tags": [
+    "Medical Reimbursement",
+    "Government Employees",
+    "Health Care"
+  ],
+  "description": "Chikitsa Pratipoorti Yojana provides reimbursement for medical expenses incurred by state government employees for treatment in recognized hospitals.",
+  "key_features": [
+    "Reimbursement for hospitalization and treatment",
+    "Covers employees and their dependents",
+    "Applicable in recognized hospitals"
+  ],
+  "benefits": {
+    "reimbursement_coverage": "Medical expenses for hospitalization"
+  },
+  "eligibility": {
+    "criteria": [
+      "State government employees",
+      "Dependents of employees",
+      "Treatment in recognized hospitals"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Submit medical bills to employer",
+      "Verification and approval by department",
+      "Reimbursement processed"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Medical Bills",
+      "mandatory": true
+    },
+    {
+      "document": "Employee ID",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Processing time varies based on verification"
+  ]
+}

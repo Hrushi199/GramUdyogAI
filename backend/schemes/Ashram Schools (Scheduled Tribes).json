@@ -1,0 +1,74 @@
+{
+  "scheme_name": "Ashram Schools (Scheduled Tribes)",
+  "location": "Madhya Pradesh",
+  "tags": [
+    "Free Education",
+    "Residential Schools",
+    "School Education",
+    "Scheduled Tribes"
+  ],
+  "description": "The Ashram Schools scheme in Madhya Pradesh provides free education and residential facilities to Scheduled Tribe (ST) students from primary to higher secondary levels. The scheme aims to improve educational access for ST students in tribal areas through dedicated residential schools.",
+  "key_features": [
+    "Free education and boarding for ST students",
+    "Covers primary to higher secondary education",
+    "Implemented by the Tribal Welfare Department, Madhya Pradesh",
+    "Provides residential facilities in tribal areas"
+  ],
+  "benefits": {
+    "coverage": "Free tuition, boarding, books, uniforms, and other expenses",
+    "additional_support": "Residential facilities and meals"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students enrolled in classes 1 to 12",
+      "Must be studying in Ashram Schools"
+    ],
+    "additional_criteria": [
+      "Applicant must belong to Scheduled Tribes (ST) as per Madhya Pradesh government norms",
+      "Must be a resident of Madhya Pradesh"
+    ],
+    "admission_requirement": "Enrolled in Ashram Schools",
+    "institution_criteria": [
+      "Ashram Schools managed by the Tribal Welfare Department"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Primary education (Classes 1-8)",
+    "Secondary education (Classes 9-10)",
+    "Higher secondary education (Classes 11-12)"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Apply through the nearest Ashram School or Tribal Welfare Department",
+      "Submit application form with required documents",
+      "Verification by school or department authorities",
+      "Admission and benefits provided to eligible students"
+    ],
+    "note": "Contact Ashram School or department for admission process"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "ST Caste Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Domicile Certificate",
+      "mandatory": true,
+      "note": "To prove Madhya Pradesh residency"
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Limited to ST students in Ashram Schools",
+    "Provides comprehensive residential support",
+    "No income limit for eligibility"
+  ]
+}

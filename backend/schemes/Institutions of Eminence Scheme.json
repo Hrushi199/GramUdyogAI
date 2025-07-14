@@ -1,0 +1,72 @@
+{
+  "scheme_name": "Institutions of Eminence Scheme",
+  "location": "Pan India",
+  "tags": [
+    "Financial Grant",
+    "Higher Education",
+    "Institutional Development",
+    "Research and Innovation"
+  ],
+  "description": "The Institutions of Eminence (IoE) Scheme provides financial grants to selected higher education institutions to achieve world-class status. The scheme aims to enhance research, innovation, and academic excellence in Indian universities and colleges.",
+  "key_features": [
+    "Grants for selected higher education institutions",
+    "Aims to achieve global rankings",
+    "Implemented by the Ministry of Education",
+    "Promotes research and innovation"
+  ],
+  "benefits": {
+    "grant_amount": "Up to Rs. 1,000 Crores over 5 years for public institutions",
+    "coverage": "Infrastructure, research facilities, faculty development, and academic programs"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Higher education institutions (universities, colleges)",
+      "Must be selected as an Institution of Eminence by the Empowered Expert Committee"
+    ],
+    "additional_criteria": [
+      "Institution must have a plan to achieve top global rankings",
+      "Public or private institutions eligible"
+    ],
+    "admission_requirement": "Not applicable (institutional scheme)",
+    "institution_criteria": [
+      "Institutions designated as IoE by the Ministry of Education"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Not applicable (scheme supports institutional development, not specific courses)"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Institutions apply through the Ministry of Education",
+      "Submit detailed proposal for IoE status",
+      "Evaluation by the Empowered Expert Committee",
+      "Grants disbursed to selected institutions"
+    ],
+    "note": "Application as per Ministry of Education notifications"
+  },
+  "required_documents": [
+    {
+      "document": "Institutional Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "IoE Proposal",
+      "mandatory": true,
+      "note": "Detailed plan for achieving global rankings"
+    },
+    {
+      "document": "Recognition Certificate (UGC/AICTE)",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details (Institution)",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Scheme supports institutions, not individual students",
+    "Private institutions receive regulatory autonomy instead of grants",
+    "Aimed at achieving top 100 global rankings"
+  ]
+}

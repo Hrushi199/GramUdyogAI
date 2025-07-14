@@ -1,0 +1,71 @@
+{
+  "scheme_name": "Investment Promotion Scheme (IPS) for MSME Sector: Assistance To Small And Medium Enterprises (SME) For Raising Of Capital Through SME Exchange",
+  "location": "The Dadra And Nagar Haveli And Daman And Diu",
+  "tags": [
+    "Financial Assistance",
+    "MSME",
+    "SME Exchange",
+    "Capital Raising"
+  ],
+  "description": "The Investment Promotion Scheme (IPS) for MSME Sector provides financial assistance to Small and Medium Enterprises (SMEs) in The Dadra and Nagar Haveli and Daman and Diu to raise capital through the SME Exchange. The scheme aims to support MSMEs by reimbursing expenses incurred during the process of raising funds through Initial Public Offerings (IPOs) or Further Public Offerings (FPOs) on recognized SME platforms.",
+  "key_features": [
+    "Reimbursement of expenses for raising capital through SME Exchange",
+    "Support for MSMEs to access public funding",
+    "Promotes financial growth and market competitiveness of SMEs"
+  ],
+  "benefits": {
+    "reimbursement": "Up to 25% of the expenditure incurred for raising capital through SME Exchange, subject to a maximum of Rs. 2.5 Lakhs",
+    "one_time_assistance": "Financial assistance provided one time per eligible MSME"
+  },
+  "eligibility": {
+    "business_criteria": [
+      "Must be a registered Micro, Small, or Medium Enterprise (MSME) as per the MSME Development Act, 2006",
+      "MSME must be located in The Dadra and Nagar Haveli and Daman and Diu"
+    ],
+    "operational_criteria": [
+      "Must have successfully raised capital through an IPO or FPO on a recognized SME Exchange",
+      "Expenses claimed must be related to the process of raising capital (e.g., legal, audit, or listing fees)"
+    ]
+  },
+  "eligible_activities": [
+    "Expenses incurred for raising capital through SME Exchange, including legal fees, audit fees, listing fees, and other related costs"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the District Industries Centre (DIC) or the official website of the Industries Department",
+      "Fill out the application form with details of the capital raised and expenses incurred",
+      "Attach required documents, including proof of MSME registration, expenditure receipts, and SME Exchange listing details",
+      "Submit the completed application to the District Industries Centre (DIC) in The Dadra and Nagar Haveli and Daman and Diu",
+      "Application will be verified, and reimbursement will be processed upon approval"
+    ],
+    "note": "Applications must be submitted within the stipulated time frame as specified by the DIC"
+  },
+  "required_documents": [
+    {
+      "document": "MSME Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Proof of Capital Raised (SME Exchange Listing Documents)",
+      "mandatory": true
+    },
+    {
+      "document": "Receipts/Invoices of Expenditure Incurred",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details for Reimbursement",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance with Scheme Guidelines",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "The reimbursement is limited to 25% of eligible expenses or Rs. 2.5 Lakhs, whichever is lower",
+    "Only expenses directly related to raising capital through SME Exchange are eligible",
+    "MSMEs must comply with all guidelines issued by the Industries Department and SME Exchange regulations"
+  ]
+}

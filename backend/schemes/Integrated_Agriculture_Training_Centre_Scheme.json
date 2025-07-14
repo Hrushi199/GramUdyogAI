@@ -1,0 +1,47 @@
+{
+  "scheme_name": "Integrated Agriculture Training Centre Scheme",
+  "location": "Meghalaya",
+  "tags": [
+    "Farmer Training",
+    "Skill Development",
+    "Agricultural Productivity"
+  ],
+  "description": "The Integrated Agriculture Training Centre Scheme in Meghalaya provides training to farmers on modern agricultural practices to enhance productivity and sustainability.",
+  "key_features": [
+    "Training on crop management, livestock, and horticulture",
+    "Hands-on demonstrations and workshops",
+    "Focus on organic farming and local crops"
+  ],
+  "benefits": {
+    "skill_enhancement": "Improved farming techniques",
+    "productivity_improvement": "Increased crop and livestock yields"
+  },
+  "eligibility": {
+    "criteria": [
+      "Farmers and rural youth in Meghalaya",
+      "Preference for small and marginal farmers"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Contact local agriculture department or training centre",
+      "Register for training programs",
+      "Attend scheduled sessions"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Proof",
+      "mandatory": false
+    }
+  ],
+  "special_notes": [
+    "Training tailored to Meghalaya\u2019s agro-climatic conditions",
+    "Free or subsidized training programs"
+  ]
+}

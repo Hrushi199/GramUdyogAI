@@ -1,0 +1,73 @@
+{
+  "scheme_name": "Grant-in-Aid to Industrial Association, CII, Industrial NGOs for Promotion of SME Clusters",
+  "location": "Puducherry",
+  "tags": [
+    "Financial Assistance",
+    "SME Clusters",
+    "Industrial Promotion",
+    "Grants"
+  ],
+  "description": "This scheme in Puducherry provides grants to industrial associations, CII, and NGOs to promote SME clusters. It supports activities like marketing, technology upgradation, and skill development to enhance the competitiveness of SMEs.",
+  "key_features": [
+    "Grants for SME cluster development",
+    "Support for marketing and technology upgradation",
+    "Encourages collaboration among SMEs"
+  ],
+  "benefits": {
+    "grant": "Up to Rs. 10 Lakhs per cluster for approved activities",
+    "technical_support": "Access to expert guidance and training"
+  },
+  "eligibility": {
+    "organization_criteria": [
+      "Registered industrial associations, CII, or NGOs in Puducherry",
+      "Must have experience in SME promotion"
+    ],
+    "activity_criteria": [
+      "Proposed activities must benefit SME clusters",
+      "Must align with Puducherry\u00e2\u20ac\u2122s industrial policy"
+    ]
+  },
+  "eligible_activities": [
+    "Marketing and promotional activities for SME clusters",
+    "Technology upgradation and skill development programs",
+    "Organizing workshops, seminars, and trade fairs"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the Department of Industries and Commerce, Puducherry",
+      "Submit a detailed proposal with cluster development activities",
+      "Attach required documents, including organization registration and activity plan",
+      "Applications are reviewed by the Industries Department",
+      "Approved organizations receive grants in phases"
+    ],
+    "note": "Progress reports are required for subsequent funding"
+  },
+  "required_documents": [
+    {
+      "document": "Organization Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Detailed Activity Proposal",
+      "mandatory": true
+    },
+    {
+      "document": "Financial Plan and Budget",
+      "mandatory": true
+    },
+    {
+      "document": "Proof of Past SME Promotion Activities",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Grants are disbursed based on project milestones",
+    "Activities must directly benefit SME clusters",
+    "Organizations must comply with reporting requirements"
+  ]
+}

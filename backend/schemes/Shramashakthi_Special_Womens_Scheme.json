@@ -1,0 +1,75 @@
+{
+  "scheme_name": "Shramashakthi Special Women's Scheme",
+  "location": "Karnataka",
+  "tags": [
+    "Women Empowerment",
+    "Financial Assistance",
+    "Minority Women",
+    "Self-Employment"
+  ],
+  "description": "The Shramashakthi Special Women\u00e2\u20ac\u2122s Scheme in Karnataka provides loans and subsidies for economic empowerment of widowed, divorced, or unmarried minority women, enabling them to start self-employment ventures.",
+  "key_features": [
+    "Subsidized loans for minority women",
+    "Support for self-employment ventures",
+    "Training for entrepreneurship"
+  ],
+  "benefits": {
+    "loan_amount": "Up to Rs. 2 Lakhs for business setup",
+    "subsidy": "50% subsidy on loan amount, up to Rs. 1 Lakh",
+    "training": "Free entrepreneurship training"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Widowed, divorced, or unmarried minority women aged 18-50 years"
+    ],
+    "community_criteria": [
+      "Must belong to a minority community (Muslim, Christian, Sikh, Jain, Buddhist, Parsi)"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Karnataka"
+    ]
+  },
+  "eligible_activities": [
+    "Setting up self-employment ventures in services, retail, or handicrafts",
+    "Purchase of equipment or raw materials",
+    "Participating in entrepreneurship training"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the Karnataka Minority Development Corporation",
+      "Submit a detailed business plan with the application",
+      "Attach required documents, including minority certificate and residency proof",
+      "Applications are reviewed by the corporation",
+      "Approved applicants receive loans and subsidies"
+    ],
+    "note": "Applicants must secure a bank loan to avail subsidy"
+  },
+  "required_documents": [
+    {
+      "document": "Minority Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Proof of Widow/Divorced/Unmarried Status",
+      "mandatory": true
+    },
+    {
+      "document": "Business Plan",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "The subsidy is linked to bank loans",
+    "Priority is given to economically disadvantaged women",
+    "Applicants must undergo entrepreneurship training"
+  ]
+}

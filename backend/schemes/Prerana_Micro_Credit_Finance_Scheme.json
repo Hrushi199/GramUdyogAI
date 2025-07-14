@@ -1,0 +1,75 @@
+{
+  "scheme_name": "Prerana (Micro Credit Finance) Scheme",
+  "location": "Karnataka",
+  "tags": [
+    "Women Empowerment",
+    "SHGs",
+    "Financial Assistance",
+    "SC Community"
+  ],
+  "description": "The Prerana (Micro Credit Finance) Scheme in Karnataka encourages women from the Scheduled Caste (SC) community to form self-help groups (SHGs) and provides financial assistance for income-generating activities, promoting economic empowerment.",
+  "key_features": [
+    "Financial support for SC women\u00e2\u20ac\u2122s SHGs",
+    "Micro-credit for income-generating activities",
+    "Training for SHG management"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 5 Lakhs per SHG for micro-enterprises",
+    "subsidy": "Up to 50% subsidy on loan amount",
+    "training": "Free SHG and entrepreneurship training"
+  },
+  "eligibility": {
+    "community_criteria": [
+      "Women from Scheduled Caste (SC) community"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Karnataka"
+    ],
+    "group_criteria": [
+      "Members of registered SHGs"
+    ]
+  },
+  "eligible_activities": [
+    "Setting up SHG-based micro-enterprises",
+    "Accessing micro-credit for business activities",
+    "Training in SHG management and entrepreneurship"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Form or join an SC women\u00e2\u20ac\u2122s SHG through the District Social Welfare Department",
+      "Submit an application through the SHG with a business plan",
+      "Attach required documents, including SHG registration and caste certificate",
+      "Applications are reviewed by the department",
+      "Approved SHGs receive funding and training"
+    ],
+    "note": "Applications are processed through SHGs"
+  },
+  "required_documents": [
+    {
+      "document": "SHG Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "SC Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card (SHG Members)",
+      "mandatory": true
+    },
+    {
+      "document": "Business Plan",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details (SHG Account)",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Funding is provided to SHGs, not individuals",
+    "SHGs must undergo capacity-building training",
+    "Priority is given to SHGs with viable business plans"
+  ]
+}

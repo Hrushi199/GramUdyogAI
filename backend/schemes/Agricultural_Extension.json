@@ -1,0 +1,47 @@
+{
+  "scheme_name": "Agricultural Extension",
+  "location": "Nationwide",
+  "tags": [
+    "Farmer Training",
+    "Technology Dissemination",
+    "Agricultural Productivity"
+  ],
+  "description": "The Agricultural Extension scheme under the Sub-Mission on Agricultural Extension (SMAE) aims to empower farmers through training, demonstrations, and dissemination of advanced agricultural technologies.",
+  "key_features": [
+    "Farmer training and capacity building",
+    "Demonstrations of modern farming techniques",
+    "Support through Agricultural Technology Management Agency (ATMA)"
+  ],
+  "benefits": {
+    "knowledge_transfer": "Access to modern farming techniques",
+    "productivity_improvement": "Increased crop yields through technology adoption"
+  },
+  "eligibility": {
+    "criteria": [
+      "Farmers, farmer groups, and cooperatives",
+      "Priority to small and marginal farmers"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Contact local ATMA office or Krishi Vigyan Kendra",
+      "Register for training programs or demonstrations",
+      "Participate in scheduled activities"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Land Ownership Proof",
+      "mandatory": false
+    }
+  ],
+  "special_notes": [
+    "Implemented through state agricultural departments",
+    "Focus on women farmers and youth"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+    "job_mentor_dashboard": {
+      "title": "{{name}} డాష్‌బోర్డ్",
+      "recreate_dashboard": "డాష్‌బోర్డ్‌ను మళ్లీ సృష్టించు",
+      "loading_error": "డాష్‌బోర్డ్ లోడ్ చేయడంలో విఫలమైంది.",
+      "go_to_profile": "ప్రొఫైల్‌కు వెళ్లు",
+      "visual_summary": {
+        "title": "విజువల్ సారాంశం",
+        "click_to_view_all": "అన్ని విభాగాలను చూడటానికి క్లిక్ చేయండి",
+        "modal": {
+          "section_label": "విభాగం {{current}} మొత్తం {{total}}",
+          "close_aria_label": "మూసివేయి",
+          "previous_aria_label": "మునుపటి",
+          "next_aria_label": "తదుపరి",
+          "go_to_section_aria_label": "విభాగం {{section}} కు వెళ్లు"
+        }
+      },
+      "csr_courses": {
+        "title": "సిఫార్సు చేయబడిన CSR కోర్సులు",
+        "view_course": "కోర్సు చూడండి"
+      },
+      "jobs": {
+        "title": "సిఫార్సు చేయబడిన ఉద్యోగాలు",
+        "contact": "సంప్రదించు"
+      },
+      "business_suggestions": {
+        "title": "వ్యాపార సూచనలు",
+        "default_idea_name": "వ్యాపార ఆలోచన #{{index}}",
+        "business_type": "వ్యాపార రకం",
+        "required_resources": "అవసరమైన వనరులు",
+        "initial_steps": "ప్రారంభ దశలు",
+        "why_it_suits": "ఇది నీకు ఎందుకు సరిపోతుంది"
+      },
+      "schemes": {
+        "title": "సిఫార్సు చేయబడిన పథకాలు",
+        "goal": "లక్ష్యం",
+        "benefits": "ప్రయోజనాలు",
+        "eligibility": "అర్హత",
+        "how_to_apply": "దరఖాస్తు చేయడం ఎలా",
+        "special_features": "ప్రత్యేక లక్షణాలు"
+      }
+    }
+  }

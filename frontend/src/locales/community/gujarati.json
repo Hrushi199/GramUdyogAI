@@ -1,0 +1,35 @@
+{
+    "community": {
+      "title": "સમુદાય નેટવર્ક",
+      "subtitle": "સાથી ઉદ્યોગસાહસિકો, માર્ગદર્શકો અને તકો સાથે જોડાઓ",
+      "tabs": {
+        "feed": "ફીડ",
+        "connections": "સંપર્કો",
+        "mentors": "માર્ગદર્શકો",
+        "groups": "જૂથો"
+      },
+      "loading": "સમુદાય લોડ થઈ રહ્યું છે...",
+      "feed": {
+        "create_post_placeholder": "અપડેટ શેર કરો અથવા પ્રશ્ન પૂછો...",
+        "post_button": "પોસ્ટ",
+        "likes": "લાઈક્સ",
+        "comments": "ટિપ્પણીઓ"
+      },
+      "connections": {
+        "find_more": "વધુ સંપર્કો શોધો"
+      },
+      "mentors": {
+        "available": "માર્ગદર્શન માટે ઉપલબ્ધ",
+        "unavailable": "હાલમાં ઉપલબ્ધ નથી",
+        "expertise": "નિપુણતા:",
+        "request_mentorship": "માર્ગદર્શન માટે વિનંતી કરો",
+        "find_more": "વધુ માર્ગદર્શકો શોધો"
+      },
+      "groups": {
+        "members": "{{count}} સભ્યો",
+        "posts": "{{count}} પોસ્ટ્સ",
+        "join_group": "જૂથમાં જોડાઓ",
+        "create_new": "નવું જૂથ બનાવો"
+      }
+    }
+  }

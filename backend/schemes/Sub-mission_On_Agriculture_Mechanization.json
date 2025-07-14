@@ -1,0 +1,51 @@
+{
+  "scheme_name": "Sub-mission On Agriculture Mechanization",
+  "location": "Nationwide",
+  "tags": [
+    "Farm Mechanization",
+    "Financial Assistance",
+    "Productivity Enhancement"
+  ],
+  "description": "The Sub-Mission on Agricultural Mechanization (SMAM) promotes the use of modern farm machinery through subsidies to enhance productivity and reduce labor dependency.",
+  "key_features": [
+    "Subsidies for tractors, harvesters, and other machinery",
+    "50% subsidy for general farmers, 90% for SC/ST farmers",
+    "Training on machinery use"
+  ],
+  "benefits": {
+    "subsidy": "Up to 90% for SC/ST farmers, 50% for others",
+    "productivity_improvement": "Reduced labor and increased efficiency"
+  },
+  "eligibility": {
+    "criteria": [
+      "Farmers, farmer groups, and cooperatives",
+      "Priority to small, marginal, and SC/ST farmers"
+    ]
+  },
+  "application_process": {
+    "mode": "Online/Offline",
+    "steps": [
+      "Apply through SMAM portal or agriculture department",
+      "Submit machinery purchase plan and documents",
+      "Subsidy approval and release"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Land Ownership Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Focus on custom hiring centers for machinery access",
+    "Convergence with state mechanization schemes"
+  ]
+}

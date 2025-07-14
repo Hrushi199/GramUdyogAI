@@ -1,0 +1,43 @@
+{
+    "job_mentor_dashboard": {
+      "title": "{{name}} ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+      "recreate_dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ಮರುಸೃಷ್ಟಿಸಿ",
+      "loading_error": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ಲೋಡ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ.",
+      "go_to_profile": "ಪ್ರೊಫೈಲ್‌ಗೆ ಹೋಗಿ",
+      "visual_summary": {
+        "title": "ದೃಶ್ಯ ಸಾರಾಂಶ",
+        "click_to_view_all": "ಎಲ್ಲಾ ವಿಭಾಗಗಳನ್ನು ನೋಡಲು ಕ್ಲಿಕ್ ಮಾಡಿ",
+        "modal": {
+          "section_label": "ವಿಭಾಗ {{current}} ಒಟ್ಟು {{total}}",
+          "close_aria_label": "ಮುಚ್ಚಿ",
+          "previous_aria_label": "ಹಿಂದಿನ",
+          "next_aria_label": "ಮುಂದಿನ",
+          "go_to_section_aria_label": "ವಿಭಾಗ {{section}} ಗೆ ಹೋಗಿ"
+        }
+      },
+      "csr_courses": {
+        "title": "ಶಿಫಾರಸು ಮಾಡಲಾದ CSR ಕೋರ್ಸ್‌ಗಳು",
+        "view_course": "ಕೋರ್ಸ್ ನೋಡಿ"
+      },
+      "jobs": {
+        "title": "ಶಿಫಾರಸು ಮಾಡಲಾದ ಉದ್ಯೋಗಗಳು",
+        "contact": "ಸಂಪರ್ಕಿಸಿ"
+      },
+      "business_suggestions": {
+        "title": "ವ್ಯಾಪಾರ ಸಲಹೆಗಳು",
+        "default_idea_name": "ವ್ಯಾಪಾರ ಐಡಿಯಾ #{{index}}",
+        "business_type": "ವ್ಯಾಪಾರದ ಪ್ರಕಾರ",
+        "required_resources": "ಅಗತ್ಯ ಸಂಪನ್ಮೂಲಗಳು",
+        "initial_steps": "ಪ್ರಾರಂಭಿಕ ಹಂತಗಳು",
+        "why_it_suits": "ಇದು ನಿಮಗೆ ಏಕೆ ಸೂಕ್ತವಾಗಿದೆ"
+      },
+      "schemes": {
+        "title": "ಶಿಫಾರಸು ಮಾಡಲಾದ ಯೋಜನೆಗಳು",
+        "goal": "ಗುರಿ",
+        "benefits": "ಪ್ರಯೋಜನಗಳು",
+        "eligibility": "ಅರ್ಹತೆ",
+        "how_to_apply": "ಅರ್ಜಿ ಸಲ್ಲಿಸುವುದು ಹೇಗೆ",
+        "special_features": "ವಿಶೇಷ ಲಕ್ಷಣಗಳು"
+      }
+    }
+  }

@@ -1,0 +1,74 @@
+{
+  "scheme_name": "Capital Subsidy",
+  "location": "Tamil Nadu",
+  "tags": [
+    "Financial Assistance",
+    "MSME",
+    "Capital Investment",
+    "Modernization"
+  ],
+  "description": "The Capital Subsidy scheme in Tamil Nadu provides financial assistance to Micro, Small, and Medium Enterprises (MSMEs) for modernization and expansion by subsidizing the cost of plant and machinery. The scheme aims to enhance productivity and competitiveness of MSMEs in the state.",
+  "key_features": [
+    "Subsidy on capital investment for plant and machinery",
+    "Support for modernization and technology upgradation",
+    "Encourages industrial growth in Tamil Nadu"
+  ],
+  "benefits": {
+    "subsidy": "25% subsidy on the cost of plant and machinery, subject to a maximum of Rs. 30 Lakhs",
+    "additional_incentive": "5% additional subsidy for enterprises in backward areas or owned by women/SC/ST"
+  },
+  "eligibility": {
+    "business_criteria": [
+      "Must be a registered MSME as per the MSME Development Act, 2006",
+      "Must be located in Tamil Nadu"
+    ],
+    "operational_criteria": [
+      "Investment in new plant and machinery for manufacturing or service sectors",
+      "Must comply with Tamil Nadu Industrial Policy guidelines"
+    ]
+  },
+  "eligible_activities": [
+    "Purchase of new plant and machinery for modernization",
+    "Expansion of existing MSME units",
+    "Technology upgradation for improved productivity"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the Tamil Nadu MSME portal or Industries Department website",
+      "Register and submit an online application with details of the investment",
+      "Upload required documents, including MSME registration and investment details",
+      "Applications are reviewed by the District Industries Centre (DIC)",
+      "Approved applicants receive the subsidy upon verification"
+    ],
+    "note": "Applications must be submitted within one year of investment"
+  },
+  "required_documents": [
+    {
+      "document": "Udyam Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Invoice/Bills for Plant and Machinery",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Loan Sanction Letter",
+      "mandatory": false,
+      "required_when": "If availing loan-based investment"
+    },
+    {
+      "document": "Aadhaar Card of Proprietor/Partners",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Additional incentives are available for women, SC/ST entrepreneurs, and units in backward areas",
+    "Subsidy is disbursed after verification of investment",
+    "MSMEs must adhere to environmental and regulatory norms"
+  ]
+}

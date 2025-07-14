@@ -1,0 +1,43 @@
+{
+    "job_mentor_dashboard": {
+      "title": "{{name}} ਡੈਸ਼ਬੋਰਡ",
+      "recreate_dashboard": "ਡੈਸ਼ਬੋਰਡ ਮੁੜ ਬਣਾਓ",
+      "loading_error": "ਡੈਸ਼ਬੋਰਡ ਲੋਡ ਕਰਨ ਵਿੱਚ ਅਸਫਲ।",
+      "go_to_profile": "ਪ੍ਰੋਫਾਈਲ 'ਤੇ ਜਾਓ",
+      "visual_summary": {
+        "title": "ਦਿੱਖ ਸਾਰ",
+        "click_to_view_all": "ਸਾਰੇ ਭਾਗ ਵੇਖਣ ਲਈ ਕਲਿੱਕ ਕਰੋ",
+        "modal": {
+          "section_label": "ਭਾਗ {{current}} ਕੁੱਲ {{total}} ਵਿੱਚੋਂ",
+          "close_aria_label": "ਬੰਦ ਕਰੋ",
+          "previous_aria_label": "ਪਿਛਲਾ",
+          "next_aria_label": "ਅਗਲਾ",
+          "go_to_section_aria_label": "ਭਾਗ {{section}} 'ਤੇ ਜਾਓ"
+        }
+      },
+      "csr_courses": {
+        "title": "ਸਿਫਾਰਸ਼ ਕੀਤੇ CSR ਕੋਰਸ",
+        "view_course": "ਕੋਰਸ ਵੇਖੋ"
+      },
+      "jobs": {
+        "title": "ਸਿਫਾਰਸ਼ ਕੀਤੀਆਂ ਨੌਕਰੀਆਂ",
+        "contact": "ਸੰਪਰਕ ਕਰੋ"
+      },
+      "business_suggestions": {
+        "title": "ਕਾਰੋਬਾਰੀ ਸੁਝਾਅ",
+        "default_idea_name": "ਕਾਰੋਬਾਰੀ ਵਿਚਾਰ #{{index}}",
+        "business_type": "ਕਾਰੋਬਾਰ ਦੀ ਕਿਸਮ",
+        "required_resources": "ਲੋੜੀਂਦੇ ਸਰੋਤ",
+        "initial_steps": "ਸ਼ੁਰੂਆਤੀ ਕਦਮ",
+        "why_it_suits": "ਇਹ ਤੁਹਾਡੇ ਲਈ ਕਿਉਂ ਅਨੁਕੂਲ ਹੈ"
+      },
+      "schemes": {
+        "title": "ਸਿਫਾਰਸ਼ ਕੀਤੀਆਂ ਸਕੀਮਾਂ",
+        "goal": "ਟੀਚਾ",
+        "benefits": "ਲਾਭ",
+        "eligibility": "ਯੋਗਤਾ",
+        "how_to_apply": "ਅਰਜ਼ੀ ਕਿਵੇਂ ਕਰਨੀ ਹੈ",
+        "special_features": "ਖਾਸ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+      }
+    }
+  }

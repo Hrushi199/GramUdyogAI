@@ -1,0 +1,43 @@
+{
+    "job_mentor_dashboard": {
+      "title": "{{name}} ଡ୍ୟାସବୋର୍ଡ",
+      "recreate_dashboard": "ଡ୍ୟାସବୋର୍ଡ ପୁନଃନିର୍ମାଣ କରନ୍ତୁ",
+      "loading_error": "ଡ୍ୟାସବୋର୍ଡ ଲୋଡ୍ କରିବାରେ ବିଫଳ।",
+      "go_to_profile": "ପ୍ରୋଫାଇଲକୁ ଯାଆନ୍ତୁ",
+      "visual_summary": {
+        "title": "ଦୃଶ୍ୟମାନ ସାରାଂଶ",
+        "click_to_view_all": "ସମସ୍ତ ବିଭାଗ ଦେଖିବାକୁ କ୍ଲିକ୍ କରନ୍ତୁ",
+        "modal": {
+          "section_label": "ବିଭାଗ {{current}} ମୋଟ {{total}} ମଧ୍ୟରୁ",
+          "close_aria_label": "ବନ୍ଦ କରନ୍ତୁ",
+          "previous_aria_label": "ପୂର୍ବବର୍ତ୍ତୀ",
+          "next_aria_label": "ପରବର୍ତ୍ତୀ",
+          "go_to_section_aria_label": "ବିଭାଗ {{section}} କୁ ଯାଆନ୍ତୁ"
+        }
+      },
+      "csr_courses": {
+        "title": "ପ୍ରସ୍ତାବିତ ସିଏସଆର କୋର୍ସ",
+        "view_course": "କୋର୍ସ ଦେଖନ୍ତୁ"
+      },
+      "jobs": {
+        "title": "ପ୍ରସ୍ତାବିତ ଚାକିରି",
+        "contact": "ଯୋଗାଯୋଗ କରନ୍ତୁ"
+      },
+      "business_suggestions": {
+        "title": "ବ୍ୟବସାୟ ପରାମର୍ଶ",
+        "default_idea_name": "ବ୍ୟବସାୟ ଧାରଣା #{{index}}",
+        "business_type": "ବ୍ୟବସାୟର ପ୍ରକାର",
+        "required_resources": "ଆବଶ୍ୟକ ସମ୍ବଳ",
+        "initial_steps": "ପ୍ରାରମ୍ଭିକ ପଦକ୍ଷେପ",
+        "why_it_suits": "ଏହା ଆପଣଙ୍କୁ କାହିଁକି ଉପଯୁକ୍ତ"
+      },
+      "schemes": {
+        "title": "ପ୍ରସ୍ତାବିତ ଯୋଜନା",
+        "goal": "ଲକ୍ଷ୍ୟ",
+        "benefits": "ଲାଭ",
+        "eligibility": "ଯୋଗ୍ୟତା",
+        "how_to_apply": "ଆବେଦନ କିପରି କରିବେ",
+        "special_features": "ବିଶେଷ ବୈଶିଷ୍ଟ୍ୟ"
+      }
+    }
+  }

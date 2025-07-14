@@ -1,0 +1,75 @@
+{
+  "scheme_name": "Chief Minister Nari Shakti Yojana",
+  "location": "Bihar",
+  "tags": [
+    "Women Empowerment",
+    "Financial Assistance",
+    "Skill Development",
+    "Social Upliftment"
+  ],
+  "description": "The Chief Minister Nari Shakti Yojana in Bihar focuses on the social, cultural, and economic empowerment of women through financial assistance, skill development, and support for self-help groups (SHGs). It aims to enhance women\u00e2\u20ac\u2122s independence and community participation.",
+  "key_features": [
+    "Financial support for women-led enterprises",
+    "Skill training for economic empowerment",
+    "Strengthening women\u00e2\u20ac\u2122s SHGs"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 5 Lakhs for SHG-based enterprises",
+    "training": "Free skill development and entrepreneurship training",
+    "market_linkages": "Support for marketing SHG products"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women aged 18-50 years"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Bihar"
+    ],
+    "group_criteria": [
+      "Members of registered women\u00e2\u20ac\u2122s Self-Help Groups (SHGs)"
+    ]
+  },
+  "eligible_activities": [
+    "Setting up SHG-based micro-enterprises",
+    "Skill development in trades like tailoring, handicrafts, or food processing",
+    "Marketing and promotion of SHG products"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the District Women and Child Development Office",
+      "Submit the application through the SHG with a business plan",
+      "Attach required documents, including SHG registration and residency proof",
+      "Applications are reviewed by a district-level committee",
+      "Approved SHGs receive funding and training support"
+    ],
+    "note": "Applications must be submitted through registered SHGs"
+  },
+  "required_documents": [
+    {
+      "document": "SHG Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Business Plan",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Funding is provided to SHGs, not individuals",
+    "Priority is given to SHGs with viable business plans",
+    "Beneficiaries must participate in training programs"
+  ]
+}

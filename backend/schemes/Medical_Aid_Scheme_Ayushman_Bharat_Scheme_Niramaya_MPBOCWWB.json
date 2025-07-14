@@ -1,0 +1,47 @@
+{
+  "scheme_name": "Medical Aid Scheme (Ayushman Bharat Scheme 'Niramaya') (MPBOCWWB)",
+  "location": "Madhya Pradesh",
+  "tags": [
+    "Health Insurance",
+    "Construction Workers",
+    "Cashless Treatment"
+  ],
+  "description": "The Medical Aid Scheme under Ayushman Bharat Niramaya provides cashless treatment for registered construction workers and their families.",
+  "key_features": [
+    "Coverage up to Rs. 5 lakh per family per year",
+    "Covers hospitalization and critical illnesses",
+    "Cashless treatment in empanelled hospitals"
+  ],
+  "benefits": {
+    "coverage_amount": "Up to Rs. 5 Lakh per family per year",
+    "hospital_types": "Empanelled public and private hospitals"
+  },
+  "eligibility": {
+    "criteria": [
+      "Registered construction workers with MPBOCWWB",
+      "Their dependents",
+      "Residents of Madhya Pradesh"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Register with MPBOCWWB",
+      "Obtain health card",
+      "Avail treatment at empanelled hospitals"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "MPBOCWWB Registration Card",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Linked to Ayushman Bharat for broader coverage"
+  ]
+}

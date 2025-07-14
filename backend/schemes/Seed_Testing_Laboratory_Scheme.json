@@ -1,0 +1,47 @@
+{
+  "scheme_name": "Seed Testing Laboratory Scheme",
+  "location": "Meghalaya",
+  "tags": [
+    "Seed Quality",
+    "Agricultural Productivity",
+    "Testing Infrastructure"
+  ],
+  "description": "The Seed Testing Laboratory Scheme in Meghalaya ensures the availability of quality seeds by establishing testing facilities to certify seed standards.",
+  "key_features": [
+    "Seed testing for quality and viability",
+    "Certification of seeds for distribution",
+    "Support for farmers and seed producers"
+  ],
+  "benefits": {
+    "seed_quality": "Certified high-quality seeds",
+    "yield_improvement": "Better crop performance"
+  },
+  "eligibility": {
+    "criteria": [
+      "Seed producers and farmers in Meghalaya",
+      "Registered seed farms or cooperatives"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Submit seed samples to testing laboratory",
+      "Pay testing fees (if applicable)",
+      "Receive certification report"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Seed Sample Details",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": false
+    }
+  ],
+  "special_notes": [
+    "Ensures compliance with national seed standards",
+    "Subsidized testing for small farmers"
+  ]
+}

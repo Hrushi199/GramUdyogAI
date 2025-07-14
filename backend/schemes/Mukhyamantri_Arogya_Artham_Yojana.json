@@ -1,0 +1,46 @@
+{
+  "scheme_name": "Mukhyamantri Arogya Artham Yojana",
+  "location": "Gujarat",
+  "tags": [
+    "Health Insurance",
+    "Low-Income Families",
+    "Cashless Treatment"
+  ],
+  "description": "Mukhyamantri Arogya Artham Yojana provides cashless treatment for serious ailments for low-income families in Gujarat.",
+  "key_features": [
+    "Coverage up to Rs. 5 lakh per family per year",
+    "Covers 698 procedures",
+    "Cashless treatment in empanelled hospitals"
+  ],
+  "benefits": {
+    "coverage_amount": "Up to Rs. 5 Lakh per family per year",
+    "procedure_coverage": "698 medical and surgical procedures"
+  },
+  "eligibility": {
+    "criteria": [
+      "Families with annual income below Rs. 1.2 lakh",
+      "Residents of Gujarat"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Register at empanelled hospital",
+      "Submit income proof and ID",
+      "Receive health card for treatment"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Income Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Focus on critical illnesses like cancer and heart diseases"
+  ]
+}

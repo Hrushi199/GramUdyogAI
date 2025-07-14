@@ -1,0 +1,43 @@
+{
+    "job_mentor_dashboard": {
+      "title": "{{name}} ડેશબોર્ડ",
+      "recreate_dashboard": "ડેશબોર્ડ ફરીથી બનાવો",
+      "loading_error": "ડેશબોર્ડ લોડ કરવામાં નિષ્ફળ.",
+      "go_to_profile": "પ્રોફાઇલ પર જાઓ",
+      "visual_summary": {
+        "title": "દ્રશ્ય સારાંશ",
+        "click_to_view_all": "બધા વિભાગો જોવા માટે ક્લિક કરો",
+        "modal": {
+          "section_label": "વિભાગ {{current}} કુલ {{total}} માંથી",
+          "close_aria_label": "બંધ કરો",
+          "previous_aria_label": "પાછળ",
+          "next_aria_label": "આગળ",
+          "go_to_section_aria_label": "વિભાગ {{section}} પર જાઓ"
+        }
+      },
+      "csr_courses": {
+        "title": "ભલામણ કરેલ CSR કોર્સ",
+        "view_course": "કોર્સ જુઓ"
+      },
+      "jobs": {
+        "title": "ભલામણ કરેલ નોકરીઓ",
+        "contact": "સંપર્ક"
+      },
+      "business_suggestions": {
+        "title": "વ્યવસાય સૂચનો",
+        "default_idea_name": "વ્યવસાય વિચાર #{{index}}",
+        "business_type": "વ્યવસાયનો પ્રકાર",
+        "required_resources": "જરૂરી સંસાધનો",
+        "initial_steps": "પ્રારંભિક પગલાં",
+        "why_it_suits": "આ તમારા માટે શા માટે યોગ્ય છે"
+      },
+      "schemes": {
+        "title": "ભલામણ કરેલ યોજનાઓ",
+        "goal": "ધ્યેય",
+        "benefits": "લાભો",
+        "eligibility": "પાત્રતા",
+        "how_to_apply": "અરજી કેવી રીતે કરવી",
+        "special_features": "વિશેષ લક્ષણો"
+      }
+    }
+  }

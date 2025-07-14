@@ -1,0 +1,52 @@
+{
+  "scheme_name": "Mukhya Mantri Himachal Health Care Scheme-HIMCARE",
+  "location": "Himachal Pradesh",
+  "tags": [
+    "Health Insurance",
+    "Cashless Treatment",
+    "Family Coverage"
+  ],
+  "description": "The HIMCARE scheme provides cashless health care coverage of up to Rs. 5 lakh per year per family for hospitalization in empanelled hospitals.",
+  "key_features": [
+    "Cashless treatment up to Rs. 5 lakh per family per year",
+    "Covers 5 members per family (3 children + parents)",
+    "Includes 1826 disease packages"
+  ],
+  "benefits": {
+    "coverage_amount": "Up to Rs. 5 Lakh per family per year",
+    "hospital_types": "Empanelled public and private hospitals"
+  },
+  "eligibility": {
+    "criteria": [
+      "Families not covered under Ayushman Bharat",
+      "Residents of Himachal Pradesh",
+      "Specific groups like street vendors, daily wagers, and out-sourced workers"
+    ]
+  },
+  "application_process": {
+    "mode": "Online/Offline",
+    "steps": [
+      "Apply through HIMCARE portal or Common Service Centres",
+      "Submit required documents",
+      "Pay premium (Rs. 1000 for general, Rs. 500 for specific categories)"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Ration Card",
+      "mandatory": true
+    },
+    {
+      "document": "Income Certificate",
+      "mandatory": false
+    }
+  ],
+  "special_notes": [
+    "Renewal required annually",
+    "Premium waivers for certain categories like BPL families"
+  ]
+}

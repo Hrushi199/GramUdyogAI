@@ -1,0 +1,81 @@
+{
+    "pageTitle": "ప్రభుత్వ పథకాలను కనుగొనండి",
+    "pageDescription": "మీ వృత్తిని నమోదు చేయండి మరియు మీ అభివృద్ధి మరియు విజయానికి సహాయపడే ప్రభుత్వ పథకాలను కనుగొనండి.",
+    "form": {
+      "occupationLabel": "మీ వృత్తిని నమోదు చేయండి:",
+      "occupationPlaceholder": "ఉదాహరణ: రైతు, ఉపాధ్యాయుడు",
+      "submitButton": "సిఫార్సులు పొందండి"
+    },
+    "loading": "సిఫార్సులు లోడ్ అవుతున్నాయి...",
+    "recommendedSchemes": "సిఫార్సు చేసిన పథకాలు",
+    "scheme": {
+      "goal": "లక్ష్యం",
+      "benefits": "లాభాలు",
+      "eligibility": "అర్హత",
+      "howToApply": "ఎలా దరఖాస్తు చేయాలి",
+      "specialFeatures": "ప్రత్యేక లక్షణాలు",
+      "viewFullDetails": "పూర్తి వివరాలు చూడండి"
+    },
+    "noExplanation": "ఏ వివరణ ఇవ్వబడలేదు.",
+    "noData": "ఇంకా డేటా అందలేదు. దయచేసి సిఫార్సుల కోసం ఫారమ్‌ను సమర్పించండి.",
+    "modal": {
+      "schemeDetails": "పథకం వివరాలు",
+      "fields": {
+        "scheme_name": "పథకం పేరు",
+        "goal": "లక్ష్యం",
+        "benefit": "లాభం",
+        "eligibility": "అర్హత",
+        "application_process": "దరఖాస్తు ప్రక్రియ",
+        "special_features": "ప్రత్యేక లక్షణాలు",
+        "description": "వివరణ",
+        "website": "వెబ్‌సైట్",
+        "contact": "సంప్రదించండి",
+        "location": "స్థానం",
+        "tags": "ట్యాగ్‌లు",
+        "key_features": "ప్రధాన లక్షణాలు",
+        "benefits_details": {
+          "interest_subsidy": "వడ్డీ సబ్సిడీ",
+          "maximum_loan_amount": "గరిష్ట రుణ మొత్తం",
+          "moratorium_period": "మోరేటోరియం కాలం",
+          "knowledge_transfer": "జ్ఞాన బదిలీ",
+          "productivity_improvement": "ఉత్పాదకత మెరుగుదల"
+        },
+        "eligibility_details": {
+          "education_criteria": "విద్యా ప్రమాణాలు",
+          "additional_criteria": "అదనపు ప్రమాణాలు",
+          "admission_requirement": "ప్రవేశ అవసరం",
+          "institution_criteria": "సంస్థ ప్రమాణాలు",
+          "criteria": "ప్రమాణాలు"
+        },
+        "eligible_courses": "అర్హత కలిగిన కోర్సులు",
+        "application_details": {
+          "mode": "మోడ్",
+          "steps": "దశలు",
+          "note": "గమనిక"
+        },
+        "required_documents": "అవసరమైన పత్రాలు",
+        "document_fields": {
+          "document": "పత్రం",
+          "mandatory": "తప్పనిసరి",
+          "note": "గమనిక"
+        },
+        "special_notes": "ప్రత్యేక గమనికలు",
+        "document": "పత్రం",
+        "mandatory": "తప్పనిసరి",
+        "note": "గమనిక",
+        "mode": "మోడ్",
+        "steps": "దశలు",
+        "interest_subsidy": "వడ్డీ సబ్సిడీ",
+        "maximum_loan_amount": "గరిష్ట రుణ మొత్తం",
+        "moratorium_period": "మోరేటోరియం కాలం",
+        "knowledge_transfer": "జ్ఞాన బదిలీ",
+        "productivity_improvement": "ఉత్పాదకత మెరుగుదల",
+        "education_criteria": "విద్యా ప్రమాణాలు",
+        "additional_criteria": "అదనపు ప్రమాణాలు",
+        "admission_requirement": "ప్రవేశ అవసరం",
+        "institution_criteria": "సంస్థ ప్రమాణాలు",
+        "criteria": "ప్రమాణాలు"
+      }
+    }
+  }
+  

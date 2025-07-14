@@ -1,0 +1,14 @@
+node_modules
+.env
+env
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+__pycache__/*
+backend/database.db
+*.db
+backend/images/*.png
+backebnd/audio/*.wav
+/venv/
+/.venv/

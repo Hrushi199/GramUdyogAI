@@ -1,0 +1,75 @@
+{
+  "scheme_name": "Soft Loan Scheme for Women Entrepreneurs",
+  "location": "Kerala",
+  "tags": [
+    "Women Entrepreneurs",
+    "Financial Assistance",
+    "Soft Loans",
+    "Working Capital"
+  ],
+  "description": "The Soft Loan Scheme for Women Entrepreneurs in Kerala provides soft loans as working capital to women entrepreneurs to support their businesses, promoting economic empowerment and business growth.",
+  "key_features": [
+    "Low-interest soft loans for women",
+    "Support for working capital needs",
+    "Encourages women-led businesses"
+  ],
+  "benefits": {
+    "loan_amount": "Up to Rs. 5 Lakhs as working capital",
+    "interest_rate": "Subsidized interest rate, max 5% per annum",
+    "repayment": "Flexible repayment period up to 5 years"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women aged 18-55 years"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Kerala"
+    ],
+    "business_criteria": [
+      "Must own or operate a registered business"
+    ]
+  },
+  "eligible_activities": [
+    "Meeting working capital needs of businesses",
+    "Purchase of raw materials or inventory",
+    "Business expansion activities"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the Kerala State Women\u00e2\u20ac\u2122s Development Corporation",
+      "Submit a detailed business plan with the application",
+      "Attach required documents, including business registration and residency proof",
+      "Applications are reviewed by the corporation",
+      "Approved applicants receive soft loans"
+    ],
+    "note": "Applicants must provide proof of business operations"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Business Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Business Plan",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Loans are disbursed through designated banks",
+    "Priority is given to women with established businesses",
+    "Applicants must submit financial statements"
+  ]
+}

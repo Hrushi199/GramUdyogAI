@@ -1,0 +1,46 @@
+{
+    "pageTitle": "એઆઈ વ્યાપાર સૂચન",
+    "pageDescription": "તમારા કૌશલ્ય શેર કરો અને તમારી કુશળતા સાથે મેળ ખાતી વ્યવસાયિક વિચારો શોધો.",
+    "form": {
+      "skillsLabel": "તમારું કૌશલ્ય દાખલ કરો:",
+      "skillsPlaceholder": "ઉદાહરણ: વેબ ડેવલપમેન્ટ, માર્કેટિંગ, રસોઈ...",
+      "submitButton": "સૂચનો મેળવો"
+    },
+    "loading": "સૂચનો લોડ થઈ રહ્યા છે...",
+    "error": {
+      "generic": "કંઇક ખોટું થયું છે",
+      "connection": "સર્વર સાથે કનેક્ટ થવામાં ભૂલ."
+    },
+    "businessIdeas": "વ્યવસાયિક વિચારોઃ",
+    "businessDetails": {
+      "businessType": "વ્યાપારનો પ્રકાર",
+      "requiredResources": "જરૂરી સંસાધનો",
+      "initialSteps": "પ્રારંભિક પગલાં",
+      "whyItSuits": "આ તમારા માટે કેમ યોગ્ય છે"
+    },
+    "actions": {
+      "translate": "અનુવાદ કરો",
+      "translating": "અનુવાદ થઈ રહ્યો છે..."
+    },
+    "noSuggestions": "કોઈ સૂચનો ઉપલબ્ધ નથી. કૃપા કરીને અલગ કૌશલ્ય સાથે પ્રયાસ કરો.",
+    "detailedGuide": {
+      "title": "સંપૂર્ણ પગલું-દર-પગલું માર્ગદર્શિકા",
+      "totalCost": "કુલ અનુમાનિત ખર્ચ",
+      "totalTime": "શરૂ કરવાનો સમય",
+      "difficulty": "મુશ્કેલી સ્તર",
+      "profitPotential": "નફાની સંભાવના",
+      "step": "પગલું",
+      "estimatedTime": "અનુમાનિત સમય",
+      "estimatedCost": "અનુમાનિત ખર્ચ",
+      "youtubeVideos": "મદદરૂપ વીડિયો",
+      "shoppingLinks": "ક્યાંથી ખરીદવું",
+      "requiredDocuments": "જરૂરી દસ્તાવેજો",
+      "documentProcess": "દસ્તાવેજ પ્રક્રિયા",
+      "tips": "પ્રો ટિપ્સ",
+      "viewDetails": "વિગતો જુઓ",
+      "hideDetails": "વિગતો છુપાવો",
+      "openLink": "લિંક ખોલો",
+      "watchVideo": "વીડિયો જુઓ"
+    }
+  }
+  

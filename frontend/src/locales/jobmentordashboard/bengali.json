@@ -1,0 +1,43 @@
+{
+    "job_mentor_dashboard": {
+      "title": "{{name}} ড্যাশবোর্ড",
+      "recreate_dashboard": "ড্যাশবোর্ড পুনরায় তৈরি করুন",
+      "loading_error": "ড্যাশবোর্ড লোড করতে ব্যর্থ।",
+      "go_to_profile": "প্রোফাইলে যান",
+      "visual_summary": {
+        "title": "দৃশ্যমান সারাংশ",
+        "click_to_view_all": "সব বিভাগ দেখতে ক্লিক করুন",
+        "modal": {
+          "section_label": "বিভাগ {{current}} এর মধ্যে {{total}}",
+          "close_aria_label": "বন্ধ করুন",
+          "previous_aria_label": "পূর্ববর্তী",
+          "next_aria_label": "পরবর্তী",
+          "go_to_section_aria_label": "বিভাগ {{section}} এ যান"
+        }
+      },
+      "csr_courses": {
+        "title": "প্রস্তাবিত সিএসআর কোর্স",
+        "view_course": "কোর্স দেখুন"
+      },
+      "jobs": {
+        "title": "প্রস্তাবিত চাকরি",
+        "contact": "যোগাযোগ করুন"
+      },
+      "business_suggestions": {
+        "title": "ব্যবসায়িক পরামর্শ",
+        "default_idea_name": "ব্যবসায়িক ধারণা #{{index}}",
+        "business_type": "ব্যবসার ধরন",
+        "required_resources": "প্রয়োজনীয় সম্পদ",
+        "initial_steps": "প্রাথমিক পদক্ষেপ",
+        "why_it_suits": "এটি আপনার জন্য কেন উপযুক্ত"
+      },
+      "schemes": {
+        "title": "প্রস্তাবিত প্রকল্প",
+        "goal": "লক্ষ্য",
+        "benefits": "সুবিধা",
+        "eligibility": "যোগ্যতা",
+        "how_to_apply": "আবেদন করার পদ্ধতি",
+        "special_features": "বিশেষ বৈশিষ্ট্য"
+      }
+    }
+  }

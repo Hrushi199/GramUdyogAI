@@ -1,0 +1,50 @@
+{
+  "scheme_name": "Scheme for Establishment of Backyard Poultry Units (Haryana)",
+  "location": "Haryana",
+  "tags": [
+    "Backyard Poultry",
+    "Financial Assistance",
+    "Employment Generation"
+  ],
+  "description": "This scheme aims to promote backyard poultry farming to provide sustainable income and employment opportunities to rural households in Haryana.",
+  "key_features": [
+    "Financial assistance for setting up backyard poultry units",
+    "Focus on rural employment and income generation"
+  ],
+  "benefits": {
+    "unit_size": "Small-scale backyard poultry units",
+    "financial_assistance": "As per scheme guidelines"
+  },
+  "eligibility": {
+    "category_criteria": [
+      "Open to rural households in Haryana"
+    ],
+    "additional_criteria": "Preference may be given to economically weaker sections"
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Approach the local Animal Husbandry Department",
+      "Submit application form with required documents",
+      "Verification and approval by department"
+    ],
+    "note": "Contact local authorities for detailed guidelines"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residence Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Focus on small-scale, household-level poultry farming"
+  ]
+}

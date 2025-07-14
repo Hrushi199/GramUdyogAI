@@ -1,0 +1,76 @@
+{
+  "scheme_name": "Pradhan Mantri Formalisation Of Micro Food Processing Enterprises",
+  "location": "Pan India",
+  "tags": [
+    "Financial Assistance",
+    "Food Processing",
+    "Micro Enterprises",
+    "Formalization"
+  ],
+  "description": "The Pradhan Mantri Formalisation of Micro Food Processing Enterprises (PMFME) scheme aims to formalize micro food processing units by providing financial, technical, and marketing support. It enhances the competitiveness of micro enterprises in the food processing sector.",
+  "key_features": [
+    "Financial support for micro food processing units",
+    "Technical and marketing assistance",
+    "Promotes formalization and growth"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 10 Lakhs with 35% credit-linked subsidy",
+    "training": "Free training for food processing techniques",
+    "branding_support": "Assistance for branding and marketing"
+  },
+  "eligibility": {
+    "business_criteria": [
+      "Must be a micro food processing enterprise",
+      "Must be registered or willing to formalize"
+    ],
+    "operational_criteria": [
+      "Engaged in food processing activities like dairy, fruits, vegetables, or grains",
+      "Must have a viable business plan"
+    ]
+  },
+  "eligible_activities": [
+    "Setting up or upgrading micro food processing units",
+    "Purchase of equipment or machinery",
+    "Branding, packaging, and marketing of food products"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the PMFME portal or Ministry of Food Processing Industries website",
+      "Register and submit an online application with a business plan",
+      "Upload required documents, including Aadhaar and business details",
+      "Applications are reviewed by the State Nodal Agency",
+      "Approved applicants receive funding and support"
+    ],
+    "note": "Applicants must complete formalization process to receive benefits"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Business Plan",
+      "mandatory": true
+    },
+    {
+      "document": "Udyam Registration Certificate",
+      "mandatory": false,
+      "required_when": "If already registered"
+    },
+    {
+      "document": "Bank Loan Sanction Letter",
+      "mandatory": true,
+      "required_when": "For credit-linked subsidy"
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "The subsidy is linked to bank loans",
+    "Units must comply with food safety and quality standards",
+    "Priority is given to women, SC/ST, and rural enterprises"
+  ]
+}

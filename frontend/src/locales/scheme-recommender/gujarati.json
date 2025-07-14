@@ -1,0 +1,81 @@
+{
+    "pageTitle": "સરકારી યોજનાઓ શોધો",
+    "pageDescription": "તમારા વ્યવસાયને નોંધણી કરો અને તમારી વૃદ્ધિ અને સફળતા માટે સરકારી યોજનાઓ શોધો.",
+    "form": {
+      "occupationLabel": "તમારો વ્યવસાય દાખલ કરો:",
+      "occupationPlaceholder": "ઉદાહરણ: ખેડૂતો, શિક્ષક",
+      "submitButton": "સુપરિશન્સ મેળવો"
+    },
+    "loading": "સુપરિશન્સ લોડ થઈ રહી છે...",
+    "recommendedSchemes": "સુપરિશિત યોજનાઓ",
+    "scheme": {
+      "goal": "લક્ષ્ય",
+      "benefits": "લાભ",
+      "eligibility": "યોગ્યતા",
+      "howToApply": "કિદ્દરે અરજી કરો",
+      "specialFeatures": "વિશેષ લક્ષણો",
+      "viewFullDetails": "પૂર્ણ વિગતો જુઓ"
+    },
+    "noExplanation": "કોઈ સ્પષ્ટતા ઉપલબ્ધ નથી.",
+    "noData": "કોઈ ડેટા મળ્યો નથી. કૃપા કરીને સુપરિશન્સ માટે ફોર્મ દાખલ કરો.",
+    "modal": {
+      "schemeDetails": "યોજનાની વિગતો",
+      "fields": {
+        "scheme_name": "યોજના નામ",
+        "goal": "લક્ષ્ય",
+        "benefit": "લાભ",
+        "eligibility": "યોગ્યતા",
+        "application_process": "અરજીની પ્રક્રિયા",
+        "special_features": "વિશેષ લક્ષણો",
+        "description": "વર્ણન",
+        "website": "વેબસાઇટ",
+        "contact": "સંપર્ક",
+        "location": "સ્થળ",
+        "tags": "ટૅગ્સ",
+        "key_features": "મુખ્ય લક્ષણો",
+        "benefits_details": {
+          "interest_subsidy": "બ્યાજ સહાય",
+          "maximum_loan_amount": "ગુણાંક લોન રકમ",
+          "moratorium_period": "વિશ્વાસ સમયગાળો",
+          "knowledge_transfer": "જ્ઞાન ટ્રાન્સફર",
+          "productivity_improvement": "ઉત્પાદકતા સુધારો"
+        },
+        "eligibility_details": {
+          "education_criteria": "શૈક્ષણિક માપદંડ",
+          "additional_criteria": "વધારાના માપદંડ",
+          "admission_requirement": "પ્રવેશની જરૂરિયાત",
+          "institution_criteria": "સંસ્થાનો માપદંડ",
+          "criteria": "માપદંડ"
+        },
+        "eligible_courses": "અરજી લાયક કોર્સ",
+        "application_details": {
+          "mode": "મોડ",
+          "steps": "કદમ",
+          "note": "ટિપ્પણી"
+        },
+        "required_documents": "આવશ્યક દસ્તાવેજો",
+        "document_fields": {
+          "document": "દસ્તાવેજ",
+          "mandatory": "જરૂરી",
+          "note": "ટિપ્પણી"
+        },
+        "special_notes": "વિશેષ ટિપ્પણીઓ",
+        "document": "દસ્તાવેજ",
+        "mandatory": "જરૂરી",
+        "note": "ટિપ્પણી",
+        "mode": "મોડ",
+        "steps": "કદમ",
+        "interest_subsidy": "બ્યાજ સહાય",
+        "maximum_loan_amount": "ગુણાંક લોન રકમ",
+        "moratorium_period": "વિશ્વાસ સમયગાળો",
+        "knowledge_transfer": "જ્ઞાન ટ્રાન્સફર",
+        "productivity_improvement": "ઉત્પાદકતા સુધારો",
+        "education_criteria": "શૈક્ષણિક માપદંડ",
+        "additional_criteria": "વધારાના માપદંડ",
+        "admission_requirement": "પ્રવેશની જરૂરિયાત",
+        "institution_criteria": "સંસ્થાનો માપદંડ",
+        "criteria": "માપદંડ"
+      }
+    }
+  }
+  

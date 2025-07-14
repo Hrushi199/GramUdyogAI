@@ -1,0 +1,83 @@
+{
+  "scheme_name": "Loan Based Schemes For Safai Karamchari - Education Loan Scheme",
+  "location": "Pan India",
+  "tags": [
+    "Education Loan",
+    "Financial Assistance",
+    "Higher Education",
+    "Safai Karamchari"
+  ],
+  "description": "The Education Loan Scheme under the National Safai Karamcharis Finance and Development Corporation (NSKFDC) provides financial assistance to Safai Karamchari students and their dependents for pursuing professional or technical education at graduate and higher levels. The scheme aims to promote educational empowerment among this community through concessional loans.",
+  "key_features": [
+    "Concessional loans for Safai Karamchari students",
+    "Covers professional and technical courses in India and abroad",
+    "Implemented through State Channelising Agencies or banks",
+    "Flexible repayment with moratorium period"
+  ],
+  "benefits": {
+    "maximum_loan_amount": "Up to Rs. 20 Lakhs for studies in India; Up to Rs. 30 Lakhs for studies abroad",
+    "interest_rate": "4% per annum for male students, 3.5% per annum for female students",
+    "moratorium_period": "6 months after course completion or securing a job"
+  },
+  "eligibility": {
+    "education_criteria": [
+      "Students pursuing professional or technical courses at graduate or postgraduate level",
+      "Courses must be recognized by UGC, AICTE, or equivalent"
+    ],
+    "additional_criteria": [
+      "Applicant must be a Safai Karamchari or dependent as per NSKFDC norms",
+      "No income ceiling for eligibility"
+    ],
+    "admission_requirement": "Admission to recognized institutions through merit or entrance tests",
+    "institution_criteria": [
+      "Recognized institutions in India or abroad"
+    ]
+  },
+  "eligible_courses_delhi": [
+    "Engineering, medical, law, management, and other professional courses",
+    "Technical courses approved by regulatory bodies",
+    "Vocational courses leading to employment"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain application form from NSKFDC or State Channelising Agency",
+      "Submit completed form with required documents",
+      "Verification and sanction by the agency/bank",
+      "Sign loan agreement upon approval"
+    ],
+    "note": "Contact NSKFDC or State Channelising Agency for details"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Safai Karamchari Certificate",
+      "mandatory": true,
+      "note": "Or proof of dependency"
+    },
+    {
+      "document": "Admission Letter",
+      "mandatory": true
+    },
+    {
+      "document": "Fee Structure",
+      "mandatory": true
+    },
+    {
+      "document": "Marksheets (10th, 12th, or last qualifying exam)",
+      "mandatory": true
+    },
+    {
+      "document": "Passport-sized Photographs",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "No income limit for eligibility, broadening access",
+    "Female students receive a 0.5% interest rate concession",
+    "Loan covers tuition, books, and living expenses"
+  ]
+}

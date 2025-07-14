@@ -1,0 +1,50 @@
+{
+  "scheme_name": "Scheme for Establishment of Hi-Tech and Mini Dairy Units (Haryana)",
+  "location": "Haryana",
+  "tags": [
+    "Dairy Farming",
+    "Poultry Farming",
+    "Financial Assistance",
+    "Hi-Tech Units"
+  ],
+  "description": "This scheme provides financial assistance for establishing hi-tech and mini dairy units, with provisions for poultry farming, to promote modern livestock farming practices in Haryana.",
+  "key_features": [
+    "Support for hi-tech and mini dairy units",
+    "Includes provisions for poultry farming"
+  ],
+  "benefits": {
+    "financial_assistance": "As per scheme guidelines",
+    "unit_types": "Dairy and poultry units"
+  },
+  "eligibility": {
+    "category_criteria": [
+      "Open to residents of Haryana"
+    ],
+    "additional_criteria": "Must have access to land and resources for hi-tech units"
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Contact the Animal Husbandry Department",
+      "Submit application with project proposal",
+      "Verification and sanction by authorities"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residence Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Project Proposal",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Primarily focused on dairy but includes poultry farming"
+  ]
+}

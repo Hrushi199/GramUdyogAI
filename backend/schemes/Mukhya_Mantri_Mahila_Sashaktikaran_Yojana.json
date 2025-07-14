@@ -1,0 +1,75 @@
+{
+  "scheme_name": "Mukhya Mantri Mahila Sashaktikaran Yojana",
+  "location": "Madhya Pradesh",
+  "tags": [
+    "Women Empowerment",
+    "Skill Training",
+    "Financial Assistance",
+    "Violence Survivors"
+  ],
+  "description": "The Mukhya Mantri Mahila Sashaktikaran Yojana in Madhya Pradesh provides permanent training and financial support for the economic and social upliftment of women who have suffered from violence, enabling them to achieve self-reliance.",
+  "key_features": [
+    "Skill training for survivors of violence",
+    "Financial assistance for self-employment",
+    "Counseling and support services"
+  ],
+  "benefits": {
+    "training": "Free skill training for 6-12 months",
+    "financial_assistance": "Up to Rs. 3 Lakhs for self-employment ventures",
+    "counseling": "Free psychological and legal support"
+  },
+  "eligibility": {
+    "gender_criteria": [
+      "Women aged 18-50 years"
+    ],
+    "residency_criteria": [
+      "Must be a resident of Madhya Pradesh"
+    ],
+    "additional_criteria": [
+      "Must be a survivor of violence (e.g., domestic abuse, trafficking)"
+    ]
+  },
+  "eligible_activities": [
+    "Skill training in trades like tailoring, handicrafts, or computer skills",
+    "Setting up self-employment ventures",
+    "Participating in counseling and rehabilitation programs"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the District Women and Child Development Office",
+      "Submit the application with proof of eligibility",
+      "Attach required documents, including Aadhaar and proof of violence",
+      "Applications are reviewed by a district committee",
+      "Selected candidates are enrolled in training and support programs"
+    ],
+    "note": "Applicants may need to provide a police report or NGO certification"
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Proof of Violence (Police Report/NGO Certificate)",
+      "mandatory": true
+    },
+    {
+      "document": "Photograph",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Confidentiality of applicants is maintained",
+    "Priority is given to women in rehabilitation centers",
+    "Training is tailored to individual needs"
+  ]
+}

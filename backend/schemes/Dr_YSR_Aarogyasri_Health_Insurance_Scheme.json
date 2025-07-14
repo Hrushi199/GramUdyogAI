@@ -1,0 +1,47 @@
+{
+  "scheme_name": "Dr. YSR Aarogyasri Health Insurance Scheme",
+  "location": "Andhra Pradesh",
+  "tags": [
+    "Health Insurance",
+    "Cashless Treatment",
+    "Critical Illness"
+  ],
+  "description": "Dr. YSR Aarogyasri provides financial assistance for hospitalization and treatment of serious ailments for families below the poverty line.",
+  "key_features": [
+    "Coverage up to Rs. 5 lakh per family per year",
+    "Covers 2436 procedures",
+    "Free diagnostics and follow-up care"
+  ],
+  "benefits": {
+    "coverage_amount": "Up to Rs. 5 Lakh per family per year",
+    "procedure_coverage": "2436 medical and surgical procedures"
+  },
+  "eligibility": {
+    "criteria": [
+      "Families with white ration cards",
+      "Annual income below Rs. 5 lakh",
+      "Residents of Andhra Pradesh"
+    ]
+  },
+  "application_process": {
+    "mode": "Automatic/Offline",
+    "steps": [
+      "Approach empanelled hospital",
+      "Verification through ration card",
+      "Cashless treatment upon approval"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "White Ration Card",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Includes free follow-up consultations and diagnostics"
+  ]
+}

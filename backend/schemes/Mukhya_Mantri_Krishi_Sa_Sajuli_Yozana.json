@@ -1,0 +1,51 @@
+{
+  "scheme_name": "Mukhya Mantri Krishi Sa Sajuli Yozana",
+  "location": "Assam",
+  "tags": [
+    "Farm Mechanization",
+    "Financial Assistance",
+    "Productivity Enhancement"
+  ],
+  "description": "Mukhya Mantri Krishi Sa Sajuli Yojana, launched in 2018-19, promotes farm mechanization in Assam by providing financial assistance for modern farm tools to boost productivity.",
+  "key_features": [
+    "Financial assistance of Rs. 5000 for farm tools",
+    "Direct Benefit Transfer to farmers",
+    "Focus on small and marginal farmers"
+  ],
+  "benefits": {
+    "financial_assistance": "Rs. 5000 per farmer",
+    "tool_access": "Modern scientific farm implements"
+  },
+  "eligibility": {
+    "criteria": [
+      "Small and marginal farmers in Assam",
+      "Selected by District Level Committee"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Apply through local agriculture department",
+      "Selection by District Level Committee",
+      "Funds transferred via DBT"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Account Details",
+      "mandatory": true
+    },
+    {
+      "document": "Land Ownership Proof",
+      "mandatory": false
+    }
+  ],
+  "special_notes": [
+    "Aims to address low mechanization in Assam",
+    "Supervised by State-Level Monitoring Committee"
+  ]
+}

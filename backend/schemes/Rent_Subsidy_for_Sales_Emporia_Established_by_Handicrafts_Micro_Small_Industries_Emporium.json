@@ -1,0 +1,72 @@
+{
+  "scheme_name": "Rent Subsidy for Sales Emporia Established by Handicrafts / Micro & Small Industries Emporium",
+  "location": "Puducherry",
+  "tags": [
+    "Financial Assistance",
+    "Handicrafts",
+    "MSME",
+    "Rent Subsidy"
+  ],
+  "description": "This scheme in Puducherry provides rent subsidies to handicraft and micro/small industries emporia to promote their products. It aims to reduce the financial burden of renting sales spaces, thereby encouraging market presence for artisans and small businesses.",
+  "key_features": [
+    "Subsidized rent for sales emporia",
+    "Support for handicraft and MSME product promotion",
+    "Encourages market access for artisans"
+  ],
+  "benefits": {
+    "rent_subsidy": "50% of rent expenses, up to a maximum of Rs. 50,000 per year",
+    "duration": "Subsidy available for up to 3 years"
+  },
+  "eligibility": {
+    "business_criteria": [
+      "Must be a registered handicraft unit or MSME in Puducherry",
+      "Must operate a sales emporium for handicrafts or MSME products"
+    ],
+    "operational_criteria": [
+      "Emporium must be located in a rented commercial space",
+      "Must have a valid lease agreement"
+    ]
+  },
+  "eligible_activities": [
+    "Renting commercial spaces for sales emporia",
+    "Promoting handicraft and MSME products through retail outlets"
+  ],
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Obtain the application form from the Department of Industries and Commerce, Puducherry",
+      "Submit the application with details of the emporium and lease agreement",
+      "Attach required documents, including MSME registration and rent receipts",
+      "Applications are reviewed by the Industries Department",
+      "Approved applicants receive the subsidy periodically"
+    ],
+    "note": "Applicants must submit rent receipts annually to continue receiving the subsidy"
+  },
+  "required_documents": [
+    {
+      "document": "MSME/Handicraft Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Lease Agreement",
+      "mandatory": true
+    },
+    {
+      "document": "Rent Receipts",
+      "mandatory": true
+    },
+    {
+      "document": "Bank Details",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "The subsidy is limited to 3 years per emporium",
+    "Emporia must exclusively promote handicraft or MSME products",
+    "Applicants must comply with Puducherry\u00e2\u20ac\u2122s industrial regulations"
+  ]
+}

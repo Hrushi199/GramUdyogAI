@@ -1,0 +1,50 @@
+{
+  "scheme_name": "Delhi Arogya Kosh",
+  "location": "Delhi",
+  "tags": [
+    "Financial Assistance",
+    "Medical Treatment",
+    "Low-Income Families"
+  ],
+  "description": "Delhi Arogya Kosh provides financial assistance for treatment of serious illnesses for low-income residents in government hospitals.",
+  "key_features": [
+    "Up to Rs. 5 lakh for treatment",
+    "Covers hospitalization and diagnostics",
+    "Applicable in government hospitals"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 5 Lakh"
+  },
+  "eligibility": {
+    "criteria": [
+      "Residents of Delhi for at least 3 years",
+      "Annual family income below Rs. 3 lakh",
+      "Treatment in government hospitals"
+    ]
+  },
+  "application_process": {
+    "mode": "Offline",
+    "steps": [
+      "Apply through treating government hospital",
+      "Submit income and residency proof",
+      "Approval by scheme committee"
+    ]
+  },
+  "required_documents": [
+    {
+      "document": "Income Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Residency Proof",
+      "mandatory": true
+    },
+    {
+      "document": "Aadhaar Card",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Funds released to hospital after approval"
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "scheme_name": "Scheme for Assistance to MSMEs for Market Development",
+  "location": "Rajasthan",
+  "tags": [
+    "Market Access",
+    "Financial Assistance",
+    "MSME",
+    "Export Promotion"
+  ],
+  "description": "The Scheme for Assistance to MSMEs for Market Development in Rajasthan supports Micro, Small, and Medium Enterprises in enhancing their market presence through financial assistance for marketing, exhibitions, and export promotion activities.",
+  "key_features": [
+    "Financial aid for marketing and promotional activities",
+    "Support for participation in trade fairs and exhibitions",
+    "Promotes export capabilities of MSMEs"
+  ],
+  "benefits": {
+    "financial_assistance": "Up to Rs. 5 Lakhs for marketing and export promotion activities",
+    "reimbursement": "Up to 50% of expenses for trade fairs, max Rs. 2 Lakhs"
+  },
+  "eligibility": {
+    "business_criteria": [
+      "Must be a registered MSME as per the MSME Development Act, 2006",
+      "Must be located in Rajasthan"
+    ],
+    "operational_criteria": [
+      "Must engage in marketing or export promotion activities",
+      "Must have a valid Udyam Registration"
+    ]
+  },
+  "eligible_activities": [
+    "Participation in state, national, or international trade fairs",
+    "Organizing promotional events or exhibitions",
+    "Developing marketing materials and export strategies"
+  ],
+  "application_process": {
+    "mode": "Online",
+    "steps": [
+      "Visit the Rajasthan Industries Department portal or scheme website",
+      "Submit an online application with details of proposed activities",
+      "Upload required documents, including MSME registration and expense estimates",
+      "Applications are reviewed by the District Industries Centre (DIC)",
+      "Approved applicants receive funding or reimbursement"
+    ],
+    "note": "Reimbursement claims require proof of participation and expenses"
+  },
+  "required_documents": [
+    {
+      "document": "Udyam Registration Certificate",
+      "mandatory": true
+    },
+    {
+      "document": "Marketing Plan/Proposal",
+      "mandatory": true
+    },
+    {
+      "document": "Expense Receipts/Invoices",
+      "mandatory": true,
+      "required_when": "For reimbursement"
+    },
+    {
+      "document": "Bank Details",
+      "mandatory": true
+    },
+    {
+      "document": "Declaration of Compliance",
+      "mandatory": true
+    }
+  ],
+  "special_notes": [
+    "Funding is limited to approved marketing activities",
+    "MSMEs must submit claims within the specified period",
+    "Priority is given to export-oriented MSMEs"
+  ]
+}

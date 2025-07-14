@@ -1,0 +1,30 @@
+{
+    "type": "Career Overview",
+    "title": "Graphic Designer",
+    "sections": [
+        {
+            "title": "Introduction to Graphic Design",
+            "text": "Graphic design is a creative field that involves visual communication and presentation of ideas. It encompasses various forms of media, including print, digital, and web-based designs. With the rise of technology, graphic designers play a crucial role in creating engaging and informative content.",
+            "imageUrl": "graphic_designer__1746191802_section_1.png",
+            "audioUrl": "graphic_designer__1746191802_section_1.wav"
+        },
+        {
+            "title": "Key Skills and Responsibilities",
+            "text": "Graphic designers require a combination of technical and artistic skills to create effective designs. They must have proficiency in design software, understanding of color theory, and knowledge of typography. Their responsibilities include creating visual elements, designing layouts, and collaborating with clients to meet their design needs.",
+            "imageUrl": "graphic_designer__1746191802_section_2.png",
+            "audioUrl": "graphic_designer__1746191802_section_2.wav"
+        },
+        {
+            "title": "Graphic Designer Jobs in India",
+            "text": "India has a thriving graphic design industry, with numerous job opportunities in various sectors, including advertising, media, and technology. Graphic designers in India can work as freelancers or full-time employees, creating designs for local and international clients. The demand for skilled graphic designers is on the rise, making it a promising career option.",
+            "imageUrl": "graphic_designer__1746191802_section_3.png",
+            "audioUrl": "graphic_designer__1746191802_section_3.wav"
+        },
+        {
+            "title": "Future Prospects and Growth",
+            "text": "The graphic design industry is constantly evolving, with new trends and technologies emerging every year. As a result, graphic designers must stay updated with the latest design tools and techniques to remain competitive. With the growth of digital media, the demand for skilled graphic designers is expected to increase, offering lucrative career prospects and opportunities for advancement.",
+            "imageUrl": "graphic_designer__1746191802_section_4.png",
+            "audioUrl": "graphic_designer__1746191802_section_4.wav"
+        }
+    ]
+}
