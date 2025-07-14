@@ -17,11 +17,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 def get_db():
-<<<<<<< HEAD
     return sqlite3.connect('gramudyogai.db')
-=======
-    return sqlite3.connect('database.db')
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 
 @router.post("/dashboard/initialize")
 async def initialize_csr_dashboard():

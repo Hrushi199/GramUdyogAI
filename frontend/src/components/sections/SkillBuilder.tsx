@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-<<<<<<< HEAD
 import ParticleBackground from '../ui/ParticleBackground';
 import { visualSummaryAPI, csrCourseAPI } from '../../lib/api';
-=======
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 
 interface VisualSummary {
   id: number;
@@ -231,19 +228,12 @@ const SkillBuilder = () => {
 
   const fetchSummaries = async () => {
     try {
-<<<<<<< HEAD
       const response = await visualSummaryAPI.getVisualSummaries();
       if (response.data) {
         setSummaries(response.data);
       } else if (response.error) {
         console.error('Error fetching summaries:', response.error);
       }
-=======
-      const response = await fetch(`${API_BASE_URL}/api/visual-summaries`);
-      if (!response.ok) throw new Error('Failed to fetch summaries');
-      const data = await response.json();
-      setSummaries(data);
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     } catch (error) {
       console.error('Error fetching summaries:', error);
     }
@@ -252,7 +242,6 @@ const SkillBuilder = () => {
   const createVisualSummary = async (topic: string, context: string) => {
     setIsCreating(true);
     try {
-<<<<<<< HEAD
       const response = await visualSummaryAPI.createVisualSummary({ 
         topic, 
         context, 
@@ -268,18 +257,6 @@ const SkillBuilder = () => {
         console.error('Error creating summary:', response.error);
         alert(t('consumer.summaryCreatorModal.error'));
       }
-=======
-      const response = await fetch(`${API_BASE_URL}/api/visual-summary`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic, context }),
-      });
-      if (!response.ok) throw new Error('Failed to create summary');
-      const data = await response.json();
-      setSummaries([data, ...summaries]);
-      setCurrentSummary(data);
-      setShowSummaryCreator(false);
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     } catch (error) {
       console.error('Error creating summary:', error);
       alert(t('consumer.summaryCreatorModal.error'));
@@ -343,7 +320,6 @@ const SkillBuilder = () => {
   const fetchCourses = async () => {
     try {
       const [coursesResponse, enrollmentsResponse] = await Promise.all([
-<<<<<<< HEAD
         csrCourseAPI.getCourses(),
         csrCourseAPI.getEnrollments(),
       ]);
@@ -387,49 +363,6 @@ const SkillBuilder = () => {
           coursesResponse.error || enrollmentsResponse.error);
         alert(t('consumer.contentList.fetchError'));
       }
-=======
-        fetch(`${API_BASE_URL}/api/csr/courses`),
-        fetch(`${API_BASE_URL}/api/csr/enrollments`),
-      ]);
-
-      if (!coursesResponse.ok || !enrollmentsResponse.ok) {
-        throw new Error('Failed to fetch courses or enrollments');
-      }
-
-      const csrCourses: CSRCourse[] = await coursesResponse.json();
-      const enrollments: CSREnrollment[] = await enrollmentsResponse.json();
-
-      const csrContent: ContentItem[] = csrCourses.map((course) => {
-        const courseEnrollments = enrollments.filter((e) => e.course_id === course.id);
-        const enrollmentCount = courseEnrollments.length;
-        const completionCount = courseEnrollments.filter((e) => e.status === 'completed').length;
-
-        return {
-          id: course.id,
-          titleKey: course.title,
-          type: 'Course',
-          format: 'CSR Course',
-          language: course.language,
-          provider: null,
-          uploader: `CSR Provider ${course.company_id}`,
-          isCSR: true,
-          duration: course.duration,
-          tokens: 0,
-          content_url: course.content_url || '#',
-          deliveryMode: 'Online',
-          enrollments: enrollmentCount,
-          completions: completionCount,
-          certification: course.certification,
-          max_seats: course.max_seats,
-          start_date: course.start_date,
-          skills: course.skills,
-          description: course.description,
-          status: course.status,
-        };
-      });
-
-      setContent([...dummyContent, ...csrContent]);
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     } catch (error) {
       console.error('Error fetching CSR courses:', error);
       alert(t('consumer.contentList.fetchError'));
@@ -527,7 +460,6 @@ const SkillBuilder = () => {
 
   const completeCourse = async (courseId: number) => {
     try {
-<<<<<<< HEAD
       const response = await csrCourseAPI.completeCourse(courseId, {
         course_id: courseId,
         user_id: USER_ID,
@@ -543,25 +475,6 @@ const SkillBuilder = () => {
         console.error('Error completing course:', response.error);
         alert(t('consumer.completion.failure') + ': ' + response.error);
       }
-=======
-      const response = await fetch(`${API_BASE_URL}/api/csr/courses/${courseId}/complete`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          course_id: courseId,
-          user_id: USER_ID,
-          status: 'completed',
-          progress: 100,
-          updated_at: new Date().toISOString(),
-        }),
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'Failed to mark course as completed');
-      }
-      alert(t('consumer.completion.success'));
-      await fetchCourses(); // Refresh to update metrics
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     } catch (error: any) {
       console.error('Error completing course:', error);
       alert(t('consumer.completion.failure') + ': ' + error.message);

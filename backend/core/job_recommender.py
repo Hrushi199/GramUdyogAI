@@ -11,11 +11,7 @@ from pydantic import BaseModel
 api_key = os.getenv("GROQ_API_KEY")
 client = Groq(api_key=api_key)
 
-<<<<<<< HEAD
 DATABASE_PATH = "gramudyogai.db"  # Path to your SQLite database
-=======
-DATABASE_PATH = "database.db"  # Path to your SQLite database
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 
 
 # Pydantic Models for Validation

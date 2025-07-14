@@ -235,11 +235,6 @@
     "dashboard": "Dashboard",
     "community": "Community",
     "skills": "Skills",
-<<<<<<< HEAD
     "signUp": "Sign Up"
-=======
-    "signUp": "Sign Up",
-    "courseRecommender": "Course Recommender"
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
   }
 }

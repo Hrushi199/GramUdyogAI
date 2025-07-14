@@ -12,19 +12,12 @@ from core.course_recommender import (
     retrieve_live_courses,
     generate_structured_recommendations
 )
-<<<<<<< HEAD
 from core.translation import llama_translate_string as translate_text
-=======
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 
 # --- 1. SETUP & MODELS ---
 router = APIRouter()
 BACKEND_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-<<<<<<< HEAD
 DB_PATH = os.path.join(BACKEND_ROOT, "gramudyogai.db")
-=======
-DB_PATH = os.path.join(BACKEND_ROOT, "database.db")
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 
 class SuggestRequest(BaseModel):
     query: str

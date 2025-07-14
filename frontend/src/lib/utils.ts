@@ -1,6 +1,5 @@
 // Simple utility function for combining class names
 export function cn(...inputs: (string | undefined | null | boolean)[]): string {
-<<<<<<< HEAD
   return inputs.filter(Boolean).join(' ');
 }
 
@@ -35,7 +34,4 @@ export function formatCurrency(amount: number): string {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(amount);
-=======
-  return inputs.filter(Boolean).join(' ')
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 }

@@ -2,12 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ParticleBackground from "../ui/ParticleBackground";
 import { useTranslation } from 'react-i18next';
-<<<<<<< HEAD
 import { Mic, MicOff, CheckCircle, ArrowRight, ArrowLeft, User, MapPin, Languages, Briefcase, Users } from 'lucide-react';
 import {userAPI, Profile} from '../../lib/api';
-=======
-
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 // Interface for our form data
 interface UserProfileForm {
   name: string;
@@ -255,27 +251,17 @@ export default function VoiceBasedUserProfile() {
       setErrorMessage(t('create_profile.review.validation.custom_language_required'));
       return false;
     }
-<<<<<<< HEAD
     if (form.skills.length === 0 && form.customSkills.length === 0) {
       setErrorMessage(t('create_profile.review.validation.skills_required'));
       return false;
     }
     if (form.jobTypes.length === 0 && form.customJobTypes.length === 0) {
       setErrorMessage(t('create_profile.review.validation.job_types_required'));
-=======
-    if (form.skills.includes('Other') && form.customSkills.length === 0) {
-      setErrorMessage(t('create_profile.review.validation.custom_skills_required'));
-      return false;
-    }
-    if (form.jobTypes.includes('Other') && form.customJobTypes.length === 0) {
-      setErrorMessage(t('create_profile.review.validation.custom_job_types_required'));
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       return false;
     }
     return true;
   };
 
-<<<<<<< HEAD
 
 
 
@@ -350,85 +336,11 @@ const saveProfile = async () => {
             placeholder="Enter your language"
             className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           />
-=======
-  // Save profile to backend
-  const saveProfile = async () => {
-    if (!validateForm()) {
-      return;
-    }
-    try {
-      setSaving(true);
-      setErrorMessage('');
-      const finalLanguage = form.language === 'Other' ? form.customLanguage : form.language;
-      const { customLanguage, ...formWithoutCustomLanguage } = form;
-      const profileData = {
-        ...formWithoutCustomLanguage,
-        language: finalLanguage,
-        skills: [...form.skills.filter(s => s !== 'Other'), ...form.customSkills],
-        jobTypes: [...form.jobTypes.filter(j => j !== 'Other'), ...form.customJobTypes],
-      };
-      const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(profileData),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.detail || data.error || t('create_profile.review.validation.save_error'));
-      }
-      setCurrentStep('completed');
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 2000);
-    } catch (error: any) {
-      setErrorMessage(error.message || t('create_profile.review.validation.save_error'));
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  // Render language selection step
-  const renderLanguageSelection = () => (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-purple-300 mb-6">{t('create_profile.language_selection.header')}</h2>
-      <p className="text-gray-300 mb-6">{t('create_profile.language_selection.description')}</p>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">  
-        {languages.map(lang => (
-          <div
-            key={lang}
-            onClick={() => selectLanguage(lang)}
-            className="p-4 bg-gray-800/50 border border-gray-700 rounded-lg text-center cursor-pointer hover:bg-purple-900/30 hover:border-purple-500 transition-all duration-300"
-          >
-            <span className="text-white">{lang}</span>
-          </div>
-        ))}
-      </div>
-      {form.language === 'Other' && (
-        <div className="mt-4">
-          <label className="block text-purple-300 text-sm font-medium mb-2">{t('create_profile.language_selection.specify_language')}</label>
-          <input 
-            className="w-full p-4 bg-gray-900/80 border border-purple-500/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300 placeholder-gray-400"
-            name="customLanguage"
-            value={form.customLanguage}
-            onChange={update}
-            placeholder={t('create_profile.language_selection.custom_language_placeholder')}
-          />
-          <div className="mt-4 flex justify-end">
-            <button
-              onClick={() => setCurrentStep('voice-input')}
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg transition-all duration-300 hover:from-blue-700 hover:to-purple-700"
-              disabled={!form.customLanguage.trim()}
-            >
-              {t('create_profile.language_selection.continue_button')}
-            </button>
-          </div>
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         </div>
       )}
     </div>
   );
 
-<<<<<<< HEAD
   const renderVoiceInput = () => (
     <div className={`max-w-4xl mx-auto transform transition-all duration-1000 ${loaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
       <div className="text-center mb-12">
@@ -770,90 +682,10 @@ const saveProfile = async () => {
             </>
           )}
         </button>
-=======
-  // Render voice input step
-  const renderVoiceInput = () => (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-purple-300 mb-4">{t('create_profile.voice_input.header')}</h2>
-      <p className="text-gray-300 mb-6">
-        {t('create_profile.voice_input.description', { language: form.language === 'Other' ? form.customLanguage : form.language })}
-      </p>
-      <div className="bg-gray-800/30 border border-gray-700 rounded-lg p-6 space-y-4">
-        <p className="text-white">🗣️ <strong>{t('create_profile.voice_input.instructions.title')}</strong></p>
-        <ul className="list-disc pl-6 text-gray-300 space-y-2">
-          <li>{t('create_profile.voice_input.instructions.name')}</li>
-          <li>{t('create_profile.voice_input.instructions.location')}</li>
-          <li>{t('create_profile.voice_input.instructions.skills')}</li>
-          <li>{t('create_profile.voice_input.instructions.job_types')}</li>
-          <li>{t('create_profile.voice_input.instructions.mentor')}</li>
-        </ul>
-      </div>
-      {!mediaRecorderSupported && (
-        <div className="bg-red-900/30 border border-red-700 rounded-lg p-4 text-red-300">
-          {errorMessage}
-        </div>
-      )}
-      {errorMessage && mediaRecorderSupported && (
-        <div className="bg-red-900/30 border border-red-700 rounded-lg p-4 text-red-300">
-          {errorMessage}
-        </div>
-      )}
-      <div className="flex flex-col items-center justify-center py-10">
-        <button
-          onClick={isListening ? stopRecording : startRecording}
-          disabled={isProcessing || !mediaRecorderSupported}
-          className={`w-24 h-24 rounded-full flex items-center justify-center focus:outline-none transition-all duration-300 ${
-            isListening 
-              ? 'bg-red-600 hover:bg-red-700 animate-pulse' 
-              : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
-          } ${isProcessing || !mediaRecorderSupported ? 'opacity-70 cursor-not-allowed' : ''}`}
-        >
-          {isListening ? (
-            <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"></path>
-            </svg>
-          ) : (
-            <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
-            </svg>
-          )}
-        </button>
-        <p className="mt-4 text-white font-medium">
-          {isListening 
-            ? t('create_profile.voice_input.listening') 
-            : isProcessing 
-              ? t('create_profile.voice_input.processing') 
-              : t('create_profile.voice_input.start_speaking')}
-        </p>
-      </div>
-      {isProcessing && (
-        <div className="flex justify-center">
-          <svg className="animate-spin h-8 w-8 text-purple-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-        </div>
-      )}
-      <div className="flex justify-between mt-6">
-        <button
-          onClick={() => setCurrentStep('language-selection')}
-          className="px-6 py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-800 transition-all duration-300"
-        >
-          {t('create_profile.voice_input.back_button')}
-        </button>
-        <button
-          onClick={() => setCurrentStep('review')}
-          className="px-6 py-3 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition-all duration-300"
-        >
-          {t('create_profile.voice_input.skip_button')}
-        </button>
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       </div>
     </div>
   );
 
-<<<<<<< HEAD
   const renderCompleted = () => (
     <div className={`max-w-2xl mx-auto text-center transform transition-all duration-1000 ${loaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
       <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-12">
@@ -888,247 +720,11 @@ const saveProfile = async () => {
             Back to Home
           </button>
         </div>
-=======
-  // Render review step
-  const renderReview = () => (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-purple-300 mb-4">{t('create_profile.review.header')}</h2>
-      <p className="text-gray-300 mb-6">{t('create_profile.review.description')}</p>
-      {errorMessage && (
-        <div className="bg-red-900/30 border border-red-700 rounded-lg p-4 text-red-300">
-          {errorMessage}
-        </div>
-      )}
-      <div className="space-y-6">
-        {/* Name Input */}
-        <div>
-          <label className="block text-purple-300 text-sm font-medium mb-2">{t('create_profile.review.name_label')}</label>
-          <input 
-            className="w-full p-4 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300 placeholder-gray-400"
-            name="name"
-            value={form.name}
-            onChange={update}
-            placeholder={t('create_profile.review.name_placeholder')}
-          />
-        </div>
-        {/* State and District Selection */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-purple-300 text-sm font-medium mb-2">{t('create_profile.review.state_label')}</label>
-            <div className="relative">
-              <select 
-                className="w-full p-4 bg-gray-900/80 border border-purple-500/30 rounded-lg text-white appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300"
-                name="state"
-                value={form.state}
-                onChange={update}
-              >
-                <option value="">{t('create_profile.review.state_placeholder')}</option>
-                {indianStates.map(state => (
-                  <option 
-                    key={state} 
-                    value={state}
-                    className="bg-gray-900 text-white"
-                  >
-                    {state}
-                  </option>
-                ))}
-              </select>
-              <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-purple-400">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </div>
-            </div>
-          </div>
-          <div>
-            <label className="block text-purple-300 text-sm font-medium mb-2">{t('create_profile.review.district_label')}</label>
-            <input 
-              className="w-full p-4 bg-gray-900/80 border border-purple-500/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300 placeholder-gray-400"
-              name="district"
-              value={form.district}
-              onChange={update}
-              placeholder={t('create_profile.review.district_placeholder')}
-            />
-          </div>
-        </div>
-        {/* Skills Selection */}
-        <div>
-          <label className="block text-purple-300 text-sm font-medium mb-2">{t('create_profile.review.skills_label')}</label>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {commonSkills.map(skill => (
-              <div 
-                key={skill}
-                onClick={() => toggleSkill(skill)}
-                className={`p-3 rounded-lg border cursor-pointer transition-all duration-300 text-center text-sm ${
-                  form.skills.includes(skill)
-                    ? 'border-purple-500 bg-purple-900/30 text-purple-300 font-semibold'
-                    : 'border-gray-700 bg-gray-800/50 text-gray-300 hover:border-gray-600'
-                }`}
-              >
-                {skill}
-              </div>
-            ))}
-          </div>
-          {/* Custom Skills Input */}
-          {form.skills.includes("Other") && (
-            <div className="mt-4 space-y-3">
-              <label className="block text-purple-300 text-sm font-medium mb-2">{t('create_profile.review.custom_skills_label')}</label>
-              <div className="flex gap-2">
-                <input 
-                  className="flex-1 p-3 bg-gray-900/80 border border-purple-500/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300 placeholder-gray-400"
-                  value={newCustomSkill}
-                  onChange={(e) => setNewCustomSkill(e.target.value)}
-                  placeholder={t('create_profile.review.custom_skill_placeholder')}
-                  onKeyPress={(e) => e.key === 'Enter' && addCustomSkill()}
-                />
-                <button 
-                  onClick={addCustomSkill}
-                  className="px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-300"
-                >
-                  {t('create_profile.review.add_button')}
-                </button>
-              </div>
-              {/* Display custom skills */}
-              {form.customSkills.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {form.customSkills.map(skill => (
-                    <div 
-                      key={skill}
-                      className="px-3 py-2 rounded-lg bg-purple-900/30 border border-purple-500 text-purple-300 flex items-center gap-2 text-sm"
-                    >
-                      {skill}
-                      <button 
-                        onClick={() => removeCustomSkill(skill)}
-                        className="text-purple-300 hover:text-white transition-colors"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-        {/* Job Types Selection */}
-        <div>
-          <label className="block text-purple-300 text-sm font-medium mb-2">{t('create_profile.review.job_types_label')}</label>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {jobTypeOptions.map(jobType => (
-              <div 
-                key={jobType}
-                onClick={() => toggleJobType(jobType)}
-                className={`p-3 rounded-lg border cursor-pointer transition-all duration-300 text-center text-sm ${
-                  form.jobTypes.includes(jobType)
-                    ? 'border-purple-500 bg-purple-900/30 text-purple-300 font-semibold'
-                    : 'border-gray-700 bg-gray-800/50 text-gray-300 hover:border-gray-600'
-                }`}
-              >
-                {jobType}
-              </div>
-            ))}
-          </div>
-          {/* Custom Job Types Input */}
-          {form.jobTypes.includes("Other") && (
-            <div className="mt-4 space-y-3">
-              <label className="block text-purple-300 text-sm font-medium mb-2">{t('create_profile.review.custom_job_types_label')}</label>
-              <div className="flex gap-2">
-                <input 
-                  className="flex-1 p-3 bg-gray-900/80 border border-purple-500/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300 placeholder-gray-400"
-                  value={newCustomJobType}
-                  onChange={(e) => setNewCustomJobType(e.target.value)}
-                  placeholder={t('create_profile.review.custom_job_type_placeholder')}
-                  onKeyPress={(e) => e.key === 'Enter' && addCustomJobType()}
-                />
-                <button 
-                  onClick={addCustomJobType}
-                  className="px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-300"
-                >
-                  {t('create_profile.review.add_button')}
-                </button>
-              </div>
-              {/* Display custom job types */}
-              {form.customJobTypes.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {form.customJobTypes.map(jobType => (
-                    <div 
-                      key={jobType}
-                      className="px-3 py-2 rounded-lg bg-purple-900/30 border border-purple-500 text-purple-300 flex items-center gap-2 text-sm"
-                    >
-                      {jobType}
-                      <button 
-                        onClick={() => removeCustomJobType(jobType)}
-                        className="text-purple-300 hover:text-white transition-colors"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-        {/* Mentor Toggle */}
-        <div>
-          <label className="flex items-center gap-3 cursor-pointer group">
-            <div 
-              className={`w-12 h-6 rounded-full p-1 transition-colors duration-300 ${
-                form.needMentor ? 'bg-purple-600' : 'bg-gray-700'
-              }`}
-              onClick={() => setForm(prev => ({ ...prev, needMentor: !prev.needMentor }))}
-            >
-              <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${
-                form.needMentor ? 'translate-x-6' : 'translate-x-0'
-              }`}></div>
-            </div>
-            <span className="text-gray-300 group-hover:text-white transition-colors duration-300">
-              {t('create_profile.review.mentor_label')}
-            </span>
-          </label>
-        </div>
-      </div>
-      <div className="flex justify-between mt-8">
-        <button
-          onClick={() => setCurrentStep('voice-input')}
-          className="px-6 py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-800 transition-all duration-300"
-        >
-          {t('create_profile.review.back_button')}
-        </button>
-        <button
-          onClick={saveProfile}
-          disabled={saving}
-          className={`px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg transition-all duration-300 hover:from-blue-700 hover:to-purple-700 ${
-            saving ? 'opacity-70 cursor-not-allowed' : ''
-          }`}
-        >
-          {saving ? t('create_profile.review.saving') : t('create_profile.review.submit_button')}
-        </button>
-      </div>
-    </div>
-  );
-
-  // Render completed step
-  const renderCompleted = () => (
-    <div className="space-y-6 text-center">
-      <h2 className="text-2xl font-bold text-purple-300 mb-4">{t('create_profile.completed.header')}</h2>
-      <p className="text-gray-300 mb-6">{t('create_profile.completed.description')}</p>
-      <div className="flex justify-center">
-        <svg className="animate-spin h-8 w-8 text-purple-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       </div>
     </div>
   );
 
   return (
-<<<<<<< HEAD
     <div className="relative min-h-screen overflow-hidden">
       <ParticleBackground />
       
@@ -1147,32 +743,6 @@ const saveProfile = async () => {
         {currentStep === 'voice-input' && renderVoiceInput()}
         {currentStep === 'review' && renderReview()}
         {currentStep === 'completed' && renderCompleted()}
-=======
-    <div className="relative min-h-screen bg-black text-white overflow-hidden">
-      <ParticleBackground />
-      <div className="absolute inset-0 z-0">
-        <div className="h-full w-full bg-[radial-gradient(circle_at_center,rgba(38,38,38,0.3)_1px,transparent_1px)] bg-[length:24px_24px]"></div>
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 z-10"></div>
-      <div className="absolute -top-24 -left-24 w-96 h-96 bg-purple-600 rounded-full filter blur-[128px] opacity-20 z-0"></div>
-      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-blue-600 rounded-full filter blur-[128px] opacity-20 z-0"></div>
-      <div className="relative z-20 max-w-3xl mx-auto px-6 py-16">
-        <div className={`transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}>
-          <h1 className="text-6xl font-bold mb-12 text-center">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-fuchsia-400 to-blue-400">
-              {t('create_profile.title')}
-            </span>
-          </h1>
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl border border-gray-700 overflow-hidden p-8 relative backdrop-blur-sm">
-            <div className="absolute -top-10 -left-10 w-40 h-40 bg-purple-500 rounded-full filter blur-3xl opacity-10"></div>
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500 rounded-full filter blur-3xl opacity-10"></div>
-            {currentStep === 'language-selection' && renderLanguageSelection()}
-            {currentStep === 'voice-input' && renderVoiceInput()}
-            {currentStep === 'review' && renderReview()}
-            {currentStep === 'completed' && renderCompleted()}
-          </div>
-        </div>
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       </div>
     </div>
   );

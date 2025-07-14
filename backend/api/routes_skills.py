@@ -16,28 +16,6 @@ import sqlite3
 from datetime import datetime
 import json
 from core.audio_generation import TextToSpeech
-<<<<<<< HEAD
-=======
-def initialize_visual_summaries_table():
-    conn = sqlite3.connect("database.db")
-    cursor = conn.cursor()
-    
-    # Create the visual_summaries table
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS visual_summaries (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            topic TEXT NOT NULL,
-            summary_data TEXT NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    """)
-    
-    conn.commit()
-    conn.close()
-
-# Call the initialization function
-initialize_visual_summaries_table()
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 class VisualSummaryRequest(BaseModel):
     topic: str
     context: str
@@ -83,11 +61,7 @@ async def get_image(image_name: str):
     return FileResponse(image_path)
 
 @router.get("/audio/{audio_name}")
-<<<<<<< HEAD
 async def get_audio_file(audio_name: str):
-=======
-async def get_audio(audio_name: str):
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     print('Getting audio file: ', audio_name)
     audio_path = os.path.join(AUDIO_FOLDER, audio_name)
 
@@ -106,11 +80,7 @@ async def create_visual_summary(request: VisualSummaryRequest):
     
     try:
         # Create tables if they don't exist
-<<<<<<< HEAD
         conn = sqlite3.connect("gramudyogai.db")
-=======
-        conn = sqlite3.connect("database.db")
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         cursor = conn.cursor()
         
         # Add translations table
@@ -187,11 +157,7 @@ async def update_summary_audio(request: AudioUpdateRequest):
     print(f"Audio URL: {request.audio_url}")
     
     try:
-<<<<<<< HEAD
         conn = sqlite3.connect("gramudyogai.db")
-=======
-        conn = sqlite3.connect("database.db")
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         cursor = conn.cursor()
         
         # Get current summary data
@@ -226,25 +192,9 @@ async def update_summary_audio(request: AudioUpdateRequest):
     finally:
         conn.close()
 
-<<<<<<< HEAD
 @router.get("/visual-summary/{summary_id}")
 async def get_visual_summary(summary_id: int):
     conn = sqlite3.connect("gramudyogai.db")
-=======
-@router.get("/audio/{language}/{filename}")
-async def get_audio(language: str, filename: str):
-    """Get audio file from language-specific folder"""
-    audio_path = os.path.join(AUDIO_FOLDER, language, filename)
-    
-    if not os.path.isfile(audio_path):
-        raise HTTPException(status_code=404, detail="Audio not found")
-        
-    return FileResponse(audio_path, media_type="audio/wav")
-
-@router.get("/visual-summary/{summary_id}")
-async def get_visual_summary(summary_id: int):
-    conn = sqlite3.connect("database.db")
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     cursor = conn.cursor()
     
     cursor.execute(
@@ -267,11 +217,7 @@ async def get_visual_summary(summary_id: int):
 
 @router.get("/visual-summaries")
 async def list_visual_summaries():
-<<<<<<< HEAD
     conn = sqlite3.connect("gramudyogai.db")
-=======
-    conn = sqlite3.connect("database.db")
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     cursor = conn.cursor()
     
     cursor.execute("SELECT * FROM visual_summaries ORDER BY created_at DESC")

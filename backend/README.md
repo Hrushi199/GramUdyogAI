@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # GramUdyogAI Backend
 
 A FastAPI-based backend for the GramUdyogAI platform, providing AI-powered services for skill development, business suggestions, and hackathon management.
@@ -161,6 +160,3 @@ backend/
 ## License
 
 This project is part of the GramUdyogAI platform.
-=======
-// placeholder
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48

@@ -37,11 +37,7 @@ class CourseEnrollment(BaseModel):
     updated_at: str = datetime.now().isoformat()
 
 def init_db():
-<<<<<<< HEAD
     conn = sqlite3.connect('gramudyogai.db')
-=======
-    conn = sqlite3.connect('database.db')
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     c = conn.cursor()
     
     # Create user_profiles table (minimal, assuming needed for foreign key)
@@ -128,11 +124,7 @@ def init_db():
             created_at TEXT NOT NULL,
             updated_at TEXT NOT NULL,
             FOREIGN KEY (course_id) REFERENCES csr_courses (id),
-<<<<<<< HEAD
             FOREIGN KEY (user_id) REFERENCES users (id)
-=======
-            FOREIGN KEY (user_id) REFERENCES user_profiles (id)
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         )
     ''')
 

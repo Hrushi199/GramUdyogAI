@@ -1,23 +1,14 @@
-<<<<<<< HEAD
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Logo from '../ui/Logo';
 import Button from '../ui/Button';
 import { useState, useEffect } from 'react';
-=======
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import Logo from '../ui/Logo';
-import Button from '../ui/Button';
-import { useState } from 'react';
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 
 const Navbar: React.FC = () => {
   const { i18n, t } = useTranslation('skillbuilder');
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-<<<<<<< HEAD
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
 
@@ -28,14 +19,11 @@ const Navbar: React.FC = () => {
     setIsLoggedIn(!!token);
     setUserName(name || '');
   }, [location.pathname]); // Re-check when route changes
-=======
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-<<<<<<< HEAD
   const handleLogout = () => {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user_id');
@@ -46,8 +34,6 @@ const Navbar: React.FC = () => {
     navigate('/');
   };
 
-=======
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
   const handleFeaturesClick = () => {
     if (location.pathname === '/') {
       const element = document.getElementById('features');
@@ -72,7 +58,6 @@ const Navbar: React.FC = () => {
           </Link>
 
           {/* Desktop Menu */}
-<<<<<<< HEAD
           <div className="hidden md:flex items-center space-x-8 ml-12">
             <NavLink to="/job-board" className="text-gray-300 hover:text-white transition-colors">
               Jobs
@@ -120,40 +105,6 @@ const Navbar: React.FC = () => {
                 Login
               </NavLink>
             )}
-=======
-          <div className="hidden md:flex items-center gap-8">
-            <div
-              onClick={handleFeaturesClick}
-              className="text-gray-300 hover:text-white transition-colors cursor-pointer"
-            >
-              {t('navbar.features')}
-            </div>
-            <Link to="/profile" className="text-gray-300 hover:text-white transition-colors">
-              {t('navbar.profile')}
-            </Link>
-            <Link to="/dashboard" className="text-gray-300 hover:text-white transition-colors">
-              {t('navbar.dashboard')}
-            </Link>
-            <Link to="/community" className="text-gray-300 hover:text-white transition-colors">
-              {t('navbar.community')}
-            </Link>
-            <Link to="/skill-builder" className="text-gray-300 hover:text-white transition-colors">
-              {t('navbar.skills')}
-            </Link>
-            {/* --- ADDED THIS LINK --- */}
-            <Link to="/course-recommender" className="text-gray-300 hover:text-white transition-colors">
-              {t('navbar.courseRecommender')}
-            </Link>
-
-            <Button
-              variant="primary"
-              size="md"
-              navigateTo="/profile"
-            >
-              {t('navbar.signUp') || 'Get Started'}
-            </Button>
-
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
             <select
               className="p-2 border border-white/20 bg-black/50 text-white rounded focus:outline-none [&>option]:bg-gray-900"
               value={i18n.language}
@@ -213,7 +164,6 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-<<<<<<< HEAD
         <div className="md:hidden bg-black/90 border-t border-white/10 py-4 px-6 max-h-[70vh] overflow-y-auto">
           <div className="flex flex-col space-y-4">
             <Link 
@@ -280,29 +230,12 @@ const Navbar: React.FC = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Community
-=======
-        <div className="md:hidden bg-black/90 border-t border-white/10 py-4 px-6">
-          <div className="flex flex-col space-y-4">
-            <div
-              onClick={handleFeaturesClick}
-              className="text-gray-300 hover:text-white transition-colors cursor-pointer py-2"
-            >
-              {t('navbar.features')}
-            </div>
-            <Link 
-              to="/profile" 
-              className="text-gray-300 hover:text-white transition-colors py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {t('navbar.profile')}
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
             </Link>
             <Link 
               to="/dashboard" 
               className="text-gray-300 hover:text-white transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
             >
-<<<<<<< HEAD
               Dashboard
             </Link>
             {isLoggedIn ? (
@@ -336,25 +269,6 @@ const Navbar: React.FC = () => {
                 Login
               </Link>
             )}
-=======
-              {t('navbar.dashboard')}
-            </Link>
-            <Link 
-              to="/community" 
-              className="text-gray-300 hover:text-white transition-colors py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {t('navbar.community')}
-            </Link>
-            <Link 
-              to="/skill-builder" 
-              className="text-gray-300 hover:text-white transition-colors py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {t('navbar.skills')}
-            </Link>
-            {/* --- ADDED THIS LINK --- */}
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
             <Link 
               to="/course-recommender" 
               className="text-gray-300 hover:text-white transition-colors py-2"
@@ -362,7 +276,6 @@ const Navbar: React.FC = () => {
             >
               Course Recommender
             </Link>
-<<<<<<< HEAD
             {isLoggedIn && (
               <div className="pt-2">
                 <Button
@@ -375,18 +288,6 @@ const Navbar: React.FC = () => {
                 </Button>
               </div>
             )}
-=======
-            <div className="pt-2">
-              <Button
-                variant="primary"
-                size="md"
-                navigateTo="/profile"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {t('navbar.signUp') || 'Get Started'}
-              </Button>
-            </div>
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
           </div>
         </div>
       )}

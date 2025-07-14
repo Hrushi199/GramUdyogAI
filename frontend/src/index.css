@@ -1,6 +1,5 @@
 @tailwind base;
 @tailwind components;
-<<<<<<< HEAD
 @tailwind utilities;
 
 /* Global Scrollbar Styles - Applied everywhere */
@@ -152,6 +151,3 @@ input:-webkit-autofill:active {
   border-color: rgba(139, 92, 246, 0.6);
   transform: scale(1.05);
 }
-=======
-@tailwind utilities;
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48

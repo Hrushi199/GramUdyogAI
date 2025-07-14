@@ -4,11 +4,7 @@ from core.translation import translate_json
 
 router = APIRouter()
 
-<<<<<<< HEAD
 @router.post("/translate")
-=======
-@router.post("/api/translate")
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 async def translate_endpoint(request: Request):
     data = await request.json()
     json_data = data.get("json")

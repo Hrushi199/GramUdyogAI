@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // /////1st version of i18n.js file
 
 // import i18n from 'i18next';
@@ -223,8 +222,6 @@
 
 // export default i18n;
 
-=======
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
@@ -388,26 +385,6 @@ import aiAssistantMl from './locales/ai-assistant/malayalam.json';
 import aiAssistantPa from './locales/ai-assistant/punjabi.json';
 import aiAssistantAs from './locales/ai-assistant/assamese.json';
 
-<<<<<<< HEAD
-=======
-
-// Import translation files for course-recommender namespace
-import enCourseRecommender from './locales/course-recommender/english.json';
-import hiCourseRecommender from './locales/course-recommender/hindi.json';
-import bnCourseRecommender from './locales/course-recommender/bengali.json';
-import mrCourseRecommender from './locales/course-recommender/marathi.json';
-import teCourseRecommender from './locales/course-recommender/telugu.json';
-import taCourseRecommender from './locales/course-recommender/tamil.json';
-import guCourseRecommender from './locales/course-recommender/gujarati.json';
-import urCourseRecommender from './locales/course-recommender/urdu.json';
-import knCourseRecommender from './locales/course-recommender/kannada.json';
-import orCourseRecommender from './locales/course-recommender/odia.json';
-import mlCourseRecommender from './locales/course-recommender/malayalam.json';
-import paCourseRecommender from './locales/course-recommender/punjabi.json';
-import asCourseRecommender from './locales/course-recommender/assamese.json';
-
-
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 i18n
   .use(initReactI18next)
   .init({
@@ -424,10 +401,6 @@ i18n
         community: communityEn, // Added community namespace
         stats: statsEn, // Added stats namespace
         'ai-assistant': aiAssistantEn, // Added ai-assistant namespace
-<<<<<<< HEAD
-=======
-        'course-recommender': enCourseRecommender, // Added course-recommender namespace
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       },
       hi: {
         skillbuilder: hiSkillBuilder,
@@ -441,10 +414,6 @@ i18n
         community: communityHi, // Added community namespace
         stats: statsHi, // Added stats namespace
         'ai-assistant': aiAssistantHi, // Added ai-assistant namespace
-<<<<<<< HEAD
-=======
-        'course-recommender': hiCourseRecommender, // Added course-recommender namespace
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       },
       bn: {
         skillbuilder: bnSkillBuilder,
@@ -458,10 +427,6 @@ i18n
         community: communityBn, // Added community namespace
         stats: statsBn, // Added stats namespace
         'ai-assistant': aiAssistantBn, // Added ai-assistant namespace
-<<<<<<< HEAD
-=======
-        'course-recommender': bnCourseRecommender, // Added course-recommender namespace
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       },
       mr: {
         skillbuilder: mrSkillBuilder,
@@ -475,10 +440,6 @@ i18n
         community: communityMr, // Added community namespace
         stats: statsMr, // Added stats namespace
         'ai-assistant': aiAssistantMr, // Added ai-assistant namespace
-<<<<<<< HEAD
-=======
-        'course-recommender': mrCourseRecommender, // Added course-recommender namespace
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       },
       te: {
         skillbuilder: teSkillBuilder,
@@ -492,10 +453,6 @@ i18n
         community: communityTe, // Added community namespace
         stats: statsTe, // Added stats namespace
         'ai-assistant': aiAssistantTe, // Added ai-assistant namespace
-<<<<<<< HEAD
-=======
-        'course-recommender': teCourseRecommender, // Added course-recommender namespace
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       },
       ta: {
         skillbuilder: taSkillBuilder,
@@ -509,10 +466,6 @@ i18n
         community: communityTa, // Added community namespace
         stats: statsTa, // Added stats namespace
         'ai-assistant': aiAssistantTa, // Added ai-assistant namespace
-<<<<<<< HEAD
-=======
-        'course-recommender': taCourseRecommender, // Added course-recommender namespace
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       },
       gu: {
         skillbuilder: guSkillBuilder,
@@ -526,10 +479,6 @@ i18n
         community: communityGu, // Added community namespace
         stats: statsGu, // Added stats namespace
         'ai-assistant': aiAssistantGu, // Added ai-assistant namespace
-<<<<<<< HEAD
-=======
-        'course-recommender': guCourseRecommender, // Added course-recommender namespace
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       },
       ur: {
         skillbuilder: urSkillBuilder,
@@ -543,10 +492,6 @@ i18n
         community: communityUr, // Added community namespace
         stats: statsUr, // Added stats namespace
         'ai-assistant': aiAssistantUr, // Added ai-assistant namespace
-<<<<<<< HEAD
-=======
-        'course-recommender': urCourseRecommender, // Added course-recommender namespace
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       },
       kn: {
         skillbuilder: knSkillBuilder,
@@ -559,12 +504,7 @@ i18n
         jobmentordashboard: jobMentorDashboardKn, // Added job_mentor_dashboard namespace
         community: communityKn, // Added community 
         stats: statsKn, // Added stats namespace
-<<<<<<< HEAD
         'ai-assistant': aiAssistantKn, // Added ai-assistant namespace
-=======
-        'ai-assistant': aiAssistantKn, // Added ai-assistant namespace 
-        'course-recommender': knCourseRecommender, // Added course-recommender namespace
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       },
       or: {
         skillbuilder: orSkillBuilder,
@@ -578,10 +518,6 @@ i18n
         community: communityOr, // Added community namespace
         stats: statsOr, // Added stats namespace
         'ai-assistant': aiAssistantOr, // Added ai-assistant namespace
-<<<<<<< HEAD
-=======
-        'course-recommender': orCourseRecommender, // Added course-recommender namespace
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       },
       ml: {
         skillbuilder: mlSkillBuilder,
@@ -595,10 +531,6 @@ i18n
         community: communityMl, // Added community 
         stats: statsMl, // Added stats namespace
         'ai-assistant': aiAssistantMl, // Added ai-assistant namespace
-<<<<<<< HEAD
-=======
-        'course-recommender': mlCourseRecommender, // Added course-recommender namespace
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       },
       pa: {
         skillbuilder: paSkillBuilder,
@@ -612,10 +544,6 @@ i18n
         community: communityPa, // Added community namespace
         stats: statsPa, // Added stats namespace
         'ai-assistant': aiAssistantPa, // Added ai-assistant namespace
-<<<<<<< HEAD
-=======
-        'course-recommender': paCourseRecommender, // Added course-recommender namespace
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       },
       as: {
         skillbuilder: asSkillBuilder,
@@ -629,10 +557,6 @@ i18n
         community: communityAs, // Added community namespace
         stats: statsAs, // Added stats namespace
         'ai-assistant': aiAssistantAs, // Added ai-assistant namespace
-<<<<<<< HEAD
-=======
-        'course-recommender': asCourseRecommender, // Added course-recommender namespace
->>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       },
     },
     lng: 'en',
