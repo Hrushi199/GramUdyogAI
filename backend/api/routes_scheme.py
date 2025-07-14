@@ -1,5 +1,5 @@
 # api/routes_scheme.py
-
+import sqlite3
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse
 from pydantic import BaseModel

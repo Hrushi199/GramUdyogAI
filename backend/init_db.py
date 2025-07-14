@@ -262,6 +262,9 @@ def seed_db():
         ("+919999999999", "hashed_password_here", "individual", "John Developer", None),
         ("+918888888888", "hashed_password_here", "company", "Tech Corp", "Tech Solutions Ltd"),
         ("+917777777777", "hashed_password_here", "individual", "Sarah Designer", None),
+        ("+916666666666", "hashed_password_here", "individual", "Raj Patel", None),
+        ("+915555555555", "hashed_password_here", "individual", "Priya Sharma", None),
+        ("+914444444444", "hashed_password_here", "individual", "Ahmed Khan", None),
     ]
     
     cursor.execute("DELETE FROM users")
@@ -296,6 +299,30 @@ def seed_db():
                 "projects_created": 0,
                 "employment_generated": 0
             })
+        },
+        {
+            "title": "AgriTech Innovation Challenge",
+            "description": "Competition focused on agricultural technology solutions",
+            "event_type": "competition",
+            "category": "Agriculture",
+            "location": "Pune",
+            "state": "Maharashtra",
+            "start_date": (datetime.now() + timedelta(days=15)).isoformat(),
+            "end_date": (datetime.now() + timedelta(days=17)).isoformat(),
+            "max_participants": 50,
+            "budget": 30000,
+            "prize_pool": 75000,
+            "organizer_id": 2,
+            "organizer_type": "company",
+            "created_by": 2,
+            "skills_required": json.dumps(["IoT", "Machine Learning", "Mobile Development"]),
+            "tags": json.dumps(["agriculture", "innovation", "iot"]),
+            "impact_metrics": json.dumps({
+                "participants_target": 50,
+                "skills_developed": 0,
+                "projects_created": 0,
+                "employment_generated": 0
+            })
         }
     ]
 
@@ -315,6 +342,244 @@ def seed_db():
             event["budget"], event["prize_pool"], event["organizer_id"],
             event["organizer_type"], event["created_by"], event["skills_required"],
             event["tags"], event["impact_metrics"], now, now
+        ))
+
+    # Sample Projects
+    sample_projects = [
+        {
+            "title": "FarmConnect Mobile App",
+            "description": "A mobile application connecting farmers directly with consumers, eliminating middlemen and ensuring fair prices for both parties. Features include real-time market prices, weather updates, and secure payment processing.",
+            "category": "Agriculture",
+            "event_id": 1,
+            "event_name": "Rural Innovation Hackathon",
+            "event_type": "hackathon",
+            "technologies": json.dumps(["React Native", "Node.js", "MongoDB", "Express.js"]),
+            "impact_metrics": json.dumps({
+                "users_reached": 1250,
+                "revenue_generated": 50000,
+                "farmers_helped": 300,
+                "transactions_processed": 850
+            }),
+            "funding_status": "funded",
+            "funding_amount": 75000,
+            "funding_goal": 75000,
+            "location": "Bangalore",
+            "state": "Karnataka",
+            "created_by": 1,
+            "status": "completed",
+            "completed_at": (datetime.now() - timedelta(days=15)).isoformat(),
+            "media": json.dumps({
+                "images": ["farmconnect_app.jpg", "dashboard.jpg"],
+                "videos": ["demo_video.mp4"]
+            }),
+            "testimonials": json.dumps([
+                {
+                    "name": "Ravi Kumar",
+                    "role": "Farmer",
+                    "message": "This app helped me sell my produce directly to customers at 30% better prices!"
+                }
+            ]),
+            "awards": json.dumps(["Best Innovation Award", "People's Choice Award"]),
+            "tags": json.dumps(["agriculture", "mobile-app", "marketplace", "farmers"])
+        },
+        {
+            "title": "Smart Irrigation System",
+            "description": "IoT-based automated irrigation system that monitors soil moisture, weather conditions, and crop requirements to optimize water usage and improve crop yield.",
+            "category": "Agriculture",
+            "event_id": 2,
+            "event_name": "AgriTech Innovation Challenge",
+            "event_type": "competition",
+            "technologies": json.dumps(["Arduino", "Python", "IoT Sensors", "Machine Learning"]),
+            "impact_metrics": json.dumps({
+                "users_reached": 500,
+                "revenue_generated": 25000,
+                "water_saved_liters": 100000,
+                "crop_yield_increase": 25
+            }),
+            "funding_status": "seeking",
+            "funding_amount": 15000,
+            "funding_goal": 100000,
+            "location": "Pune",
+            "state": "Maharashtra",
+            "created_by": 3,
+            "status": "active",
+            "completed_at": None,
+            "media": json.dumps({
+                "images": ["irrigation_system.jpg", "sensor_setup.jpg"],
+                "videos": ["system_demo.mp4"]
+            }),
+            "testimonials": json.dumps([
+                {
+                    "name": "Sunita Patil",
+                    "role": "Farmer",
+                    "message": "Reduced my water usage by 40% while increasing my crop yield!"
+                }
+            ]),
+            "awards": json.dumps(["Best Technical Innovation"]),
+            "tags": json.dumps(["iot", "irrigation", "automation", "water-conservation"])
+        },
+        {
+            "title": "Rural Healthcare Chatbot",
+            "description": "AI-powered multilingual chatbot providing basic healthcare guidance and connecting rural communities with healthcare professionals through telemedicine.",
+            "category": "Healthcare",
+            "event_id": 1,
+            "event_name": "Rural Innovation Hackathon",
+            "event_type": "hackathon",
+            "technologies": json.dumps(["Python", "NLP", "TensorFlow", "React", "WebRTC"]),
+            "impact_metrics": json.dumps({
+                "users_reached": 2000,
+                "revenue_generated": 0,
+                "consultations_provided": 1500,
+                "villages_covered": 50
+            }),
+            "funding_status": "seeking",
+            "funding_amount": 0,
+            "funding_goal": 200000,
+            "location": "Bangalore",
+            "state": "Karnataka",
+            "created_by": 4,
+            "status": "active",
+            "completed_at": None,
+            "media": json.dumps({
+                "images": ["chatbot_interface.jpg", "telemedicine_setup.jpg"],
+                "videos": ["chatbot_demo.mp4"]
+            }),
+            "testimonials": json.dumps([
+                {
+                    "name": "Dr. Anita Verma",
+                    "role": "Rural Health Officer",
+                    "message": "This chatbot has helped bridge the healthcare gap in remote villages."
+                }
+            ]),
+            "awards": json.dumps(["Social Impact Award"]),
+            "tags": json.dumps(["healthcare", "ai", "chatbot", "telemedicine", "rural"])
+        },
+        {
+            "title": "EcoWaste Management System",
+            "description": "Comprehensive waste management solution for rural areas including waste tracking, recycling optimization, and community engagement features.",
+            "category": "Environment",
+            "event_id": 1,
+            "event_name": "Rural Innovation Hackathon",
+            "event_type": "hackathon",
+            "technologies": json.dumps(["React", "Node.js", "PostgreSQL", "GIS Mapping"]),
+            "impact_metrics": json.dumps({
+                "users_reached": 800,
+                "revenue_generated": 12000,
+                "waste_recycled_kg": 5000,
+                "communities_served": 15
+            }),
+            "funding_status": "funded",
+            "funding_amount": 50000,
+            "funding_goal": 50000,
+            "location": "Bangalore",
+            "state": "Karnataka",
+            "created_by": 5,
+            "status": "active",
+            "completed_at": None,
+            "media": json.dumps({
+                "images": ["waste_tracking.jpg", "recycling_center.jpg"],
+                "videos": ["system_overview.mp4"]
+            }),
+            "testimonials": json.dumps([
+                {
+                    "name": "Mohan Reddy",
+                    "role": "Village Head",
+                    "message": "Our village is now 80% cleaner thanks to this system!"
+                }
+            ]),
+            "awards": json.dumps(["Environmental Impact Award"]),
+            "tags": json.dumps(["environment", "waste-management", "recycling", "sustainability"])
+        },
+        {
+            "title": "SkillBridge Learning Platform",
+            "description": "Digital platform connecting rural youth with skill development opportunities, online courses, and job placement assistance.",
+            "category": "Education",
+            "event_id": 2,
+            "event_name": "AgriTech Innovation Challenge",
+            "event_type": "competition",
+            "technologies": json.dumps(["Vue.js", "Django", "MySQL", "Video Streaming"]),
+            "impact_metrics": json.dumps({
+                "users_reached": 3000,
+                "revenue_generated": 35000,
+                "courses_completed": 1200,
+                "job_placements": 150
+            }),
+            "funding_status": "seeking",
+            "funding_amount": 25000,
+            "funding_goal": 150000,
+            "location": "Pune",
+            "state": "Maharashtra",
+            "created_by": 6,
+            "status": "active",
+            "completed_at": None,
+            "media": json.dumps({
+                "images": ["learning_platform.jpg", "student_dashboard.jpg"],
+                "videos": ["platform_walkthrough.mp4"]
+            }),
+            "testimonials": json.dumps([
+                {
+                    "name": "Kavita Singh",
+                    "role": "Student",
+                    "message": "Got my first job through this platform! The courses were excellent."
+                }
+            ]),
+            "awards": json.dumps([]),
+            "tags": json.dumps(["education", "skill-development", "job-placement", "rural-youth"])
+        }
+    ]
+
+    cursor.execute("DELETE FROM projects")
+    for project in sample_projects:
+        cursor.execute('''
+            INSERT INTO projects (
+                title, description, category, event_id, event_name, event_type,
+                technologies, impact_metrics, funding_status, funding_amount,
+                funding_goal, location, state, created_by, created_at, completed_at,
+                status, media, testimonials, awards, tags
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (
+            project["title"], project["description"], project["category"],
+            project["event_id"], project["event_name"], project["event_type"],
+            project["technologies"], project["impact_metrics"], project["funding_status"],
+            project["funding_amount"], project["funding_goal"], project["location"],
+            project["state"], project["created_by"], now, project["completed_at"],
+            project["status"], project["media"], project["testimonials"],
+            project["awards"], project["tags"]
+        ))
+
+    # Sample Project Team Members
+    sample_team_members = [
+        # FarmConnect Mobile App team
+        {"project_id": 1, "user_id": 1, "event_id": 1, "role": "Lead Developer", "skills": json.dumps(["React Native", "Node.js", "Project Management"])},
+        {"project_id": 1, "user_id": 3, "event_id": 1, "role": "UI/UX Designer", "skills": json.dumps(["UI Design", "User Research", "Prototyping"])},
+        {"project_id": 1, "user_id": 4, "event_id": 1, "role": "Backend Developer", "skills": json.dumps(["Node.js", "MongoDB", "API Development"])},
+        
+        # Smart Irrigation System team
+        {"project_id": 2, "user_id": 3, "event_id": 2, "role": "Hardware Engineer", "skills": json.dumps(["Arduino", "IoT", "Sensors"])},
+        {"project_id": 2, "user_id": 5, "event_id": 2, "role": "Software Developer", "skills": json.dumps(["Python", "Machine Learning", "Data Analysis"])},
+        
+        # Rural Healthcare Chatbot team
+        {"project_id": 3, "user_id": 4, "event_id": 1, "role": "AI Engineer", "skills": json.dumps(["Python", "NLP", "TensorFlow"])},
+        {"project_id": 3, "user_id": 6, "event_id": 1, "role": "Frontend Developer", "skills": json.dumps(["React", "JavaScript", "WebRTC"])},
+        
+        # EcoWaste Management System team
+        {"project_id": 4, "user_id": 5, "event_id": 1, "role": "Full Stack Developer", "skills": json.dumps(["React", "Node.js", "PostgreSQL"])},
+        {"project_id": 4, "user_id": 1, "event_id": 1, "role": "GIS Specialist", "skills": json.dumps(["GIS Mapping", "Data Visualization", "Geospatial Analysis"])},
+        
+        # SkillBridge Learning Platform team
+        {"project_id": 5, "user_id": 6, "event_id": 2, "role": "Full Stack Developer", "skills": json.dumps(["Vue.js", "Django", "MySQL"])},
+        {"project_id": 5, "user_id": 3, "event_id": 2, "role": "Product Manager", "skills": json.dumps(["Product Management", "User Research", "Strategy"])},
+    ]
+
+    cursor.execute("DELETE FROM project_team_members")
+    for member in sample_team_members:
+        cursor.execute('''
+            INSERT INTO project_team_members (
+                project_id, user_id, event_id, role, skills, joined_at
+            ) VALUES (?, ?, ?, ?, ?, ?)
+        ''', (
+            member["project_id"], member["user_id"], member["event_id"],
+            member["role"], member["skills"], now
         ))
 
     conn.commit()
