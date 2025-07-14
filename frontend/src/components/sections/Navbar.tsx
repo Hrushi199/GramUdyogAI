@@ -77,6 +77,9 @@ const Navbar: React.FC = () => {
             <NavLink to="/projects" className="text-gray-300 hover:text-white transition-colors">
               Projects
             </NavLink>
+            <NavLink to = "/course-recommender" className="text=gray-300 hover:text-white transition-colors">
+              Course - Recommender
+            </NavLink>
             {isLoggedIn && (
               <NavLink to="/my-projects" className="text-gray-300 hover:text-white transition-colors">
                 My Projects
