@@ -135,6 +135,7 @@ def normalize_language(lang: str) -> str:
             {"role": "user", "content": prompt}
         ]
     )
+<<<<<<< HEAD
     # Safely extract the code from the LLM response, handling possible None values
     code = None
     try:
@@ -144,6 +145,10 @@ def normalize_language(lang: str) -> str:
     except (AttributeError, IndexError, KeyError):
         code = None
     if code and code in SUPPORTED_LANG_CODES.values():
+=======
+    code = llm_response.choices[0].message.content.strip().replace('"', '').replace("'", "")
+    if code in SUPPORTED_LANG_CODES.values():
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         return code
     return "en"
 
@@ -215,6 +220,7 @@ def transcribe_audio_and_extract_profile(audio_file, language="en"):
         response_format={"type": "json_object"}
     )
     try:
+<<<<<<< HEAD
         content = llm_response.choices[0].message.content
         if content is not None:
             profile_data = json.loads(content)
@@ -222,6 +228,10 @@ def transcribe_audio_and_extract_profile(audio_file, language="en"):
         else:
             profile_data = {}
             print('Error: LLM response content is None')
+=======
+        profile_data = json.loads(llm_response.choices[0].message.content)
+        print('Extracted profile data:', profile_data)
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     except Exception as e:
         profile_data = {}
         print('Error parsing JSON:', e)

@@ -12,7 +12,10 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
       secondary: "bg-gray-100 text-gray-900",
       destructive: "bg-red-600 text-white",
       outline: "border border-gray-300 text-gray-700",
+<<<<<<< HEAD
       project: "bg-gray-900 text-white border border-gray-700 rounded-full px-3 py-1 text-xs font-semibold"
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     }
 
     return (

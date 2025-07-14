@@ -14,7 +14,11 @@ from sentence_transformers import SentenceTransformer
 
 # --- 1. CONFIGURATION ---
 BACKEND_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+<<<<<<< HEAD
 DB_PATH = os.path.join(BACKEND_ROOT, "gramudyogai.db")
+=======
+DB_PATH = os.path.join(BACKEND_ROOT, "database.db")
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
@@ -24,7 +28,11 @@ HTTP_TIMEOUT = 15
 # --- 2. EFFICIENT IN-MEMORY FAISS INDEX MANAGEMENT ---
 def build_faiss_index_in_memory():
     """Builds the FAISS index directly in memory from the database."""
+<<<<<<< HEAD
     print("Building FAISS index in memory from gramudyogai.db...")
+=======
+    print("Building FAISS index in memory from database.db...")
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     if not os.path.exists(DB_PATH):
         print(f"FATAL ERROR: Database not found at {DB_PATH}. Cannot build index.")
         return None
@@ -40,6 +48,7 @@ def build_faiss_index_in_memory():
             print(f"Generating embeddings for {len(courses)} courses...")
             course_texts = [f"Title: {c['title']}. Description: {c['description']}" for c in courses]
             embeddings = embedding_model.encode(course_texts, normalize_embeddings=True, show_progress_bar=True)
+<<<<<<< HEAD
 
             index = faiss.IndexIDMap(faiss.IndexFlatIP(VECTOR_DIM))
             ids = np.array([c['id'] for c in courses], dtype=np.int64)
@@ -52,6 +61,15 @@ def build_faiss_index_in_memory():
             print(f"In-memory FAISS index built successfully with {index.ntotal} courses.")
             return index
     except Exception as e:
+=======
+            
+            index = faiss.IndexIDMap(faiss.IndexFlatIP(VECTOR_DIM))
+            index.add_with_ids(np.array(embeddings, dtype="float32"), np.array([c['id'] for c in courses]))
+            
+            print(f"In-memory FAISS index built successfully with {index.ntotal} courses.")
+            return index
+    except sqlite3.Error as e:
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         print(f"Database error during index build: {e}")
         return None
 

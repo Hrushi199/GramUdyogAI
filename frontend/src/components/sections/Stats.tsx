@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import React from 'react';
 
 // interface StatsProps {
@@ -36,6 +37,8 @@
 
 // export default Stats;
 
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

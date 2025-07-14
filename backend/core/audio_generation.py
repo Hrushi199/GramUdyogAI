@@ -10,7 +10,11 @@ from scipy.io.wavfile import write as scipy_wav_write
 from dotenv import load_dotenv, find_dotenv
 
 # Load environment variables
+<<<<<<< HEAD
 load_dotenv(find_dotenv())
+=======
+# load_dotenv(find_dotenv())
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 
 class TextToSpeech:
     def __init__(self):
@@ -18,10 +22,15 @@ class TextToSpeech:
         self.default_sampling_rate = 22050
         self.token = os.getenv("E2E_TIR_ACCESS_TOKEN")
         
+<<<<<<< HEAD
         # Handle missing token gracefully
         if not self.token:
             print("Warning: E2E_TIR_ACCESS_TOKEN not set. Audio generation will be disabled.")
             self.token = None
+=======
+        if not self.token:
+            raise ValueError("E2E_TIR_ACCESS_TOKEN environment variable not set")
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         
         # Ensure base audio directory exists
         self.base_audio_dir = pathlib.Path("audio")
@@ -77,11 +86,14 @@ class TextToSpeech:
         print(f"Speaker: {speaker}")
         print(f"Output path: {output_path}")
         
+<<<<<<< HEAD
         # Check if token is available
         if not self.token:
             print("Audio generation disabled - E2E_TIR_ACCESS_TOKEN not set")
             return None
         
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         try:
             # Create hash and setup paths
             text_hash = hashlib.md5(text.encode()).hexdigest()

@@ -233,6 +233,11 @@
       "dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
       "community": "ಸಮುದಾಯ",
       "skills": "ಕೌಶಲ್ಯಗಳು",
+<<<<<<< HEAD
       "signUp": "ಸೈನ್ ಅಪ್"
+=======
+      "signUp": "ಸೈನ್ ಅಪ್",
+      "courseRecommender": "ಕೋರ್ಸ್ ಶಿಫಾರಸು"
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     }
   }

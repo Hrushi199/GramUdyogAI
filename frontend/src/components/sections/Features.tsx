@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
+<<<<<<< HEAD
 import { Cpu, Building2, Users, GraduationCap, Youtube, Calendar, Award } from 'lucide-react';
+=======
+import { Cpu, Building2, Users, GraduationCap, Youtube } from 'lucide-react';
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -48,6 +52,7 @@ const Features: React.FC<FeaturesProps> = ({ loaded }) => {
       onClick: () => navigate('/youtube-audio-summary'),
     },
     {
+<<<<<<< HEAD
       titleKey: 'features.5.title',
       descriptionKey: 'features.5.description',
       fallbackTitle: 'AI-Powered Event Management',
@@ -64,6 +69,8 @@ const Features: React.FC<FeaturesProps> = ({ loaded }) => {
       onClick: () => navigate('/projects'),
     },
     {
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       titleKey: 'features.2.title',
       descriptionKey: 'features.2.description',
       fallbackTitle: 'Networking Opportunities',

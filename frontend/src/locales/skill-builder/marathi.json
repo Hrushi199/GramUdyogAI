@@ -233,6 +233,11 @@
       "dashboard": "डॅशबोर्ड",
       "community": "समुदाय",
       "skills": "कौशल्ये",
+<<<<<<< HEAD
       "signUp": "साइन अप"
+=======
+      "signUp": "साइन अप",
+      "courseRecommender": "कोर्स सिफारस"
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     }
   }

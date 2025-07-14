@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ParticleBackground from "../ui/ParticleBackground";
+<<<<<<< HEAD
 import { jobAPI } from "../../lib/api";
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 
 interface Job {
   id: number;
@@ -32,12 +35,18 @@ const JobBoard = () => {
     const fetchJobs = async () => {
       setLoading(true);
       try {
+<<<<<<< HEAD
         const response = await jobAPI.getJobs();
         if (response.data) {
           setJobs(response.data);
         } else if (response.error) {
           console.error("Error fetching jobs:", response.error);
         }
+=======
+        const response = await fetch(`${API_BASE_URL}/api/jobs`);
+        const data: Job[] = await response.json();
+        setJobs(data);
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       } catch (error) {
         console.error("Error fetching jobs:", error);
       } finally {
@@ -53,6 +62,7 @@ const JobBoard = () => {
     setLoading(true);
     
     try {
+<<<<<<< HEAD
       const response = await jobAPI.createJob({
         title,
         description,
@@ -63,6 +73,17 @@ const JobBoard = () => {
       });
 
       if (response.data) {
+=======
+      const response = await fetch(`${API_BASE_URL}/api/jobs`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, description, company, location, company_contact: companyContact, pay }),
+      });
+
+      if (response.ok) {
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         setTitle("");
         setDescription("");
         setCompany("");
@@ -82,6 +103,7 @@ const JobBoard = () => {
         }
         
         // Refresh job list
+<<<<<<< HEAD
         const updatedJobsResponse = await jobAPI.getJobs();
         if (updatedJobsResponse.data) {
           setJobs(updatedJobsResponse.data);
@@ -89,6 +111,11 @@ const JobBoard = () => {
         setActiveTab("view"); // Switch to the "View Jobs" tab after posting
       } else if (response.error) {
         console.error("Error posting job:", response.error);
+=======
+        const updatedJobs: Job[] = await fetch(`${API_BASE_URL}/api/jobs`).then((res) => res.json());
+        setJobs(updatedJobs);
+        setActiveTab("view"); // Switch to the "View Jobs" tab after posting
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
       }
     } catch (error) {
       console.error("Error posting job:", error);

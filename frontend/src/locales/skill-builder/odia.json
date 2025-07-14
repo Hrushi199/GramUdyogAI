@@ -233,6 +233,11 @@
       "dashboard": "ଡ୍ୟାଶବୋର୍ଡ",
       "community": "ସମୁଦାୟ",
       "skills": "ଦକ୍ଷତା",
+<<<<<<< HEAD
       "signUp": "ସାଇନ ଅପ"
+=======
+      "signUp": "ସାଇନ ଅପ",
+      "courseRecommender": "କୋର୍ସ ସୁପାରିଶକାରୀ"
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
     }
   }

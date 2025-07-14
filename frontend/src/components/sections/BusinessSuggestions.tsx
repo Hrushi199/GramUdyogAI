@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+<<<<<<< HEAD
 import ParticleBackground from '../ui/ParticleBackground';
 
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 
 interface DetailedStep {
   step_number: number;
@@ -38,7 +41,10 @@ const BusinessSuggestion: React.FC = () => {
   const [openStepIndexes, setOpenStepIndexes] = useState<{[key: string]: number[]}>({});
   const [translatingIdx, setTranslatingIdx] = useState<number | null>(null);
   const [hasSubmitted, setHasSubmitted] = useState(false);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
   
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const { t, i18n } = useTranslation('business-suggestions');
@@ -74,8 +80,11 @@ const BusinessSuggestion: React.FC = () => {
     }
   };
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
   const handleTranslateSuggestion = async (idx: number, suggestion: Suggestion) => {
     setTranslatingIdx(idx);
     try {

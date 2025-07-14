@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import os, sys
 from init_db import init_database, seed_db
 import logging
@@ -20,6 +21,14 @@ init_database()
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+=======
+import os
+from dotenv import load_dotenv
+# load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 from api.routes_skills import router as skills_router
 from api.routes_business import router as business_router
 # from api.routes_government import router as government_router  # Commented out as the module does not exist
@@ -36,6 +45,7 @@ from api.routes_dashboard import router as dashboard_router
 from api.routes_ai_assistant import router as ai_assistant_router
 # --- ADD THIS IMPORT ---
 from api.routes_course_suggestion import router as course_suggestion_router
+<<<<<<< HEAD
 from api.routes_events import router as events_router
 from api.routes_projects import router as projects_router
 from api.routes_auth import router as auth_router
@@ -50,6 +60,11 @@ app.mount("/images", StaticFiles(directory="images"), name="images")
 app.mount("/audio", StaticFiles(directory="audio"), name="audio")
 
 
+=======
+
+app = FastAPI(title="GramUdyogAI API")
+
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
@@ -75,6 +90,7 @@ app.include_router(dashboard_router, prefix="/api", tags=["dashboard"])
 app.include_router(youtube_summary_router, prefix="/api/youtube-summary", tags=["youtube-summary"])
 app.include_router(ai_assistant_router, prefix="/api", tags=["ai-assistant"])
 app.include_router(course_suggestion_router, prefix="/api")
+<<<<<<< HEAD
 app.include_router(events_router, prefix="/api", tags=["events"])
 app.include_router(projects_router, prefix="/api", tags=["projects"])
 app.include_router(auth_router, prefix="/api", tags=["authentication"])
@@ -102,3 +118,8 @@ if __name__ == "__main__":
         reload=is_dev,  # Enable reload in development
         log_level="info" if is_dev else "warning"
     )
+=======
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48

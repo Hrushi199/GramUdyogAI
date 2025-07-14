@@ -13,7 +13,11 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 def get_db():
+<<<<<<< HEAD
     return sqlite3.connect('gramudyogai.db')
+=======
+    return sqlite3.connect('database.db')
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
 
 # Company Routes
 @router.post("/courses")
@@ -157,7 +161,11 @@ async def enroll_course(course_id: int, enrollment: CourseEnrollment):
             raise HTTPException(status_code=400, detail="No seats available")
 
         # Check if user exists
+<<<<<<< HEAD
         c.execute('SELECT id FROM users WHERE id = ?', (enrollment.user_id,))
+=======
+        c.execute('SELECT id FROM user_profiles WHERE id = ?', (enrollment.user_id,))
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         if not c.fetchone():
             raise HTTPException(status_code=422, detail="Invalid user_id")
 
@@ -229,7 +237,11 @@ async def get_recommended_courses(user_id: int):
     c = conn.cursor()
     try:
         # Get user profile
+<<<<<<< HEAD
         c.execute('SELECT * FROM users WHERE id = ?', (user_id,))
+=======
+        c.execute('SELECT * FROM user_profiles WHERE id = ?', (user_id,))
+>>>>>>> 67bc1d18df77eb37d08a63ea39f59d52a7dc4b48
         user = c.fetchone()
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
