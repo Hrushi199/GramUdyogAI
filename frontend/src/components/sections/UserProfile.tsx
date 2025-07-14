@@ -17,6 +17,7 @@ interface UserProfileForm {
   jobTypes: string[];
   customJobTypes: string[];
   needMentor: boolean;
+  userType: string; // <-- Add this line
 }
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
@@ -44,7 +45,8 @@ export default function VoiceBasedUserProfile() {
     customSkills: [],
     jobTypes: [], 
     customJobTypes: [],
-    needMentor: false
+    needMentor: false,
+    userType: 'individual' // <-- Add this line
   });
 
   // Media recorder reference
@@ -148,7 +150,7 @@ export default function VoiceBasedUserProfile() {
       setForm(prev => ({
         ...prev,
         name: data.name || prev.name,
-        location: data.location || prev.location,
+        location: data.district || prev.district,
         state: data.state || prev.state,
         district: data.district || prev.district,
         skills: data.skills || prev.skills,
@@ -277,7 +279,7 @@ const saveProfile = async () => {
   const profileData: Profile = {
     name: form.name,
     organization: form.organization || null,
-    location: form.location,
+    location: form.district,
     state: form.state,
     skills: allSkills,
     experience: form.experience || '',  // Ensure required fields have defaults
@@ -514,6 +516,22 @@ const saveProfile = async () => {
                 readOnly
                 className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-gray-300"
               />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">User Type</label>
+              <select
+                name="userType"
+                value={form.userType}
+                onChange={update}
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              >
+                <option value="individual">Individual</option>
+                <option value="investor">Investor</option>
+                <option value="organization">Organization</option>
+                <option value="NGO">NGO</option>
+                {/* Add more user types as needed */}
+              </select>
             </div>
           </div>
         </div>
