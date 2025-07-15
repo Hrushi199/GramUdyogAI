@@ -226,14 +226,24 @@
       }
     },
     "navbar": {
-      "features": "वैशिष्ट्ये",
-      "about": "बद्दल",
-      "contact": "संपर्क",
+      "home": "होम",
+      "jobs": "नोकर्या",
+      "schemes": "योजना",
+      "learning": "शिकणे",
+      "skills": "कौशल्ये",
+      "courseRecommender": "अभ्यासक्रम शिफारसकर्ता",
+      "business": "व्यवसाय",
+      "businessIdeas": "व्यावसायिक कल्पना",
+      "projects": "प्रकल्प",
+      "myProjects": "माझे प्रकल्प",
+      "events": "कार्यक्रम",
+      "csr": "सीएसआर",
       "profile": "प्रोफाइल",
       "dashboard": "डॅशबोर्ड",
+      "welcome": "स्वागत",
+      "login": "लॉगिन",
+      "logout": "लॉगआउट",
       "community": "समुदाय",
-      "skills": "कौशल्ये",
-      "signUp": "साइन अप",
-      "courseRecommender": "कोर्स सिफारस"
+      "createProfile": "प्रोफाइल तयार करा"
     }
   }

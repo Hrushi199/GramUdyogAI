@@ -228,13 +228,28 @@
     }
   },
   "navbar": {
-  "features": "विशेषताएँ",
-  "about": "हमारे बारे में",
-  "contact": "संपर्क",
-  "profile": "प्रोफाइल",
-  "dashboard": "डैशबोर्ड",
-  "community": "समुदाय",
-  "skills": "कौशल",
-  "signUp": "साइन अप"
-}
+    "home": "होम",
+    "jobs": "नौकरियां",
+    "schemes": "योजनाएं",
+    "learning": "सीखना",
+    "skills": "कौशल",
+    "courseRecommender": "कोर्स सुझावकर्ता",
+    "business": "व्यापार",
+    "businessIdeas": "व्यापारिक विचार",
+    "projects": "परियोजनाएं",
+    "myProjects": "मेरी परियोजनाएं",
+    "events": "कार्यक्रम",
+    "csr": "सीएसआर",
+    "profile": "प्रोफ़ाइल",
+    "dashboard": "डैशबोर्ड",
+    "welcome": "स्वागत",
+    "login": "लॉगिन",
+    "logout": "लॉगआउट",
+    "community": "समुदाय",
+    "createProfile": "प्रोफ़ाइल बनाएं",
+    "features": "विशेषताएँ",
+    "about": "हमारे बारे में",
+    "contact": "संपर्क",
+    "signUp": "साइन अप"
+  }
 }

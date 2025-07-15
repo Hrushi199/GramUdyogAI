@@ -233,6 +233,21 @@
       "dashboard": "ড্যাশবোর্ড",
       "community": "সম্প্রদায়",
       "skills": "দক্ষতা",
-      "signUp": "সাইন আপ"
+      "signUp": "সাইন আপ",
+      "home": "হোম",
+      "jobs": "চাকরি",
+      "schemes": "প্রকল্প",
+      "learning": "শেখা",
+      "courseRecommender": "কোর্স সুপারিশকারী",
+      "business": "ব্যবসা",
+      "businessIdeas": "ব্যবসায়িক ধারণা",
+      "projects": "প্রকল্প",
+      "myProjects": "আমার প্রকল্প",
+      "events": "ইভেন্ট",
+      "csr": "সিএসআর",
+      "welcome": "স্বাগতম",
+      "login": "লগইন",
+      "logout": "লগআউট",
+      "createProfile": "প্রোফাইল তৈরি করুন"
     }
   }
