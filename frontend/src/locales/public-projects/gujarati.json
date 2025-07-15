@@ -1,0 +1,82 @@
+{
+  "title": "જાહેર પ્રોજેક્ટ્સ",
+  "subtitle": "પ્રતિભાશાળી ટીમોના નવીન પ્રોજેક્ટ્સ શોધો. બ્રાઉઝ કરો અને રોકાણ કરો!",
+  "loading": "પ્રોજેક્ટ્સ લોડ થઈ રહ્યા છે...",
+  "stats": {
+    "totalProjects": "કુલ પ્રોજેક્ટ્સ",
+    "peopleImpacted": "પ્રભાવિત લોકો",
+    "totalRevenue": "કુલ આવક",
+    "activeProjects": "સક્રિય પ્રોજેક્ટ્સ"
+  },
+  "search": {
+    "placeholder": "પ્રોજેક્ટ્સ શોધો...",
+    "allCategories": "બધી શ્રેણીઓ",
+    "allStatus": "બધી સ્થિતિ",
+    "allFunding": "બધું ફંડિંગ",
+    "sortBy": {
+      "recent": "સૌથી તાજેતરનું",
+      "impact": "સર્વોચ્ચ આવક",
+      "funding": "સૌથી વધુ ફંડેડ",
+      "people": "સૌથી વધુ લોકો પ્રભાવિત"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "વેબ ડેવલપમેન્ટ",
+    "mobile_app": "મોબાઇલ એપ",
+    "iot": "IoT",
+    "blockchain": "બ્લોકચેન",
+    "healthcare": "આરોગ્યસેવા",
+    "education": "શિક્ષણ",
+    "agriculture": "કૃષિ",
+    "finance": "ફાઇનાન્સ",
+    "social_impact": "સામાજિક પ્રભાવ"
+  },
+  "status": {
+    "active": "સક્રિય",
+    "completed": "પૂર્ણ",
+    "scaled": "વિસ્તૃત"
+  },
+  "funding": {
+    "seeking": "ફંડિંગ શોધી રહ્યું",
+    "funded": "ફંડેડ",
+    "self_sustaining": "સ્વ-નિર્ભર"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} ટીમ સભ્યો",
+    "teamMembers_one": "{{count}} ટીમ સભ્ય",
+    "peopleImpacted": "પ્રભાવિત લોકો",
+    "revenue": "આવક",
+    "fundingProgress": "ફંડિંગ પ્રગતિ",
+    "awards": "{{count}} પુરસ્કારો",
+    "awards_one": "{{count}} પુરસ્કાર",
+    "moretech": "+{{count}} વધુ"
+  },
+  "modal": {
+    "description": "વર્ણન",
+    "team": "ટીમ",
+    "technologiesUsed": "ઉપયોગમાં લેવાયેલી ટેકનોલોજીઓ",
+    "testimonials": "પ્રશંસાપત્રો",
+    "awards": "પુરસ્કારો",
+    "impactMetrics": "પ્રભાવ મેટ્રિક્સ",
+    "projectDetails": "પ્રોજેક્ટ વિગતો",
+    "fundingStatus": "ફંડિંગ સ્થિતિ",
+    "actions": "ક્રિયાઓ",
+    "created": "બનાવ્યું:",
+    "goal": "લક્ષ્ય",
+    "raised": "એકત્રિત",
+    "funded": "{{percent}}% ફંડેડ",
+    "viewDemo": "ડેમો જુઓ",
+    "viewCode": "કોડ જુઓ",
+    "investInProject": "પ્રોજેક્ટમાં રોકાણ કરો",
+    "shareProject": "પ્રોજેક્ટ શેર કરો"
+  },
+  "noProjects": {
+    "message": "તમારા માપદંડો સાથે મેળ ખાતા કોઈ પ્રોજેક્ટ્સ મળ્યા નથી.",
+    "clearFilters": "ફિલ્ટર સાફ કરો"
+  },
+  "toasts": {
+    "investmentNote": "રોકાણ કાર્યક્ષમતા અહીં અમલમાં મૂકવામાં આવશે",
+    "linkCopied": "લિંક ક્લિપબોર્ડ પર કોપી થયું!"
+  }
+}

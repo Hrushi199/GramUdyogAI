@@ -1,0 +1,82 @@
+{
+  "title": "பொது திட்டங்கள்",
+  "subtitle": "திறமையான குழுக்களின் புதுமையான திட்டங்களைக் கண்டறியுங்கள். உலாவுங்கள் மற்றும் முதலீடு செய்யுங்கள்!",
+  "loading": "திட்டங்கள் ஏற்றப்படுகின்றன...",
+  "stats": {
+    "totalProjects": "மொத்த திட்டங்கள்",
+    "peopleImpacted": "பாதிக்கப்பட்ட மக்கள்",
+    "totalRevenue": "மொத்த வருமானம்",
+    "activeProjects": "செயலில் உள்ள திட்டங்கள்"
+  },
+  "search": {
+    "placeholder": "திட்டங்களைத் தேடுங்கள்...",
+    "allCategories": "அனைத்து வகைகள்",
+    "allStatus": "அனைத்து நிலை",
+    "allFunding": "அனைத்து நிதியுதவி",
+    "sortBy": {
+      "recent": "மிக சமீபத்திய",
+      "impact": "அதிக வருமானம்",
+      "funding": "அதிக நிதியுதவி",
+      "people": "அதிக மக்கள் பாதிப்பு"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "வலை மேம்பாடு",
+    "mobile_app": "மொபைல் பயன்பாடு",
+    "iot": "IoT",
+    "blockchain": "பிளாக்செயின்",
+    "healthcare": "சுகாதாரம்",
+    "education": "கல்வி",
+    "agriculture": "விவசாயம்",
+    "finance": "நிதி",
+    "social_impact": "சமூக தாக்கம்"
+  },
+  "status": {
+    "active": "செயலில்",
+    "completed": "முடிந்தது",
+    "scaled": "விரிவுபடுத்தப்பட்டது"
+  },
+  "funding": {
+    "seeking": "நிதியுதவி தேடுகிறது",
+    "funded": "நிதியுதவி பெற்றது",
+    "self_sustaining": "சுய-நிலைத்தன்மை"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} குழு உறுப்பினர்கள்",
+    "teamMembers_one": "{{count}} குழு உறுப்பினர்",
+    "peopleImpacted": "பாதிக்கப்பட்ட மக்கள்",
+    "revenue": "வருமானம்",
+    "fundingProgress": "நிதியுதவி முன்னேற்றம்",
+    "awards": "{{count}} விருதுகள்",
+    "awards_one": "{{count}} விருது",
+    "moretech": "+{{count}} மேலும்"
+  },
+  "modal": {
+    "description": "விளக்கம்",
+    "team": "குழு",
+    "technologiesUsed": "பயன்படுத்தப்பட்ட தொழில்நுட்பங்கள்",
+    "testimonials": "சான்றுகள்",
+    "awards": "விருதுகள்",
+    "impactMetrics": "தாக்க அளவுகோல்கள்",
+    "projectDetails": "திட்ட விவரங்கள்",
+    "fundingStatus": "நிதியுதவி நிலை",
+    "actions": "செயல்கள்",
+    "created": "உருவாக்கப்பட்டது:",
+    "goal": "இலக்கு",
+    "raised": "திரட்டப்பட்டது",
+    "funded": "{{percent}}% நிதியுதவி",
+    "viewDemo": "டெமோ பார்க்கவும்",
+    "viewCode": "குறியீடு பார்க்கவும்",
+    "investInProject": "திட்டத்தில் முதலீடு செய்யுங்கள்",
+    "shareProject": "திட்டத்தைப் பகிருங்கள்"
+  },
+  "noProjects": {
+    "message": "உங்கள் அளவுகோல்களுக்கு பொருந்தும் திட்டங்கள் எதுவும் கிடைக்கவில்லை.",
+    "clearFilters": "வடிப்பான்களை அழிக்கவும்"
+  },
+  "toasts": {
+    "investmentNote": "முதலீட்டு செயல்பாடு இங்கே செயல்படுத்தப்படும்",
+    "linkCopied": "இணைப்பு கிளிப்போர்டுக்கு நகலெடுக்கப்பட்டது!"
+  }
+}

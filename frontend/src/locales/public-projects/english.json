@@ -1,0 +1,88 @@
+{
+  "title": "Public Projects",
+  "subtitle": "Discover innovative projects by talented teams. Browse and invest!",
+  "loading": "Loading Projects...",
+  "stats": {
+    "totalProjects": "Total Projects",
+    "peopleImpacted": "People Impacted",
+    "totalRevenue": "Total Revenue",
+    "activeProjects": "Active Projects"
+  },
+  "search": {
+    "placeholder": "Search projects...",
+    "allCategories": "All Categories",
+    "allStatus": "All Status",
+    "allFunding": "All Funding",
+    "sortBy": {
+      "recent": "Most Recent",
+      "impact": "Highest Revenue",
+      "funding": "Most Funded",
+      "people": "Most People Impacted"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "Web Development",
+    "mobile_app": "Mobile App",
+    "iot": "IoT",
+    "blockchain": "Blockchain",
+    "healthcare": "Healthcare",
+    "education": "Education",
+    "agriculture": "Agriculture",
+    "finance": "Finance",
+    "social_impact": "Social Impact"
+  },
+  "status": {
+    "active": "Active",
+    "completed": "Completed",
+    "scaled": "Scaled"
+  },
+  "funding": {
+    "seeking": "Seeking Funding",
+    "funded": "Funded",
+    "self_sustaining": "Self Sustaining"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} team members",
+    "teamMembers_one": "{{count}} team member",
+    "peopleImpacted": "People Impacted",
+    "revenue": "Revenue",
+    "fundingProgress": "Funding Progress",
+    "awards": "{{count}} awards",
+    "awards_one": "{{count}} award",
+    "moretech": "+{{count}} more"
+  },
+  "modal": {
+    "description": "Description",
+    "team": "Team",
+    "technologiesUsed": "Technologies Used",
+    "testimonials": "Testimonials",
+    "awards": "Awards",
+    "impactMetrics": "Impact Metrics",
+    "projectDetails": "Project Details",
+    "fundingStatus": "Funding Status",
+    "actions": "Actions",
+    "created": "Created:",
+    "goal": "Goal",
+    "raised": "Raised",
+    "funded": "{{percent}}% funded",
+    "viewDemo": "View Demo",
+    "viewCode": "View Code",
+    "investProject": "Invest in Project",
+    "shareProject": "Share Project",
+    "usersReached": "Users Reached",
+    "revenueGenerated": "Revenue Generated",
+    "businessesSupported": "Businesses Supported",
+    "communityEngagement": "Community Engagement",
+    "investSuccess": "Investment functionality would be implemented here",
+    "linkCopied": "Link copied to clipboard!"
+  },
+  "noProjects": {
+    "message": "No projects found matching your criteria.",
+    "clearFilters": "Clear Filters"
+  },
+  "toasts": {
+    "investmentNote": "Investment functionality would be implemented here",
+    "linkCopied": "Link copied to clipboard!"
+  }
+}

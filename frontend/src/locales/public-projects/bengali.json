@@ -1,0 +1,82 @@
+{
+  "title": "পাবলিক প্রকল্প",
+  "subtitle": "প্রতিভাবান দলের উদ্ভাবনী প্রকল্প আবিষ্কার করুন। ব্রাউজ করুন এবং বিনিয়োগ করুন!",
+  "loading": "প্রকল্প লোড হচ্ছে...",
+  "stats": {
+    "totalProjects": "মোট প্রকল্প",
+    "peopleImpacted": "প্রভাবিত মানুষ",
+    "totalRevenue": "মোট আয়",
+    "activeProjects": "সক্রিয় প্রকল্প"
+  },
+  "search": {
+    "placeholder": "প্রকল্প খুঁজুন...",
+    "allCategories": "সব বিভাগ",
+    "allStatus": "সব অবস্থা",
+    "allFunding": "সব ফান্ডিং",
+    "sortBy": {
+      "recent": "সবচেয়ে সাম্প্রতিক",
+      "impact": "সর্বোচ্চ আয়",
+      "funding": "সবচেয়ে বেশি ফান্ডেড",
+      "people": "সবচেয়ে বেশি মানুষ প্রভাবিত"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "ওয়েব ডেভেলপমেন্ট",
+    "mobile_app": "মোবাইল অ্যাপ",
+    "iot": "IoT",
+    "blockchain": "ব্লকচেইন",
+    "healthcare": "স্বাস্থ্যসেবা",
+    "education": "শিক্ষা",
+    "agriculture": "কৃষি",
+    "finance": "অর্থ",
+    "social_impact": "সামাজিক প্রভাব"
+  },
+  "status": {
+    "active": "সক্রিয়",
+    "completed": "সম্পূর্ণ",
+    "scaled": "বিস্তৃত"
+  },
+  "funding": {
+    "seeking": "ফান্ডিং খোঁজা",
+    "funded": "ফান্ডেড",
+    "self_sustaining": "স্ব-নির্ভর"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} দলের সদস্য",
+    "teamMembers_one": "{{count}} দলের সদস্য",
+    "peopleImpacted": "প্রভাবিত মানুষ",
+    "revenue": "আয়",
+    "fundingProgress": "ফান্ডিং অগ্রগতি",
+    "awards": "{{count}} পুরস্কার",
+    "awards_one": "{{count}} পুরস্কার",
+    "moretech": "+{{count}} আরও"
+  },
+  "modal": {
+    "description": "বর্ণনা",
+    "team": "দল",
+    "technologiesUsed": "ব্যবহৃত প্রযুক্তি",
+    "testimonials": "প্রশংসাপত্র",
+    "awards": "পুরস্কার",
+    "impactMetrics": "প্রভাব মেট্রিক্স",
+    "projectDetails": "প্রকল্পের বিবরণ",
+    "fundingStatus": "ফান্ডিং অবস্থা",
+    "actions": "কার্যক্রম",
+    "created": "তৈরি:",
+    "goal": "লক্ষ্য",
+    "raised": "সংগৃহীত",
+    "funded": "{{percent}}% ফান্ডেড",
+    "viewDemo": "ডেমো দেখুন",
+    "viewCode": "কোড দেখুন",
+    "investInProject": "প্রকল্পে বিনিয়োগ করুন",
+    "shareProject": "প্রকল্প শেয়ার করুন"
+  },
+  "noProjects": {
+    "message": "আপনার মানদণ্ড অনুযায়ী কোন প্রকল্প পাওয়া যায়নি।",
+    "clearFilters": "ফিল্টার পরিষ্কার করুন"
+  },
+  "toasts": {
+    "investmentNote": "বিনিয়োগ কার্যকারিতা এখানে বাস্তবায়িত হবে",
+    "linkCopied": "লিঙ্ক ক্লিপবোর্ডে কপি করা হয়েছে!"
+  }
+}

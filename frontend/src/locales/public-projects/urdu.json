@@ -1,0 +1,82 @@
+{
+  "title": "عوامی منصوبے",
+  "subtitle": "ذہین ٹیموں کے اختراعی منصوبے دریافت کریں۔ براؤز کریں اور سرمایہ کاری کریں!",
+  "loading": "منصوبے لوڈ ہو رہے ہیں...",
+  "stats": {
+    "totalProjects": "کل منصوبے",
+    "peopleImpacted": "متاثرہ لوگ",
+    "totalRevenue": "کل آمدنی",
+    "activeProjects": "فعال منصوبے"
+  },
+  "search": {
+    "placeholder": "منصوبے تلاش کریں...",
+    "allCategories": "تمام اقسام",
+    "allStatus": "تمام حالت",
+    "allFunding": "تمام فنڈنگ",
+    "sortBy": {
+      "recent": "سب سے حالیہ",
+      "impact": "سب سے زیادہ آمدنی",
+      "funding": "سب سے زیادہ فنڈڈ",
+      "people": "سب سے زیادہ لوگ متاثر"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "ویب ڈیولپمنٹ",
+    "mobile_app": "موبائل ایپ",
+    "iot": "IoT",
+    "blockchain": "بلاک چین",
+    "healthcare": "صحت کی دیکھ بھال",
+    "education": "تعلیم",
+    "agriculture": "زراعت",
+    "finance": "مالیات",
+    "social_impact": "سماجی اثرات"
+  },
+  "status": {
+    "active": "فعال",
+    "completed": "مکمل",
+    "scaled": "توسیع شدہ"
+  },
+  "funding": {
+    "seeking": "فنڈنگ تلاش کر رہا ہے",
+    "funded": "فنڈڈ",
+    "self_sustaining": "خود کفیل"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} ٹیم ممبرز",
+    "teamMembers_one": "{{count}} ٹیم ممبر",
+    "peopleImpacted": "متاثرہ لوگ",
+    "revenue": "آمدنی",
+    "fundingProgress": "فنڈنگ کی پیش قدمی",
+    "awards": "{{count}} ایوارڈز",
+    "awards_one": "{{count}} ایوارڈ",
+    "moretech": "+{{count}} مزید"
+  },
+  "modal": {
+    "description": "تفصیل",
+    "team": "ٹیم",
+    "technologiesUsed": "استعمال شدہ ٹیکنالوجیز",
+    "testimonials": "تعریفی خطوط",
+    "awards": "ایوارڈز",
+    "impactMetrics": "اثر میٹرکس",
+    "projectDetails": "منصوبے کی تفصیلات",
+    "fundingStatus": "فنڈنگ کی حالت",
+    "actions": "اعمال",
+    "created": "تخلیق شدہ:",
+    "goal": "ہدف",
+    "raised": "جمع شدہ",
+    "funded": "{{percent}}% فنڈڈ",
+    "viewDemo": "ڈیمو دیکھیں",
+    "viewCode": "کوڈ دیکھیں",
+    "investInProject": "منصوبے میں سرمایہ کاری کریں",
+    "shareProject": "منصوبہ شیئر کریں"
+  },
+  "noProjects": {
+    "message": "آپ کے معیار سے میل کھانے والے کوئی منصوبے نہیں ملے۔",
+    "clearFilters": "فلٹرز صاف کریں"
+  },
+  "toasts": {
+    "investmentNote": "سرمایہ کاری کی فعالیت یہاں نافذ کی جائے گی",
+    "linkCopied": "لنک کلپ بورڈ میں کاپی ہو گیا!"
+  }
+}

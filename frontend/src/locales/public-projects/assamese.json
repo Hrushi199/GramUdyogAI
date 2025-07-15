@@ -1,0 +1,82 @@
+{
+  "title": "ৰাজহুৱা প্ৰকল্প",
+  "subtitle": "প্ৰতিভাবান দলৰ উদ্ভাবনী প্ৰকল্প আৱিষ্কাৰ কৰক। ব্ৰাউজ কৰক আৰু বিনিয়োগ কৰক!",
+  "loading": "প্ৰকল্প লোড হৈছে...",
+  "stats": {
+    "totalProjects": "মুঠ প্ৰকল্প",
+    "peopleImpacted": "প্ৰভাৱিত লোক",
+    "totalRevenue": "মুঠ আয়",
+    "activeProjects": "সক্ৰিয় প্ৰকল্প"
+  },
+  "search": {
+    "placeholder": "প্ৰকল্প বিচাৰক...",
+    "allCategories": "সকলো শ্ৰেণী",
+    "allStatus": "সকলো অৱস্থা",
+    "allFunding": "সকলো ফাণ্ডিং",
+    "sortBy": {
+      "recent": "সৰ্বশেষ",
+      "impact": "সৰ্ব্বোচ্চ আয়",
+      "funding": "সৰ্ব্বাধিক ফাণ্ডেড",
+      "people": "সৰ্ব্বাধিক লোক প্ৰভাৱিত"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "ৱেব ডেভেলপমেণ্ট",
+    "mobile_app": "মোবাইল এপ",
+    "iot": "IoT",
+    "blockchain": "ব্লকচেইন",
+    "healthcare": "স্বাস্থ্যসেৱা",
+    "education": "শিক্ষা",
+    "agriculture": "কৃষি",
+    "finance": "বিত্ত",
+    "social_impact": "সামাজিক প্ৰভাৱ"
+  },
+  "status": {
+    "active": "সক্ৰিয়",
+    "completed": "সম্পূৰ্ণ",
+    "scaled": "বিস্তৃত"
+  },
+  "funding": {
+    "seeking": "ফাণ্ডিং বিচাৰি",
+    "funded": "ফাণ্ডেড",
+    "self_sustaining": "স্ব-নিৰ্ভৰ"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} দলৰ সদস্য",
+    "teamMembers_one": "{{count}} দলৰ সদস্য",
+    "peopleImpacted": "প্ৰভাৱিত লোক",
+    "revenue": "আয়",
+    "fundingProgress": "ফাণ্ডিং অগ্ৰগতি",
+    "awards": "{{count}} পুৰস্কাৰ",
+    "awards_one": "{{count}} পুৰস্কাৰ",
+    "moretech": "+{{count}} অধিক"
+  },
+  "modal": {
+    "description": "বৰ্ণনা",
+    "team": "দল",
+    "technologiesUsed": "ব্যৱহৃত প্ৰযুক্তি",
+    "testimonials": "প্ৰশংসাপত্ৰ",
+    "awards": "পুৰস্কাৰ",
+    "impactMetrics": "প্ৰভাৱ মেট্ৰিক্স",
+    "projectDetails": "প্ৰকল্পৰ বিৱৰণ",
+    "fundingStatus": "ফাণ্ডিং অৱস্থা",
+    "actions": "কাৰ্য্য",
+    "created": "সৃষ্টি:",
+    "goal": "লক্ষ্য",
+    "raised": "সংগৃহীত",
+    "funded": "{{percent}}% ফাণ্ডেড",
+    "viewDemo": "ডেমো চাওক",
+    "viewCode": "কোড চাওক",
+    "investInProject": "প্ৰকল্পত বিনিয়োগ কৰক",
+    "shareProject": "প্ৰকল্প শ্বেয়াৰ কৰক"
+  },
+  "noProjects": {
+    "message": "আপোনাৰ মাপদণ্ড অনুযায়ী কোনো প্ৰকল্প পোৱা নগ'ল।",
+    "clearFilters": "ফিল্টাৰ পৰিষ্কাৰ কৰক"
+  },
+  "toasts": {
+    "investmentNote": "বিনিয়োগ কাৰ্য্যক্ষমতা ইয়াত বাস্তৱায়িত হ'ব",
+    "linkCopied": "লিংক ক্লিপবৰ্ডত কপি হ'ল!"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "title": "ಸಾರ್ವಜನಿಕ ಯೋಜನೆಗಳು",
+  "subtitle": "ಪ್ರತಿಭಾವಂತ ತಂಡಗಳ ನವೀನ ಯೋಜನೆಗಳನ್ನು ಅನ್ವೇಷಿಸಿ. ಬ್ರೌಸ್ ಮಾಡಿ ಮತ್ತು ಹೂಡಿಕೆ ಮಾಡಿ!",
+  "loading": "ಯೋಜನೆಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ...",
+  "stats": {
+    "totalProjects": "ಒಟ್ಟು ಯೋಜನೆಗಳು",
+    "peopleImpacted": "ಪ್ರಭಾವಿತ ಜನರು",
+    "totalRevenue": "ಒಟ್ಟು ಆದಾಯ",
+    "activeProjects": "ಸಕ್ರಿಯ ಯೋಜನೆಗಳು"
+  },
+  "search": {
+    "placeholder": "ಯೋಜನೆಗಳನ್ನು ಹುಡುಕಿ...",
+    "allCategories": "ಎಲ್ಲಾ ವರ್ಗಗಳು",
+    "allStatus": "ಎಲ್ಲಾ ಸ್ಥಿತಿ",
+    "allFunding": "ಎಲ್ಲಾ ನಿಧಿ",
+    "sortBy": {
+      "recent": "ಇತ್ತೀಚಿನ",
+      "impact": "ಅತ್ಯಧಿಕ ಆದಾಯ",
+      "funding": "ಅತಿ ಹೆಚ್ಚು ನಿಧಿ",
+      "people": "ಅತ್ಯಧಿಕ ಜನರು ಪ್ರಭಾವಿತ"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "ವೆಬ್ ಅಭಿವೃದ್ಧಿ",
+    "mobile_app": "ಮೊಬೈಲ್ ಅಪ್ಲಿಕೇಶನ್",
+    "iot": "IoT",
+    "blockchain": "ಬ್ಲಾಕ್‌ಚೈನ್",
+    "healthcare": "ಆರೋಗ್ಯ ಸೇವೆ",
+    "education": "ಶಿಕ್ಷಣ",
+    "agriculture": "ಕೃಷಿ",
+    "finance": "ಹಣಕಾಸು",
+    "social_impact": "ಸಾಮಾಜಿಕ ಪ್ರಭಾವ"
+  },
+  "status": {
+    "active": "ಸಕ್ರಿಯ",
+    "completed": "ಪೂರ್ಣಗೊಂಡ",
+    "scaled": "ವಿಸ್ತರಿಸಲಾಗಿದೆ"
+  },
+  "funding": {
+    "seeking": "ನಿಧಿ ಹುಡುಕುತ್ತಿದೆ",
+    "funded": "ನಿಧಿ ಪಡೆದಿದೆ",
+    "self_sustaining": "ಸ್ವ-ನಿರ್ಭರ"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} ತಂಡದ ಸದಸ್ಯರು",
+    "teamMembers_one": "{{count}} ತಂಡದ ಸದಸ್ಯ",
+    "peopleImpacted": "ಪ್ರಭಾವಿತ ಜನರು",
+    "revenue": "ಆದಾಯ",
+    "fundingProgress": "ನಿಧಿ ಪ್ರಗತಿ",
+    "awards": "{{count}} ಪುರಸ್ಕಾರಗಳು",
+    "awards_one": "{{count}} ಪುರಸ್ಕಾರ",
+    "moretech": "+{{count}} ಇನ್ನಷ್ಟು"
+  },
+  "modal": {
+    "description": "ವಿವರಣೆ",
+    "team": "ತಂಡ",
+    "technologiesUsed": "ಬಳಸಿದ ತಂತ್ರಜ್ಞಾನಗಳು",
+    "testimonials": "ಪ್ರಶಂಸಾಪತ್ರಗಳು",
+    "awards": "ಪುರಸ್ಕಾರಗಳು",
+    "impactMetrics": "ಪ್ರಭಾವ ಮೆಟ್ರಿಕ್ಸ್",
+    "projectDetails": "ಯೋಜನೆಯ ವಿವರಗಳು",
+    "fundingStatus": "ನಿಧಿ ಸ್ಥಿತಿ",
+    "actions": "ಕ್ರಿಯೆಗಳು",
+    "created": "ರಚಿಸಲಾಗಿದೆ:",
+    "goal": "ಗುರಿ",
+    "raised": "ಸಂಗ್ರಹಿಸಲಾಗಿದೆ",
+    "funded": "{{percent}}% ನಿಧಿ ಪಡೆದಿದೆ",
+    "viewDemo": "ಡೆಮೊ ನೋಡಿ",
+    "viewCode": "ಕೋಡ್ ನೋಡಿ",
+    "investInProject": "ಯೋಜನೆಯಲ್ಲಿ ಹೂಡಿಕೆ ಮಾಡಿ",
+    "shareProject": "ಯೋಜನೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ"
+  },
+  "noProjects": {
+    "message": "ನಿಮ್ಮ ಮಾನದಂಡಗಳಿಗೆ ಸರಿಹೊಂದುವ ಯಾವುದೇ ಯೋಜನೆಗಳು ಕಂಡುಬಂದಿಲ್ಲ.",
+    "clearFilters": "ಫಿಲ್ಟರ್‌ಗಳನ್ನು ಸಾಫ್ ಮಾಡಿ"
+  },
+  "toasts": {
+    "investmentNote": "ಹೂಡಿಕೆ ಕಾರ್ಯಚಟುವಟಿಕೆಯನ್ನು ಇಲ್ಲಿ ಅನುಷ್ಠಾನಗೊಳಿಸಲಾಗುವುದು",
+    "linkCopied": "ಲಿಂಕ್ ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ಗೆ ಕಾಪಿ ಮಾಡಲಾಗಿದೆ!"
+  }
+}

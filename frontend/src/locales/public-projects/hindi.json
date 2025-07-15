@@ -1,0 +1,86 @@
+{
+  "title": "सार्वजनिक परियोजनाएं",
+  "subtitle": "प्रतिभाशाली टीमों की नवाचार परियोजनाओं की खोज करें। ब्राउज़ करें और निवेश करें!",
+  "loading": "परियोजनाएं लोड हो रही हैं...",
+  "stats": {
+    "totalProjects": "कुल परियोजनाएं",
+    "peopleImpacted": "प्रभावित लोग",
+    "totalRevenue": "कुल राजस्व",
+    "activeProjects": "सक्रिय परियोजनाएं"
+  },
+  "search": {
+    "placeholder": "परियोजनाएं खोजें...",
+    "allCategories": "सभी श्रेणियां",
+    "allStatus": "सभी स्थिति",
+    "allFunding": "सभी फंडिंग",
+    "sortBy": {
+      "recent": "सबसे नवीन",
+      "impact": "सर्वोच्च राजस्व",
+      "funding": "सबसे अधिक फंडेड",
+      "people": "सबसे अधिक लोग प्रभावित"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "वेब डेवलपमेंट",
+    "mobile_app": "मोबाइल ऐप",
+    "iot": "IoT",
+    "blockchain": "ब्लॉकचेन",
+    "healthcare": "स्वास्थ्य सेवा",
+    "education": "शिक्षा",
+    "agriculture": "कृषि",
+    "finance": "वित्त",
+    "social_impact": "सामाजिक प्रभाव"
+  },
+  "status": {
+    "active": "सक्रिय",
+    "completed": "पूर्ण",
+    "scaled": "बढ़ाया गया"
+  },
+  "funding": {
+    "seeking": "फंडिंग की तलाश",
+    "funded": "फंडेड",
+    "self_sustaining": "स्व-निर्भर"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} टीम सदस्य",
+    "teamMembers_one": "{{count}} टीम सदस्य",
+    "peopleImpacted": "प्रभावित लोग",
+    "revenue": "राजस्व",
+    "fundingProgress": "फंडिंग प्रगति",
+    "awards": "{{count}} पुरस्कार",
+    "awards_one": "{{count}} पुरस्कार",
+    "moretech": "+{{count}} और"
+  },
+  "modal": {
+    "description": "विवरण",
+    "team": "टीम",
+    "technologiesUsed": "उपयोग की गई तकनीकें",
+    "testimonials": "प्रशंसापत्र",
+    "awards": "पुरस्कार",
+    "impactMetrics": "प्रभाव मेट्रिक्स",
+    "projectDetails": "परियोजना विवरण",
+    "fundingStatus": "फंडिंग स्थिति",
+    "actions": "कार्य",
+    "created": "बनाया गया:",
+    "goal": "लक्ष्य",
+    "raised": "जुटाया गया",
+    "funded": "{{percent}}% फंडेड",
+    "viewDemo": "डेमो देखें",
+    "viewCode": "कोड देखें",
+    "investInProject": "परियोजना में निवेश करें",
+    "shareProject": "परियोजना साझा करें",
+    "usersReached": "पहुंचे उपयोगकर्ता",
+    "revenueGenerated": "उत्पन्न राजस्व",
+    "businessesSupported": "समर्थित व्यवसाय",
+    "communityEngagement": "सामुदायिक सहभागिता"
+  },
+  "noProjects": {
+    "message": "आपके मानदंडों से मेल खाने वाली कोई परियोजना नहीं मिली।",
+    "clearFilters": "फिल्टर साफ़ करें"
+  },
+  "toasts": {
+    "investmentNote": "निवेश कार्यक्षमता यहाँ लागू की जाएगी",
+    "linkCopied": "लिंक क्लिपबोर्ड पर कॉपी किया गया!"
+  }
+}

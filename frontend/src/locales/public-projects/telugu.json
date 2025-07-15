@@ -1,0 +1,82 @@
+{
+  "title": "పబ్లిక్ ప్రాజెక్ట్‌లు",
+  "subtitle": "ప్రతిభావంతులైన టీమ్‌ల వినూత్న ప్రాజెక్ట్‌లను కనుగొనండి. బ్రౌజ్ చేసి పెట్టుబడి పెట్టండి!",
+  "loading": "ప్రాజెక్ట్‌లు లోడ్ అవుతున్నాయి...",
+  "stats": {
+    "totalProjects": "మొత్తం ప్రాజెక్ట్‌లు",
+    "peopleImpacted": "ప్రభావితమైన వ్యక్తులు",
+    "totalRevenue": "మొత్తం ఆదాయం",
+    "activeProjects": "క్రియాశీల ప్రాజెక్ట్‌లు"
+  },
+  "search": {
+    "placeholder": "ప్రాజెక్ట్‌లను వెతకండి...",
+    "allCategories": "అన్ని వర్గాలు",
+    "allStatus": "అన్ని స్థితులు",
+    "allFunding": "అన్ని ఫండింగ్",
+    "sortBy": {
+      "recent": "అత్యంత ఇటీవలి",
+      "impact": "అత్యధిక ఆదాయం",
+      "funding": "అత్యధిక ఫండింగ్",
+      "people": "అత్యధిక వ్యక్తుల ప్రభావం"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "వెబ్ డెవలప్‌మెంట్",
+    "mobile_app": "మొబైల్ యాప్",
+    "iot": "IoT",
+    "blockchain": "బ్లాక్‌చైన్",
+    "healthcare": "ఆరోగ్య సంరక్షణ",
+    "education": "విద్య",
+    "agriculture": "వ్యవసాయం",
+    "finance": "ఫైనాన్స్",
+    "social_impact": "సామాజిక ప్రభావం"
+  },
+  "status": {
+    "active": "క్రియాశీల",
+    "completed": "పూర్తయింది",
+    "scaled": "విస్తరించబడింది"
+  },
+  "funding": {
+    "seeking": "ఫండింగ్ అన్వేషణ",
+    "funded": "ఫండెడ్",
+    "self_sustaining": "స్వయం-నిర్వహణ"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} టీమ్ సభ్యులు",
+    "teamMembers_one": "{{count}} టీమ్ సభ్యుడు",
+    "peopleImpacted": "ప్రభావితమైన వ్యక్తులు",
+    "revenue": "ఆదాయం",
+    "fundingProgress": "ఫండింగ్ పురోగతి",
+    "awards": "{{count}} అవార్డులు",
+    "awards_one": "{{count}} అవార్డు",
+    "moretech": "+{{count}} మరిన్ని"
+  },
+  "modal": {
+    "description": "వివరణ",
+    "team": "టీమ్",
+    "technologiesUsed": "ఉపయోగించిన సాంకేతికతలు",
+    "testimonials": "సాక్ష్యాలు",
+    "awards": "అవార్డులు",
+    "impactMetrics": "ప్రభావ మెట్రిక్స్",
+    "projectDetails": "ప్రాజెక్ట్ వివరాలు",
+    "fundingStatus": "ఫండింగ్ స్థితి",
+    "actions": "చర్యలు",
+    "created": "సృష్టించబడింది:",
+    "goal": "లక్ష్యం",
+    "raised": "సేకరించబడింది",
+    "funded": "{{percent}}% ఫండెడ్",
+    "viewDemo": "డెమో చూడండి",
+    "viewCode": "కోడ్ చూడండి",
+    "investInProject": "ప్రాజెక్ట్‌లో పెట్టుబడి పెట్టండి",
+    "shareProject": "ప్రాజెక్ట్ షేర్ చేయండి"
+  },
+  "noProjects": {
+    "message": "మీ ప్రమాణాలకు సరిపోయే ప్రాజెక్ట్‌లు ఏవీ కనుగొనబడలేదు.",
+    "clearFilters": "ఫిల్టర్‌లను క్లియర్ చేయండి"
+  },
+  "toasts": {
+    "investmentNote": "పెట్టుబడి కార్యాచరణ ఇక్కడ అమలు చేయబడుతుంది",
+    "linkCopied": "లింక్ క్లిప్‌బోర్డ్‌కు కాపీ చేయబడింది!"
+  }
+}

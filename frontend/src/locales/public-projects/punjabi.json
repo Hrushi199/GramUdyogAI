@@ -1,0 +1,82 @@
+{
+  "title": "ਜਨਤਕ ਪ੍ਰੋਜੈਕਟ",
+  "subtitle": "ਪ੍ਰਤਿਭਾਸ਼ਾਲੀ ਟੀਮਾਂ ਦੇ ਨਵੀਨ ਪ੍ਰੋਜੈਕਟ ਖੋਜੋ। ਬ੍ਰਾਊਜ਼ ਕਰੋ ਅਤੇ ਨਿਵੇਸ਼ ਕਰੋ!",
+  "loading": "ਪ੍ਰੋਜੈਕਟ ਲੋਡ ਹੋ ਰਹੇ ਹਨ...",
+  "stats": {
+    "totalProjects": "ਕੁੱਲ ਪ੍ਰੋਜੈਕਟ",
+    "peopleImpacted": "ਪ੍ਰਭਾਵਿਤ ਲੋਕ",
+    "totalRevenue": "ਕੁੱਲ ਆਮਦਨ",
+    "activeProjects": "ਸਰਗਰਮ ਪ੍ਰੋਜੈਕਟ"
+  },
+  "search": {
+    "placeholder": "ਪ੍ਰੋਜੈਕਟ ਖੋਜੋ...",
+    "allCategories": "ਸਾਰੀਆਂ ਸ਼ਰੇਣੀਆਂ",
+    "allStatus": "ਸਾਰੀ ਸਥਿਤੀ",
+    "allFunding": "ਸਾਰੀ ਫੰਡਿੰਗ",
+    "sortBy": {
+      "recent": "ਸਭ ਤੋਂ ਤਾਜ਼ਾ",
+      "impact": "ਸਭ ਤੋਂ ਜ਼ਿਆਦਾ ਆਮਦਨ",
+      "funding": "ਸਭ ਤੋਂ ਜ਼ਿਆਦਾ ਫੰਡਿੰਗ",
+      "people": "ਸਭ ਤੋਂ ਜ਼ਿਆਦਾ ਲੋਕ ਪ੍ਰਭਾਵਿਤ"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "ਵੈਬ ਡਿਵੈਲਪਮੈਂਟ",
+    "mobile_app": "ਮੋਬਾਈਲ ਐਪ",
+    "iot": "IoT",
+    "blockchain": "ਬਲਾਕਚੇਨ",
+    "healthcare": "ਸਿਹਤ ਸੇਵਾ",
+    "education": "ਸਿੱਖਿਆ",
+    "agriculture": "ਖੇਤੀਬਾੜੀ",
+    "finance": "ਵਿੱਤ",
+    "social_impact": "ਸਮਾਜਿਕ ਪ੍ਰਭਾਵ"
+  },
+  "status": {
+    "active": "ਸਰਗਰਮ",
+    "completed": "ਪੂਰਾ",
+    "scaled": "ਵਿਸਤ੍ਰਿਤ"
+  },
+  "funding": {
+    "seeking": "ਫੰਡਿੰਗ ਦੀ ਭਾਲ",
+    "funded": "ਫੰਡਿਡ",
+    "self_sustaining": "ਸਵੈ-ਨਿਰਭਰ"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} ਟੀਮ ਮੈਂਬਰ",
+    "teamMembers_one": "{{count}} ਟੀਮ ਮੈਂਬਰ",
+    "peopleImpacted": "ਪ੍ਰਭਾਵਿਤ ਲੋਕ",
+    "revenue": "ਆਮਦਨ",
+    "fundingProgress": "ਫੰਡਿੰਗ ਪ੍ਰਗਤੀ",
+    "awards": "{{count}} ਪੁਰਸਕਾਰ",
+    "awards_one": "{{count}} ਪੁਰਸਕਾਰ",
+    "moretech": "+{{count}} ਹੋਰ"
+  },
+  "modal": {
+    "description": "ਵਰਣਨ",
+    "team": "ਟੀਮ",
+    "technologiesUsed": "ਵਰਤੀਆਂ ਗਈਆਂ ਤਕਨੀਕਾਂ",
+    "testimonials": "ਪ੍ਰਸ਼ੰਸਾ ਪੱਤਰ",
+    "awards": "ਪੁਰਸਕਾਰ",
+    "impactMetrics": "ਪ੍ਰਭਾਵ ਮੈਟ੍ਰਿਕਸ",
+    "projectDetails": "ਪ੍ਰੋਜੈਕਟ ਵਿਸਤਾਰ",
+    "fundingStatus": "ਫੰਡਿੰਗ ਸਥਿਤੀ",
+    "actions": "ਕਾਰਵਾਈਆਂ",
+    "created": "ਬਣਾਇਆ ਗਿਆ:",
+    "goal": "ਟੀਚਾ",
+    "raised": "ਇਕੱਠਾ ਕੀਤਾ",
+    "funded": "{{percent}}% ਫੰਡਿਡ",
+    "viewDemo": "ਡੈਮੋ ਦੇਖੋ",
+    "viewCode": "ਕੋਡ ਦੇਖੋ",
+    "investInProject": "ਪ੍ਰੋਜੈਕਟ ਵਿੱਚ ਨਿਵੇਸ਼ ਕਰੋ",
+    "shareProject": "ਪ੍ਰੋਜੈਕਟ ਸਾਂਝਾ ਕਰੋ"
+  },
+  "noProjects": {
+    "message": "ਤੁਹਾਡੇ ਮਾਪਦੰਡਾਂ ਨਾਲ ਮੇਲ ਖਾਂਦੇ ਕੋਈ ਪ੍ਰੋਜੈਕਟ ਨਹੀਂ ਮਿਲੇ।",
+    "clearFilters": "ਫਿਲਟਰ ਸਾਫ਼ ਕਰੋ"
+  },
+  "toasts": {
+    "investmentNote": "ਨਿਵੇਸ਼ ਕਾਰਜਸ਼ੀਲਤਾ ਇੱਥੇ ਲਾਗੂ ਕੀਤੀ ਜਾਵੇਗੀ",
+    "linkCopied": "ਲਿੰਕ ਕਲਿੱਪਬੋਰਡ 'ਤੇ ਕਾਪੀ ਹੋ ਗਿਆ!"
+  }
+}
