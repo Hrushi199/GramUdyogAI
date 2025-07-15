@@ -1,0 +1,81 @@
+{
+  "title": "ನನ್ನ ಪ್ರಾಜೆಕ್ಟ್‌ಗಳು",
+  "subtitle": "ಎಲ್ಲಾ ಇವೆಂಟ್‌ಗಳು ಮತ್ತು ಹ್ಯಾಕಥಾನ್‌ಗಳಲ್ಲಿ ನಿಮ್ಮ ಪ್ರಾಜೆಕ್ಟ್ ಕೊಡುಗೆ, ಟೀಮ್ ಸಹಯೋಗ ಮತ್ತು ಪ್ರಭಾವವನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಿ.",
+  "loading": "ನಿಮ್ಮ ಪ್ರಾಜೆಕ್ಟ್‌ಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ...",
+  "stats": {
+    "totalProjects": "ಒಟ್ಟು ಪ್ರಾಜೆಕ್ಟ್‌ಗಳು",
+    "peopleImpacted": "ಪ್ರಭಾವಿತ ಜನರು",
+    "jobsCreated": "ಸೃಷ್ಟಿಸಿದ ಕೆಲಸಗಳು",
+    "avgImpactScore": "ಸರಾಸರಿ ಪ್ರಭಾವ ಸ್ಕೋರ್"
+  },
+  "search": {
+    "placeholder": "ನಿಮ್ಮ ಪ್ರಾಜೆಕ್ಟ್‌ಗಳನ್ನು ಹುಡುಕಿ...",
+    "allCategories": "ಎಲ್ಲಾ ವರ್ಗಗಳು",
+    "allStatus": "ಎಲ್ಲಾ ಸ್ಥಿತಿ",
+    "allFunding": "ಎಲ್ಲಾ ಫಂಡಿಂಗ್",
+    "sortBy": {
+      "recent": "ಅತ್ಯಂತ ಹೊಸ",
+      "impact": "ಅತ್ಯಧಿಕ ಪ್ರಭಾವ",
+      "funding": "ಅತ್ಯಧಿಕ ಫಂಡೆಡ್",
+      "people": "ಅತ್ಯಧಿಕ ಜನರು ಪ್ರಭಾವಿತರು"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "ವೆಬ್ ಡೆವಲಪ್‌ಮೆಂಟ್",
+    "mobile_app": "ಮೊಬೈಲ್ ಆಪ್",
+    "iot": "IoT",
+    "blockchain": "ಬ್ಲಾಕ್‌ಚೈನ್",
+    "healthcare": "ಆರೋಗ್ಯ ಸೇವೆ",
+    "education": "ಶಿಕ್ಷಣ",
+    "agriculture": "ಕೃಷಿ",
+    "finance": "ಹಣಕಾಸು",
+    "social_impact": "ಸಾಮಾಜಿಕ ಪ್ರಭಾವ"
+  },
+  "status": {
+    "active": "ಸಕ್ರಿಯ",
+    "completed": "ಪೂರ್ಣಗೊಂಡ",
+    "scaled": "ಸ್ಕೇಲ್ಡ್"
+  },
+  "funding": {
+    "seeking": "ಫಂಡಿಂಗ್ ಹುಡುಕುತ್ತಿದೆ",
+    "funded": "ಫಂಡೆಡ್",
+    "self_sustaining": "ಸ್ವಾವಲಂಬಿ"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} ಟೀಮ್ ಸದಸ್ಯರು",
+    "teamMembers_one": "{{count}} ಟೀಮ್ ಸದಸ್ಯ",
+    "peopleImpacted": "ಪ್ರಭಾವಿತ ಜನರು",
+    "impactScore": "ಪ್ರಭಾವ ಸ್ಕೋರ್",
+    "fundingProgress": "ಫಂಡಿಂಗ್ ಪ್ರಗತಿ",
+    "awards": "{{count}} ಪ್ರಶಸ್ತಿಗಳು",
+    "awards_one": "{{count}} ಪ್ರಶಸ್ತಿ",
+    "moretech": "+{{count}} ಇನ್ನಷ್ಟು"
+  },
+  "noProjects": {
+    "title": "ಇನ್ನೂ ಯಾವುದೇ ಪ್ರಾಜೆಕ್ಟ್‌ಗಳಿಲ್ಲ",
+    "message": "ನೀವು ಇನ್ನೂ ಯಾವುದೇ ಪ್ರಾಜೆಕ್ಟ್‌ನಲ್ಲಿ ಭಾಗವಹಿಸಿಲ್ಲ. ಇವೆಂಟ್‌ಗಳಲ್ಲಿ ಭಾಗವಹಿಸಿ ಮತ್ತು ಟೀಮ್‌ಗಳೊಂದಿಗೆ ಸೇರಿಕೊಂಡು ಆರಂಭಿಸಿ!",
+    "browseEvents": "ಇವೆಂಟ್‌ಗಳನ್ನು ಬ್ರೌಸ್ ಮಾಡಿ",
+    "viewAllProjects": "ಎಲ್ಲಾ ಪ್ರಾಜೆಕ್ಟ್‌ಗಳನ್ನು ನೋಡಿ"
+  },
+  "modal": {
+    "description": "ವಿವರಣೆ",
+    "team": "ಟೀಮ್",
+    "technologiesUsed": "ಬಳಸಿದ ತಂತ್ರಜ್ಞಾನಗಳು",
+    "impactMetrics": "ಪ್ರಭಾವ ಮೆಟ್ರಿಕ್ಸ್",
+    "projectDetails": "ಪ್ರಾಜೆಕ್ಟ್ ವಿವರಗಳು",
+    "actions": "ಕ್ರಿಯೆಗಳು",
+    "created": "ಸೃಷ್ಟಿಸಿದ:",
+    "yourRole": "ನಿಮ್ಮ ಪಾತ್ರ:",
+    "peopleImpacted": "ಪ್ರಭಾವಿತ ಜನರು",
+    "revenueGenerated": "ಉತ್ಪಾದಿಸಿದ ಆದಾಯ",
+    "jobsCreated": "ಸೃಷ್ಟಿಸಿದ ಕೆಲಸಗಳು",
+    "socialImpactScore": "ಸಾಮಾಜಿಕ ಪ್ರಭಾವ ಸ್ಕೋರ್",
+    "sustainabilityScore": "ಸಮರ್ಥನೀಯತೆ ಸ್ಕೋರ್",
+    "viewDemo": "ಡೆಮೋ ನೋಡಿ",
+    "viewCode": "ಕೋಡ್ ನೋಡಿ",
+    "investInProject": "ಪ್ರಾಜೆಕ್ಟ್‌ನಲ್ಲಿ ಹೂಡಿಕೆ ಮಾಡಿ",
+    "realUser": "ನಿಜವಾದ ಬಳಕೆದಾರ",
+    "you": "ನೀವು"
+  }
+}

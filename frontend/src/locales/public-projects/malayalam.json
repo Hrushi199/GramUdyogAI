@@ -1,0 +1,82 @@
+{
+  "title": "പൊതു പദ്ധതികൾ",
+  "subtitle": "പ്രതിഭാശാലികളായ ടീമുകളുടെ നൂതന പദ്ധതികൾ കണ്ടെത്തുക. ബ്രൗസ് ചെയ്യുക, നിക്ഷേപിക്കുക!",
+  "loading": "പദ്ധതികൾ ലോഡ് ചെയ്യുന്നു...",
+  "stats": {
+    "totalProjects": "മൊത്തം പദ്ധതികൾ",
+    "peopleImpacted": "ബാധിക്കപ്പെട്ട ആളുകൾ",
+    "totalRevenue": "മൊത്തം വരുമാനം",
+    "activeProjects": "സജീവ പദ്ധതികൾ"
+  },
+  "search": {
+    "placeholder": "പദ്ധതികൾ തിരയുക...",
+    "allCategories": "എല്ലാ വിഭാഗങ്ങൾ",
+    "allStatus": "എല്ലാ സ്ഥിതി",
+    "allFunding": "എല്ലാ ഫണ്ടിംഗ്",
+    "sortBy": {
+      "recent": "ഏറ്റവും പുതിയത്",
+      "impact": "ഏറ്റവും ഉയർന്ന വരുമാനം",
+      "funding": "ഏറ്റവും കൂടുതൽ ഫണ്ടഡ്",
+      "people": "ഏറ്റവും കൂടുതൽ ആളുകൾ ബാധിതർ"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "വെബ് ഡെവലപ്മെന്റ്",
+    "mobile_app": "മൊബൈൽ ആപ്പ്",
+    "iot": "IoT",
+    "blockchain": "ബ്ലോക്ക്‌ചെയിൻ",
+    "healthcare": "ആരോഗ്യസംരക്ഷണം",
+    "education": "വിദ്യാഭ്യാസം",
+    "agriculture": "കൃഷി",
+    "finance": "ധനകാര്യം",
+    "social_impact": "സാമൂഹിക സ്വാധീനം"
+  },
+  "status": {
+    "active": "സജീവം",
+    "completed": "പൂർത്തിയായി",
+    "scaled": "വിപുലീകരിച്ചു"
+  },
+  "funding": {
+    "seeking": "ഫണ്ടിംഗ് തേടുന്നു",
+    "funded": "ഫണ്ടഡ്",
+    "self_sustaining": "സ്വയം നിലനിർത്തുന്ന"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} ടീം അംഗങ്ങൾ",
+    "teamMembers_one": "{{count}} ടീം അംഗം",
+    "peopleImpacted": "ബാധിക്കപ്പെട്ട ആളുകൾ",
+    "revenue": "വരുമാനം",
+    "fundingProgress": "ഫണ്ടിംഗ് പുരോഗതി",
+    "awards": "{{count}} അവാർഡുകൾ",
+    "awards_one": "{{count}} അവാർഡ്",
+    "moretech": "+{{count}} കൂടുതൽ"
+  },
+  "modal": {
+    "description": "വിവരണം",
+    "team": "ടീം",
+    "technologiesUsed": "ഉപയോഗിച്ച സാങ്കേതിക വിദ്യകൾ",
+    "testimonials": "സാക്ഷ്യപത്രങ്ങൾ",
+    "awards": "അവാർഡുകൾ",
+    "impactMetrics": "ഇംപാക്റ്റ് മെട്രിക്സ്",
+    "projectDetails": "പദ്ധതി വിശദാംശങ്ങൾ",
+    "fundingStatus": "ഫണ്ടിംഗ് സ്ഥിതി",
+    "actions": "പ്രവൃത്തികൾ",
+    "created": "സൃഷ്ടിച്ചത്:",
+    "goal": "ലക്ഷ്യം",
+    "raised": "സമാഹരിച്ചത്",
+    "funded": "{{percent}}% ഫണ്ടഡ്",
+    "viewDemo": "ഡെമോ കാണുക",
+    "viewCode": "കോഡ് കാണുക",
+    "investInProject": "പദ്ധതിയിൽ നിക്ഷേപിക്കുക",
+    "shareProject": "പദ്ധതി പങ്കിടുക"
+  },
+  "noProjects": {
+    "message": "നിങ്ങളുടെ മാനദണ്ഡങ്ങളുമായി പൊരുത്തപ്പെടുന്ന പദ്ധതികളൊന്നും കണ്ടെത്തിയില്ല.",
+    "clearFilters": "ഫിൽട്ടറുകൾ മായ്ക്കുക"
+  },
+  "toasts": {
+    "investmentNote": "നിക്ഷേപ പ്രവർത്തനക്ഷമത ഇവിടെ നടപ്പിലാക്കും",
+    "linkCopied": "ലിങ്ക് ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത്തി!"
+  }
+}

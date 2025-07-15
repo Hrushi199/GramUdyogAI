@@ -262,13 +262,14 @@ async def create_project(project: ProjectCreate, current_user: Dict[str, Any] = 
         cursor.execute('''
             INSERT INTO projects (
                 title, description, category, event_id, event_name, event_type,
-                technologies, impact_metrics, funding_status,
+                team_members, technologies, impact_metrics, funding_status,
                 funding_amount, funding_goal, location, state, created_by, created_at,
                 completed_at, status, media, testimonials, awards, tags
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             project.title, project.description, project.category, project.event_id, project.event_name, project.event_type,
-             json.dumps(project.technologies), json.dumps(project.impact_metrics),
+            json.dumps([]),  # Initialize with empty team_members
+            json.dumps(project.technologies), json.dumps(project.impact_metrics),
             project.funding_status, project.funding_amount, project.funding_goal,
             project.location, project.state, current_user['id'], datetime.now().isoformat(),
             project.completed_at or datetime.now().isoformat(), project.status, json.dumps(project.media),
@@ -566,52 +567,67 @@ async def search_projects(query: str, limit: int = 10):
 
 # Initialize with some sample data
 def populate_sample_projects():
-    cursor = get_db().cursor()
-    now = datetime.now().isoformat()
-    sample_projects = [
-        {
-            "title": "Smart Irrigation System",
-            "description": "IoT-based irrigation system for small farmers",
-            "category": "Agriculture",
-            "event_id": 1,
-            "event_name": "Rural Innovation Hackathon",
-            "event_type": "hackathon",
-            "technologies": json.dumps(["IoT", "Python", "Arduino"]),
-            "impact_metrics": json.dumps({"users_reached": 0, "revenue_generated": 0}),
-            "funding_status": "seeking",
-            "funding_amount": 0,
-            "funding_goal": 50000,
-            "location": "Bangalore",
-            "state": "Karnataka",
-            "created_by": 1,
-            "created_at": now,
-            "completed_at": None,
-            "status": "active",
-            "media": json.dumps({"images": [], "videos": []}),
-            "testimonials": json.dumps([]),
-            "awards": json.dumps([]),
-            "tags": json.dumps(["agriculture", "iot", "sustainability"])
-        }
-    ]
+    try:
+        cursor = get_db().cursor()
+        
+        # Check if sample data already exists
+        cursor.execute("SELECT COUNT(*) FROM projects WHERE title = 'Smart Irrigation System'")
+        if cursor.fetchone()[0] > 0:
+            return  # Sample data already exists
+            
+        now = datetime.now().isoformat()
+        sample_projects = [
+            {
+                "title": "Smart Irrigation System",
+                "description": "IoT-based irrigation system for small farmers",
+                "category": "Agriculture",
+                "event_id": 1,
+                "event_name": "Rural Innovation Hackathon",
+                "event_type": "hackathon",
+                "technologies": json.dumps(["IoT", "Python", "Arduino"]),
+                "impact_metrics": json.dumps({"users_reached": 0, "revenue_generated": 0}),
+                "funding_status": "seeking",
+                "funding_amount": 0,
+                "funding_goal": 50000,
+                "location": "Bangalore",
+                "state": "Karnataka",
+                "created_by": 1,
+                "created_at": now,
+                "completed_at": None,
+                "status": "active",
+                "media": json.dumps({"images": [], "videos": []}),
+                "testimonials": json.dumps([]),
+                "awards": json.dumps([]),
+                "tags": json.dumps(["agriculture", "iot", "sustainability"]),
+                "team_members": json.dumps([])
+            }
+        ]
 
-    for project in sample_projects:
-        cursor.execute('''
-            INSERT INTO projects (
-                title, description, category, event_id, event_name, event_type,
-                technologies, impact_metrics, funding_status, funding_amount,
-                funding_goal, location, state, created_by, created_at,
-                completed_at, status, media, testimonials, awards, tags
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (
-            project["title"], project["description"], project["category"],
-            project["event_id"], project["event_name"], project["event_type"],
-            project["technologies"], project["impact_metrics"],
-            project["funding_status"], project["funding_amount"], project["funding_goal"],
-            project["location"], project["state"], project["created_by"],
-            project["created_at"], project["completed_at"], project["status"],
-            project["media"], project["testimonials"], project["awards"],
-            project["tags"]
-        ))
+        for project in sample_projects:
+            cursor.execute('''
+                INSERT INTO projects (
+                    title, description, category, event_id, event_name, event_type,
+                    team_members, technologies, impact_metrics, funding_status, funding_amount,
+                    funding_goal, location, state, created_by, created_at,
+                    completed_at, status, media, testimonials, awards, tags
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                project["title"], project["description"], project["category"],
+                project["event_id"], project["event_name"], project["event_type"],
+                project["team_members"], project["technologies"], project["impact_metrics"],
+                project["funding_status"], project["funding_amount"], project["funding_goal"],
+                project["location"], project["state"], project["created_by"],
+                project["created_at"], project["completed_at"], project["status"],
+                project["media"], project["testimonials"], project["awards"],
+                project["tags"]
+            ))
+        
+        get_db().commit()
+        print("Sample projects populated successfully")
+        
+    except Exception as e:
+        print(f"Error populating sample projects: {e}")
+        # Don't re-raise the exception to prevent server startup failure
 
 
 

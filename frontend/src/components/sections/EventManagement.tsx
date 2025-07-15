@@ -62,7 +62,7 @@ interface ValidationErrors {
 }
 
 const EventManagement: React.FC = () => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation('event-management');
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -130,35 +130,35 @@ const EventManagement: React.FC = () => {
     
     // Required field validations
     if (!eventForm.title.trim()) {
-      errors.title = 'Event title is required';
+      errors.title = t('validation.titleRequired');
     } else if (eventForm.title.trim().length < 5) {
-      errors.title = 'Event title must be at least 5 characters long';
+      errors.title = t('validation.titleMinLength');
     }
     
     if (!eventForm.description.trim()) {
-      errors.description = 'Event description is required';
+      errors.description = t('validation.descriptionRequired');
     } else if (eventForm.description.trim().length < 20) {
-      errors.description = 'Event description must be at least 20 characters long';
+      errors.description = t('validation.descriptionMinLength');
     }
     
     if (!eventForm.category.trim()) {
-      errors.category = 'Event category is required';
+      errors.category = t('validation.categoryRequired');
     }
     
     if (!eventForm.location.trim()) {
-      errors.location = 'Event location is required';
+      errors.location = t('validation.locationRequired');
     }
     
     if (!eventForm.state.trim()) {
-      errors.state = 'Event state is required';
+      errors.state = t('validation.stateRequired');
     }
     
     if (!eventForm.start_date) {
-      errors.start_date = 'Start date is required';
+      errors.start_date = t('validation.startDateRequired');
     }
     
     if (!eventForm.end_date) {
-      errors.end_date = 'End date is required';
+      errors.end_date = t('validation.endDateRequired');
     }
     
     // Date validation
@@ -169,36 +169,36 @@ const EventManagement: React.FC = () => {
       today.setHours(0, 0, 0, 0);
       
       if (startDate < today) {
-        errors.start_date = 'Start date cannot be in the past';
+        errors.start_date = t('validation.startDatePast');
       }
       
       if (endDate <= startDate) {
-        errors.end_date = 'End date must be after start date';
+        errors.end_date = t('validation.endDateInvalid');
       }
     }
     
     // Number validations
     if (eventForm.max_participants <= 0) {
-      errors.max_participants = 'Maximum participants must be greater than 0';
+      errors.max_participants = t('validation.maxParticipantsPositive');
     } else if (eventForm.max_participants > 10000) {
-      errors.max_participants = 'Maximum participants cannot exceed 10,000';
+      errors.max_participants = t('validation.maxParticipantsLimit');
     }
     
     if (eventForm.budget < 0) {
-      errors.budget = 'Budget cannot be negative';
+      errors.budget = t('validation.budgetNegative');
     }
     
     if (eventForm.prize_pool < 0) {
-      errors.prize_pool = 'Prize pool cannot be negative';
+      errors.prize_pool = t('validation.prizePoolNegative');
     }
     
     // Skills and tags validation
     if (eventForm.skills_required.length === 0) {
-      errors.skills_required = 'At least one skill is required';
+      errors.skills_required = t('validation.skillsRequired');
     }
     
     if (eventForm.tags.length === 0) {
-      errors.tags = 'At least one tag is required';
+      errors.tags = t('validation.tagsRequired');
     }
     
     setValidationErrors(errors);
@@ -351,20 +351,20 @@ const EventManagement: React.FC = () => {
                   sections: Array.isArray(aiEvent.sections) ? aiEvent.sections : prev.sections,
                 }));
               } else {
-                setSpeechError('AI event generation failed.');
+                setSpeechError(t('toast.aiGenerationFailed'));
               }
             } else {
-              setSpeechError('No transcript received.');
+              setSpeechError(t('toast.noTranscript'));
             }
           } catch (error) {
-            setSpeechError('Error transcribing or generating event.');
+            setSpeechError(t('toast.transcriptionError'));
           }
         };
 
         recorder.start();
         setIsListening(true);
       } catch (error) {
-        setSpeechError('Microphone access denied');
+        setSpeechError(t('toast.microphoneAccessDenied'));
       }
     } else {
       setSpeechSupported(false);
@@ -433,14 +433,14 @@ const EventManagement: React.FC = () => {
           },
         });
         clearValidationErrors();
-        toast.success('Event created successfully!', { style: { background: 'rgba(30, 0, 60, 0.8)', color: '#fff', border: '1px solid #a259ec', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)' } });
+        toast.success(t('toast.eventCreated'), { style: { background: 'rgba(30, 0, 60, 0.8)', color: '#fff', border: '1px solid #a259ec', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)' } });
       } else if (response.error) {
         console.error('Error creating event:', response.error);
         setValidationErrors({ general: response.error });
       }
     } catch (error) {
       console.error('Error creating event:', error);
-      setValidationErrors({ general: 'Failed to create event. Please try again.' });
+      setValidationErrors({ general: t('validation.createFailed') });
     } finally {
       setIsSubmitting(false);
     }
@@ -524,7 +524,7 @@ const EventManagement: React.FC = () => {
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
-          <p className="mt-4 text-lg text-white">Loading Events...</p>
+          <p className="mt-4 text-lg text-white">{t('loading')}</p>
         </div>
       </div>
     );
@@ -543,15 +543,15 @@ const EventManagement: React.FC = () => {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-white">Event Management</h1>
-            <p className="text-gray-300">AI-Powered Hackathon & Event Platform</p>
+            <h1 className="text-3xl font-bold text-white">{t('pageTitle')}</h1>
+            <p className="text-gray-300">{t('pageSubtitle')}</p>
           </div>
           <button
             onClick={() => setShowCreateModal(true)}
             className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition flex items-center space-x-2"
           >
             <Plus className="h-5 w-5" />
-            <span>Create Event</span>
+            <span>{t('createEvent')}</span>
           </button>
         </div>
 
@@ -564,7 +564,7 @@ const EventManagement: React.FC = () => {
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                   <input
                     type="text"
-                    placeholder="Search events..."
+                    placeholder={t('searchPlaceholder')}
                     className="w-full pl-10 pr-4 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white placeholder-gray-400"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -576,23 +576,23 @@ const EventManagement: React.FC = () => {
                 onChange={(e) => setFilterType(e.target.value)}
                 className="px-4 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white"
               >
-                <option value="all">All Types</option>
-                <option value="hackathon">Hackathon</option>
-                <option value="workshop">Workshop</option>
-                <option value="competition">Competition</option>
-                <option value="training">Training</option>
-                <option value="meetup">Meetup</option>
+                <option value="all">{t('filters.allTypes')}</option>
+                <option value="hackathon">{t('eventTypes.hackathon')}</option>
+                <option value="workshop">{t('eventTypes.workshop')}</option>
+                <option value="competition">{t('eventTypes.competition')}</option>
+                <option value="training">{t('eventTypes.training')}</option>
+                <option value="meetup">{t('eventTypes.meetup')}</option>
               </select>
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
                 className="px-4 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white"
               >
-                <option value="all">All Status</option>
-                <option value="draft">Draft</option>
-                <option value="active">Active</option>
-                <option value="ongoing">Ongoing</option>
-                <option value="completed">Completed</option>
+                <option value="all">{t('filters.allStatus')}</option>
+                <option value="draft">{t('eventStatus.draft')}</option>
+                <option value="active">{t('eventStatus.active')}</option>
+                <option value="ongoing">{t('eventStatus.ongoing')}</option>
+                <option value="completed">{t('eventStatus.completed')}</option>
               </select>
             </div>
           </CardContent>
@@ -610,10 +610,10 @@ const EventManagement: React.FC = () => {
                     </CardTitle>
                     <div className="flex items-center space-x-2 mb-2">
                       <Badge className={getEventTypeColor(event.event_type)}>
-                        {event.event_type}
+                        {t(`eventTypes.${event.event_type}`)}
                       </Badge>
                       <Badge className={getStatusColor(event.status)}>
-                        {event.status}
+                        {t(`eventStatus.${event.status}`)}
                       </Badge>
                     </div>
                   </div>
@@ -645,12 +645,12 @@ const EventManagement: React.FC = () => {
                   </div>
                   <div className="flex items-center space-x-2 text-sm text-gray-400">
                     <Users className="h-4 w-4" />
-                    <span>{event.current_participants}/{event.max_participants} participants</span>
+                    <span>{event.current_participants}/{event.max_participants} {t('eventCard.participants')}</span>
                   </div>
                   {event.prize_pool > 0 && (
                     <div className="flex items-center space-x-2 text-sm text-gray-400">
                       <Award className="h-4 w-4" />
-                      <span>{formatCurrency(event.prize_pool)} prize pool</span>
+                      <span>{formatCurrency(event.prize_pool)} {t('eventCard.prizePool')}</span>
                     </div>
                   )}
                 </div>
@@ -662,7 +662,7 @@ const EventManagement: React.FC = () => {
                   ))}
                   {event.tags.length > 3 && (
                     <span className="bg-purple-900/50 text-purple-300 border border-purple-700 px-2 py-1 rounded text-xs">
-                      +{event.tags.length - 3} more
+                      +{event.tags.length - 3} {t('eventCard.more')}
                     </span>
                   )}
                 </div>      
@@ -716,11 +716,11 @@ const EventManagement: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
-              <h2 className="text-2xl font-bold text-white mb-6">Create Event</h2>
+              <h2 className="text-2xl font-bold text-white mb-6">{t('createEventModal.title')}</h2>
               <form onSubmit={e => { e.preventDefault(); createEvent(); }} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Event Title</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.eventTitle')}</label>
                     <input
                       type="text"
                       value={eventForm.title}
@@ -731,21 +731,21 @@ const EventManagement: React.FC = () => {
                     {validationErrors.title && <p className="text-red-400 text-xs mt-1">{validationErrors.title}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Event Type</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.eventType')}</label>
                     <select
                       value={eventForm.event_type}
                       onChange={e => setEventForm(prev => ({ ...prev, event_type: e.target.value as any }))}
                       className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white transition"
                     >
-                      <option value="hackathon">Hackathon</option>
-                      <option value="workshop">Workshop</option>
-                      <option value="competition">Competition</option>
-                      <option value="training">Training</option>
-                      <option value="meetup">Meetup</option>
+                      <option value="hackathon">{t('eventTypes.hackathon')}</option>
+                      <option value="workshop">{t('eventTypes.workshop')}</option>
+                      <option value="competition">{t('eventTypes.competition')}</option>
+                      <option value="training">{t('eventTypes.training')}</option>
+                      <option value="meetup">{t('eventTypes.meetup')}</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Category</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.category')}</label>
                     <input
                       type="text"
                       value={eventForm.category}
@@ -756,7 +756,7 @@ const EventManagement: React.FC = () => {
                     {validationErrors.category && <p className="text-red-400 text-xs mt-1">{validationErrors.category}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Location</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.location')}</label>
                     <input
                       type="text"
                       value={eventForm.location}
@@ -767,7 +767,7 @@ const EventManagement: React.FC = () => {
                     {validationErrors.location && <p className="text-red-400 text-xs mt-1">{validationErrors.location}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">State</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.state')}</label>
                     <input
                       type="text"
                       value={eventForm.state}
@@ -778,7 +778,7 @@ const EventManagement: React.FC = () => {
                     {validationErrors.state && <p className="text-red-400 text-xs mt-1">{validationErrors.state}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Start Date</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.startDate')}</label>
                     <input
                       type="datetime-local"
                       value={eventForm.start_date}
@@ -789,7 +789,7 @@ const EventManagement: React.FC = () => {
                     {validationErrors.start_date && <p className="text-red-400 text-xs mt-1">{validationErrors.start_date}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">End Date</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.endDate')}</label>
                     <input
                       type="datetime-local"
                       value={eventForm.end_date}
@@ -800,7 +800,7 @@ const EventManagement: React.FC = () => {
                     {validationErrors.end_date && <p className="text-red-400 text-xs mt-1">{validationErrors.end_date}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Max Participants</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.maxParticipants')}</label>
                     <input
                       type="number"
                       value={eventForm.max_participants}
@@ -812,7 +812,7 @@ const EventManagement: React.FC = () => {
                     {validationErrors.max_participants && <p className="text-red-400 text-xs mt-1">{validationErrors.max_participants}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Budget</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.budget')}</label>
                     <input
                       type="number"
                       value={eventForm.budget}
@@ -823,7 +823,7 @@ const EventManagement: React.FC = () => {
                     {validationErrors.budget && <p className="text-red-400 text-xs mt-1">{validationErrors.budget}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Prize Pool</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.prizePool')}</label>
                     <input
                       type="number"
                       value={eventForm.prize_pool}
@@ -835,7 +835,7 @@ const EventManagement: React.FC = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Description</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.description')}</label>
                   <textarea
                     value={eventForm.description}
                     onChange={e => setEventForm(prev => ({ ...prev, description: e.target.value }))}
@@ -847,7 +847,7 @@ const EventManagement: React.FC = () => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Required Skills (comma-separated)</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.requiredSkills')}</label>
                     <input
                       type="text"
                       value={eventForm.skills_required.join(', ')}
@@ -856,12 +856,12 @@ const EventManagement: React.FC = () => {
                         skills_required: e.target.value.split(',').map(s => s.trim()).filter(s => s) 
                       }))}
                       className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white placeholder-gray-400 transition"
-                      placeholder="e.g., React, Node.js, Python"
+                      placeholder={t('createEventModal.skillsPlaceholder')}
                     />
                     {validationErrors.skills_required && <p className="text-red-400 text-xs mt-1">{validationErrors.skills_required}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Tags (comma-separated)</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.tags')}</label>
                     <input
                       type="text"
                       value={eventForm.tags.join(', ')}
@@ -870,34 +870,34 @@ const EventManagement: React.FC = () => {
                         tags: e.target.value.split(',').map(s => s.trim()).filter(s => s) 
                       }))}
                       className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white placeholder-gray-400 transition"
-                      placeholder="e.g., AI, Web Development, Mobile"
+                      placeholder={t('createEventModal.tagsPlaceholder')}
                     />
                     {validationErrors.tags && <p className="text-red-400 text-xs mt-1">{validationErrors.tags}</p>}
                   </div>
                 </div>
                 {/* Marketing Highlights */}
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Marketing Highlights</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.marketingHighlights')}</label>
                   <textarea
                     value={eventForm.marketing_highlights?.join('\n') || ''}
                     onChange={e => setEventForm(prev => ({ ...prev, marketing_highlights: e.target.value.split('\n').filter(Boolean) }))}
                     className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white placeholder-gray-400 transition min-h-[60px]"
-                    placeholder="One highlight per line"
+                    placeholder={t('createEventModal.marketingHighlightsPlaceholder')}
                   />
                 </div>
                 {/* Success Metrics */}
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Success Metrics</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.successMetrics')}</label>
                   <textarea
                     value={eventForm.success_metrics?.join('\n') || ''}
                     onChange={e => setEventForm(prev => ({ ...prev, success_metrics: e.target.value.split('\n').filter(Boolean) }))}
                     className="w-full px-3 py-2 border border-purple-500/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-purple-900/20 text-white placeholder-gray-400 transition min-h-[60px]"
-                    placeholder="One metric per line"
+                    placeholder={t('createEventModal.successMetricsPlaceholder')}
                   />
                 </div>
                 {/* Sections (Agenda) */}
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Event Sections / Agenda</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('createEventModal.eventSections')}</label>
                   {(eventForm.sections || []).map((section, idx) => (
                     <div key={idx} className="mb-2 border border-purple-700/30 rounded-lg p-2 bg-purple-900/10">
                       <input
@@ -908,7 +908,7 @@ const EventManagement: React.FC = () => {
                           sections: prev.sections?.map((s, i) => i === idx ? { ...s, title: e.target.value } : s)
                         }))}
                         className="w-full mb-1 px-2 py-1 rounded bg-purple-900/20 text-white border border-purple-700/30"
-                        placeholder="Section Title"
+                        placeholder={t('createEventModal.sectionTitle')}
                       />
                       <textarea
                         value={section.description}
@@ -917,7 +917,7 @@ const EventManagement: React.FC = () => {
                           sections: prev.sections?.map((s, i) => i === idx ? { ...s, description: e.target.value } : s)
                         }))}
                         className="w-full mb-1 px-2 py-1 rounded bg-purple-900/20 text-white border border-purple-700/30"
-                        placeholder="Section Description"
+                        placeholder={t('createEventModal.sectionDescription')}
                       />
                       <input
                         type="text"
@@ -927,7 +927,7 @@ const EventManagement: React.FC = () => {
                           sections: prev.sections?.map((s, i) => i === idx ? { ...s, key_points: e.target.value.split(',').map(k => k.trim()).filter(Boolean) } : s)
                         }))}
                         className="w-full mb-1 px-2 py-1 rounded bg-purple-900/20 text-white border border-purple-700/30"
-                        placeholder="Key Points (comma separated)"
+                        placeholder={t('createEventModal.keyPoints')}
                       />
                       <input
                         type="text"
@@ -937,7 +937,7 @@ const EventManagement: React.FC = () => {
                           sections: prev.sections?.map((s, i) => i === idx ? { ...s, target_audience: e.target.value } : s)
                         }))}
                         className="w-full mb-1 px-2 py-1 rounded bg-purple-900/20 text-white border border-purple-700/30"
-                        placeholder="Target Audience"
+                        placeholder={t('createEventModal.targetAudience')}
                       />
                       <input
                         type="text"
@@ -947,7 +947,7 @@ const EventManagement: React.FC = () => {
                           sections: prev.sections?.map((s, i) => i === idx ? { ...s, expected_outcome: e.target.value } : s)
                         }))}
                         className="w-full px-2 py-1 rounded bg-purple-900/20 text-white border border-purple-700/30"
-                        placeholder="Expected Outcome"
+                        placeholder={t('createEventModal.expectedOutcome')}
                       />
                       <button
                         type="button"
@@ -956,7 +956,7 @@ const EventManagement: React.FC = () => {
                           ...prev,
                           sections: prev.sections?.filter((_, i) => i !== idx)
                         }))}
-                      >Remove Section</button>
+                      >{t('createEventModal.removeSection')}</button>
                     </div>
                   ))}
                   <button
@@ -966,7 +966,7 @@ const EventManagement: React.FC = () => {
                       ...prev,
                       sections: [...(prev.sections || []), { title: '', description: '', key_points: [], target_audience: '', expected_outcome: '' }]
                     }))}
-                  >Add Section</button>
+                  >{t('createEventModal.addSection')}</button>
                 </div>
                 {/* AI/Translation/Voice Features */}
                 <div className="flex flex-col md:flex-row md:items-center gap-4 pt-2">
@@ -981,7 +981,7 @@ const EventManagement: React.FC = () => {
                     ) : (
                       <Activity className="h-4 w-4 mr-2" />
                     )}
-                    Generate with AI
+                    {t('createEventModal.generateWithAI')}
                   </button>
                   
                   {/* Optional: Voice prompt input */}
@@ -999,7 +999,7 @@ const EventManagement: React.FC = () => {
                       ) : (
                         <Mic className="h-4 w-4 mr-2" />
                       )}
-                      {isListening ? 'Stop Listening' : 'Start Voice Input'}
+                      {isListening ? t('createEventModal.stopListening') : t('createEventModal.startVoiceInput')}
                     </button>
                 </div>
                 {/* Validation/general errors */}
@@ -1011,14 +1011,14 @@ const EventManagement: React.FC = () => {
                     onClick={() => setShowCreateModal(false)}
                     className="px-6 py-2 border border-gray-600 rounded-lg hover:bg-gray-700/50 transition text-gray-300 hover:text-white"
                   >
-                    Cancel
+                    {t('common.cancel')}
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting}
                     className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {isSubmitting ? 'Creating...' : 'Create Event'}
+                    {isSubmitting ? t('createEventModal.creating') : t('createEventModal.createEvent')}
                   </button>
                 </div>
               </form>

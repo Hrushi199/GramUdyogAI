@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { 
   Award, Users, TrendingUp, MapPin, Calendar, 
-  Building2, Star, Eye, Share2, ExternalLink,
-  Target, DollarSign, Activity, Globe, Heart, Search,
-  Plus, User, Crown
+  Building2, Eye, Share2, ExternalLink,
+  Activity, Heart, Search,
+  User, Crown
 } from 'lucide-react';
 import type { Testimonial, Award as AwardType } from '../../lib/api';
 import PublicProfileAvatar from '../ui/PublicProfileAvatar';
@@ -57,6 +58,7 @@ interface Project {
 }
 
 const MyProjects: React.FC = () => {
+  const { t } = useTranslation('myprojects');
   const [projects, setProjects] = useState<Project[]>([]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
@@ -179,7 +181,7 @@ const MyProjects: React.FC = () => {
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
-          <p className="mt-4 text-lg text-white">Loading Your Projects...</p>
+          <p className="mt-4 text-lg text-white">{t('loading')}</p>
         </div>
       </div>
     );
@@ -197,9 +199,9 @@ const MyProjects: React.FC = () => {
       <div className="relative z-20 container mx-auto p-6 space-y-6">
         {/* Header */}
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">My Projects</h1>
+          <h1 className="text-4xl font-bold text-white mb-4">{t('title')}</h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Track your project contributions, team collaborations, and impact across all events and hackathons.
+            {t('subtitle')}
           </p>
         </div>
 
@@ -210,7 +212,7 @@ const MyProjects: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <Award className="h-8 w-8 text-purple-400" />
                 <div>
-                  <p className="text-sm font-medium text-gray-400">Total Projects</p>
+                  <p className="text-sm font-medium text-gray-400">{t('stats.totalProjects')}</p>
                   <p className="text-2xl font-bold text-white">{projects.length}</p>
                 </div>
               </div>
@@ -222,7 +224,7 @@ const MyProjects: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <Users className="h-8 w-8 text-blue-400" />
                 <div>
-                  <p className="text-sm font-medium text-gray-400">People Impacted</p>
+                  <p className="text-sm font-medium text-gray-400">{t('stats.peopleImpacted')}</p>
                   <p className="text-2xl font-bold text-white">
                     {formatNumber(projects.reduce((sum, p) => sum + p.impact_metrics.people_impacted, 0))}
                   </p>
@@ -236,7 +238,7 @@ const MyProjects: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <TrendingUp className="h-8 w-8 text-green-400" />
                 <div>
-                  <p className="text-sm font-medium text-gray-400">Jobs Created</p>
+                  <p className="text-sm font-medium text-gray-400">{t('stats.jobsCreated')}</p>
                   <p className="text-2xl font-bold text-white">
                     {formatNumber(projects.reduce((sum, p) => sum + p.impact_metrics.jobs_created, 0))}
                   </p>
@@ -250,7 +252,7 @@ const MyProjects: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <Heart className="h-8 w-8 text-pink-400" />
                 <div>
-                  <p className="text-sm font-medium text-gray-400">Avg Impact Score</p>
+                  <p className="text-sm font-medium text-gray-400">{t('stats.avgImpactScore')}</p>
                   <p className="text-2xl font-bold text-white">
                     {projects.length > 0 
                       ? Math.round(projects.reduce((sum, p) => sum + p.impact_metrics.social_impact_score, 0) / projects.length)
@@ -271,7 +273,7 @@ const MyProjects: React.FC = () => {
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                   <input
                     type="text"
-                    placeholder="Search your projects..."
+                    placeholder={t('search.placeholder')}
                     className="w-full pl-10 pr-4 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white placeholder-gray-400"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -283,47 +285,47 @@ const MyProjects: React.FC = () => {
                 onChange={(e) => setFilterCategory(e.target.value)}
                 className="px-4 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white"
               >
-                <option value="all">All Categories</option>
-                <option value="AI/ML">AI/ML</option>
-                <option value="Web Development">Web Development</option>
-                <option value="Mobile App">Mobile App</option>
-                <option value="IoT">IoT</option>
-                <option value="Blockchain">Blockchain</option>
-                <option value="Healthcare">Healthcare</option>
-                <option value="Education">Education</option>
-                <option value="Agriculture">Agriculture</option>
-                <option value="Finance">Finance</option>
-                <option value="Social Impact">Social Impact</option>
+                <option value="all">{t('search.allCategories')}</option>
+                <option value="AI/ML">{t('categories.ai_ml')}</option>
+                <option value="Web Development">{t('categories.web_development')}</option>
+                <option value="Mobile App">{t('categories.mobile_app')}</option>
+                <option value="IoT">{t('categories.iot')}</option>
+                <option value="Blockchain">{t('categories.blockchain')}</option>
+                <option value="Healthcare">{t('categories.healthcare')}</option>
+                <option value="Education">{t('categories.education')}</option>
+                <option value="Agriculture">{t('categories.agriculture')}</option>
+                <option value="Finance">{t('categories.finance')}</option>
+                <option value="Social Impact">{t('categories.social_impact')}</option>
               </select>
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
                 className="px-4 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white"
               >
-                <option value="all">All Status</option>
-                <option value="active">Active</option>
-                <option value="completed">Completed</option>
-                <option value="scaled">Scaled</option>
+                <option value="all">{t('search.allStatus')}</option>
+                <option value="active">{t('status.active')}</option>
+                <option value="completed">{t('status.completed')}</option>
+                <option value="scaled">{t('status.scaled')}</option>
               </select>
               <select
                 value={filterFunding}
                 onChange={(e) => setFilterFunding(e.target.value)}
                 className="px-4 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white"
               >
-                <option value="all">All Funding</option>
-                <option value="seeking">Seeking Funding</option>
-                <option value="funded">Funded</option>
-                <option value="self_sustaining">Self Sustaining</option>
+                <option value="all">{t('search.allFunding')}</option>
+                <option value="seeking">{t('funding.seeking')}</option>
+                <option value="funded">{t('funding.funded')}</option>
+                <option value="self_sustaining">{t('funding.self_sustaining')}</option>
               </select>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
                 className="px-4 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white"
               >
-                <option value="recent">Most Recent</option>
-                <option value="impact">Highest Impact</option>
-                <option value="funding">Most Funded</option>
-                <option value="people">Most People Impacted</option>
+                <option value="recent">{t('search.sortBy.recent')}</option>
+                <option value="impact">{t('search.sortBy.impact')}</option>
+                <option value="funding">{t('search.sortBy.funding')}</option>
+                <option value="people">{t('search.sortBy.people')}</option>
               </select>
             </div>
           </CardContent>
@@ -336,16 +338,16 @@ const MyProjects: React.FC = () => {
               <div className="mb-4">
                 <Activity className="h-16 w-16 text-gray-400 mx-auto" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">No Projects Yet</h3>
+              <h3 className="text-xl font-semibold text-white mb-2">{t('noProjects.title')}</h3>
               <p className="text-gray-400 mb-6">
-                You haven't joined any projects yet. Start by participating in events and joining teams!
+                {t('noProjects.message')}
               </p>
               <div className="flex justify-center space-x-4">
                 <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition">
-                  Browse Events
+                  {t('noProjects.browseEvents')}
                 </button>
                 <button className="bg-gradient-to-r from-green-600 to-teal-600 text-white px-6 py-2 rounded-lg hover:from-green-700 hover:to-teal-700 transition">
-                  View All Projects
+                  {t('noProjects.viewAllProjects')}
                 </button>
               </div>
             </CardContent>
@@ -421,7 +423,7 @@ const MyProjects: React.FC = () => {
                     
                     <div className="flex items-center space-x-2 text-sm text-gray-400">
                       <Users className="h-4 w-4" />
-                      <span>{project.team_members.length} team members</span>
+                      <span>{t('projectCard.teamMembers', { count: project.team_members.length })}</span>
                     </div>
                   </div>
                   
@@ -431,13 +433,13 @@ const MyProjects: React.FC = () => {
                       <div className="text-lg font-bold text-blue-300">
                         {formatNumber(project.impact_metrics.people_impacted)}
                       </div>
-                      <div className="text-xs text-blue-200">People Impacted</div>
+                      <div className="text-xs text-blue-200">{t('projectCard.peopleImpacted')}</div>
                     </div>
                     <div className="text-center p-2 bg-purple-900/40 rounded-lg">
                       <div className="text-lg font-bold text-purple-300">
                         {project.impact_metrics.social_impact_score}/100
                       </div>
-                      <div className="text-xs text-purple-200">Impact Score</div>
+                      <div className="text-xs text-purple-200">{t('projectCard.impactScore')}</div>
                     </div>
                   </div>
                   
@@ -450,7 +452,7 @@ const MyProjects: React.FC = () => {
                     ))}
                     {project.technologies.length > 3 && (
                       <Badge className="bg-gray-700 text-white text-xs">
-                        +{project.technologies.length - 3} more
+                        {t('projectCard.moretech', { count: project.technologies.length - 3 })}
                       </Badge>
                     )}
                   </div>
@@ -459,7 +461,7 @@ const MyProjects: React.FC = () => {
                   {project.funding_status === 'seeking' && project.funding_goal && (
                     <div className="mb-4">
                       <div className="flex justify-between text-sm text-gray-600 mb-1">
-                        <span>Funding Progress</span>
+                        <span>{t('projectCard.fundingProgress')}</span>
                         <span>{formatCurrency(project.funding_amount || 0)} / {formatCurrency(project.funding_goal)}</span>
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
@@ -475,7 +477,7 @@ const MyProjects: React.FC = () => {
                   {project.awards.length > 0 && (
                     <div className="flex items-center space-x-2 text-sm text-gray-500">
                       <Award className="h-4 w-4" />
-                      <span>{project.awards.length} award{project.awards.length > 1 ? 's' : ''}</span>
+                      <span>{t('projectCard.awards', { count: project.awards.length })}</span>
                     </div>
                   )}
                 </CardContent>
@@ -503,12 +505,12 @@ const MyProjects: React.FC = () => {
                   {/* Main Content */}
                   <div className="lg:col-span-2 space-y-6">
                     <div>
-                      <h3 className="text-xl font-semibold mb-3 text-white">Description</h3>
+                      <h3 className="text-xl font-semibold mb-3 text-white">{t('modal.description')}</h3>
                       <p className="text-gray-300">{selectedProject.description}</p>
                     </div>
                     
                     <div>
-                      <h3 className="text-xl font-semibold mb-3 text-white">Team</h3>
+                      <h3 className="text-xl font-semibold mb-3 text-white">{t('modal.team')}</h3>
                       <div className="space-y-3">
                         {selectedProject.team_members.map((member) => (
                           <div key={member.id} className="flex items-center space-x-3 p-3 bg-gray-800/50 rounded-lg border border-gray-700">
@@ -522,13 +524,13 @@ const MyProjects: React.FC = () => {
                                 {member.user_id && (
                                   <Badge className="bg-green-900/50 text-green-300 border-green-700">
                                     <User className="h-3 w-3 mr-1" />
-                                    Real User
+                                    {t('modal.realUser')}
                                   </Badge>
                                 )}
                                 {member.user_id === getUserId() && (
                                   <Badge className="bg-purple-900/50 text-purple-300 border-purple-700">
                                     <Crown className="h-3 w-3 mr-1" />
-                                    You
+                                    {t('modal.you')}
                                   </Badge>
                                 )}
                               </div>
@@ -552,7 +554,7 @@ const MyProjects: React.FC = () => {
                     </div>
                     
                     <div>
-                      <h3 className="text-xl font-semibold mb-3 text-white">Technologies Used</h3>
+                      <h3 className="text-xl font-semibold mb-3 text-white">{t('modal.technologiesUsed')}</h3>
                       <div className="flex flex-wrap gap-2">
                         {selectedProject.technologies.map((tech, index) => (
                           <Badge key={index} className="bg-blue-100 text-blue-800">
@@ -568,27 +570,27 @@ const MyProjects: React.FC = () => {
                     {/* Impact Metrics */}
                     <Card className="bg-gray-800/50 border border-gray-700">
                       <CardHeader>
-                        <CardTitle className="text-white">Impact Metrics</CardTitle>
+                        <CardTitle className="text-white">{t('modal.impactMetrics')}</CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-400">People Impacted</span>
+                          <span className="text-sm text-gray-400">{t('modal.peopleImpacted')}</span>
                           <span className="font-semibold text-white">{formatNumber(selectedProject.impact_metrics.people_impacted)}</span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-400">Revenue Generated</span>
+                          <span className="text-sm text-gray-400">{t('modal.revenueGenerated')}</span>
                           <span className="font-semibold text-white">{formatCurrency(selectedProject.impact_metrics.revenue_generated)}</span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-400">Jobs Created</span>
+                          <span className="text-sm text-gray-400">{t('modal.jobsCreated')}</span>
                           <span className="font-semibold text-white">{selectedProject.impact_metrics.jobs_created}</span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-400">Social Impact Score</span>
+                          <span className="text-sm text-gray-400">{t('modal.socialImpactScore')}</span>
                           <span className="font-semibold text-white">{selectedProject.impact_metrics.social_impact_score}/100</span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-400">Sustainability Score</span>
+                          <span className="text-sm text-gray-400">{t('modal.sustainabilityScore')}</span>
                           <span className="font-semibold text-white">{selectedProject.impact_metrics.sustainability_score}/100</span>
                         </div>
                       </CardContent>
@@ -597,12 +599,12 @@ const MyProjects: React.FC = () => {
                     {/* Project Details */}
                     <Card className="bg-gray-800/50 border border-gray-700">
                       <CardHeader>
-                        <CardTitle className="text-white">Project Details</CardTitle>
+                        <CardTitle className="text-white">{t('modal.projectDetails')}</CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <div className="flex items-center space-x-2 text-sm">
                           <Calendar className="h-4 w-4 text-gray-400" />
-                          <span className="text-gray-300">Created: {new Date(selectedProject.created_at).toLocaleDateString()}</span>
+                          <span className="text-gray-300">{t('modal.created')} {new Date(selectedProject.created_at).toLocaleDateString()}</span>
                         </div>
                         <div className="flex items-center space-x-2 text-sm">
                           <MapPin className="h-4 w-4 text-gray-400" />
@@ -615,7 +617,7 @@ const MyProjects: React.FC = () => {
                         {selectedProject.user_role && (
                           <div className="flex items-center space-x-2 text-sm">
                             <User className="h-4 w-4 text-gray-400" />
-                            <span className="text-gray-300">Your Role: {selectedProject.user_role}</span>
+                            <span className="text-gray-300">{t('modal.yourRole')} {selectedProject.user_role}</span>
                           </div>
                         )}
                       </CardContent>
@@ -624,7 +626,7 @@ const MyProjects: React.FC = () => {
                     {/* Actions */}
                     <Card className="bg-gray-800/50 border border-gray-700">
                       <CardHeader>
-                        <CardTitle className="text-white">Actions</CardTitle>
+                        <CardTitle className="text-white">{t('modal.actions')}</CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-3">
                         {selectedProject.media.demo_url && (
@@ -635,7 +637,7 @@ const MyProjects: React.FC = () => {
                             className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition flex items-center justify-center space-x-2"
                           >
                             <ExternalLink className="h-4 w-4" />
-                            <span>View Demo</span>
+                            <span>{t('modal.viewDemo')}</span>
                           </a>
                         )}
                         
@@ -647,13 +649,13 @@ const MyProjects: React.FC = () => {
                             className="w-full bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-900 transition flex items-center justify-center space-x-2"
                           >
                             <ExternalLink className="h-4 w-4" />
-                            <span>View Code</span>
+                            <span>{t('modal.viewCode')}</span>
                           </a>
                         )}
                         
                         {selectedProject.funding_status === 'seeking' && (
                           <button className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition">
-                            Invest in Project
+                            {t('modal.investInProject')}
                           </button>
                         )}
                       </CardContent>
@@ -669,4 +671,4 @@ const MyProjects: React.FC = () => {
   );
 };
 
-export default MyProjects; 
+export default MyProjects;

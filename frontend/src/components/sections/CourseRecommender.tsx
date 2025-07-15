@@ -1,7 +1,6 @@
 // src/components/sections/CourseRecommender.tsx
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import ParticleBackground from "../ui/ParticleBackground";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -27,6 +26,7 @@ const Icons = {
 
 // --- Main Component ---
 export default function CourseRecommender() {
+  const { t, i18n } = useTranslation('course-recommender');
   const [query, setQuery] = useState("");
   const [data, setData] = useState<SuggestionResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -43,11 +43,11 @@ export default function CourseRecommender() {
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) {
-      setError("Please enter a skill or topic to search for courses.");
+      setError(t('error.emptyQuery', 'Please enter a skill or topic to search for courses.'));
       return;
     }
     if (cooldown > 0) {
-      setError(`Please wait ${cooldown} seconds before searching again.`);
+      setError(t('error.cooldown', `Please wait {{seconds}} seconds before searching again.`, { seconds: cooldown }));
       return;
     }
 
@@ -57,13 +57,16 @@ export default function CourseRecommender() {
 
     try {
       const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/suggest-courses`;
-      const response = await axios.post<SuggestionResponse>(apiUrl, { query });
+      const response = await axios.post<SuggestionResponse>(apiUrl, { 
+        query,
+        language: i18n.language 
+      });
       setData(response.data);
       setCooldown(10); 
     } catch (err: any) {
-      const defaultError = "Could not fetch recommendations. Please ensure the backend server is running.";
+      const defaultError = t('error.connection', 'Could not fetch recommendations. Please ensure the backend server is running.');
       if (err.response?.status === 503) {
-          setError("The recommendation service is busy. Please wait a moment and try again.");
+          setError(t('error.serviceBusy', 'The recommendation service is busy. Please wait a moment and try again.'));
       } else {
           setError(err.response?.data?.detail || err.message || defaultError);
       }
@@ -96,10 +99,10 @@ export default function CourseRecommender() {
                         <Icons.ai className="w-10 h-10 text-white" />
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-cyan-400 mb-4">
-                        AI Course Recommender
+                        {t('pageTitle', 'AI Course Recommender')}
                     </h1>
                     <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                        Enter a skill you want to learn to discover tailored courses, schemes, and job opportunities.
+                        {t('pageDescription', 'Enter a skill you want to learn to discover tailored courses, schemes, and job opportunities.')}
                     </p>
                 </div>
             </motion.div>
@@ -118,7 +121,7 @@ export default function CourseRecommender() {
                                 type="text"
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
-                                placeholder="E.g., 'Sewing and Tailoring', 'Digital Marketing'..."
+                                placeholder={t('form.skillsPlaceholder', "E.g., 'Sewing and Tailoring', 'Digital Marketing'...")}
                                 className="w-full p-4 bg-black/20 border-2 border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 text-white placeholder-gray-500 transition-all backdrop-blur-sm"
                             />
                         </div>
@@ -130,18 +133,18 @@ export default function CourseRecommender() {
                             {loading ? (
                                 <>
                                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                    Searching...
+                                    {t('form.searching', 'Searching...')}
                                 </>
-                            ) : cooldown > 0 ? `Wait ${cooldown}s` : "Find Courses"}
+                            ) : cooldown > 0 ? t('form.wait', 'Wait {{seconds}}s', { seconds: cooldown }) : t('form.submitButton', 'Find Courses')}
                         </button>
                     </form>
                 </div>
             </motion.div>
 
             <AnimatePresence>
-                {loading && <LoadingSpinner />}
-                {error && <ErrorMessage message={error} />}
-                {data && <ResultsDisplay data={data} />}
+                {loading && <LoadingSpinner t={t} />}
+                {error && <ErrorMessage message={error} t={t} />}
+                {data && <ResultsDisplay data={data} t={t} />}
             </AnimatePresence>
         </div>
     </div>
@@ -149,7 +152,7 @@ export default function CourseRecommender() {
 }
 
 // --- Sub-components for Display ---
-const ResultsDisplay = ({ data }: { data: SuggestionResponse }) => (
+const ResultsDisplay = ({ data, t }: { data: SuggestionResponse; t: any }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -162,22 +165,22 @@ const ResultsDisplay = ({ data }: { data: SuggestionResponse }) => (
           <Icons.ai className="w-8 h-8 text-white" />
         </div>
         <div>
-          <h2 className="text-3xl font-bold text-white">AI-Powered Suggestions</h2>
-          <p className="text-gray-400">Personalized recommendations for your learning journey</p>
+          <h2 className="text-3xl font-bold text-white">{t('results.title', 'AI-Powered Suggestions')}</h2>
+          <p className="text-gray-400">{t('results.subtitle', 'Personalized recommendations for your learning journey')}</p>
         </div>
       </div>
       <p className="text-gray-300 mb-8 text-lg leading-relaxed">{data.introduction}</p>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {data.recommendations.map((rec, i) => (
-            <RecommendationCard key={i} item={rec} index={i} />
+            <RecommendationCard key={i} item={rec} index={i} t={t} />
         ))}
       </div>
     </div>
   </motion.div>
 );
 
-const RecommendationCard = ({ item, index }: { item: RecommendationItem; index: number }) => {
+const RecommendationCard = ({ item, index, t }: { item: RecommendationItem; index: number; t: any }) => {
     const isPlatform = item.type === "Platform Course";
     const typeColor = isPlatform ? "bg-purple-500/20 text-purple-300 border-purple-500/30" : "bg-blue-500/20 text-blue-300 border-blue-500/30";
     const icon = isPlatform ? <Icons.platform className="w-4 h-4" /> : <Icons.live className="w-4 h-4" />;
@@ -203,13 +206,13 @@ const RecommendationCard = ({ item, index }: { item: RecommendationItem; index: 
                 rel="noopener noreferrer"
                 className="mt-auto block w-full text-center px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 rounded-xl font-semibold text-white transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
             >
-                Know More
+                {t('actions.knowMore', 'Know More')}
             </a>
         </motion.div>
     )
 };
 
-const LoadingSpinner = () => (
+const LoadingSpinner = ({ t }: { t: any }) => (
   <motion.div 
     initial={{ opacity: 0 }} 
     animate={{ opacity: 1 }} 
@@ -221,13 +224,13 @@ const LoadingSpinner = () => (
         <div className="animate-spin rounded-full h-16 w-16 border-4 border-white/20 border-t-purple-500 mx-auto"></div>
         <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/20 to-blue-500/20 blur-xl"></div>
       </div>
-      <h3 className="mt-6 text-xl font-bold text-white">Searching for Resources</h3>
-      <p className="mt-2 text-gray-400">Our AI is finding the best courses for you...</p>
+      <h3 className="mt-6 text-xl font-bold text-white">{t('loading.title', 'Searching for Resources')}</h3>
+      <p className="mt-2 text-gray-400">{t('loading.description', 'Our AI is finding the best courses for you...')}</p>
     </div>
   </motion.div>
 );
 
-const ErrorMessage = ({ message }: { message: string }) => (
+const ErrorMessage = ({ message, t }: { message: string; t: any }) => (
   <motion.div 
     initial={{ opacity: 0, y: 10 }} 
     animate={{ opacity: 1, y: 0 }} 
@@ -241,7 +244,7 @@ const ErrorMessage = ({ message }: { message: string }) => (
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <h3 className="font-bold text-xl text-red-300">Something went wrong</h3>
+        <h3 className="font-bold text-xl text-red-300">{t('error.title', 'Something went wrong')}</h3>
       </div>
       <p className="text-red-200">{message}</p>
     </div>

@@ -1,0 +1,82 @@
+{
+  "title": "ସର୍ବସାଧାରଣ ପ୍ରକଳ୍ପ",
+  "subtitle": "ପ୍ରତିଭାବାନ ଦଳଗୁଡ଼ିକର ନବାଚାର ପ୍ରକଳ୍ପ ଆବିଷ୍କାର କରନ୍ତୁ। ବ୍ରାଉଜ୍ କରନ୍ତୁ ଏବଂ ବିନିଯୋଗ କରନ୍ତୁ!",
+  "loading": "ପ୍ରକଳ୍ପଗୁଡ଼ିକ ଲୋଡ୍ ହେଉଛି...",
+  "stats": {
+    "totalProjects": "ମୋଟ ପ୍ରକଳ୍ପ",
+    "peopleImpacted": "ପ୍ରଭାବିତ ଲୋକ",
+    "totalRevenue": "ମୋଟ ଆୟ",
+    "activeProjects": "ସକ୍ରିୟ ପ୍ରକଳ୍ପ"
+  },
+  "search": {
+    "placeholder": "ପ୍ରକଳ୍ପ ଖୋଜନ୍ତୁ...",
+    "allCategories": "ସମସ୍ତ ଶ୍ରେଣୀ",
+    "allStatus": "ସମସ୍ତ ସ୍ଥିତି",
+    "allFunding": "ସମସ୍ତ ପାଣ୍ଠି",
+    "sortBy": {
+      "recent": "ସବୁଠାରୁ ସାମ୍ପ୍ରତିକ",
+      "impact": "ସର୍ବୋଚ୍ଚ ଆୟ",
+      "funding": "ସର୍ବାଧିକ ପାଣ୍ଠି",
+      "people": "ସର୍ବାଧିକ ଲୋକ ପ୍ରଭାବିତ"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "ୱେବ୍ ଡେଭେଲପମେଣ୍ଟ",
+    "mobile_app": "ମୋବାଇଲ୍ ଆପ୍",
+    "iot": "IoT",
+    "blockchain": "ବ୍ଲକଚେନ୍",
+    "healthcare": "ସ୍ୱାସ୍ଥ୍ୟସେବା",
+    "education": "ଶିକ୍ଷା",
+    "agriculture": "କୃଷି",
+    "finance": "ଅର୍ଥ",
+    "social_impact": "ସାମାଜିକ ପ୍ରଭାବ"
+  },
+  "status": {
+    "active": "ସକ୍ରିୟ",
+    "completed": "ସମ୍ପୂର୍ଣ୍ଣ",
+    "scaled": "ବିସ୍ତୃତ"
+  },
+  "funding": {
+    "seeking": "ପାଣ୍ଠି ଖୋଜୁଛି",
+    "funded": "ପାଣ୍ଠି ପାଇଛି",
+    "self_sustaining": "ସ୍ୱୟଂ-ନିର୍ଭରଶୀଳ"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} ଦଳ ସଦସ୍ୟ",
+    "teamMembers_one": "{{count}} ଦଳ ସଦସ୍ୟ",
+    "peopleImpacted": "ପ୍ରଭାବିତ ଲୋକ",
+    "revenue": "ଆୟ",
+    "fundingProgress": "ପାଣ୍ଠି ପ୍ରଗତି",
+    "awards": "{{count}} ପୁରସ୍କାର",
+    "awards_one": "{{count}} ପୁରସ୍କାର",
+    "moretech": "+{{count}} ଅଧିକ"
+  },
+  "modal": {
+    "description": "ବର୍ଣ୍ଣନା",
+    "team": "ଦଳ",
+    "technologiesUsed": "ବ୍ୟବହୃତ ପ୍ରଯୁକ୍ତି",
+    "testimonials": "ପ୍ରଶଂସାପତ୍ର",
+    "awards": "ପୁରସ୍କାର",
+    "impactMetrics": "ପ୍ରଭାବ ମେଟ୍ରିକ୍ସ",
+    "projectDetails": "ପ୍ରକଳ୍ପ ବିବରଣୀ",
+    "fundingStatus": "ପାଣ୍ଠି ସ୍ଥିତି",
+    "actions": "କାର୍ଯ୍ୟ",
+    "created": "ସୃଷ୍ଟି:",
+    "goal": "ଲକ୍ଷ୍ୟ",
+    "raised": "ସଂଗୃହୀତ",
+    "funded": "{{percent}}% ପାଣ୍ଠି ପାଇଛି",
+    "viewDemo": "ଡେମୋ ଦେଖନ୍ତୁ",
+    "viewCode": "କୋଡ୍ ଦେଖନ୍ତୁ",
+    "investInProject": "ପ୍ରକଳ୍ପରେ ବିନିଯୋଗ କରନ୍ତୁ",
+    "shareProject": "ପ୍ରକଳ୍ପ ସାଝା କରନ୍ତୁ"
+  },
+  "noProjects": {
+    "message": "ଆପଣଙ୍କ ମାନଦଣ୍ଡ ସହିତ ମେଳ ଖାଉଥିବା କୌଣସି ପ୍ରକଳ୍ପ ମିଳିଲା ନାହିଁ।",
+    "clearFilters": "ଫିଲ୍ଟର ସଫା କରନ୍ତୁ"
+  },
+  "toasts": {
+    "investmentNote": "ବିନିଯୋଗ କାର୍ଯ୍ୟକ୍ଷମତା ଏଠାରେ କାର୍ଯ୍ୟକାରୀ ହେବ",
+    "linkCopied": "ଲିଙ୍କ କ୍ଲିପବୋର୍ଡରେ କପି ହେଲା!"
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "title": "ମୋର ପ୍ରୋଜେକ୍ଟଗୁଡ଼ିକ",
+  "subtitle": "ସମସ୍ତ ଇଭେଣ୍ଟ ଏବଂ ହ୍ୟାକାଥନରେ ଆପଣଙ୍କର ପ୍ରୋଜେକ୍ଟ ଅବଦାନ, ଟିମ୍ ସହଯୋଗ ଏବଂ ପ୍ରଭାବ ଟ୍ରାକ୍ କରନ୍ତୁ।",
+  "loading": "ଆପଣଙ୍କର ପ୍ରୋଜେକ୍ଟଗୁଡ଼ିକ ଲୋଡ୍ ହେଉଛି...",
+  "stats": {
+    "totalProjects": "ମୋଟ ପ୍ରୋଜେକ୍ଟଗୁଡ଼ିକ",
+    "peopleImpacted": "ପ୍ରଭାବିତ ଲୋକ",
+    "jobsCreated": "ସୃଷ୍ଟି ହୋଇଥିବା ଚାକିରୀ",
+    "avgImpactScore": "ହାରାହାରି ପ୍ରଭାବ ସ୍କୋର"
+  },
+  "search": {
+    "placeholder": "ଆପଣଙ୍କର ପ୍ରୋଜେକ୍ଟଗୁଡ଼ିକ ଖୋଜନ୍ତୁ...",
+    "allCategories": "ସମସ୍ତ ଶ୍ରେଣୀ",
+    "allStatus": "ସମସ୍ତ ସ୍ଥିତି",
+    "allFunding": "ସମସ୍ତ ଅର୍ଥାୟନ",
+    "sortBy": {
+      "recent": "ସବୁଠାରୁ ନୂତନ",
+      "impact": "ସର୍ବୋଚ୍ଚ ପ୍ରଭାବ",
+      "funding": "ସର୍ବାଧିକ ଅର୍ଥାୟନ",
+      "people": "ସର୍ବାଧିକ ଲୋକ ପ୍ରଭାବିତ"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "ୱେବ୍ ଡେଭେଲପମେଣ୍ଟ",
+    "mobile_app": "ମୋବାଇଲ୍ ଆପ୍",
+    "iot": "IoT",
+    "blockchain": "ବ୍ଲକଚେନ୍",
+    "healthcare": "ସ୍ୱାସ୍ଥ୍ୟ ସେବା",
+    "education": "ଶିକ୍ଷା",
+    "agriculture": "କୃଷି",
+    "finance": "ଆର୍ଥିକ",
+    "social_impact": "ସାମାଜିକ ପ୍ରଭାବ"
+  },
+  "status": {
+    "active": "ସକ୍ରିୟ",
+    "completed": "ସମାପ୍ତ",
+    "scaled": "ସ୍କେଲ୍ଡ"
+  },
+  "funding": {
+    "seeking": "ଅର୍ଥାୟନ ଖୋଜିବା",
+    "funded": "ଅର୍ଥାୟନ ପ୍ରାପ୍ତ",
+    "self_sustaining": "ସ୍ୱାବଲମ୍ବୀ"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} ଟିମ୍ ସଦସ୍ୟ",
+    "teamMembers_one": "{{count}} ଟିମ୍ ସଦସ୍ୟ",
+    "peopleImpacted": "ପ୍ରଭାବିତ ଲୋକ",
+    "impactScore": "ପ୍ରଭାବ ସ୍କୋର",
+    "fundingProgress": "ଅର୍ଥାୟନ ଅଗ୍ରଗତି",
+    "awards": "{{count}} ପୁରସ୍କାର",
+    "awards_one": "{{count}} ପୁରସ୍କାର",
+    "moretech": "+{{count}} ଏବଂ"
+  },
+  "noProjects": {
+    "title": "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ପ୍ରୋଜେକ୍ଟ ନାହିଁ",
+    "message": "ଆପଣ ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ପ୍ରୋଜେକ୍ଟରେ ଯୋଗ ଦେଇନାହାଁନ୍ତି। ଇଭେଣ୍ଟଗୁଡ଼ିକରେ ଅଂଶଗ୍ରହଣ କରି ଏବଂ ଟିମ୍ ସହିତ ଯୋଗ ଦେଇ ଆରମ୍ଭ କରନ୍ତୁ!",
+    "browseEvents": "ଇଭେଣ୍ଟଗୁଡ଼ିକ ବ୍ରାଉଜ୍ କରନ୍ତୁ",
+    "viewAllProjects": "ସମସ୍ତ ପ୍ରୋଜେକ୍ଟ ଦେଖନ୍ତୁ"
+  },
+  "modal": {
+    "description": "ବିବରଣୀ",
+    "team": "ଟିମ୍",
+    "technologiesUsed": "ବ୍ୟବହୃତ ପ୍ରଯୁକ୍ତିବିଦ୍ୟା",
+    "impactMetrics": "ପ୍ରଭାବ ମେଟ୍ରିକ୍ସ",
+    "projectDetails": "ପ୍ରୋଜେକ୍ଟ ବିବରଣୀ",
+    "actions": "କାର୍ଯ୍ୟ",
+    "created": "ସୃଷ୍ଟି ହୋଇଛି:",
+    "yourRole": "ଆପଣଙ୍କର ଭୂମିକା:",
+    "peopleImpacted": "ପ୍ରଭାବିତ ଲୋକ",
+    "revenueGenerated": "ଉତ୍ପନ୍ନ ଆୟ",
+    "jobsCreated": "ସୃଷ୍ଟି ହୋଇଥିବା ଚାକିରୀ",
+    "socialImpactScore": "ସାମାଜିକ ପ୍ରଭାବ ସ୍କୋର",
+    "sustainabilityScore": "ସ୍ଥିରତା ସ୍କୋର",
+    "viewDemo": "ଡେମୋ ଦେଖନ୍ତୁ",
+    "viewCode": "କୋଡ୍ ଦେଖନ୍ତୁ",
+    "investInProject": "ପ୍ରୋଜେକ୍ଟରେ ନିବେଶ କରନ୍ତୁ",
+    "realUser": "ପ୍ରକୃତ ବ୍ୟବହାରକାରୀ",
+    "you": "ଆପଣ"
+  }
+}

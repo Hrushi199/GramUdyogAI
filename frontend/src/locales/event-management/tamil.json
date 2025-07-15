@@ -1,0 +1,93 @@
+{
+  "pageTitle": "இவென்ட் மேனேஜ்மென்ட்",
+  "pageSubtitle": "AI-சக்தி பெற்ற ஹாக்கத்தான் மற்றும் இவென்ட் பிளாட்ஃபார்ம்",
+  "createEvent": "இவென்ட் உருவாக்கவும்",
+  "searchPlaceholder": "இவென்ட்களை தேடவும்...",
+  "filters": {
+    "allTypes": "அனைத்து வகைகளும்",
+    "allStatus": "அனைத்து நிலைகளும்"
+  },
+  "eventTypes": {
+    "hackathon": "ஹாக்கத்தான்",
+    "workshop": "பட்டறை",
+    "competition": "போட்டி",
+    "training": "பயிற்சி",
+    "meetup": "மீட்அப்"
+  },
+  "eventStatus": {
+    "draft": "வரைவு",
+    "active": "செயலில்",
+    "ongoing": "நடைபெறும்",
+    "completed": "முடிந்தது"
+  },
+  "eventCard": {
+    "participants": "பங்கேற்பாளர்கள்",
+    "prizePool": "பரிசு பூல்",
+    "more": "மேலும்"
+  },
+  "createEventModal": {
+    "title": "இவென்ட் உருவாக்கவும்",
+    "eventTitle": "இவென்ட் தலைப்பு",
+    "eventType": "இவென்ட் வகை",
+    "category": "வகை",
+    "location": "இடம்",
+    "state": "மாநிலம்",
+    "startDate": "தொடக்க தேதி",
+    "endDate": "முடிவு தேதி",
+    "maxParticipants": "அதிகபட்ச பங்கேற்பாளர்கள்",
+    "budget": "பட்ஜெட்",
+    "prizePool": "பரிசு பூல்",
+    "description": "விவரம்",
+    "requiredSkills": "தேவையான திறன்கள் (காமாவால் பிரிக்கவும்)",
+    "tags": "ட்யாக்குகள் (காமாவால் பிரிக்கவும்)",
+    "skillsPlaceholder": "உதாரணம், React, Node.js, Python",
+    "tagsPlaceholder": "உதாரணம், AI, வெப் டெவலப்மென்ட், மொபைல்",
+    "marketingHighlights": "மார்க்கெட்டிங் ஹைலைட்ஸ்",
+    "marketingHighlightsPlaceholder": "ஒரு வரிக்கு ஒரு ஹைலைட்",
+    "successMetrics": "வெற்றி அளவீடுகள்",
+    "successMetricsPlaceholder": "ஒரு வரிக்கு ஒரு அளவீடு",
+    "eventSections": "இவென்ட் பிரிவுகள் / நிகழ்ச்சி நிரல்",
+    "sectionTitle": "பிரிவு தலைப்பு",
+    "sectionDescription": "பிரிவு விவரம்",
+    "keyPoints": "முக்கிய புள்ளிகள் (காமாவால் பிரிக்கவும்)",
+    "targetAudience": "இலக்கு பார்வையாளர்கள்",
+    "expectedOutcome": "எதிர்பார்க்கப்படும் முடிவு",
+    "removeSection": "பிரிவை அகற்று",
+    "addSection": "பிரிவு சேர்",
+    "generateWithAI": "AI உடன் உருவாக்கவும்",
+    "startVoiceInput": "குரல் உள்ளீடு தொடங்கு",
+    "stopListening": "கேட்பதை நிறுத்து",
+    "cancel": "ரத்து செய்",
+    "creating": "உருவாக்கப்படுகிறது...",
+    "createButton": "இவென்ட் உருவாக்கவும்"
+  },
+  "validation": {
+    "titleRequired": "இவென்ட் தலைப்பு தேவை",
+    "titleMinLength": "இவென்ட் தலைப்பு குறைந்தது 5 எழுத்துகள் இருக்க வேண்டும்",
+    "descriptionRequired": "இவென்ட் விவரம் தேவை",
+    "descriptionMinLength": "இவென்ட் விவரம் குறைந்தது 20 எழுத்துகள் இருக்க வேண்டும்",
+    "categoryRequired": "இவென்ட் வகை தேவை",
+    "locationRequired": "இவென்ட் இடம் தேவை",
+    "stateRequired": "இவென்ட் மாநிலம் தேவை",
+    "startDateRequired": "தொடக்க தேதி தேவை",
+    "endDateRequired": "முடிவு தேதி தேவை",
+    "startDatePast": "தொடக்க தேதி கடந்த காலத்தில் இருக்க முடியாது",
+    "endDateInvalid": "முடிவு தேதி தொடக்க தேதிக்கு பிறகு இருக்க வேண்டும்",
+    "maxParticipantsPositive": "அதிகபட்ச பங்கேற்பாளர்கள் 0 க்கும் அதிகமாக இருக்க வேண்டும்",
+    "maxParticipantsLimit": "அதிகபட்ச பங்கேற்பாளர்கள் 10,000 க்கும் அதிகமாக இருக்க முடியாது",
+    "budgetNegative": "பட்ஜெட் எதிர்மறையாக இருக்க முடியாது",
+    "prizePoolNegative": "பரிசு பூல் எதிர்மறையாக இருக்க முடியாது",
+    "skillsRequired": "குறைந்தது ஒரு திறன் தேவை",
+    "tagsRequired": "குறைந்தது ஒரு ட்யாக் தேவை",
+    "createFailed": "இவென்ட் உருவாக்க தோல்வி. தயவுசெய்து மீண்டும் முயற்சிக்கவும்."
+  },
+  "loading": "இவென்ட்கள் ஏற்றப்படுகின்றன...",
+  "toast": {
+    "eventCreated": "இவென்ட் வெற்றிகரமாக உருவாக்கப்பட்டது!",
+    "microphoneAccessDenied": "மைக்ரோஃபோன் அணுகல் மறுக்கப்பட்டது",
+    "speechNotSupported": "பேச்சு அங்கீகாரம் ஆதரிக்கப்படவில்லை",
+    "noTranscript": "எந்த டிரான்ஸ்கிரிப்ட் பெறப்படவில்லை",
+    "aiGenerationFailed": "AI இவென்ட் உருவாக்கம் தோல்வி",
+    "transcriptionError": "டிரான்ஸ்கிரிப்ஷன் அல்லது இவென்ட் உருவாக்கத்தில் பிழை"
+  }
+}

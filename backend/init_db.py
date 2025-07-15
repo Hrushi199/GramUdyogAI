@@ -533,13 +533,14 @@ def seed_db():
         cursor.execute('''
             INSERT INTO projects (
                 title, description, category, event_id, event_name, event_type,
-                technologies, impact_metrics, funding_status, funding_amount,
+                team_members, technologies, impact_metrics, funding_status, funding_amount,
                 funding_goal, location, state, created_by, created_at, completed_at,
                 status, media, testimonials, awards, tags
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             project["title"], project["description"], project["category"],
             project["event_id"], project["event_name"], project["event_type"],
+            json.dumps([]),  # Initialize with empty team_members
             project["technologies"], project["impact_metrics"], project["funding_status"],
             project["funding_amount"], project["funding_goal"], project["location"],
             project["state"], project["created_by"], now, project["completed_at"],

@@ -1,0 +1,82 @@
+{
+  "title": "सार्वजनिक प्रकल्प",
+  "subtitle": "प्रतिभावान संघांचे नाविन्यपूर्ण प्रकल्प शोधा. ब्राउझ करा आणि गुंतवणूक करा!",
+  "loading": "प्रकल्प लोड होत आहेत...",
+  "stats": {
+    "totalProjects": "एकूण प्रकल्प",
+    "peopleImpacted": "प्रभावित लोक",
+    "totalRevenue": "एकूण महसूल",
+    "activeProjects": "सक्रिय प्रकल्प"
+  },
+  "search": {
+    "placeholder": "प्रकल्प शोधा...",
+    "allCategories": "सर्व श्रेणी",
+    "allStatus": "सर्व स्थिती",
+    "allFunding": "सर्व निधी",
+    "sortBy": {
+      "recent": "सर्वात अलीकडील",
+      "impact": "सर्वोच्च महसूल",
+      "funding": "सर्वाधिक निधी",
+      "people": "सर्वाधिक लोक प्रभावित"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "वेब डेव्हलपमेंट",
+    "mobile_app": "मोबाइल अॅप",
+    "iot": "IoT",
+    "blockchain": "ब्लॉकचेन",
+    "healthcare": "आरोग्यसेवा",
+    "education": "शिक्षण",
+    "agriculture": "शेती",
+    "finance": "वित्त",
+    "social_impact": "सामाजिक प्रभाव"
+  },
+  "status": {
+    "active": "सक्रिय",
+    "completed": "पूर्ण",
+    "scaled": "विस्तारित"
+  },
+  "funding": {
+    "seeking": "निधी शोधत आहे",
+    "funded": "निधी मिळाला",
+    "self_sustaining": "स्वयंपूर्ण"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} संघ सदस्य",
+    "teamMembers_one": "{{count}} संघ सदस्य",
+    "peopleImpacted": "प्रभावित लोक",
+    "revenue": "महसूल",
+    "fundingProgress": "निधी प्रगती",
+    "awards": "{{count}} पुरस्कार",
+    "awards_one": "{{count}} पुरस्कार",
+    "moretech": "+{{count}} अधिक"
+  },
+  "modal": {
+    "description": "वर्णन",
+    "team": "संघ",
+    "technologiesUsed": "वापरलेली तंत्रज्ञान",
+    "testimonials": "प्रशंसापत्रे",
+    "awards": "पुरस्कार",
+    "impactMetrics": "प्रभाव मेट्रिक्स",
+    "projectDetails": "प्रकल्प तपशील",
+    "fundingStatus": "निधी स्थिती",
+    "actions": "क्रिया",
+    "created": "तयार केले:",
+    "goal": "लक्ष्य",
+    "raised": "गोळा केले",
+    "funded": "{{percent}}% निधी मिळाला",
+    "viewDemo": "डेमो पहा",
+    "viewCode": "कोड पहा",
+    "investInProject": "प्रकल्पात गुंतवणूक करा",
+    "shareProject": "प्रकल्प शेअर करा"
+  },
+  "noProjects": {
+    "message": "तुमच्या निकषांशी जुळणारे कोणतेही प्रकल्प सापडले नाहीत.",
+    "clearFilters": "फिल्टर साफ करा"
+  },
+  "toasts": {
+    "investmentNote": "गुंतवणूक कार्यक्षमता येथे अंमलबजावणी केली जाईल",
+    "linkCopied": "लिंक क्लिपबोर्डवर कॉपी केली!"
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "pageTitle": "ఈవెంట్ మేనేజ్‌మెంట్",
+  "pageSubtitle": "AI-శక్తితో కూడిన హ్యాకథాన్ మరియు ఈవెంట్ ప్లాట్‌ఫారమ్",
+  "createEvent": "ఈవెంట్ సృష్టించండి",
+  "searchPlaceholder": "ఈవెంట్‌లను వెతకండి...",
+  "filters": {
+    "allTypes": "అన్ని రకాలు",
+    "allStatus": "అన్ని స్థితులు"
+  },
+  "eventTypes": {
+    "hackathon": "హ్యాకథాన్",
+    "workshop": "వర్క్‌షాప్",
+    "competition": "పోటీ",
+    "training": "శిక్షణ",
+    "meetup": "మీట్‌అప్"
+  },
+  "eventStatus": {
+    "draft": "డ్రాఫ్ట్",
+    "active": "క్రియాశీల",
+    "ongoing": "కొనసాగుతున్న",
+    "completed": "పూర్తయిన"
+  },
+  "eventCard": {
+    "participants": "పాల్గొనేవారు",
+    "prizePool": "బహుమతి పూల్",
+    "more": "మరిన్ని"
+  },
+  "createEventModal": {
+    "title": "ఈవెంట్ సృష్టించండి",
+    "eventTitle": "ఈవెంట్ శీర్షిక",
+    "eventType": "ఈవెంట్ రకం",
+    "category": "వర్గం",
+    "location": "స్థానం",
+    "state": "రాష్ట్రం",
+    "startDate": "ప్రారంభ తేదీ",
+    "endDate": "ముగింపు తేదీ",
+    "maxParticipants": "గరిష్ట పాల్గొనేవారు",
+    "budget": "బడ్జెట్",
+    "prizePool": "బహుమతి పూల్",
+    "description": "వివరణ",
+    "requiredSkills": "అవసరమైన నైపుణ్యాలు (కామాతో వేరు చేయండి)",
+    "tags": "ట్యాగ్‌లు (కామాతో వేరు చేయండి)",
+    "skillsPlaceholder": "ఉదాహరణ, React, Node.js, Python",
+    "tagsPlaceholder": "ఉదాహరణ, AI, వెబ్ డెవలప్‌మెంట్, మొబైల్",
+    "marketingHighlights": "మార్కెటింగ్ హైలైట్‌లు",
+    "marketingHighlightsPlaceholder": "ఒక లైనుకు ఒక హైలైట్",
+    "successMetrics": "విజయ మెట్రిక్స్",
+    "successMetricsPlaceholder": "ఒక లైనుకు ఒక మెట్రిక్",
+    "eventSections": "ఈవెంట్ విభాగాలు / ఎజెండా",
+    "sectionTitle": "విభాగం శీర్షిక",
+    "sectionDescription": "విభాగం వివరణ",
+    "keyPoints": "ముఖ్య అంశాలు (కామాతో వేరు చేయండి)",
+    "targetAudience": "లక్ష్య ప్రేక్షకులు",
+    "expectedOutcome": "ఆశించిన ఫలితం",
+    "removeSection": "విభాగం తొలగించండి",
+    "addSection": "విభాగం జోడించండి",
+    "generateWithAI": "AI తో జనరేట్ చేయండి",
+    "startVoiceInput": "వాయిస్ ఇన్‌పుట్ ప్రారంభించండి",
+    "stopListening": "వినడం ఆపండి",
+    "cancel": "రద్దు చేయండి",
+    "creating": "సృష్టిస్తున్నాము...",
+    "createButton": "ఈవెంట్ సృష్టించండి"
+  },
+  "validation": {
+    "titleRequired": "ఈవెంట్ శీర్షిక అవసరం",
+    "titleMinLength": "ఈవెంట్ శీర్షిక కనీసం 5 అక్షరాలు ఉండాలి",
+    "descriptionRequired": "ఈవెంట్ వివరణ అవసరం",
+    "descriptionMinLength": "ఈవెంట్ వివరణ కనీసం 20 అక్షరాలు ఉండాలి",
+    "categoryRequired": "ఈవెంట్ వర్గం అవసరం",
+    "locationRequired": "ఈవెంట్ స్థానం అవసరం",
+    "stateRequired": "ఈవెంట్ రాష్ట్రం అవసరం",
+    "startDateRequired": "ప్రారంభ తేదీ అవసరం",
+    "endDateRequired": "ముగింపు తేదీ అవసరం",
+    "startDatePast": "ప్రారంభ తేదీ గతంలో ఉండకూడదు",
+    "endDateInvalid": "ముగింపు తేదీ ప్రారంభ తేదీ తర్వాత ఉండాలి",
+    "maxParticipantsPositive": "గరిష్ట పాల్గొనేవారు 0 కంటే ఎక్కువ ఉండాలి",
+    "maxParticipantsLimit": "గరిష్ట పాల్గొనేవారు 10,000 కంటే ఎక్కువ ఉండకూడదు",
+    "budgetNegative": "బడ్జెట్ ప్రతికూలంగా ఉండకూడదు",
+    "prizePoolNegative": "బహుమతి పూల్ ప్రతికూలంగా ఉండకూడదు",
+    "skillsRequired": "కనీసం ఒక నైపుణ్యం అవసరం",
+    "tagsRequired": "కనీసం ఒక ట్యాగ్ అవసరం",
+    "createFailed": "ఈవెంట్ సృష్టించడం విఫలమైంది. దయచేసి మళ్లీ ప్రయత్నించండి."
+  },
+  "loading": "ఈవెంట్‌లు లోడ్ అవుతున్నాయి...",
+  "toast": {
+    "eventCreated": "ఈవెంట్ విజయవంతంగా సృష్టించబడింది!",
+    "microphoneAccessDenied": "మైక్రోఫోన్ యాక్సెస్ తిరస్కరించబడింది",
+    "speechNotSupported": "వాక్ గుర్తింపు మద్దతు లేదు",
+    "noTranscript": "ట్రాన్స్‌క్రిప్ట్ అందలేదు",
+    "aiGenerationFailed": "AI ఈవెంట్ జనరేషన్ విఫలమైంది",
+    "transcriptionError": "ట్రాన్స్‌క్రిప్షన్ లేదా ఈవెంట్ జనరేషన్‌లో లోపం"
+  }
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import {
@@ -83,6 +84,7 @@ interface Project {
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 const PublicProjects: React.FC = () => {
+  const { t } = useTranslation('public-projects');
   const [projects, setProjects] = useState<Project[]>([]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
@@ -120,7 +122,7 @@ const PublicProjects: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  };  
 
   const filteredAndSortedProjects = projects
     .filter(p => {
@@ -189,7 +191,7 @@ const PublicProjects: React.FC = () => {
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600" />
-          <p className="mt-4 text-lg text-white">Loading Projects...</p>
+          <p className="mt-4 text-lg text-white">{t('loading')}</p>
         </div>
       </div>
     );
@@ -204,9 +206,9 @@ const PublicProjects: React.FC = () => {
       <div className="relative z-20 container mx-auto p-6 space-y-6">
         {/* Header */}
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Public Projects</h1>
+          <h1 className="text-4xl font-bold text-white mb-4">{t('title')}</h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Discover innovative projects by talented teams. Browse and invest!
+            {t('subtitle')}
           </p>
         </div>
 
@@ -216,7 +218,7 @@ const PublicProjects: React.FC = () => {
             <CardContent className="p-6 flex items-center space-x-2">
               <AwardIcon className="h-8 w-8 text-purple-400" />
               <div>
-                <p className="text-sm font-medium text-gray-400">Total Projects</p>
+                <p className="text-sm font-medium text-gray-400">{t('stats.totalProjects')}</p>
                 <p className="text-2xl font-bold text-white">{projects.length}</p>
               </div>
             </CardContent>
@@ -225,7 +227,7 @@ const PublicProjects: React.FC = () => {
             <CardContent className="p-6 flex items-center space-x-2">
               <Users className="h-8 w-8 text-blue-400" />
               <div>
-                <p className="text-sm font-medium text-gray-400">People Impacted</p>
+                <p className="text-sm font-medium text-gray-400">{t('stats.peopleImpacted')}</p>
                 <p className="text-2xl font-bold text-white">
                   {formatNumber(
                     projects.reduce((sum, p) => sum + p.impact_metrics.users_reached, 0)
@@ -238,7 +240,7 @@ const PublicProjects: React.FC = () => {
             <CardContent className="p-6 flex items-center space-x-2">
               <TrendingUp className="h-8 w-8 text-green-400" />
               <div>
-                <p className="text-sm font-medium text-gray-400">Total Revenue</p>
+                <p className="text-sm font-medium text-gray-400">{t('stats.totalRevenue')}</p>
                 <p className="text-2xl font-bold text-white">
                   {formatCurrency(
                     projects.reduce((sum, p) => sum + p.impact_metrics.revenue_generated, 0)
@@ -251,7 +253,7 @@ const PublicProjects: React.FC = () => {
             <CardContent className="p-6 flex items-center space-x-2">
               <Building2 className="h-8 w-8 text-orange-400" />
               <div>
-                <p className="text-sm font-medium text-gray-400">Active Projects</p>
+                <p className="text-sm font-medium text-gray-400">{t('stats.activeProjects')}</p>
                 <p className="text-2xl font-bold text-white">
                   {projects.filter(p => p.status === 'active').length}
                 </p>
@@ -267,7 +269,7 @@ const PublicProjects: React.FC = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <input
                 type="text"
-                placeholder="Search projects..."
+                placeholder={t('search.placeholder')}
                 className="w-full pl-10 py-2 border border-gray-700 rounded-lg bg-gray-800/50 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500"
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
@@ -278,47 +280,47 @@ const PublicProjects: React.FC = () => {
               onChange={e => setFilterCategory(e.target.value)}
               className="px-4 py-2 border border-gray-700 rounded-lg bg-gray-800/50 text-white focus:outline-none focus:border-purple-500"
             >
-              <option value="all">All Categories</option>
-              <option value="AI/ML">AI/ML</option>
-              <option value="Web Development">Web Development</option>
-              <option value="Mobile App">Mobile App</option>
-              <option value="IoT">IoT</option>
-              <option value="Blockchain">Blockchain</option>
-              <option value="Healthcare">Healthcare</option>
-              <option value="Education">Education</option>
-              <option value="Agriculture">Agriculture</option>
-              <option value="Finance">Finance</option>
-              <option value="Social Impact">Social Impact</option>
+              <option value="all">{t('search.allCategories')}</option>
+              <option value="AI/ML">{t('categories.ai_ml')}</option>
+              <option value="Web Development">{t('categories.web_development')}</option>
+              <option value="Mobile App">{t('categories.mobile_app')}</option>
+              <option value="IoT">{t('categories.iot')}</option>
+              <option value="Blockchain">{t('categories.blockchain')}</option>
+              <option value="Healthcare">{t('categories.healthcare')}</option>
+              <option value="Education">{t('categories.education')}</option>
+              <option value="Agriculture">{t('categories.agriculture')}</option>
+              <option value="Finance">{t('categories.finance')}</option>
+              <option value="Social Impact">{t('categories.social_impact')}</option>
             </select>
             <select
               value={filterStatus}
               onChange={e => setFilterStatus(e.target.value)}
               className="px-4 py-2 border border-gray-700 rounded-lg bg-gray-800/50 text-white focus:outline-none focus:border-purple-500"
             >
-              <option value="all">All Status</option>
-              <option value="active">Active</option>
-              <option value="completed">Completed</option>
-              <option value="scaled">Scaled</option>
+              <option value="all">{t('search.allStatus')}</option>
+              <option value="active">{t('status.active')}</option>
+              <option value="completed">{t('status.completed')}</option>
+              <option value="scaled">{t('status.scaled')}</option>
             </select>
             <select
               value={filterFunding}
               onChange={e => setFilterFunding(e.target.value)}
               className="px-4 py-2 border border-gray-700 rounded-lg bg-gray-800/50 text-white focus:outline-none focus:border-purple-500"
             >
-              <option value="all">All Funding</option>
-              <option value="seeking">Seeking Funding</option>
-              <option value="funded">Funded</option>
-              <option value="self_sustaining">Self Sustaining</option>
+              <option value="all">{t('search.allFunding')}</option>
+              <option value="seeking">{t('funding.seeking')}</option>
+              <option value="funded">{t('funding.funded')}</option>
+              <option value="self_sustaining">{t('funding.self_sustaining')}</option>
             </select>
             <select
               value={sortBy}
               onChange={e => setSortBy(e.target.value)}
               className="px-4 py-2 border border-gray-700 rounded-lg bg-gray-800/50 text-white focus:outline-none focus:border-purple-500"
             >
-              <option value="recent">Most Recent</option>
-              <option value="impact">Highest Revenue</option>
-              <option value="funding">Most Funded</option>
-              <option value="people">Most People Impacted</option>
+              <option value="recent">{t('search.sortBy.recent')}</option>
+              <option value="impact">{t('search.sortBy.impact')}</option>
+              <option value="funding">{t('search.sortBy.funding')}</option>
+              <option value="people">{t('search.sortBy.people')}</option>
             </select>
           </CardContent>
         </Card>
@@ -384,7 +386,7 @@ const PublicProjects: React.FC = () => {
                   </div>
                   <div className="flex items-center text-sm text-gray-400 space-x-2">
                     <Users className="h-4 w-4" />
-                    <span>{project.team_members.length} team members</span>
+                    <span>{t('projectCard.teamMembers', { count: project.team_members.length })}</span>
                   </div>
                 </div>
 
@@ -393,13 +395,13 @@ const PublicProjects: React.FC = () => {
                     <div className="text-lg font-bold text-blue-300">
                       {formatNumber(project.impact_metrics.users_reached)}
                     </div>
-                    <div className="text-xs text-blue-200">People Impacted</div>
+                    <div className="text-xs text-blue-200">{t('projectCard.peopleImpacted')}</div>
                   </div>
                   <div className="text-center p-2 bg-green-900/40 rounded-lg">
                     <div className="text-lg font-bold text-green-300">
                       {formatCurrency(project.impact_metrics.revenue_generated)}
                     </div>
-                    <div className="text-xs text-green-200">Revenue</div>
+                    <div className="text-xs text-green-200">{t('projectCard.revenue')}</div>
                   </div>
                 </div>
 
@@ -411,7 +413,7 @@ const PublicProjects: React.FC = () => {
                   ))}
                   {project.technologies.length > 3 && (
                     <Badge className="bg-gray-700 text-gray-300 text-xs">
-                      +{project.technologies.length - 3} more
+                      {t('projectCard.moretech', { count: project.technologies.length - 3 })}
                     </Badge>
                   )}
                 </div>
@@ -419,7 +421,7 @@ const PublicProjects: React.FC = () => {
                 {project.funding_status === 'seeking' && project.funding_goal > 0 && (
                   <div className="mb-4">
                     <div className="flex justify-between text-sm text-gray-400 mb-1">
-                      <span>Funding Progress</span>
+                      <span>{t('projectCard.fundingProgress')}</span>
                       <span>
                         {formatCurrency(project.funding_amount)} /{' '}
                         {formatCurrency(project.funding_goal)}
@@ -443,7 +445,7 @@ const PublicProjects: React.FC = () => {
                   <div className="flex items-center space-x-2 text-sm text-gray-400">
                     <AwardIcon className="h-4 w-4" />
                     <span>
-                      {project.awards.length} award{project.awards.length > 1 ? 's' : ''}
+                      {t('projectCard.awards', { count: project.awards.length })}
                     </span>
                   </div>
                 )}
@@ -455,7 +457,7 @@ const PublicProjects: React.FC = () => {
         {/* No projects message */}
         {filteredAndSortedProjects.length === 0 && (
           <div className="text-center py-12">
-            <div className="text-gray-400 text-lg">No projects found matching your criteria.</div>
+            <div className="text-gray-400 text-lg">{t('noProjects.message')}</div>
             <button
               onClick={() => {
                 setSearchTerm('');
@@ -466,7 +468,7 @@ const PublicProjects: React.FC = () => {
               }}
               className="mt-4 px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
             >
-              Clear Filters
+              {t('noProjects.clearFilters')}
             </button>
           </div>
         )}
@@ -491,12 +493,12 @@ const PublicProjects: React.FC = () => {
                 {/* Left/Main */}
                 <div className="lg:col-span-2 space-y-6 text-gray-300">
                   <section>
-                    <h3 className="text-xl font-semibold mb-2 text-white">Description</h3>
+                    <h3 className="text-xl font-semibold mb-2 text-white">{t('modal.description')}</h3>
                     <p>{selectedProject.description}</p>
                   </section>
 
                   <section>
-                    <h3 className="text-xl font-semibold mb-3 text-white">Team</h3>
+                    <h3 className="text-xl font-semibold mb-3 text-white">{t('modal.team')}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {selectedProject.team_members.map(member => (
                         <div
@@ -517,7 +519,7 @@ const PublicProjects: React.FC = () => {
 
                   <section>
                     <h3 className="text-xl font-semibold mb-3 text-white">
-                      Technologies Used
+                      {t('modal.technologiesUsed')}
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {selectedProject.technologies.map((tech, i) => (
@@ -531,7 +533,7 @@ const PublicProjects: React.FC = () => {
                   {selectedProject.testimonials.length > 0 && (
                     <section>
                       <h3 className="text-xl font-semibold mb-3 text-white">
-                        Testimonials
+                        {t('modal.testimonials')}
                       </h3>
                       <div className="space-y-4">
                         {selectedProject.testimonials.map(t => (
@@ -564,7 +566,7 @@ const PublicProjects: React.FC = () => {
 
                   {selectedProject.awards.length > 0 && (
                     <section>
-                      <h3 className="text-xl font-semibold mb-3 text-white">Awards</h3>
+                      <h3 className="text-xl font-semibold mb-3 text-white">{t('modal.awards')}</h3>
                       <div className="space-y-3">
                         {selectedProject.awards.map(award => (
                           <div key={award.id} className="flex items-center space-x-3 p-3 bg-gray-800/50 rounded-lg">
@@ -586,17 +588,17 @@ const PublicProjects: React.FC = () => {
                 <div className="space-y-6">
                   <Card className="bg-gray-800/50 border-gray-700">
                     <CardHeader>
-                      <CardTitle className="text-white">Impact Metrics</CardTitle>
+                      <CardTitle className="text-white">{t('modal.impactMetrics')}</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="flex justify-between">
-                        <span className="text-sm text-gray-400">People Impacted</span>
+                        <span className="text-sm text-gray-400">{t('projectCard.peopleImpacted')}</span>
                         <span className="font-semibold text-white">
                           {formatNumber(selectedProject.impact_metrics.users_reached)}
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-sm text-gray-400">Revenue Generated</span>
+                        <span className="text-sm text-gray-400">{t('projectCard.revenue')}</span>
                         <span className="font-semibold text-white">
                           {formatCurrency(selectedProject.impact_metrics.revenue_generated)}
                         </span>
@@ -606,13 +608,13 @@ const PublicProjects: React.FC = () => {
 
                   <Card className="bg-gray-800/50 border-gray-700">
                     <CardHeader>
-                      <CardTitle className="text-white">Project Details</CardTitle>
+                      <CardTitle className="text-white">{t('modal.projectDetails')}</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4 text-sm text-gray-400">
                       <div className="flex items-center space-x-2">
                         <Calendar className="h-4 w-4" />
                         <span>
-                          Created: {new Date(selectedProject.created_at).toLocaleDateString()}
+                          {t('modal.created')} {new Date(selectedProject.created_at).toLocaleDateString()}
                         </span>
                       </div>
                       <div className="flex items-center space-x-2">
@@ -627,7 +629,7 @@ const PublicProjects: React.FC = () => {
                       </div>
                       <div className="flex items-center space-x-2">
                         <Users className="h-4 w-4" />
-                        <span>{selectedProject.team_members.length} team members</span>
+                        <span>{t('projectCard.teamMembers', { count: selectedProject.team_members.length })}</span>
                       </div>
                     </CardContent>
                   </Card>
@@ -635,17 +637,17 @@ const PublicProjects: React.FC = () => {
                   {selectedProject.funding_status === 'seeking' && selectedProject.funding_goal > 0 && (
                     <Card className="bg-gray-800/50 border-gray-700">
                       <CardHeader>
-                        <CardTitle className="text-white">Funding Status</CardTitle>
+                        <CardTitle className="text-white">{t('modal.fundingStatus')}</CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <div className="flex justify-between text-sm">
-                          <span className="text-gray-400">Goal</span>
+                          <span className="text-gray-400">{t('modal.goal')}</span>
                           <span className="font-semibold text-white">
                             {formatCurrency(selectedProject.funding_goal)}
                           </span>
                         </div>
                         <div className="flex justify-between text-sm">
-                          <span className="text-gray-400">Raised</span>
+                          <span className="text-gray-400">{t('modal.raised')}</span>
                           <span className="font-semibold text-white">
                             {formatCurrency(selectedProject.funding_amount)}
                           </span>
@@ -662,7 +664,9 @@ const PublicProjects: React.FC = () => {
                           />
                         </div>
                         <div className="text-center text-sm text-gray-400">
-                          {Math.round((selectedProject.funding_amount / selectedProject.funding_goal) * 100)}% funded
+                          {t('modal.funded', { 
+                            percent: Math.round((selectedProject.funding_amount / selectedProject.funding_goal) * 100) 
+                          })}
                         </div>
                       </CardContent>
                     </Card>
@@ -692,18 +696,18 @@ const PublicProjects: React.FC = () => {
                           className="flex items-center justify-center space-x-2 w-full py-2 px-4 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors"
                         >
                           <ExternalLink className="h-4 w-4" />
-                          <span>View Code</span>
+                          <span>{t('modal.viewCode')}</span>
                         </a>
                       )}
                       {selectedProject.funding_status === 'seeking' && (
                         <button 
                           onClick={() => {
                             // Add invest functionality here
-                            toast.success('Investment functionality would be implemented here');
+                            toast.success(t('toasts.investmentNote'));
                           }}
                           className="w-full py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                         >
-                          Invest in Project
+                          {t('modal.investInProject')}
                         </button>
                       )}
                       <button
@@ -718,13 +722,13 @@ const PublicProjects: React.FC = () => {
                           } else {
                             // Fallback for browsers that don't support Web Share API
                             navigator.clipboard.writeText(window.location.href);
-                            toast.success('Link copied to clipboard!');
+                            toast.success(t('toasts.linkCopied'));
                           }
                         }}
                         className="w-full py-2 px-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center space-x-2"
                       >
                         <Share2 className="h-4 w-4" />
-                        <span>Share Project</span>
+                        <span>{t('modal.shareProject')}</span>
                       </button>
                     </CardContent>
                   </Card>
