@@ -788,8 +788,12 @@ export class UserAPI {
   }
 
   async getProfile(): Promise<ApiResponse<UserProfile>> {
-const response = await this.api.get<UserProfile>('/api/profile/');
+const response = await this.api.get<UserProfile>('/api/profile');
   return response;  }
+
+  async getProfileById(id: string | number): Promise<ApiResponse<UserProfile>> {
+    return this.api.get<UserProfile>(`/api/profile/public/${id}`);
+  }
 
   // UPDATE methods
   async updateUser(id: number, userData: Partial<User>): Promise<ApiResponse<User>> {

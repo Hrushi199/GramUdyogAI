@@ -128,7 +128,7 @@ def get_latest_profile_id():
         'SELECT id FROM users ORDER BY created_at DESC LIMIT 1'
     ).fetchone()
     conn.close()
-    return result["id"] if result else None
+    return result[0] if result else None
 
 def get_dashboard_cache(profile_id):
     conn = get_db()
