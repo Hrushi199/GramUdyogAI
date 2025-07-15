@@ -122,6 +122,8 @@ async def explain_schemes(occupation: str, selected_schemes: List[Dict]) -> List
                 if original_scheme["scheme_name"] == scheme.name:
                     scheme.full_json = original_scheme
                     break
+                    scheme.full_json = original_scheme
+                    break
         
         # FIX: Return list of dictionaries instead of Pydantic models
         return [scheme.model_dump() for scheme in parsed.schemes]

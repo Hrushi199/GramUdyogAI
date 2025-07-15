@@ -212,9 +212,72 @@ async def ai_assistant_enhanced(req: AssistantRequest):
 
     # 4. Translate output back to user's language if needed
     if req.lang != "en":
-        response_data.output = translate_text(response_data.output, req.lang)
-        if response_data.summary:
-            response_data.summary = translate_text(response_data.summary, req.lang)
+        try:
+            from core.translation import translate_structured_data_safely, generate_short_summary, translate_text_safely
+            
+            # First, translate structured data if present
+            if response_data.structured_data:
+                print(f"Translating structured data to {req.lang}...")
+                response_data.structured_data = translate_structured_data_safely(
+                    response_data.structured_data, req.lang
+                )
+                print("Structured data translation completed")
+                
+                # Generate and translate a shorter summary for non-English languages
+                if response_data.structured_data and any(key in response_data.structured_data for key in ['schemes', 'jobs', 'suggestions', 'courses', 'tutorials', 'events', 'projects', 'summaries']):
+                    # Determine the item type and data
+                    if 'schemes' in response_data.structured_data:
+                        items = response_data.structured_data['schemes']
+                        item_type = 'government schemes'
+                    elif 'jobs' in response_data.structured_data:
+                        items = response_data.structured_data['jobs']
+                        item_type = 'job opportunities'
+                    elif 'suggestions' in response_data.structured_data:
+                        items = response_data.structured_data['suggestions']
+                        item_type = 'business suggestions'
+                    elif 'courses' in response_data.structured_data:
+                        items = response_data.structured_data['courses']
+                        item_type = 'courses'
+                    elif 'tutorials' in response_data.structured_data:
+                        items = response_data.structured_data['tutorials']
+                        item_type = 'skill tutorials'
+                    elif 'events' in response_data.structured_data:
+                        items = response_data.structured_data['events']
+                        item_type = 'events'
+                    elif 'projects' in response_data.structured_data:
+                        items = response_data.structured_data['projects']
+                        item_type = 'projects'
+                    elif 'summaries' in response_data.structured_data:
+                        items = response_data.structured_data['summaries']
+                        item_type = 'video summaries'
+                    else:
+                        items = []
+                        item_type = 'options'
+                    
+                    if items:
+                        # Generate summary (already translated inside the function)
+                        response_data.summary = generate_short_summary(items, req.user_info, item_type, req.lang)
+                        print(f"Generated translated summary: {response_data.summary[:100]}...")
+                        
+                        # Update the output to be shorter and translated
+                        response_data.output = translate_text_safely(
+                            f"Found {len(items)} {item_type} for you. Check the details below.", 
+                            req.lang
+                        )
+            
+            # If no structured data but we have a summary, translate it
+            elif response_data.summary:
+                response_data.summary = translate_text_safely(response_data.summary, req.lang)
+            
+            # Always translate the basic output
+            response_data.output = translate_text_safely(response_data.output, req.lang)
+                
+        except Exception as e:
+            print(f"Translation error: {e}")
+            import traceback
+            traceback.print_exc()
+            # Keep the English text if translation fails
+            pass
 
     return response_data.dict()
 
