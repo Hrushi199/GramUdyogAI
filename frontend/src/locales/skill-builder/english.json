@@ -228,13 +228,24 @@
     }
   },
   "navbar": {
-    "features": "Features",
-    "about": "About",
-    "contact": "Contact",
+    "home": "Home",
+    "jobs": "Jobs",
+    "schemes": "Schemes",
+    "learning": "Learning",
+    "skills": "Skills",
+    "courseRecommender": "Course Recommender",
+    "business": "Business",
+    "businessIdeas": "Business Ideas",
+    "projects": "Projects",
+    "myProjects": "My Projects",
+    "events": "Events",
+    "csr": "CSR",
     "profile": "Profile",
     "dashboard": "Dashboard",
+    "welcome": "Welcome",
+    "login": "Login",
+    "logout": "Logout",
     "community": "Community",
-    "skills": "Skills",
-    "signUp": "Sign Up"
+    "createProfile": "Create Profile"
   }
 }

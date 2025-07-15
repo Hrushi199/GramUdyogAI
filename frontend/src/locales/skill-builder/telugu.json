@@ -226,14 +226,24 @@
       }
     },
     "navbar": {
-      "features": "ఫీచర్లు",
-      "about": "గురించి",
-      "contact": "సంప్రదించండి",
+      "home": "హోమ్",
+      "jobs": "ఉద్యోగాలు",
+      "schemes": "పథకాలు",
+      "learning": "నేర్చుకోవడం",
+      "skills": "నైపుణ్యాలు",
+      "courseRecommender": "కోర్సు సిఫార్సుదారు",
+      "business": "వ్యాపారం",
+      "businessIdeas": "వ్యాపార ఆలోచనలు",
+      "projects": "ప్రాజెక్టులు",
+      "myProjects": "నా ప్రాజెక్టులు",
+      "events": "ఈవెంట్లు",
+      "csr": "సిఎస్ఆర్",
       "profile": "ప్రొఫైల్",
       "dashboard": "డాష్‌బోర్డ్",
-      "community": "సముదాయం",
-      "skills": "నైపుణ్యాలు",
-      "signUp": "సైన్ అప్",
-      "courseRecommender": "కోర్సు సూచిక"
+      "welcome": "స్వాగతం",
+      "login": "లాగిన్",
+      "logout": "లాగౌట్",
+      "community": "కమ్యూనిటీ",
+      "createProfile": "ప్రొఫైల్ సృష్టించండి"
     }
   }

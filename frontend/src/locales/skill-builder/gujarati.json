@@ -233,6 +233,21 @@
       "dashboard": "ડેશબોર્ડ",
       "community": "સમુદાય",
       "skills": "કૌશલ્યો",
-      "signUp": "સાઇન અપ"
+      "signUp": "સાઇન અપ",
+      "home": "હોમ",
+      "jobs": "નોકરીઓ",
+      "schemes": "યોજનાઓ",
+      "learning": "શિક્ષણ",
+      "courseRecommender": "કોર્સ ભલામણકર્તા",
+      "business": "વ્યવસાય",
+      "businessIdeas": "વ્યવસાયિક વિચારો",
+      "projects": "પ્રોજેક્ટ્સ",
+      "myProjects": "મારા પ્રોજેક્ટ્સ",
+      "events": "ઇવેન્ટ્સ",
+      "csr": "સીએસઆર",
+      "welcome": "સ્વાગત",
+      "login": "લોગિન",
+      "logout": "લોગઆઉટ",
+      "createProfile": "પ્રોફાઇલ બનાવો"
     }
   }
