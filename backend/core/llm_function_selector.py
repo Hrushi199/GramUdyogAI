@@ -11,7 +11,16 @@ class FunctionSelectionResponse(BaseModel):
 api_key = os.getenv("GROQ_API_KEY")
 client = Groq(api_key=api_key)
 
+"""
+llm_function_selector.py: Selects which backend function to call and what arguments to use, based on user natural language input.
+This module does NOT execute the function itself (e.g., course recommender), it only selects which function and arguments to use.
+"""
+
 def select_function_and_args(user_text_en: str):
+    """
+    Given a user request in English, use the LLM to select the best function and extract arguments.
+    Returns (function_name, arguments) or (None, None) on error.
+    """
     prompt = f"""
 You are an AI assistant for a government and business support portal called GramUdyogAI. 
 Given the user's request, select which function to call and extract the arguments.
@@ -26,6 +35,7 @@ Available functions:
 - project_showcase: for project showcasing and collaboration (argument: project type, industry, or investment needs)
 - youtube_summary: for video summaries and educational content (argument: topic or video preferences)
 - profile_management: for user profile and dashboard information (argument: user profile section or data type)
+- product_recommendation: for government marketplace product links (argument: product search terms, comma-separated, suitable for GeM search)
 
 Guidelines:
 - Use "recommend_job" for: job search, employment, career opportunities, work
@@ -37,12 +47,10 @@ Guidelines:
 - Use "project_showcase" for: projects, collaboration, investment, showcasing work
 - Use "youtube_summary" for: video summaries, educational videos, content analysis
 - Use "profile_management" for: profile info, dashboard, personal data, user settings
+- Use "product_recommendation" for: product links, government marketplace, GeM, buying products, equipment, tools, machinery, etc.
 
 IMPORTANT: For the arguments field, provide a simple string description, not a JSON object.
-Examples:
-- For business_suggestion: "farming, agriculture, organic produce"
-- For recommend_job: "software developer, remote work"
-- For scheme_recommendation: "farmer, small business, agriculture"
+- For product_recommendation, extract only generic, marketplace-friendly product search terms (not natural language). Output a comma-separated list of product keywords suitable for GeM search. Example: 'pumps, solar panel, tractor'.
 
 Return a JSON object: {{"function": "...", "arguments": "..."}}
 
@@ -56,22 +64,18 @@ User request: "{user_text_en}"
         ],
         response_format={"type": "json_object"},
     )
-    
-    content = response.choices[0].message.content
+    content = response.choices[0].message.content if response and response.choices and response.choices[0].message.content else None
     print(content)
+    if not content:
+        print("LLM did not return any content.")
+        return None, None
     try:
-        # Parse the response JSON
-        import json
         response_data = json.loads(content)
-        
         function_name = response_data.get("function", "")
         arguments = response_data.get("arguments", "")
-        
         # If arguments is a dict/object, convert to string
         if isinstance(arguments, dict):
-            # Extract meaningful values from the dict
             if function_name == "business_suggestion":
-                # For business suggestions, combine interests and resources
                 interests = arguments.get("user_interests", "")
                 resources = arguments.get("available_resources", [])
                 skill_level = arguments.get("skill_level", "")
@@ -81,19 +85,19 @@ User request: "{user_text_en}"
                     resources_str = str(resources)
                 arguments = f"interests: {interests}, resources: {resources_str}, skill_level: {skill_level}"
             else:
-                # For other functions, convert dict values to string
                 arguments = ", ".join([f"{k}: {v}" for k, v in arguments.items() if v])
-        
         print(f"Parsed function: {function_name}, arguments: {arguments}")
         return function_name, arguments
     except (json.JSONDecodeError, ValidationError) as e:
         print(f"Parsing error: {e}")
-        
         # Fallback: try the original Pydantic parsing
         try:
-            parsed = FunctionSelectionResponse.parse_raw(content)
-            print(parsed)
-            return parsed.function, parsed.arguments
+            if content:
+                parsed = FunctionSelectionResponse.parse_raw(content)
+                print(parsed)
+                return parsed.function, parsed.arguments
+            else:
+                return None, None
         except ValidationError as e2:
             print(f"Validation error: {e2}")
             return None, None
@@ -121,4 +125,8 @@ async def llama_summarize_items(items, user_info, item_type="job"):
             {"role": "user", "content": prompt}
         ]
     )
-    return response.choices[0].message.content.strip()
+    content = response.choices[0].message.content if response and response.choices and response.choices[0].message.content else None
+    if content:
+        return content.strip()
+    else:
+        return "Sorry, I couldn't generate a summary for these items."

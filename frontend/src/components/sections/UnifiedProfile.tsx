@@ -11,7 +11,7 @@ import {
   BarChart3, Lightbulb,
   ArrowRight, Settings, Trophy, Mic, Square, X
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getUserId, UserProfile, UserProfileUpdate, Project, Event, voiceUpdateProfile } from '../../lib/api.ts';
 import { Toaster, toast } from 'react-hot-toast';
 
@@ -24,7 +24,12 @@ interface Activity {
   impact_score: number;
 }
 
-const UnifiedProfile: React.FC = () => {
+interface UnifiedProfileProps {
+  publicView?: boolean;
+  userId?: string | number;
+}
+
+const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, userId: propUserId }) => {
   const { i18n } = useTranslation();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
@@ -62,14 +67,22 @@ const UnifiedProfile: React.FC = () => {
 
   const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+  const { id: routeId } = useParams<{ id: string }>();
+  const userId = propUserId || routeId;
+  const loggedInUserId = getUserId();
+  const isOwnProfile = !publicView || (userId && String(userId) === String(loggedInUserId));
 
   useEffect(() => {
     const timer = setTimeout(() => setLoaded(true), 100);
-    fetchProfile();
-    fetchProjects();
-    fetchEvents();
+    if (publicView && userId) {
+      fetchPublicProfile(userId);
+    } else {
+      fetchProfile();
+      fetchProjects();
+      fetchEvents();
+    }
     return () => clearTimeout(timer);
-  }, []);
+  }, [publicView, userId]);
 
   // Update fetchProfile function
   const fetchProfile = async () => {
@@ -167,6 +180,21 @@ const UnifiedProfile: React.FC = () => {
     } catch (error) {
       console.error('Error fetching events:', error);
       setEvents([]);
+    }
+  };
+
+  const fetchPublicProfile = async (id: string | number) => {
+    try {
+      const response = await userAPI.getProfileById(id);
+      if (response.data) {
+        setProfile(response.data);
+      } else {
+        setProfile(null);
+      }
+    } catch (error) {
+      setProfile(null);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -603,6 +631,32 @@ const UnifiedProfile: React.FC = () => {
     );
   }
 
+  if (!profile && !loading && isOwnProfile) {
+    return (
+      <div className="relative min-h-screen overflow-hidden">
+        <ParticleBackground />
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 z-10"></div>
+        <div className="relative z-20 flex items-center justify-center min-h-screen">
+          <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 max-w-md">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full mb-4">
+                <User className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-white mb-4">Profile Not Found</h2>
+              <p className="text-gray-300 mb-6">You have not created a profile yet. Click below to get started!</p>
+              <button
+                onClick={() => navigate('/profile/create')}
+                className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 transform hover:scale-105"
+              >
+                Create Profile
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (!profile) {
     return (
       <div className="relative min-h-screen overflow-hidden">
@@ -857,13 +911,15 @@ const UnifiedProfile: React.FC = () => {
                     <Mic className="h-4 w-4" />
                     <span>Voice Update</span>
                   </button>
-                  <button
-                    onClick={handleEdit}
-                    className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 flex items-center space-x-2"
-                  >
-                    <Edit className="h-4 w-4" />
-                    <span>Edit Profile</span>
-                  </button>
+                  {isOwnProfile && (
+                    <button
+                      onClick={handleEdit}
+                      className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 flex items-center space-x-2"
+                    >
+                      <Edit className="h-4 w-4" />
+                      <span>Edit Profile</span>
+                    </button>
+                  )}
                   <button
                     onClick={() => navigate('/events')}
                     className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-3 rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-200 transform hover:scale-105 flex items-center space-x-2"

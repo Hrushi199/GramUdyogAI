@@ -701,13 +701,19 @@ export class ProjectAPI {
   }
 
   // Team management
-  async addTeamMember(projectId: number, member: {
-    user_id: number;
-    role: string;
-    skills: string[];
-  }): Promise<ApiResponse<{ message: string }>> {
-    return this.api.post<{ user_id: number; role: string; skills: string[] }, { message: string }>(`/api/projects/${projectId}/team-members`, member);
-  }
+  // async addTeamMember(projectId: number, member: {
+  //   user_id: number;
+  //   role: string;
+  //   skills: string[];
+  // }): Promise<ApiResponse<{ message: string }>> {
+  //   // Deprecated: Use NotificationAPI.sendTeamInvite instead
+  //   // Build query string
+  //   const params = new URLSearchParams();
+  //   params.append('user_id', member.user_id.toString());
+  //   params.append('role', member.role);
+  //   member.skills.forEach(skill => params.append('skills', skill));
+  //   return this.api.post<undefined, { message: string }>(`/api/projects/${projectId}/team-members?${params.toString()}`, undefined);
+  // }
 
   async removeTeamMember(projectId: number, userId: number): Promise<ApiResponse<{ message: string }>> {
     return this.api.delete<{ message: string }>(`/api/projects/${projectId}/team-members/${userId}`);

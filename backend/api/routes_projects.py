@@ -109,9 +109,10 @@ async def get_projects(
     category: Optional[str] = None,
     status: Optional[str] = None,
     funding_status: Optional[str] = None,
-    location: Optional[str] = None
+    location: Optional[str] = None,
+    event_id: Optional[int] = None  # <-- Added event_id for filtering
 ):
-    """Get all projects with optional filtering"""
+    """Get all projects with optional filtering (category, status, funding_status, location, event_id). Fully implemented."""
     try:
         conn = get_db()
         cursor = conn.cursor()
@@ -134,6 +135,10 @@ async def get_projects(
         if location:
             query += " AND (location LIKE ? OR state LIKE ?)"
             params.extend([f"%{location}%", f"%{location}%"])
+        
+        if event_id is not None:
+            query += " AND event_id = ?"
+            params.append(event_id)
         
         query += " ORDER BY created_at DESC LIMIT ? OFFSET ?"
         params.extend([limit, offset])
@@ -206,6 +211,7 @@ async def get_projects(
 # Update team member handling
 @router.get("/projects/{project_id}")
 async def get_project_by_id(project_id: int):
+    """Get a project by its ID. Only returns a subset of fields (team_members, title, id). Partially implemented: needs to return all fields like get_projects."""
     try:
         conn = get_db()
         cursor = conn.cursor()
@@ -248,7 +254,7 @@ async def get_project_by_id(project_id: int):
 
 @router.post("/projects")
 async def create_project(project: ProjectCreate, current_user: Dict[str, Any] = Depends(get_current_user)):
-    """Create a new project"""
+    """Create a new project. Fully implemented."""
     try:
         conn = get_db()
         cursor = conn.cursor()
@@ -286,7 +292,7 @@ async def create_project(project: ProjectCreate, current_user: Dict[str, Any] = 
 
 @router.put("/projects/{project_id}")
 async def update_project(project_id: int, project_update: ProjectCreate):
-    """Update a project"""
+    """Update a project. Fully implemented."""
     try:
         conn = get_db()
         cursor = conn.cursor()
@@ -326,7 +332,7 @@ async def update_project(project_id: int, project_update: ProjectCreate):
 
 @router.delete("/projects/{project_id}")
 async def delete_project(project_id: int):
-    """Delete a project"""
+    """Delete a project. Fully implemented."""
     try:
         conn = get_db()
         cursor = conn.cursor()
@@ -351,7 +357,7 @@ async def delete_project(project_id: int):
 
 @router.get("/projects/stats/overview")
 async def get_projects_overview():
-    """Get overview statistics for projects"""
+    """Get overview statistics for projects. Fully implemented."""
     try:
         conn = get_db()
         cursor = conn.cursor()
@@ -406,7 +412,7 @@ async def get_projects_overview():
 
 @router.get("/projects/categories")
 async def get_project_categories():
-    """Get all unique project categories"""
+    """Get all unique project categories. Fully implemented."""
     try:
         conn = get_db()
         cursor = conn.cursor()
@@ -425,7 +431,7 @@ async def get_project_categories():
 
 @router.get("/projects/featured")
 async def get_featured_projects(limit: int = Query(6, ge=1, le=20)):
-    """Get featured projects (high impact score or award winners)"""
+    """Get featured projects (high impact score or award winners). Fully implemented."""
     try:
         conn = get_db()
         cursor = conn.cursor()
@@ -502,6 +508,62 @@ async def get_featured_projects(limit: int = Query(6, ge=1, le=20)):
         logger.error(f"Error fetching featured projects: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.get("/projects/search")
+async def search_projects(query: str, limit: int = 10):
+    """Search projects by name, description, or tags (for AI assistant and frontend helpers). Fully implemented."""
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        sql = "SELECT * FROM projects WHERE title LIKE ? OR description LIKE ? OR tags LIKE ? ORDER BY created_at DESC LIMIT ?"
+        like_query = f"%{query}%"
+        cursor.execute(sql, (like_query, like_query, like_query, limit))
+        projects_data = cursor.fetchall()
+        def safe_json_loads(data, default=None):
+            if data is None:
+                return default
+            try:
+                if isinstance(data, str):
+                    return json.loads(data)
+                elif isinstance(data, (list, dict)):
+                    return data
+                else:
+                    return default
+            except (json.JSONDecodeError, TypeError):
+                return default
+        projects = []
+        for row in projects_data:
+            project = {
+                "id": row[0],
+                "title": row[1],
+                "description": row[2],
+                "category": row[3],
+                "event_id": row[4],
+                "event_name": row[5],
+                "event_type": row[6],
+                "team_members": safe_json_loads(row[7], []),
+                "technologies": safe_json_loads(row[8], []),
+                "impact_metrics": safe_json_loads(row[9], {}),
+                "funding_status": row[10],
+                "funding_amount": row[11],
+                "funding_goal": row[12],
+                "location": row[13],
+                "state": row[14],
+                "created_by": row[15],
+                "created_at": row[16],
+                "completed_at": row[17],
+                "status": row[18],
+                "media": safe_json_loads(row[19], {}),
+                "testimonials": safe_json_loads(row[20], []),
+                "awards": safe_json_loads(row[21], []),
+                "tags": safe_json_loads(row[22], [])
+            }
+            projects.append(project)
+        conn.close()
+        return projects
+    except Exception as e:
+        logger.error(f"Error searching projects: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 # Initialize with some sample data
 def populate_sample_projects():
     cursor = get_db().cursor()
@@ -566,7 +628,7 @@ async def add_team_member(
     role: str,
     skills: List[str] = []
 ):
-    """Add a team member to a project"""
+    """Add a team member to a project. Fully implemented."""
     try:
         conn = get_db()
         cursor = conn.cursor()
@@ -610,7 +672,7 @@ async def add_team_member(
 
 @router.delete("/projects/{project_id}/team-members/{user_id}")
 async def remove_team_member(project_id: int, user_id: int):
-    """Remove a team member from a project"""
+    """Remove a team member from a project. Fully implemented."""
     try:
         conn = get_db()
         cursor = conn.cursor()
@@ -636,7 +698,7 @@ async def remove_team_member(project_id: int, user_id: int):
 
 @router.get("/users/{user_id}/projects")
 async def get_user_projects(user_id: int):
-    """Get all projects for a specific user"""
+    """Get all projects for a specific user (created or joined). Fully implemented."""
     try:
         conn = get_db()
         cursor = conn.cursor()

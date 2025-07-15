@@ -417,7 +417,7 @@ async def _get_unified_profile_by_user_id(user_id: int) -> Dict[str, Any]:
 
 @router.put("/")
 async def update_unified_profile(profile_update: ProfileUpdate, current_user = Depends(get_current_user)):
-    """Update unified profile"""
+    """Update unified profile and sync name/organization to users table"""
     try:
         if isinstance(current_user, dict):
             user_id = current_user['id']
@@ -425,58 +425,60 @@ async def update_unified_profile(profile_update: ProfileUpdate, current_user = D
             user_id = current_user  # current_user is already the user_id
         conn = get_db()
         cursor = conn.cursor()
-        
         # Build update query dynamically
         update_fields = []
         params = []
-        
         if profile_update.name is not None:
             update_fields.append("name = ?")
             params.append(profile_update.name)
-        
         if profile_update.organization is not None:
             update_fields.append("organization = ?")
             params.append(profile_update.organization)
-        
         if profile_update.location is not None:
             update_fields.append("location = ?")
             params.append(profile_update.location)
-        
         if profile_update.state is not None:
             update_fields.append("state = ?")
             params.append(profile_update.state)
-        
         if profile_update.skills is not None:
             update_fields.append("skills = ?")
             params.append(json.dumps(profile_update.skills))
-        
         if profile_update.experience is not None:
             update_fields.append("experience = ?")
             params.append(profile_update.experience)
-        
         if profile_update.goals is not None:
             update_fields.append("goals = ?")
             params.append(profile_update.goals)
-        
         if update_fields:
             update_fields.append("updated_at = ?")
             params.append(datetime.now().isoformat())
             params.append(user_id)
-            
             query = f'''
                 UPDATE unified_profiles 
                 SET {', '.join(update_fields)}
                 WHERE user_id = ?
             '''
-            
             cursor.execute(query, params)
             conn.commit()
-        
+        # --- Sync name/organization to users table if present ---
+        user_update_fields = []
+        user_params = []
+        if profile_update.name is not None:
+            user_update_fields.append("name = ?")
+            user_params.append(profile_update.name)
+        if profile_update.organization is not None:
+            user_update_fields.append("organization = ?")
+            user_params.append(profile_update.organization)
+        if user_update_fields:
+            user_update_fields.append("updated_at = ?")
+            user_params.append(datetime.now().isoformat())
+            user_params.append(user_id)
+            user_query = f"UPDATE users SET {', '.join(user_update_fields)} WHERE id = ?"
+            cursor.execute(user_query, user_params)
+            conn.commit()
         conn.close()
-        
         # Return updated profile
         return await _get_unified_profile_by_user_id(user_id)
-        
     except Exception as e:
         logger.error(f"Error updating profile: {e}")
         raise HTTPException(status_code=500, detail=str(e))
@@ -674,6 +676,11 @@ def compare_with_peers(profile: Dict[str, Any]) -> Dict[str, Any]:
             "percentile": min(100, (user_metrics["social_impact_score"] / peer_averages["social_impact_score"]) * 100)
         }
     }
+
+@router.get("/public/{user_id}")
+async def get_public_profile(user_id: int):
+    """Get unified profile for any user by user_id (public view)"""
+    return await _get_unified_profile_by_user_id(user_id)
 
 # Initialize database on startup
 # init_profile_db()

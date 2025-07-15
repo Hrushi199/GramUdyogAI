@@ -15,6 +15,7 @@ import {
   Search
 } from 'lucide-react';
 import { Toaster, toast } from 'react-hot-toast';
+import PublicProfileAvatar from '../ui/PublicProfileAvatar';
 
 interface TeamMember {
   id: number;
@@ -79,93 +80,7 @@ interface Project {
   tags: string[];
 }
 
-// Mock API function since we can't import external API
-const mockProjectAPI = {
-  getProjects: async () => {
-    // Mock data for demonstration
-    const mockProjects: Project[] = [
-      {
-        id: 1,
-        title: "AI-Powered Health Monitor",
-        description: "An innovative health monitoring system using AI to predict health issues before they occur. The system analyzes vital signs and provides personalized health recommendations.",
-        category: "AI/ML",
-        event_id: 1,
-        event_name: "TechCrunch Disrupt 2024",
-        event_type: "hackathon",
-        team_members: [
-          { id: 1, user_id: 1, role: "Full Stack Developer", skills: ["React", "Node.js", "Python"], name: "John Doe" },
-          { id: 2, user_id: 2, role: "Data Scientist", skills: ["Machine Learning", "Python", "TensorFlow"], name: "Jane Smith" }
-        ],
-        technologies: ["React", "Node.js", "Python", "TensorFlow", "MongoDB"],
-        impact_metrics: { users_reached: 5000, revenue_generated: 250000 },
-        funding_status: "seeking",
-        funding_amount: 50000,
-        funding_goal: 100000,
-        location: "Mumbai",
-        state: "Maharashtra",
-        created_by: 1,
-        created_at: "2024-01-15T10:00:00Z",
-        completed_at: null,
-        status: "active",
-        media: {
-          images: ["image1.jpg", "image2.jpg"],
-          videos: ["demo.mp4"],
-          demo_url: "https://example.com/demo",
-          github_url: "https://github.com/example/project"
-        },
-        testimonials: [
-          {
-            id: 1,
-            name: "Dr. Sarah Johnson",
-            role: "Medical Director",
-            organization: "City Hospital",
-            content: "This system has revolutionized how we monitor patient health. The predictive capabilities are outstanding.",
-            rating: 5
-          }
-        ],
-        awards: [
-          { id: 1, name: "Best Innovation Award", organization: "TechCrunch", year: 2024, category: "Healthcare" }
-        ],
-        tags: ["health", "AI", "monitoring"]
-      },
-      {
-        id: 2,
-        title: "Smart Agriculture Platform",
-        description: "IoT-based platform for smart farming that helps farmers optimize crop yield and reduce resource consumption through data-driven insights.",
-        category: "IoT",
-        event_id: 2,
-        event_name: "AgTech Innovation Summit",
-        event_type: "competition",
-        team_members: [
-          { id: 3, user_id: 3, role: "IoT Engineer", skills: ["Arduino", "Raspberry Pi", "C++"], name: "Mike Johnson" },
-          { id: 4, user_id: 4, role: "Mobile Developer", skills: ["Flutter", "Dart", "Firebase"], name: "Sarah Wilson" }
-        ],
-        technologies: ["Arduino", "Raspberry Pi", "Flutter", "Firebase", "Python"],
-        impact_metrics: { users_reached: 1200, revenue_generated: 75000 },
-        funding_status: "funded",
-        funding_amount: 200000,
-        funding_goal: 200000,
-        location: "Pune",
-        state: "Maharashtra",
-        created_by: 3,
-        created_at: "2024-02-10T14:30:00Z",
-        completed_at: "2024-06-15T10:00:00Z",
-        status: "completed",
-        media: {
-          images: ["farm1.jpg", "farm2.jpg"],
-          videos: ["harvest.mp4"],
-          demo_url: "https://example.com/farm-demo",
-          github_url: "https://github.com/example/smart-farm"
-        },
-        testimonials: [],
-        awards: [],
-        tags: ["agriculture", "IoT", "sustainability"]
-      }
-    ];
-
-    return { data: mockProjects, error: null };
-  }
-};
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 const PublicProjects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -179,18 +94,28 @@ const PublicProjects: React.FC = () => {
 
   useEffect(() => {
     fetchProjects();
-  }, []);
+  }, [filterCategory, filterStatus, filterFunding]);
 
   const fetchProjects = async () => {
     setLoading(true);
     try {
-      const response = await mockProjectAPI.getProjects();
-      if (response.data) {
-        setProjects(response.data);
+      // Build query params
+      const params = new URLSearchParams();
+      if (filterCategory !== 'all') params.append('category', filterCategory);
+      if (filterStatus !== 'all') params.append('status', filterStatus);
+      if (filterFunding !== 'all') params.append('funding_status', filterFunding);
+      // You can add event_id support here if needed
+      const url = `${API_BASE_URL}/api/projects?${params.toString()}`;
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        setProjects(data);
       } else {
-        console.error('Error fetching projects:', response.error);
+        setProjects([]);
+        console.error('Error fetching projects:', response.statusText);
       }
     } catch (err) {
+      setProjects([]);
       console.error('Error fetching projects:', err);
     } finally {
       setLoading(false);
@@ -582,15 +507,8 @@ const PublicProjects: React.FC = () => {
                             {member.name.charAt(0)}
                           </div>
                           <div>
-                            <div className="font-semibold text-white">{member.name}</div>
-                            <div className="text-sm text-gray-400">{member.role}</div>
-                            <div className="flex flex-wrap gap-1 mt-1">
-                              {member.skills.slice(0, 2).map((skill, idx) => (
-                                <Badge key={idx} className="bg-gray-700 text-gray-300 text-xs">
-                                  {skill}
-                                </Badge>
-                              ))}
-                            </div>
+                            <PublicProfileAvatar userId={member.user_id} name={member.name} size={32} />
+                            <span>{member.name}</span>
                           </div>
                         </div>
                       ))}

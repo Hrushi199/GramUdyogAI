@@ -12,6 +12,7 @@ import {
   YoutubeSummaryRenderer,
   ProfileRenderer
 } from '../ui/FeatureRenderers';
+import { useEffect } from 'react';
 
 interface AssistantResponse {
   output: string;
@@ -20,6 +21,28 @@ interface AssistantResponse {
   summary?: string;
 }
 import { Toaster, toast } from 'react-hot-toast';
+
+// Helper for chunked translation
+async function translateInChunks(text: string, lang: string, chunkSize = 400) {
+  if (!text || lang === 'en') return text;
+  const chunks = [];
+  for (let i = 0; i < text.length; i += chunkSize) {
+    chunks.push(text.slice(i, i + chunkSize));
+  }
+  const translatedChunks = await Promise.all(
+    chunks.map(async (chunk) => {
+      // Call your backend translation endpoint (replace with actual API call)
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/translate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: chunk, lang }),
+      });
+      const data = await res.json();
+      return data.translated || chunk;
+    })
+  );
+  return translatedChunks.join('');
+}
 
 export default function AIAssistant({ lang }: { lang: string }) {
   const { t } = useTranslation('ai-assistant');
@@ -32,6 +55,7 @@ export default function AIAssistant({ lang }: { lang: string }) {
   const [ttsEnabled, setTtsEnabled] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const [translating, setTranslating] = useState(false);
 
   // Enhanced browser STT with better feedback
   const handleStartListening = () => {
@@ -127,44 +151,99 @@ export default function AIAssistant({ lang }: { lang: string }) {
     }
   };
 
+  // Helper to render all new structured data types
   const renderFeatureContent = () => {
     if (!assistantResponse?.structured_data) return null;
-
-    const { feature_type, structured_data } = assistantResponse;
-
-    switch (feature_type) {
-      case 'recommend_job':
-        return <JobRenderer jobs={structured_data.jobs || []} compact={true} />;
-      
-      case 'scheme_recommendation':
-        return <SchemeRenderer schemes={structured_data.schemes || []} compact={true} />;
-      
-      case 'business_suggestion':
-        return <BusinessSuggestionRenderer suggestions={structured_data.suggestions || []} compact={true} />;
-      
-      case 'course_recommendation':
-        return <CourseRenderer courses={structured_data.courses || []} compact={true} />;
-      
-      case 'skill_tutorial':
-        return <TutorialRenderer tutorials={structured_data.tutorials || []} compact={true} />;
-      
+    const d = assistantResponse.structured_data;
+    switch (assistantResponse.feature_type) {
       case 'event_management':
-        return <EventRenderer events={structured_data.events || []} compact={true} />;
-      
+        if (d.event) return <EventRenderer events={[d.event]} compact={false} />;
+        if (d.events) return <EventRenderer events={d.events} compact={true} />;
+        break;
       case 'project_showcase':
-        return <ProjectRenderer projects={structured_data.projects || []} compact={true} />;
-      
-      case 'youtube_summary':
-        return <YoutubeSummaryRenderer summaries={structured_data.summaries || []} compact={true} />;
-      
+        if (d.projects) return <ProjectRenderer projects={d.projects} compact={true} />;
+        break;
       case 'profile_management':
       case 'dashboard_view':
-        return <ProfileRenderer profile={structured_data.profile || {}} compact={true} />;
-      
+        if (d.profile) return <ProfileRenderer profile={d.profile} compact={false} />;
+        break;
+      case 'recommend_job':
+        if (d.jobs) return <JobRenderer jobs={d.jobs} compact={true} />;
+        break;
+      case 'scheme_recommendation':
+        if (d.schemes) return <SchemeRenderer schemes={d.schemes} compact={true} />;
+        break;
+      case 'business_suggestion':
+        if (d.suggestions) return <BusinessSuggestionRenderer suggestions={d.suggestions} compact={true} />;
+        break;
+      case 'course_recommendation':
+        if (d.courses) return <CourseRenderer courses={d.courses} compact={true} />;
+        break;
+      case 'skill_tutorial':
+        if (d.tutorials) return <TutorialRenderer tutorials={d.tutorials} compact={true} />;
+        break;
+      case 'youtube_summary':
+        if (d.youtube_summary) return <YoutubeSummaryRenderer summaries={[d.youtube_summary]} compact={true} />;
+        if (d.youtube_search_url) return (
+          <div className="p-3 bg-gray-800 rounded-lg border border-gray-700 mt-2">
+            <a href={d.youtube_search_url} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline">Search YouTube for this topic</a>
+          </div>
+        );
+        break;
+      case 'csr_dashboard':
+        if (d.companies) return (
+          <div className="p-3 bg-gray-800 rounded-lg border border-gray-700 mt-2">
+            <h3 className="text-lg font-bold mb-2">CSR Companies</h3>
+            <ul className="list-disc ml-6">
+              {d.companies.map((c: any) => <li key={c.id}>{c.name}</li>)}
+            </ul>
+          </div>
+        );
+        break;
+      case 'csr_course':
+        if (d.csr_courses) return <CourseRenderer courses={d.csr_courses} compact={true} />;
+        break;
+      case 'visual_summary':
+        if (d.visual_summary) return (
+          <div className="p-3 bg-gray-800 rounded-lg border border-gray-700 mt-2">
+            <h3 className="text-lg font-bold mb-2">Visual Summary</h3>
+            <pre className="text-xs text-gray-300 whitespace-pre-wrap">{JSON.stringify(d.visual_summary, null, 2)}</pre>
+          </div>
+        );
+        break;
+      case 'product_recommendation':
+        if (d.product_links && Array.isArray(d.product_links)) return (
+          <div className="p-3 bg-green-900/20 rounded-lg border border-green-700 mt-2">
+            <h3 className="text-lg font-bold mb-2">Product Search</h3>
+            <ul className="space-y-2">
+              {d.product_links.map((link: any) => (
+                <li key={link.product_term}>
+                  <span className="font-semibold">{link.product_term}</span>: {' '}
+                  <a href={link.product_search_url} target="_blank" rel="noopener noreferrer" className="text-green-400 underline">View on GeM</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+        break;
       default:
         return null;
     }
+    return null;
   };
+
+  // Translation effect for output and summary
+  useEffect(() => {
+    if (assistantResponse && lang !== 'en' && assistantResponse.output) {
+      setTranslating(true);
+      translateInChunks(assistantResponse.output, lang).then(translated => {
+        setAssistantResponse(r => r ? { ...r, output: translated } : r);
+        setTranslating(false);
+      });
+    }
+    // Optionally translate summary as well
+    // eslint-disable-next-line
+  }, [assistantResponse?.output, lang]);
 
   return (
     <div
@@ -302,7 +381,7 @@ export default function AIAssistant({ lang }: { lang: string }) {
                 </button>
               )}
             </div>
-            <p className="text-white text-sm">{assistantResponse.output}</p>
+            <p className="text-white text-sm">{translating ? t('status.translating', 'Translating...') : assistantResponse.output}</p>
           </div>
 
           {/* Feature-Specific Content */}

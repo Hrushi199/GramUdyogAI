@@ -13,6 +13,8 @@ import { formatCurrency } from '../../lib/utils';
 import { useTranslation } from 'react-i18next';
 import { TeamMember as TeamMemberType } from '../../lib/api';
 import { Toaster, toast } from 'react-hot-toast';
+import PublicProfileAvatar from '../ui/PublicProfileAvatar';
+import { notificationAPI } from '../../lib/api';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
@@ -202,10 +204,12 @@ const EventDetails: React.FC = () => {
   const [searchResults, setSearchResults] = useState<UserType[]>([]);
   const [searchUserQuery, setSearchUserQuery] = useState('');
   const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
-  const [newMemberRole, setNewMemberRole] = useState('');
   const [newMemberSkills, setNewMemberSkills] = useState('');
   const [userProjects, setUserProjects] = useState<Project[]>([]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  // Add state for pending invites
+  const [pendingInvites, setPendingInvites] = useState<any[]>([]);
 
 
   const fetchTeamMembers = async (eventId: number) => {
@@ -275,34 +279,33 @@ const EventDetails: React.FC = () => {
   };
 
   const addTeamMember = async () => {
-    if (!selectedProject || !selectedUser || !newMemberRole || !newMemberSkills || !event) {
-      toast.error('Please select a project, a user, and define a role and skills.');
+    if (!selectedProject || !selectedUser || !newMemberSkills || !event) {
+      toast.error('Please select a project, a user, and define skills.');
       return;
     }
-
+    const user = localStorage.getItem('user');
+    const userData = user ? JSON.parse(user) : null;
+    const inviterId = userData?.id || localStorage.getItem('user_id');
     try {
-      const response = await projectAPI.addTeamMember(
-        selectedProject.id,
-        {
-          user_id: selectedUser.id,
-          role: newMemberRole,
-          skills: newMemberSkills.split(',').map(s => s.trim()),
-        }
-      );
-
+      const response = await notificationAPI.sendTeamInvite({
+        inviter_id: parseInt(inviterId),
+        invitee_id: selectedUser.id,
+        project_id: selectedProject.id,
+        role: 'Member',
+        skills: newMemberSkills.split(',').map(s => s.trim()),
+        message: ''
+      });
       if (response.data) {
-        toast.success('Team member added successfully!');
+        toast.success('Team invite sent successfully!');
         setShowAddMemberModal(false);
         setSelectedUser(null);
-        setNewMemberRole('');
         setNewMemberSkills('');
-        // Refresh team members list
-        fetchTeamMembers(event.id);
+        // Optionally refresh invites list
       } else {
-        toast.error('Error adding team member: ' + (response.error || 'Unknown error'));
+        toast.error('Error sending invite: ' + (response.error || 'Unknown error'));
       }
     } catch (error) {
-      console.error('Error adding team member:', error);
+      console.error('Error sending invite:', error);
       toast.error('An unexpected error occurred.');
     }
   };
@@ -379,6 +382,9 @@ const EventDetails: React.FC = () => {
     }
   };
 
+  // Move isCreator up so it is available for useEffect
+  const isCreator = event?.created_by === parseInt(localStorage.getItem('user_id') || '0');
+
   useEffect(() => {
     fetchEvent();
     if (eventId) {
@@ -397,6 +403,41 @@ const EventDetails: React.FC = () => {
   useEffect(() => {
     setSelectedLanguage(i18n.language || 'en');
   }, [i18n.language]);
+
+  // Fetch pending invites for this event's projects (for organizer)
+  const fetchPendingInvites = async () => {
+    const user = localStorage.getItem('user');
+    const userData = user ? JSON.parse(user) : null;
+    const userId = userData?.id || localStorage.getItem('user_id');
+    if (!userId || !event) return;
+    try {
+      // Get all team_invite notifications sent by this user for projects in this event
+      const response = await notificationAPI.getNotifications(
+        parseInt(userId),
+        false,
+        'team_invite',
+        100,
+        0
+      );
+      if (response.data) {
+        // Filter for invites related to this event's projects and still pending
+        const eventProjectIds = userProjects.filter(p => p.event_id === event.id).map(p => p.id);
+        const pending = response.data.filter(
+          (n: any) => n.metadata?.status === 'pending' && eventProjectIds.includes(n.project_id)
+        );
+        setPendingInvites(pending);
+      }
+    } catch (error) {
+      setPendingInvites([]);
+    }
+  };
+
+  // Fetch pending invites when event or userProjects change
+  useEffect(() => {
+    if (isCreator && event && userProjects.length > 0) {
+      fetchPendingInvites();
+    }
+  }, [event, userProjects, isCreator]);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -448,11 +489,10 @@ const EventDetails: React.FC = () => {
     );
   }
 
-  const isCreator = event.created_by === parseInt(localStorage.getItem('user_id') || '0');
   const eventTypeColor = getEventTypeColor(event.event_type);
   const statusColor = getStatusColor(event.status);
   const formattedBudget = formatCurrency(event.budget);
-
+  console.log(event.organizer);
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20">
       {/* Background gradients */}
@@ -510,6 +550,10 @@ const EventDetails: React.FC = () => {
           <CardHeader>
             <div className="flex items-start justify-between">
               <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <PublicProfileAvatar userId={event.organizer.id} name={event.organizer.name} size={40} />
+                  <span className="text-lg font-semibold text-white">{event.organizer.name}</span>
+                </div>
                 <div className="flex items-center space-x-3 mb-3">
                   <Badge className={eventTypeColor}>
                     {event.event_type}
@@ -647,6 +691,93 @@ const EventDetails: React.FC = () => {
           </Card>
         </div>
 
+        {/* Marketing Highlights & Success Metrics & Agenda */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          {/* Marketing Highlights */}
+          <Card className="bg-gradient-to-br from-purple-900/30 to-purple-900/10 border border-purple-700/40">
+            <CardHeader>
+              <CardTitle className="text-white flex items-center">
+                <Star className="h-5 w-5 mr-2 text-yellow-400" />
+                Marketing Highlights
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {event.marketing_highlights && event.marketing_highlights.length > 0 ? (
+                <ul className="list-disc pl-5 text-purple-100 space-y-1">
+                  {event.marketing_highlights.map((highlight, idx) => (
+                    <li key={idx}>{highlight}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-purple-200">No marketing highlights provided.</p>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Success Metrics */}
+          <Card className="bg-gradient-to-br from-green-900/30 to-green-900/10 border border-green-700/40">
+            <CardHeader>
+              <CardTitle className="text-white flex items-center">
+                <TrendingUp className="h-5 w-5 mr-2 text-green-400" />
+                Success Metrics
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {event.success_metrics && event.success_metrics.length > 0 ? (
+                <ul className="list-disc pl-5 text-green-100 space-y-1">
+                  {event.success_metrics.map((metric, idx) => (
+                    <li key={idx}>{metric}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-green-200">No success metrics provided.</p>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Agenda / Sections */}
+          <Card className="bg-gradient-to-br from-blue-900/30 to-blue-900/10 border border-blue-700/40">
+            <CardHeader>
+              <CardTitle className="text-white flex items-center">
+                <Clock className="h-5 w-5 mr-2 text-blue-400" />
+                Agenda / Sections
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {event.sections && event.sections.length > 0 ? (
+                <div className="space-y-4">
+                  {event.sections.map((section, idx) => (
+                    <div key={idx} className="border-l-4 border-blue-700 pl-4 py-2 bg-blue-900/10 rounded">
+                      <h4 className="text-blue-200 font-semibold mb-1">{section.title}</h4>
+                      <p className="text-blue-100 mb-1">{section.description}</p>
+                      {section.key_points && section.key_points.length > 0 && (
+                        <div className="mb-1">
+                          <span className="text-xs text-blue-300 font-medium">Key Points: </span>
+                          <span className="text-xs text-blue-100">{section.key_points.join(', ')}</span>
+                        </div>
+                      )}
+                      {section.target_audience && (
+                        <div className="mb-1">
+                          <span className="text-xs text-blue-300 font-medium">Target Audience: </span>
+                          <span className="text-xs text-blue-100">{section.target_audience}</span>
+                        </div>
+                      )}
+                      {section.expected_outcome && (
+                        <div>
+                          <span className="text-xs text-blue-300 font-medium">Expected Outcome: </span>
+                          <span className="text-xs text-blue-100">{section.expected_outcome}</span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-blue-200">No agenda/sections provided.</p>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Team Management Section */}
         <Card className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 border border-gray-700/50">
           <CardHeader>
@@ -696,7 +827,13 @@ const EventDetails: React.FC = () => {
                         <div className="flex items-center justify-between">
                           <div className="flex-1">
                             <div className="flex items-center space-x-2 mb-1">
-                              <p className="text-white font-medium">{member.name}</p>
+                              <PublicProfileAvatar userId={member.user_id} name={member.name} size={32} />
+                              {member.role === 'Team Leader' && (
+                                <Badge className="bg-yellow-900/80 text-yellow-200 border-yellow-600 text-xs flex items-center">
+                                  <Crown className="h-3 w-3 mr-1 text-yellow-300" />
+                                  Team Leader
+                                </Badge>
+                              )}
                               {member.user_id && (
                                 <Badge className="bg-green-900/50 text-green-300 border-green-700 text-xs">
                                   <User className="h-3 w-3 mr-1" />
@@ -838,7 +975,6 @@ const EventDetails: React.FC = () => {
                   setShowAddMemberModal(false);
                   setSelectedUser(null);
                   setSelectedProject(null);
-                  setNewMemberRole('');
                   setNewMemberSkills('');
                 }}
                 className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
@@ -892,9 +1028,7 @@ const EventDetails: React.FC = () => {
                 {selectedUser && (
                   <div className="bg-gray-800/30 border border-gray-600 rounded-lg p-3">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
-                        {selectedUser.name.charAt(0)}
-                      </div>
+                      <PublicProfileAvatar userId={selectedUser.id} name={selectedUser.name} size={32} />
                       <div>
                         <div className="text-white font-medium">{selectedUser.name}</div>
                         <div className="text-gray-400 text-sm">{selectedUser.phone}</div>
@@ -903,18 +1037,6 @@ const EventDetails: React.FC = () => {
                     </div>
                   </div>
                 )}
-                
-                {/* Role */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Role</label>
-                  <input
-                    type="text"
-                    placeholder="e.g., Frontend Developer, Team Lead"
-                    className="w-full px-3 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white placeholder-gray-400"
-                    value={newMemberRole}
-                    onChange={(e) => setNewMemberRole(e.target.value)}
-                  />
-                </div>
                 
                 {/* Skills */}
                 <div>
@@ -961,7 +1083,7 @@ const EventDetails: React.FC = () => {
                   </button>
                   <button
                     onClick={() => addTeamMember()}
-                    disabled={!selectedProject || !selectedUser || !newMemberRole}
+                    disabled={!selectedProject || !selectedUser || !newMemberSkills}
                     className="bg-gradient-to-r from-green-600 to-teal-600 text-white px-4 py-2 rounded-lg hover:from-green-700 hover:to-teal-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                   >
                     <UserPlus className="h-4 w-4 mr-2" />

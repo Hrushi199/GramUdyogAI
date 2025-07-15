@@ -24,6 +24,7 @@ import Auth from './components/sections/Auth';
 import UnifiedProfile from './components/sections/UnifiedProfile';
 import ProtectedRoute from './components/ProtectedRoute';
 import EventDetails from './components/sections/EventDetails';
+import NotificationCenter from './components/ui/NotificationCenter';
 
 // Wrapper component for the home page to handle scroll behavior
 const HomePage = ({ loaded }: { loaded: boolean }) => {
@@ -53,16 +54,26 @@ const HomePage = ({ loaded }: { loaded: boolean }) => {
 };
 export default function App() {
   const [loaded, setLoaded] = useState(false);
-  
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [userId, setUserId] = useState<number | null>(null);
+
   useEffect(() => {
     document.title = "EmpowerUp | Unlock Your Business Potential";
     setLoaded(true);
+    // Set userId from localStorage
+    const id = localStorage.getItem('user_id');
+    setUserId(id ? parseInt(id) : null);
   }, []);
   
   return (
     <div className="min-h-screen bg-black text-white pt-20">
       <Router>
-        <Navbar />
+        <Navbar onOpenNotifications={() => setNotificationOpen(true)} />
+        <NotificationCenter
+          userId={userId || 0}
+          isOpen={notificationOpen}
+          onClose={() => setNotificationOpen(false)}
+        />
         
         <Routes>
           {/* Home Page with scroll handling */}
@@ -73,8 +84,9 @@ export default function App() {
           <Route path="/auth" element={<Auth />} />
           
           {/* Profile Routes - Clear separation */}
-          <Route path="/profile" element={<ProtectedRoute><UnifiedProfile /></ProtectedRoute>} />
           <Route path="/profile/create" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+          <Route path="/profile/:id" element={<UnifiedProfile publicView={true} />} />
+          <Route path="/profile" element={<ProtectedRoute><UnifiedProfile /></ProtectedRoute>} />
           
           <Route path="/dashboard" element={<ProtectedRoute><JobMentorDashboard /></ProtectedRoute>} />
           <Route path="/community" element={<ProtectedRoute><Community /></ProtectedRoute>} />

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Bell, X, Check, XCircle, Users, Calendar, Award, MessageSquare, Trash2 } from 'lucide-react';
 import { notificationAPI, Notification, TeamInviteResponse } from '../../lib/api';
+import PublicProfileAvatar from './PublicProfileAvatar';
 
 interface NotificationCenterProps {
   userId: number;
@@ -148,8 +149,8 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ userId, isOpen,
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-      <div className="glassmorphism-card rounded-2xl p-6 w-full max-w-2xl max-h-[80vh] overflow-hidden relative">
+    <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/80 backdrop-blur-sm" onClick={onClose} style={{ pointerEvents: 'auto' }}>
+      <div className="glassmorphism-card rounded-2xl p-6 w-full max-w-2xl max-h-[80vh] overflow-hidden relative" onClick={e => e.stopPropagation()} style={{ pointerEvents: 'auto' }}>
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-3">
@@ -163,12 +164,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ userId, isOpen,
               </p>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800/50 rounded-full"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          {/* Removed X close button */}
         </div>
 
         {/* Tabs */}
@@ -302,44 +298,62 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ userId, isOpen,
                     
                     {/* Team Invite Details */}
                     {notification.notification_type === 'team_invite' && notification.metadata && (
-                      <div className="mt-3 p-3 bg-gray-800/30 rounded-lg border border-gray-700/50">
-                        <div className="grid grid-cols-2 gap-2 text-xs">
-                          <div>
-                            <span className="text-gray-400">Project:</span>
-                            <span className="text-white ml-1">{notification.metadata.project_title}</span>
-                          </div>
-                          <div>
-                            <span className="text-gray-400">Role:</span>
-                            <span className="text-white ml-1">{notification.metadata.role}</span>
-                          </div>
-                          <div>
-                            <span className="text-gray-400">Inviter:</span>
-                            <span className="text-white ml-1">{notification.metadata.inviter_name}</span>
-                          </div>
-                          <div>
-                            <span className="text-gray-400">Status:</span>
-                            <span className={`ml-1 ${
-                              notification.metadata.status === 'pending' ? 'text-yellow-400' :
-                              notification.metadata.status === 'accepted' ? 'text-green-400' :
-                              'text-red-400'
-                            }`}>
-                              {notification.metadata.status}
-                            </span>
-                          </div>
-                        </div>
-                        {notification.metadata.skills && (
-                          <div className="mt-2">
-                            <span className="text-gray-400 text-xs">Skills:</span>
-                            <div className="flex flex-wrap gap-1 mt-1">
-                              {notification.metadata.skills.map((skill: string, index: number) => (
-                                <span key={index} className="tag-purple text-xs">
-                                  {skill}
+                      (() => {
+                        const meta = notification.metadata as {
+                          project_title?: string;
+                          role?: string;
+                          inviter_id?: number;
+                          inviter_name?: string;
+                          status?: string;
+                          skills?: string[];
+                        } || {};
+                        return (
+                          <div className="mt-3 p-3 bg-gray-800/30 rounded-lg border border-gray-700/50">
+                            <div className="grid grid-cols-2 gap-2 text-xs">
+                              <div>
+                                <span className="text-gray-400">Project:</span>
+                                <span className="text-white ml-1">{meta.project_title || ''}</span>
+                              </div>
+                              <div>
+                                <span className="text-gray-400">Role:</span>
+                                <span className="text-white ml-1">{meta.role || ''}</span>
+                              </div>
+                              <div>
+                                <span className="text-gray-400">Inviter:</span>
+                                <span className="text-white ml-1">
+                                  {typeof meta.inviter_id !== 'undefined' && typeof meta.inviter_name === 'string' ? (
+                                    <PublicProfileAvatar userId={String(meta.inviter_id)} name={meta.inviter_name} size={32} />
+                                  ) : (
+                                    'User'
+                                  )}
                                 </span>
-                              ))}
+                              </div>
+                              <div>
+                                <span className="text-gray-400">Status:</span>
+                                <span className={`ml-1 ${
+                                  meta.status === 'pending' ? 'text-yellow-400' :
+                                  meta.status === 'accepted' ? 'text-green-400' :
+                                  'text-red-400'
+                                }`}>
+                                  {meta.status || ''}
+                                </span>
+                              </div>
                             </div>
+                            {Array.isArray(meta.skills) && (
+                              <div className="mt-2">
+                                <span className="text-gray-400 text-xs">Skills:</span>
+                                <div className="flex flex-wrap gap-1 mt-1">
+                                  {meta.skills.map((skill: string, index: number) => (
+                                    <span key={index} className="tag-purple text-xs">
+                                      {skill}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
                           </div>
-                        )}
-                      </div>
+                        );
+                      })()
                     )}
                   </div>
                 </div>

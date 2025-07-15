@@ -118,6 +118,14 @@ def update_event_status_automatically():
 # Update event statuses on startup
 update_event_status_automatically()
 
+def get_user_name_by_id(user_id):
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('SELECT name FROM users WHERE id = ?', (user_id,))
+    row = cursor.fetchone()
+    conn.close()
+    return row[0] if row else 'Unknown'
+
 @router.get("/events")
 async def get_events(
     limit: int = Query(50, ge=1, le=100),
@@ -185,7 +193,7 @@ async def get_events(
                 "organizer": {
                     "id": row[13],
                     "type": row[14],
-                    "name": "Organizer"  # You can fetch organizer details from another table
+                    "name": get_user_name_by_id(row[13])
                 },
                 "skills_required": safe_json_loads(row[15], []),
                 "tags": safe_json_loads(row[16], []),
@@ -360,7 +368,7 @@ async def get_event_by_id(event_id: int):
             "organizer": {
                 "id": row[13],
                 "type": row[14],
-                "name": "Organizer"
+                "name": get_user_name_by_id(row[13])
             },
             "skills_required": safe_json_loads(row[15], []),
             "tags": safe_json_loads(row[16], []),
@@ -417,14 +425,25 @@ async def generate_event_with_ai_endpoint(request: AIGenerateRequest):
         if not generated_event:
             raise HTTPException(status_code=500, detail="Failed to generate event with AI")
 
-        # Convert to the expected format
+        # Fill all required fields for event creation
+        now = datetime.now().isoformat(timespec='minutes')
         event_data = {
             "title": generated_event.title,
             "description": generated_event.description,
-            "skills_required": generated_event.skills_required,
-            "tags": generated_event.tags,
-            "marketing_highlights": generated_event.marketing_highlights,
-            "success_metrics": generated_event.success_metrics,
+            "event_type": request.event_type or "hackathon",
+            "category": getattr(generated_event, "category", "General"),
+            "location": "",
+            "state": "",
+            "start_date": now,
+            "end_date": now,
+            "max_participants": 100,
+            "budget": 0,
+            "prize_pool": 0,
+            "skills_required": generated_event.skills_required or [],
+            "tags": generated_event.tags or [],
+            "status": "draft",
+            "marketing_highlights": generated_event.marketing_highlights or [],
+            "success_metrics": generated_event.success_metrics or [],
             "sections": [
                 {
                     "title": section.title,
@@ -433,10 +452,9 @@ async def generate_event_with_ai_endpoint(request: AIGenerateRequest):
                     "target_audience": section.target_audience,
                     "expected_outcome": section.expected_outcome
                 }
-                for section in generated_event.sections
-            ]
+                for section in getattr(generated_event, "sections", [])
+            ],
         }
-
         return event_data
     except Exception as e:
         logger.error(f"Error generating event with AI: {e}")
@@ -999,7 +1017,7 @@ async def get_user_events(user_id: int):
                 "organizer": {
                     "id": row[13],
                     "type": row[14],
-                    "name": "Organizer"
+                    "name": get_user_name_by_id(row[13])
                 },
                 "skills_required": safe_json_loads(row[15], []),
                 "tags": safe_json_loads(row[16], []),
@@ -1092,4 +1110,72 @@ async def generate_visual_summary_for_event(event_id: int):
         
     except Exception as e:
         logger.error(f"Error generating visual summary: {e}")
+        raise HTTPException(status_code=500, detail=str(e)) 
+
+@router.get("/events/search")
+async def search_events(query: str, limit: int = 10):
+    """Search events by name or keyword (title or description). Fully implemented for AI assistant and frontend helpers."""
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        sql = "SELECT * FROM events WHERE title LIKE ? OR description LIKE ? ORDER BY created_at DESC LIMIT ?"
+        like_query = f"%{query}%"
+        cursor.execute(sql, (like_query, like_query, limit))
+        events_data = cursor.fetchall()
+        
+        def safe_json_loads(data, default=None):
+            if data is None:
+                return default
+            try:
+                if isinstance(data, str):
+                    return json.loads(data)
+                elif isinstance(data, (list, dict)):
+                    return data
+                else:
+                    return default
+            except (json.JSONDecodeError, TypeError):
+                return default
+        
+        events = []
+        for row in events_data:
+            event = {
+                "id": row[0],
+                "title": row[1],
+                "description": row[2],
+                "event_type": row[3],
+                "category": row[4],
+                "location": row[5],
+                "state": row[6],
+                "start_date": row[7],
+                "end_date": row[8],
+                "max_participants": row[9],
+                "current_participants": row[10],
+                "budget": row[11],
+                "prize_pool": row[12],
+                "organizer": {
+                    "id": row[13],
+                    "type": row[14],
+                    "name": get_user_name_by_id(row[13])
+                },
+                "skills_required": safe_json_loads(row[15], []),
+                "tags": safe_json_loads(row[16], []),
+                "status": row[17],
+                "impact_metrics": safe_json_loads(row[18], {
+                    "participants_target": 0,
+                    "skills_developed": 0,
+                    "projects_created": 0,
+                    "employment_generated": 0
+                }),
+                "marketing_highlights": safe_json_loads(row[19], []),
+                "success_metrics": safe_json_loads(row[20], []),
+                "sections": safe_json_loads(row[21], []),
+                "social_media_posts": [],
+                "created_at": row[19],
+                "updated_at": row[20]
+            }
+            events.append(event)
+        conn.close()
+        return events
+    except Exception as e:
+        logger.error(f"Error searching events: {e}")
         raise HTTPException(status_code=500, detail=str(e)) 

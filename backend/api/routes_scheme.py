@@ -17,6 +17,9 @@ from core.translation import llama_translate_string as translate_text
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import os
+import logging
+from init_db import get_db
+logger = logging.getLogger(__name__)
 router = APIRouter()
 
 class UserRequest(BaseModel):
@@ -48,3 +51,35 @@ async def recommend_schemes(data: UserRequest):
         "relevant_schemes": relevant_names,
         "explanation": explanation
     }
+
+@router.get("/schemes/search")
+async def search_schemes(query: str, limit: int = 10):
+    """Search schemes by name, description, or target group (for AI assistant and frontend helpers). Fully implemented."""
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        sql = "SELECT * FROM schemes WHERE name LIKE ? OR description LIKE ? OR target_group LIKE ? ORDER BY created_at DESC LIMIT ?"
+        like_query = f"%{query}%"
+        cursor.execute(sql, (like_query, like_query, like_query, limit))
+        schemes_data = cursor.fetchall()
+        schemes = []
+        for row in schemes_data:
+            scheme = {
+                "id": row[0],
+                "name": row[1],
+                "description": row[2],
+                "target_group": row[3],
+                "benefits": row[4],
+                "eligibility": row[5],
+                "application_process": row[6],
+                "documents_required": row[7],
+                "contact_info": row[8],
+                "created_at": row[9],
+                "updated_at": row[10]
+            }
+            schemes.append(scheme)
+        conn.close()
+        return schemes
+    except Exception as e:
+        logger.error(f"Error searching schemes: {e}")
+        raise HTTPException(status_code=500, detail=str(e))

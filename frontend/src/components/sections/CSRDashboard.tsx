@@ -9,6 +9,7 @@ import {
   PieChart, LineChart, Globe, Heart, Star, Zap
 } from 'lucide-react';
 import { csrCourseAPI } from '../../lib/api';
+import PublicProfileAvatar from '../ui/PublicProfileAvatar';
 
 interface Company {
   id: number;
@@ -241,7 +242,8 @@ const CSRDashboard: React.FC = () => {
                           : 'bg-gray-800/50 border border-gray-600 hover:border-purple-500/50'
                       }`}
                     >
-                      <h3 className="font-semibold text-white mb-2">{company.company_name}</h3>
+                      <PublicProfileAvatar userId={company.id} name={company.company_name} size={40} />
+                      <span>{company.company_name}</span>
                       <p className="text-sm text-gray-400 mb-2">{company.industry}</p>
                       <div className="flex items-center justify-between">
                         <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/50">

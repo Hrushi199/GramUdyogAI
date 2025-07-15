@@ -8,6 +8,7 @@ import {
   Plus, User, Crown
 } from 'lucide-react';
 import type { Testimonial, Award as AwardType } from '../../lib/api';
+import PublicProfileAvatar from '../ui/PublicProfileAvatar';
 
 interface TeamMember {
   id: number;
@@ -516,7 +517,8 @@ const MyProjects: React.FC = () => {
                             </div>
                             <div className="flex-1">
                               <div className="flex items-center space-x-2">
-                                <span className="font-semibold text-white">{member.name}</span>
+                                <PublicProfileAvatar userId={member.user_id ?? ''} name={member.name} size={32} />
+                                <span>{member.name}</span>
                                 {member.user_id && (
                                   <Badge className="bg-green-900/50 text-green-300 border-green-700">
                                     <User className="h-3 w-3 mr-1" />

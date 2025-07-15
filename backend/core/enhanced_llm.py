@@ -26,13 +26,18 @@ class EventGenerationSchema(BaseModel):
     description: str
     event_type: str
     category: str
+    location: str = ""
+    state: str = ""
+    start_date: str = ""
+    end_date: str = ""
+    max_participants: int = 100
+    budget: int = 0
+    prize_pool: int = 0
     skills_required: List[str]
     tags: List[str]
-    target_participants: int
-    duration_hours: int
-    sections: List[EventSectionSchema]
     marketing_highlights: List[str]
     success_metrics: List[str]
+    sections: List[EventSectionSchema]
 
 # Marketing Content Schema
 class SocialMediaPostSchema(BaseModel):
@@ -83,20 +88,29 @@ async def generate_event_with_ai(prompt: str, event_type: str, context: str = ""
         if not groq:
             print("Warning: Groq client not initialized. Cannot generate event.")
             return None
-            
+        
+        now_str = datetime.now().strftime('%Y-%m-%dT%H:%M')
         system_prompt = f"""
         You are an expert event planner specializing in {event_type} events.
         The user prefers to interact in the language: {language}.
+        Current datetime is: {now_str}. Use this as a reference for generating start_date and end_date.
         Create a comprehensive event plan in JSON format with the following structure:
         {{
             "title": "Event Title",
             "description": "Detailed description",
             "event_type": "{event_type}",
             "category": "Category",
+            "location": "Location",
+            "state": "State",
+            "start_date": "YYYY-MM-DDTHH:MM (24-hour, zero-padded, e.g., 2024-06-10T14:30)",
+            "end_date": "YYYY-MM-DDTHH:MM (24-hour, zero-padded, e.g., 2024-06-10T18:00)",
+            "max_participants": 100,
+            "budget": 0,
+            "prize_pool": 0,
             "skills_required": ["skill1", "skill2"],
             "tags": ["tag1", "tag2"],
-            "target_participants": 100,
-            "duration_hours": 24,
+            "marketing_highlights": ["highlight1", "highlight2"],
+            "success_metrics": ["metric1", "metric2"],
             "sections": [
                 {{
                     "title": "Section Title",
@@ -105,9 +119,7 @@ async def generate_event_with_ai(prompt: str, event_type: str, context: str = ""
                     "target_audience": "Target audience",
                     "expected_outcome": "Expected outcome"
                 }}
-            ],
-            "marketing_highlights": ["highlight1", "highlight2"],
-            "success_metrics": ["metric1", "metric2"]
+            ]
         }}
         Focus on creating engaging, impactful events that drive skill development and innovation.
         Context: {context}

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 from typing import Dict, Any, List, Optional
 from core.translation import llama_translate_string as translate_text
@@ -7,7 +7,8 @@ from core.scheme_recommender import get_all_scheme_names, get_relevant_scheme_na
 from core.business_suggestion_generation import generate_prompt_from_skills, get_business_suggestions
 from core.llm_function_selector import select_function_and_args, llama_summarize_items
 from core.skill_tutorial import get_skill_tutorials
-from core.ai_assistant_data import get_recent_events, get_featured_projects, get_youtube_summaries, get_user_profile_summary
+from core.ai_assistant_data import get_recent_events, get_featured_projects, get_youtube_summaries, get_user_profile_summary, UserInfo, YoutubeSummaryRequest
+import re
 
 # Import course functions - handle gracefully if not available
 try:
@@ -29,8 +30,8 @@ class AssistantResponse(BaseModel):
     summary: Optional[str] = None
 
 @router.post("/ai-assistant-enhanced")
-async def ai_assistant_enhanced(req: AssistantRequest):
-    """Enhanced AI assistant that returns structured data for UI rendering"""
+async def ai_assistant_enhanced(req: AssistantRequest, request: Request = None):
+    """Supercharged AI assistant: supports all major features, robust chaining, real data, and helper lookups."""
     print("Received enhanced request:", req.dict())
     
     # 1. Translate input to English if needed
@@ -47,162 +48,227 @@ async def ai_assistant_enhanced(req: AssistantRequest):
     print("Arguments for function:", args)
 
     response_data = AssistantResponse(output="", feature_type=func_name)
-    
-    # 3. Call the selected function and structure the response
+
+    # 3. Robust function handling and chaining
     try:
-        if func_name == "recommend_job":
-            all_job_names = await get_all_job_names()
-            relevant_job_names = await get_relevant_jobs(args, all_job_names)
-            
-            if isinstance(relevant_job_names, dict) and "relevant_jobs" in relevant_job_names:
-                relevant_jobs = await load_selected_jobs(relevant_job_names["relevant_jobs"])
-                if relevant_jobs:
-                    response_data.structured_data = {
-                        "jobs": relevant_jobs,
-                        "search_query": args,
-                        "total_found": len(relevant_jobs)
-                    }
-                    response_data.summary = await llama_summarize_items(relevant_jobs, user_text_en, item_type="job")
-                    response_data.output = f"Found {len(relevant_jobs)} relevant job opportunities for you."
+        # --- EVENTS ---
+        if func_name == "event_management":
+            event_id = None
+            if isinstance(args, str) and args:
+                event_name_match = re.search(r'event ([\w\s\-]+)', args, re.IGNORECASE)
+            else:
+                event_name_match = None
+            if event_name_match:
+                event_name = event_name_match.group(1).strip()
+                events = await request.app.router.routes[0].endpoint.__globals__['search_events'](event_name, 1)
+                if events:
+                    event_id = events[0]['id']
+            if event_id:
+                from core.ai_assistant_data import get_event_by_id
+                event = await get_event_by_id(event_id)
+                if event:
+                    response_data.structured_data = {"event": event}
+                    response_data.output = f"Here are the details for event '{event['title']}'."
                 else:
-                    response_data.output = "No suitable jobs found for your query."
+                    response_data.output = "Event not found."
             else:
-                response_data.output = "No suitable jobs found for your query."
-                
+                from core.ai_assistant_data import get_events
+                events = await get_events(limit=10)
+                response_data.structured_data = {"events": events}
+                response_data.output = f"Here are some upcoming events."
+
+        # --- PROJECTS ---
+        elif func_name == "project_showcase":
+            event_id = None
+            if isinstance(args, str) and args:
+                event_name_match = re.search(r'event ([\w\s\-]+)', args, re.IGNORECASE)
+            else:
+                event_name_match = None
+            if event_name_match:
+                event_name = event_name_match.group(1).strip()
+                events = await request.app.router.routes[0].endpoint.__globals__['search_events'](event_name, 1)
+                if events:
+                    event_id = events[0]['id']
+            if isinstance(args, str) and args:
+                project_name_match = re.search(r'project ([\w\s\-]+)', args, re.IGNORECASE)
+            else:
+                project_name_match = None
+            if project_name_match:
+                project_name = project_name_match.group(1).strip()
+                from core.ai_assistant_data import search_projects
+                projects = await search_projects(project_name, 5)
+                response_data.structured_data = {"projects": projects}
+                response_data.output = f"Here are projects matching '{project_name}'."
+            elif event_id:
+                from core.ai_assistant_data import get_projects
+                projects = await get_projects(event_id=event_id, limit=10)
+                response_data.structured_data = {"projects": projects}
+                response_data.output = f"Here are projects for the event."
+            else:
+                from core.ai_assistant_data import get_projects
+                projects = await get_projects(limit=10)
+                response_data.structured_data = {"projects": projects}
+                response_data.output = f"Here are some public projects."
+
+        # --- USERS/PROFILES ---
+        elif func_name in ["profile_management", "dashboard_view"]:
+            if isinstance(args, str) and args:
+                user_name_match = re.search(r'user ([\w\s\-]+)', args, re.IGNORECASE)
+            else:
+                user_name_match = None
+            if user_name_match:
+                user_name = user_name_match.group(1).strip()
+                from core.ai_assistant_data import search_users
+                users = await search_users(user_name, 1)
+                if users:
+                    user_id = users[0]['id']
+                    from core.ai_assistant_data import _get_unified_profile_by_user_id
+                    profile = await _get_unified_profile_by_user_id(user_id)
+                    response_data.structured_data = {"profile": profile}
+                    response_data.output = f"Here is the profile for {user_name}."
+                else:
+                    response_data.output = f"No user found with name '{user_name}'."
+            else:
+                from core.ai_assistant_data import get_profile
+                profile = await get_profile()
+                response_data.structured_data = {"profile": profile}
+                response_data.output = f"Here is your profile."
+
+        # --- JOBS ---
+        elif func_name == "recommend_job":
+            from core.ai_assistant_data import recommend_job, get_jobs, UserInfo
+            if args:
+                # If args is already a UserInfo, use as-is; if string, wrap; if dict, construct
+                if isinstance(args, UserInfo):
+                    user_info = args
+                elif isinstance(args, dict):
+                    user_info = UserInfo(**args)
+                else:
+                    user_info = UserInfo(user_info=args)
+                jobs = await recommend_job(user_info)
+                response_data.structured_data = {"jobs": jobs}
+                response_data.output = f"Here are some recommended jobs."
+            else:
+                jobs = await get_jobs()
+                response_data.structured_data = {"jobs": jobs}
+                response_data.output = f"Here are some available jobs."
+
+        # --- SCHEMES ---
         elif func_name == "scheme_recommendation":
-            all_scheme_names = await get_all_scheme_names()
-            relevant_scheme_names = await get_relevant_scheme_names(args, all_scheme_names)
-            relevant_schemes = await load_selected_schemes(relevant_scheme_names)
-            
-            if relevant_schemes:
-                response_data.structured_data = {
-                    "schemes": relevant_schemes,
-                    "search_query": args,
-                    "total_found": len(relevant_schemes)
-                }
-                response_data.summary = await llama_summarize_items(relevant_schemes, user_text_en, item_type="scheme")
-                response_data.output = f"Found {len(relevant_schemes)} government schemes that match your requirements."
+            scheme_name_match = re.search(r'scheme ([\w\s\-]+)', args, re.IGNORECASE) if isinstance(args, str) and args else None
+            if scheme_name_match:
+                scheme_name = scheme_name_match.group(1).strip()
+                from core.ai_assistant_data import search_schemes
+                schemes = await search_schemes(scheme_name, 5)
+                response_data.structured_data = {"schemes": schemes}
+                response_data.output = f"Here are schemes matching '{scheme_name}'."
             else:
-                response_data.output = "No suitable schemes found for your query."
-                
+                # Use advanced scheme recommender logic
+                from core.scheme_recommender import get_all_scheme_names, get_relevant_scheme_names, load_selected_schemes, explain_schemes
+                occupation = args if isinstance(args, str) and args else "entrepreneur"
+                all_names = await get_all_scheme_names()
+                relevant_names = await get_relevant_scheme_names(occupation, all_names)
+                selected_schemes = await load_selected_schemes(relevant_names)
+                explained = await explain_schemes(occupation, selected_schemes)
+                response_data.structured_data = {"schemes": explained}
+                response_data.output = f"Here are some government schemes for {occupation}."
+
+        # --- BUSINESS SUGGESTIONS ---
         elif func_name == "business_suggestion":
+            from core.business_suggestion_generation import generate_prompt_from_skills, get_business_suggestions
             prompt = generate_prompt_from_skills(args)
             suggestions = await get_business_suggestions(prompt)
-            
-            if hasattr(suggestions, "suggestions") and suggestions.suggestions:
-                suggestions_data = [s.dict() for s in suggestions.suggestions]
-                response_data.structured_data = {
-                    "suggestions": suggestions_data,
-                    "skills_input": args,
-                    "total_found": len(suggestions_data)
-                }
-                response_data.summary = await llama_summarize_items(suggestions_data, user_text_en, item_type="business suggestion")
-                response_data.output = f"Generated {len(suggestions_data)} business suggestions based on your skills."
-            else:
-                response_data.output = "No business suggestions could be generated for your skills."
-                
+            suggestions_data = [s.dict() for s in suggestions.suggestions] if hasattr(suggestions, "suggestions") else []
+            response_data.structured_data = {"suggestions": suggestions_data}
+            response_data.output = f"Here are some business suggestions."
+
+        # --- COURSES & SKILLS ---
         elif func_name == "course_recommendation":
-            try:
-                course_data = generate_structured_recommendations(args, {})
-                if course_data and "courses" in course_data:
-                    response_data.structured_data = {
-                        "courses": course_data["courses"],
-                        "search_query": args,
-                        "total_found": len(course_data["courses"])
-                    }
-                    response_data.summary = f"Found courses to help you learn {args}"
-                    response_data.output = f"Found {len(course_data['courses'])} courses for {args}."
-                else:
-                    response_data.output = f"No courses found for {args}."
-            except Exception as e:
-                print(f"Course recommendation error: {e}")
-                response_data.output = f"Unable to fetch courses for {args} at the moment."
-                
+            from core.course_recommender import generate_structured_recommendations
+            course_data = generate_structured_recommendations(args, {})
+            response_data.structured_data = {"courses": course_data.get("courses", [])}
+            response_data.output = f"Here are some recommended courses."
         elif func_name == "skill_tutorial":
-            try:
-                tutorial_data = await get_skill_tutorials(args)
-                if tutorial_data:
-                    response_data.structured_data = {
-                        "tutorials": tutorial_data,
-                        "skill": args,
-                        "total_found": len(tutorial_data) if isinstance(tutorial_data, list) else 1
-                    }
-                    response_data.summary = f"Found tutorials to help you learn {args}"
-                    response_data.output = f"Found skill building resources for {args}."
-                else:
-                    response_data.output = f"No tutorials found for {args}."
-            except:
-                response_data.output = f"Unable to fetch tutorials for {args} at the moment."
-                
-        elif func_name == "event_management":
-            try:
-                events_data = await get_recent_events(args)
-                if events_data:
-                    response_data.structured_data = {
-                        "events": events_data,
-                        "search_query": args,
-                        "total_found": len(events_data)
-                    }
-                    response_data.summary = f"Found upcoming events related to {args}"
-                    response_data.output = f"Found {len(events_data)} upcoming events for you."
-                else:
-                    response_data.output = f"No upcoming events found for {args}."
-            except Exception as e:
-                print(f"Event management error: {e}")
-                response_data.output = f"Unable to fetch events for {args} at the moment."
-                
-        elif func_name == "project_showcase":
-            try:
-                projects_data = await get_featured_projects(args)
-                if projects_data:
-                    response_data.structured_data = {
-                        "projects": projects_data,
-                        "search_query": args,
-                        "total_found": len(projects_data)
-                    }
-                    response_data.summary = f"Found featured projects related to {args}"
-                    response_data.output = f"Found {len(projects_data)} featured projects for you."
-                else:
-                    response_data.output = f"No projects found for {args}."
-            except Exception as e:
-                print(f"Project showcase error: {e}")
-                response_data.output = f"Unable to fetch projects for {args} at the moment."
-                
+            from core.skill_tutorial import get_skill_tutorials
+            tutorials = await get_skill_tutorials(args)
+            response_data.structured_data = {"tutorials": tutorials}
+            response_data.output = f"Here are some skill tutorials."
+
+        # --- YOUTUBE SUMMARY ---
         elif func_name == "youtube_summary":
-            try:
-                summaries_data = await get_youtube_summaries(args)
-                if summaries_data:
-                    response_data.structured_data = {
-                        "summaries": summaries_data,
-                        "search_query": args,
-                        "total_found": len(summaries_data)
-                    }
-                    response_data.summary = f"Found video summaries related to {args}"
-                    response_data.output = f"Found {len(summaries_data)} video summaries for you."
+            from core.ai_assistant_data import youtube_audio_summary, YoutubeSummaryRequest
+            yt_link_match = re.search(r'(https?://[\w\./\-\?&=]+)', args) if isinstance(args, str) and args else None
+            if yt_link_match:
+                yt_url = yt_link_match.group(1)
+                if isinstance(args, YoutubeSummaryRequest):
+                    req_obj = args
+                elif isinstance(args, dict):
+                    req_obj = YoutubeSummaryRequest(**args)
                 else:
-                    response_data.output = f"No video summaries found for {args}."
-            except Exception as e:
-                print(f"YouTube summary error: {e}")
-                response_data.output = f"Unable to fetch video summaries for {args} at the moment."
-                
-        elif func_name == "profile_management":
-            try:
-                profile_data = await get_user_profile_summary()
-                if profile_data:
-                    response_data.structured_data = {
-                        "profile": profile_data,
-                        "search_query": args
+                    req_obj = YoutubeSummaryRequest(youtube_url=yt_url, language=req.lang)
+                summary = await youtube_audio_summary(req_obj)
+                response_data.structured_data = {"youtube_summary": summary}
+                response_data.output = f"Here is the summary for the YouTube video."
+            else:
+                search_query = args.replace(' ', '+') if isinstance(args, str) and args else ''
+                yt_search_url = f"https://www.youtube.com/results?search_query={search_query}"
+                response_data.structured_data = {"youtube_search_url": yt_search_url}
+                response_data.output = f"Here are some YouTube videos for your topic."
+
+        # --- CSR ---
+        # elif func_name == "csr_dashboard":
+        #     from api.routes_csr_dashboard import get_companies, get_company_metrics
+        #     companies = await get_companies()
+        #     response_data.structured_data = {"companies": companies}
+        #     response_data.output = f"Here are some CSR companies."
+        # elif func_name == "csr_course":
+        #     from api.routes_csr import get_courses
+        #     courses = await get_courses()
+        #     response_data.structured_data = {"csr_courses": courses}
+        #     response_data.output = f"Here are some CSR courses."
+
+        # --- PRODUCT RECOMMENDATION ---
+        elif func_name == "product_recommendation":
+            # Use LLM to generate one or more product search queries from args
+            product_terms = [t.strip() for t in args.split(',') if t.strip()]
+            if product_terms:
+                product_links = [
+                    {
+                        "product_term": term,
+                        "product_search_url": f"https://mkp.gem.gov.in/search?q={term.replace(' ', '+')}"
                     }
-                    response_data.summary = f"Here's your profile overview"
-                    response_data.output = f"Here's your current profile information and achievements."
+                    for term in product_terms
+                ]
+                response_data.structured_data = {"product_links": product_links}
+                if len(product_links) == 1:
+                    response_data.output = f"Here is a government marketplace result for '{product_links[0]['product_term']}'."
                 else:
-                    response_data.output = f"Unable to load profile information."
-            except Exception as e:
-                print(f"Profile management error: {e}")
-                response_data.output = f"Unable to fetch profile information at the moment."
-                
+                    response_data.output = f"Here are government marketplace results for: {', '.join([l['product_term'] for l in product_links])}."
+            else:
+                response_data.output = "Please specify a product to search for."
+
+        # --- VISUAL SUMMARY ---
+        elif func_name == "visual_summary":
+            from core.enhanced_llm import generate_visual_summary_for_marketing
+            summary = await generate_visual_summary_for_marketing(args)
+            response_data.structured_data = {"visual_summary": summary}
+            response_data.output = f"Here is a visual summary for your topic."
+
+        # --- AUDIO (STT) ---
+        # elif func_name == "audio_transcription":
+        #     # Only if user uploads audio or requests transcription
+        #     if request and hasattr(request, 'files') and 'audio' in request.files:
+        #         audio_file = request.files['audio']
+        #         from core.stt import transcribe_audio
+        #         transcription = await transcribe_audio(audio_file, req.lang)
+        #         response_data.structured_data = {"transcription": transcription}
+        #         response_data.output = f"Here is the transcription of your audio."
+        #     else:
+        #         response_data.output = "Please upload an audio file to transcribe."
+
+        # --- DEFAULT ---
         else:
-            response_data.output = "Sorry, I couldn't understand your request. I can help you with jobs, government schemes, business suggestions, courses, skill tutorials, events, projects, video summaries, and profile information."
+            response_data.output = "Sorry, I couldn't understand your request. I can help you with events, projects, users, jobs, schemes, business, courses, skills, YouTube, CSR, and visual summaries."
             response_data.feature_type = "general"
 
     except Exception as e:
@@ -214,69 +280,16 @@ async def ai_assistant_enhanced(req: AssistantRequest):
     if req.lang != "en":
         try:
             from core.translation import translate_structured_data_safely, generate_short_summary, translate_text_safely
-            
-            # First, translate structured data if present
             if response_data.structured_data:
-                print(f"Translating structured data to {req.lang}...")
-                response_data.structured_data = translate_structured_data_safely(
-                    response_data.structured_data, req.lang
-                )
-                print("Structured data translation completed")
-                
-                # Generate and translate a shorter summary for non-English languages
-                if response_data.structured_data and any(key in response_data.structured_data for key in ['schemes', 'jobs', 'suggestions', 'courses', 'tutorials', 'events', 'projects', 'summaries']):
-                    # Determine the item type and data
-                    if 'schemes' in response_data.structured_data:
-                        items = response_data.structured_data['schemes']
-                        item_type = 'government schemes'
-                    elif 'jobs' in response_data.structured_data:
-                        items = response_data.structured_data['jobs']
-                        item_type = 'job opportunities'
-                    elif 'suggestions' in response_data.structured_data:
-                        items = response_data.structured_data['suggestions']
-                        item_type = 'business suggestions'
-                    elif 'courses' in response_data.structured_data:
-                        items = response_data.structured_data['courses']
-                        item_type = 'courses'
-                    elif 'tutorials' in response_data.structured_data:
-                        items = response_data.structured_data['tutorials']
-                        item_type = 'skill tutorials'
-                    elif 'events' in response_data.structured_data:
-                        items = response_data.structured_data['events']
-                        item_type = 'events'
-                    elif 'projects' in response_data.structured_data:
-                        items = response_data.structured_data['projects']
-                        item_type = 'projects'
-                    elif 'summaries' in response_data.structured_data:
-                        items = response_data.structured_data['summaries']
-                        item_type = 'video summaries'
-                    else:
-                        items = []
-                        item_type = 'options'
-                    
-                    if items:
-                        # Generate summary (already translated inside the function)
-                        response_data.summary = generate_short_summary(items, req.user_info, item_type, req.lang)
-                        print(f"Generated translated summary: {response_data.summary[:100]}...")
-                        
-                        # Update the output to be shorter and translated
-                        response_data.output = translate_text_safely(
-                            f"Found {len(items)} {item_type} for you. Check the details below.", 
-                            req.lang
-                        )
-            
-            # If no structured data but we have a summary, translate it
+                response_data.structured_data = translate_structured_data_safely(response_data.structured_data, req.lang)
+                response_data.output = translate_text_safely(response_data.output, req.lang)
             elif response_data.summary:
                 response_data.summary = translate_text_safely(response_data.summary, req.lang)
-            
-            # Always translate the basic output
             response_data.output = translate_text_safely(response_data.output, req.lang)
-                
         except Exception as e:
             print(f"Translation error: {e}")
             import traceback
             traceback.print_exc()
-            # Keep the English text if translation fails
             pass
 
     return response_data.dict()

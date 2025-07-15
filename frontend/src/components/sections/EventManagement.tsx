@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { eventAPI, projectAPI, userAPI, notificationAPI, sttAPI, Event, EventCreate, EventUpdate, Project, User as ApiUser, SocialMediaPost, TeamInviteCreate } from '../../lib/api';
 import { useNavigate } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
+import PublicProfileAvatar from '../ui/PublicProfileAvatar';
 
 interface EventForm {
   title: string;
@@ -111,6 +112,13 @@ const EventManagement: React.FC = () => {
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
+
+  // Add state for user search
+  const [userSearchTerm, setUserSearchTerm] = useState('');
+  const [userSearchResults, setUserSearchResults] = useState<ApiUser[]>([]);
+  const [searching, setSearching] = useState(false);
+  // Add state to control visibility of user search UI
+  const [showUserSearch, setShowUserSearch] = useState(false);
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
@@ -474,6 +482,41 @@ const EventManagement: React.FC = () => {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(amount);
+  };
+
+  const handleUserSearch = async () => {
+    if (!userSearchTerm.trim()) {
+      toast.error('Please enter a name, phone, or organization to search.');
+      return;
+    }
+    setSearching(true);
+    try {
+      const response = await userAPI.searchUsers(userSearchTerm);
+      if (response.data) setUserSearchResults(response.data);
+      else setUserSearchResults([]);
+    } catch (e) {
+      setUserSearchResults([]);
+    } finally {
+      setSearching(false);
+    }
+  };
+
+  const handleAddToTeam = async (user: ApiUser) => {
+    try {
+      const invite = {
+        inviter_id: parseInt(localStorage.getItem('user_id') || '0'),
+        invitee_id: user.id,
+        project_id: 0, // or event/project context
+        role: 'Member',
+        skills: [],
+        message: '',
+      };
+      const response = await notificationAPI.sendTeamInvite(invite);
+      if (response.data) toast.success('Team invite sent!');
+      else toast.error(response.error || 'Failed to send invite');
+    } catch (e) {
+      toast.error('Failed to send invite');
+    }
   };
 
   if (loading) {
@@ -982,7 +1025,37 @@ const EventManagement: React.FC = () => {
             </div>
           </div>
         )}
-        <Toaster />
+        {/* In the UI, only render the user search bar and results if showUserSearch is true */}
+        {showUserSearch && (
+          <div className="my-4">
+            <input
+              type="text"
+              value={userSearchTerm}
+              onChange={(e) => setUserSearchTerm(e.target.value)}
+              placeholder="Search users by name, phone, or organization..."
+              className="px-4 py-2 border border-gray-700 rounded-lg bg-gray-800/50 text-white w-full mb-2"
+            />
+            <button
+              onClick={handleUserSearch}
+              className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
+              disabled={searching}
+            >
+              {searching ? 'Searching...' : 'Search'}
+            </button>
+            <div className="mt-2 space-y-2">
+              {userSearchResults.map((user) => (
+                <div key={user.id} className="flex items-center gap-2 bg-gray-900 p-2 rounded">
+                  <PublicProfileAvatar userId={user.id} name={user.name} size={32} />
+                  <span>{user.name}</span>
+                  <button onClick={() => handleAddToTeam(user)} className="ml-auto px-3 py-1 bg-green-600 text-white rounded">Add to Team</button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {/* Add a button to open the user search UI in the team management section/modal */}
+        <button onClick={() => setShowUserSearch(true)} className="px-3 py-1 bg-blue-600 text-white rounded">Add Team Member</button>
+<Toaster position="top-right" />
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ from datetime import datetime
 import json
 import logging
 from api.routes_auth import get_current_user
+from init_db import get_db
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -83,6 +84,37 @@ async def get_users(
         
     except Exception as e:
         logger.error(f"Error fetching users: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/users/search")
+async def search_users(query: str, limit: int = 10):
+    """Search users by name, organization, or skills (for AI assistant and frontend helpers). Fully implemented."""
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        sql = "SELECT * FROM users WHERE name LIKE ? OR organization LIKE ? OR skills LIKE ? ORDER BY created_at DESC LIMIT ?"
+        like_query = f"%{query}%"
+        cursor.execute(sql, (like_query, like_query, like_query, limit))
+        users_data = cursor.fetchall()
+        users = []
+        for row in users_data:
+            user = {
+                "id": row[0],
+                "phone": row[1],
+                "user_type": row[2],
+                "name": row[3],
+                "organization": row[4],
+                "is_active": row[5],
+                "is_verified": row[6],
+                "created_at": row[7],
+                "last_login": row[8],
+                "skills": row[9] if len(row) > 9 else None
+            }
+            users.append(user)
+        conn.close()
+        return users
+    except Exception as e:
+        logger.error(f"Error searching users: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/users/{user_id}")
@@ -177,6 +209,8 @@ async def update_user(user_id: int, user_update: UserUpdate, current_user: Dict[
         logger.error(f"Error updating user: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+
+
 @router.delete("/users/{user_id}")
 async def delete_user(user_id: int, current_user: Dict[str, Any] = Depends(get_current_user)):
     """Delete a user (only admin can delete users)"""
@@ -246,27 +280,3 @@ async def get_user_stats(user_id: int):
         logger.error(f"Error fetching user stats: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.get("/users/search")
-async def search_users(query: str):
-    """Search users by name, phone, or organization"""
-    cleaned_query = query.replace('+91', '')
-    conn = get_db()
-    conn.row_factory = sqlite3.Row  # <-- This is critical!
-    cursor = conn.cursor()
-    cursor.execute("""
-        SELECT id, phone, name, user_type, organization 
-        FROM users 
-        WHERE phone LIKE ? OR name LIKE ? OR organization LIKE ?
-    """, (f'%{cleaned_query}%', f'%{cleaned_query}%', f'%{cleaned_query}%'))
-    results = cursor.fetchall()
-    conn.close()
-    users = []
-    for row in results:
-        users.append({
-            "id": row['id'],
-            "phone": row['phone'],
-            "name": row['name'],
-            "user_type": row['user_type'],
-            "organization": row['organization']
-        })
-    return users
