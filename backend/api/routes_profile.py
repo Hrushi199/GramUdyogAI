@@ -406,7 +406,7 @@ async def _get_unified_profile_by_user_id(user_id: int) -> Dict[str, Any]:
         }
         
         # Enhance with real-time data
-        profile = await enhance_profile_with_realtime_data(profile, user_id)
+        # profile = await enhance_profile_with_realtime_data(profile, user_id)
         
         conn.close()
         return profile

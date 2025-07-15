@@ -329,6 +329,63 @@ async def generate_visual_summary_for_marketing(event_data: Dict[str, Any]) -> O
         print(f"Error generating visual summary: {e}")
         return None
 
+async def voice_update_profile(transcription: str, current_profile: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """Update profile fields based on voice transcription"""
+    try:
+        if not groq:
+            print("Warning: Groq client not initialized. Cannot update profile.")
+            return None
+            
+        system_prompt = (
+            "You are a profile update assistant. When given a voice transcription and current profile, your job is to update the profile fields based ONLY on what is clearly mentioned in the transcription.\n\n"
+            "Rules:\n"
+            "- ONLY return fields that are clearly mentioned in the transcription.\n"
+            "- Do NOT return fields that are not mentioned.\n"
+            "- NEVER overwrite the entire profile. Only return a partial object with changed fields.\n"
+            "- For skills, only add or remove as clearly stated in the transcription. If not clear, leave unchanged (do not return the field).\n"
+            "- If a field should be removed, return it with null.\n"
+            "- Your response must be a valid JSON object with only the changed fields.\n\n"
+            "Example:\n"
+            "Current Profile: {\"name\": \"Alice\", \"skills\": [\"Python\", \"Design\"]}\n"
+            "Voice Transcription: \"Add JavaScript to my skills and change my name to Alicia\"\n"
+            "Response: {\"name\": \"Alicia\", \"skills\": [\"Python\", \"Design\", \"JavaScript\"]}\n\n"
+            "Always follow this pattern.\n\n"
+            "JSON schema for updates:\n"
+            "{\n  \"name\": \"string or null\",\n  \"location\": \"string or null\",\n  \"state\": \"string or null\",\n  \"skills\": [\"string\"],\n  \"experience\": \"string or null\",\n  \"goals\": \"string or null\",\n  \"organization\": \"string or null\"\n}\n\n"
+            "Your response must be a JSON object only."
+        )
+            
+        user_prompt = f"""
+        Current Profile: {json.dumps(current_profile, indent=2)}
+        Voice Transcription: "{transcription}"
+        
+        Update the profile based on the voice input. Only change fields that are clearly mentioned.
+        """
+            
+        response = groq.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+            temperature=0.3,
+            max_tokens=1024,
+            response_format={"type": "json_object"}
+        )
+            
+        content = response.choices[0].message.content
+        if content:
+            profile_updates = json.loads(content)
+            # Filter out null values and return only the updates
+            return {k: v for k, v in profile_updates.items() if v is not None}
+        else:
+            print("Warning: Empty response from LLM")
+            return None
+        
+    except Exception as e:
+        print(f"Error updating profile with voice: {e}")
+        return None
+
 # ===== UTILITY FUNCTIONS =====
 def format_currency(amount: int) -> str:
     """Format amount as Indian currency"""

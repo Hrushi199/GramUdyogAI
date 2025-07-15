@@ -14,6 +14,7 @@ import {
   ExternalLink,
   Search
 } from 'lucide-react';
+import { Toaster, toast } from 'react-hot-toast';
 
 interface TeamMember {
   id: number;
@@ -780,7 +781,7 @@ const PublicProjects: React.FC = () => {
                         <button 
                           onClick={() => {
                             // Add invest functionality here
-                            alert('Investment functionality would be implemented here');
+                            toast.success('Investment functionality would be implemented here');
                           }}
                           className="w-full py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                         >
@@ -799,7 +800,7 @@ const PublicProjects: React.FC = () => {
                           } else {
                             // Fallback for browsers that don't support Web Share API
                             navigator.clipboard.writeText(window.location.href);
-                            alert('Link copied to clipboard!');
+                            toast.success('Link copied to clipboard!');
                           }
                         }}
                         className="w-full py-2 px-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center space-x-2"
@@ -815,6 +816,17 @@ const PublicProjects: React.FC = () => {
           </div>
         )}
       </div>
+      <Toaster
+        toastOptions={{
+          style: {
+            background: 'rgba(255, 255, 255, 0.1)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            color: '#fff',
+            boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+          },
+        }}
+      />
     </div>
   );
 };

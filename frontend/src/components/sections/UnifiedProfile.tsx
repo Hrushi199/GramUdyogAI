@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
@@ -6,23 +6,14 @@ import { userAPI } from '../../lib/api';
 import ParticleBackground from "../ui/ParticleBackground";
 import { 
   User, Building2, Users, Award, Calendar, MapPin, 
-  TrendingUp, DollarSign, Activity, Globe, Star,
-  Edit, Share2, Eye, Plus, Target, Users2, Briefcase,
-  GraduationCap, Heart, Zap, BarChart3, Lightbulb,
-  ArrowRight, Settings, Bell, Crown, Trophy, Mic, Square, X
+  DollarSign, Activity, Globe, Star,
+  Edit, Plus, Target, Users2, Briefcase,
+  BarChart3, Lightbulb,
+  ArrowRight, Settings, Trophy, Mic, Square, X
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import {getUserId, UserProfile, UserProfileUpdate} from '../../lib/api.ts';
-
-
-// interface Achievement {
-//   id: number;
-//   title: string;
-//   description: string;
-//   type: 'event' | 'project' | 'award' | 'certification';
-//   date: string;
-//   impact_score: number;
-// }
+import { getUserId, UserProfile, UserProfileUpdate, Project, Event, voiceUpdateProfile } from '../../lib/api.ts';
+import { Toaster, toast } from 'react-hot-toast';
 
 interface Activity {
   id: number;
@@ -32,15 +23,6 @@ interface Activity {
   date: string;
   impact_score: number;
 }
-
-// interface Recommendation {
-//   id: number;
-//   type: 'skill' | 'event' | 'connection' | 'project';
-//   title: string;
-//   description: string;
-//   priority: 'high' | 'medium' | 'low';
-//   action_url?: string;
-// }
 
 const UnifiedProfile: React.FC = () => {
   const { i18n } = useTranslation();
@@ -59,17 +41,24 @@ const UnifiedProfile: React.FC = () => {
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
   const [loaded, setLoaded] = useState(false);
-  const [projects, setProjects] = useState<any[]>([]);
-  const [events, setEvents] = useState<any[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const [showVoiceOnboarding, setShowVoiceOnboarding] = useState(false);
 
   // Voice input states
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentVoiceField, setCurrentVoiceField] = useState<string | null>(null);
-  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
-  const [audioChunks, setAudioChunks] = useState<Blob[]>([]);
   const [isTyping, setIsTyping] = useState(false);
+
+  // Media recorder reference
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+  let resolveDataAvailable: () => void;
+
+  // Add state for pending profile changes
+  const [pendingProfile, setPendingProfile] = useState<UserProfile | null>(null);
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
 
   const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
@@ -83,62 +72,59 @@ const UnifiedProfile: React.FC = () => {
   }, []);
 
   // Update fetchProfile function
-const fetchProfile = async () => {
-  try {
-    // const userId = getUserId();
-    const response = await userAPI.getProfile();
-    if (response.data) {
-      setProfile(response.data);
-    } else {
-      // Set default profile data if AI enhancement fails
-      setProfile({
-        user_id: parseInt(getUserId() || '0'),
-        user_type: 'individual',
-        name: '',
-        organization: 'None',
-        location: '',
-        state: '',
-        skills: [],
-        experience: '',
-        goals: '',
-        impact_metrics: {
-          participants_target: 0,
-          skills_developed: 0,
-          projects_created: 0,
-          employment_generated: 0,
-          revenue_generated: 0,
-          events_hosted: 0,
-          jobs_created: 0,
-          social_impact_score: 0,
-          sustainability_score: 0
-        },
-        achievements: [],
-        recent_activities: [],
-        recommendations: [
-          {
-            id: 1,
-            type: 'skill',
-            title: 'Complete Your Profile',
-            description: 'Add more details to get personalized recommendations',
-            priority: 'high',
-            estimated_impact: 100,
-          }
-        ],
-        networking_suggestions: [
-          'Join relevant events in your area',
-          'Connect with professionals in your field'
-        ],
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      });
+  const fetchProfile = async () => {
+    try {
+      const response = await userAPI.getProfile();
+      if (response.data) {
+        setProfile(response.data);
+      } else {
+        setProfile({
+          user_id: parseInt(getUserId() || '0'),
+          user_type: 'individual',
+          name: '',
+          organization: 'None',
+          location: '',
+          state: '',
+          skills: [],
+          experience: '',
+          goals: '',
+          impact_metrics: {
+            participants_target: 0,
+            skills_developed: 0,
+            projects_created: 0,
+            employment_generated: 0,
+            revenue_generated: 0,
+            events_hosted: 0,
+            jobs_created: 0,
+            social_impact_score: 0,
+            sustainability_score: 0
+          },
+          achievements: [],
+          recent_activities: [],
+          recommendations: [
+            {
+              id: 1,
+              type: 'skill',
+              title: 'Complete Your Profile',
+              description: 'Add more details to get personalized recommendations',
+              priority: 'high',
+              estimated_impact: 100,
+            }
+          ],
+          networking_suggestions: [
+            'Join relevant events in your area',
+            'Connect with professionals in your field'
+          ],
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.error('Error fetching profile:', error);
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   const fetchProjects = async () => {
     try {
@@ -223,16 +209,14 @@ const fetchProfile = async () => {
         name: profile.name,
         organization: profile.organization || '',
         location: profile.location || '',
-        state: profile.state|| '',
+        state: profile.state || '',
         skills: profile.skills,
-        experience: profile.experience|| '',
+        experience: profile.experience || '',
         goals: profile.goals || ''
       });
     }
     setEditing(true);
   };
-
-  
 
   const handleSave = async () => {
     try {
@@ -243,298 +227,366 @@ const fetchProfile = async () => {
       if (response.data) {
         setProfile(response.data);
         setEditing(false);
-        console.log('Profile updated successfully');
+        toast.success('Profile updated successfully!', {
+          style: {
+            background: 'rgba(30, 144, 255, 0.1)',
+            border: '1px solid rgba(30, 144, 255, 0.3)',
+            color: '#fff',
+            boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+          },
+          iconTheme: {
+            primary: '#fff',
+            secondary: '#3085d6',
+          },
+        });
       } else if (response.error) {
-        console.error('Error updating profile:', response.error);
-        alert('Failed to update profile: ' + response.error);
+        toast.error('Failed to update profile: ' + response.error, {
+          style: {
+            background: 'rgba(139, 0, 0, 0.1)',
+            border: '1px solid rgba(139, 0, 0, 0.3)',
+            color: '#fff',
+            boxShadow: '0 8px 32px 0 rgba(139, 0, 0, 0.37)',
+          },
+          iconTheme: {
+            primary: '#fff',
+            secondary: '#ff6b6b',
+          },
+        });
       }
     } catch (error) {
-      console.error('Error updating profile:', error);
-      alert('An unexpected error occurred while updating profile');
+      toast.error('An unexpected error occurred while updating profile', {
+        style: {
+          background: 'rgba(139, 0, 0, 0.1)',
+          border: '1px solid rgba(139, 0, 0, 0.3)',
+          color: '#fff',
+          boxShadow: '0 8px 32px 0 rgba(139, 0, 0, 0.37)',
+        },
+        iconTheme: {
+          primary: '#fff',
+          secondary: '#ff6b6b',
+        },
+      });
     } finally {
       setSaving(false);
     }
   };
-
-
 
   const handleCancel = () => {
     setEditing(false);
   };
 
   const addSkill = (skill: string) => {
-    if (skill.trim() && !editForm.skills.includes(skill.trim())) {
-      setEditForm(prev => ({
-        ...prev,
-        skills: [...prev.skills, skill.trim()]
-      }));
-    }
+    setEditForm(prev => ({
+      ...prev,
+      skills: [...(prev.skills || []), skill]
+    }));
   };
 
   const removeSkill = (skillToRemove: string) => {
     setEditForm(prev => ({
       ...prev,
-      skills: prev.skills.filter(skill => skill !== skillToRemove)
+      skills: (prev.skills || []).filter(skill => skill !== skillToRemove)
     }));
   };
 
-  const startVoiceRecording = async (field: string) => {
+  // Helper: Check microphone permission
+  async function checkMicPermission() {
+    if (!navigator.permissions) return true; // fallback for older browsers
     try {
-      setCurrentVoiceField(field);
-      setAudioChunks([]);
-      
+      const status = await navigator.permissions.query({ name: 'microphone' as PermissionName });
+      if (status.state === 'granted') return true;
+      if (status.state === 'prompt') {
+        // Will prompt on getUserMedia
+        return true;
+      }
+      return false;
+    } catch {
+      return true;
+    }
+  }
+
+  // Helper: Get supported mime type
+  function getSupportedMimeType() {
+    const types = [
+      'audio/webm;codecs=opus',
+      'audio/webm',
+      'audio/ogg;codecs=opus',
+      'audio/ogg',
+      'audio/wav',
+    ];
+    for (const type of types) {
+      if (MediaRecorder.isTypeSupported(type)) return type;
+    }
+    return '';
+  }
+
+  const startVoiceRecording = async () => {
+    try {
+      const hasPermission = await checkMicPermission();
+      if (!hasPermission) {
+        console.log('Requesting microphone permission...');
+      }
+      audioChunksRef.current = [];
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
-      
-      recorder.ondataavailable = (event) => {
+      console.log('Microphone stream acquired:', stream);
+      const mimeType = getSupportedMimeType();
+      if (!mimeType) {
+        toast.error('No supported audio format found.');
+        setIsRecording(false);
+        return;
+      }
+      const mediaRecorder = new MediaRecorder(stream, { mimeType });
+      mediaRecorderRef.current = mediaRecorder;
+      const startTime = Date.now();
+      const dataReady = new Promise<void>((resolve) => {
+        resolveDataAvailable = resolve;
+      });
+      mediaRecorder.ondataavailable = (event) => {
+        console.log('Data available:', event.data.size);
         if (event.data.size > 0) {
-          setAudioChunks(prev => [...prev, event.data]);
+          audioChunksRef.current.push(event.data);
+          resolveDataAvailable();
         }
       };
-      
-      recorder.onstop = async () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-        await processVoiceInput(audioBlob);
+      mediaRecorder.onstop = async () => {
+        await dataReady;
+        const audioBlob = new Blob(audioChunksRef.current, { type: mimeType });
+        const duration = (Date.now() - startTime) / 1000;
+        console.log('Recording duration:', duration, 'seconds');
+        if (audioBlob.size === 0 || duration < 1) {
+          toast.error('Recording too short or no audio captured.');
+          setIsRecording(false);
+          return;
+        }
+        await processVoiceInput(audioBlob, 'profile');
       };
-      
-      setMediaRecorder(recorder);
-      recorder.start();
+      await new Promise(resolve => setTimeout(resolve, 100));
+      mediaRecorder.start();
       setIsRecording(true);
+      setCurrentVoiceField('profile');
+      console.log('MediaRecorder started, state:', mediaRecorder.state);
+      toast.success('Recording started!');
     } catch (error) {
-      console.error('Error starting recording:', error);
-    }
-  };
-
-  const stopVoiceRecording = () => {
-    if (mediaRecorder && isRecording) {
-      mediaRecorder.stop();
-      mediaRecorder.stream.getTracks().forEach(track => track.stop());
+      console.error('Error starting voice recording:', error);
+      toast.error('Failed to start recording. Please check microphone permissions.');
       setIsRecording(false);
     }
   };
 
-  const processVoiceInput = async (audioBlob: Blob) => {
-    if (!currentVoiceField) return;
-    
+  const stopVoiceRecording = () => {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+      console.log('Stopping MediaRecorder, state:', mediaRecorderRef.current.state);
+      mediaRecorderRef.current.stop();
+      mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
+      setIsRecording(false);
+      toast.success('Recording stopped.');
+    } else {
+      console.warn('MediaRecorder not recording or not initialized:', mediaRecorderRef.current?.state);
+      setIsRecording(false);
+    }
+  };
+
+  const processVoiceInput = async (audioBlob: Blob, field: string) => {
+    console.log('Processing blob of size:', audioBlob.size, 'for field:', field);
     try {
       setIsProcessing(true);
-      
-      // Get language from i18n
+      console.log('Set isProcessing to true');
       const language = i18n.language || 'en';
-      
-      // Create form data
       const formData = new FormData();
       formData.append('audio', audioBlob, 'recording.webm');
       formData.append('language', language);
-      
-      if (currentVoiceField === 'profile') {
-        // Use the speech-to-profile endpoint for full profile updates
-        const response = await fetch(`${API_BASE_URL}/api/speech-to-profile`, {
+      if (field === 'profile') {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        console.log('Sending request to /api/transcribe');
+        const transcribeResponse = await fetch(`${API_BASE_URL}/api/transcribe`, {
           method: 'POST',
-          body: formData
+          body: formData,
+          signal: controller.signal,
         });
-        
-        if (response.ok) {
-          const data = await response.json();
-          
-          // Update the profile with the extracted data
+        clearTimeout(timeoutId);
+        console.log('Transcription response:', transcribeResponse.status, transcribeResponse.statusText);
+        if (!transcribeResponse.ok) {
+          const errorText = await transcribeResponse.text().catch(() => 'Unknown error');
+          console.error('Transcription failed:', transcribeResponse.status, errorText);
+          toast.error(`Failed to transcribe audio: ${errorText}`);
+          setIsProcessing(false);
+          return;
+        }
+        const transcribeData = await transcribeResponse.json();
+        console.log('Transcription data:', transcribeData);
+        const transcription = transcribeData.text?.trim() || '';
+        if (!transcription) {
+          console.warn('No transcription result received');
+          toast.error('No transcription result');
+          setIsProcessing(false);
+          return;
+        }
+        try {
+          console.log('Sending transcription to voiceUpdateProfile:', transcription);
+          const llmData = await voiceUpdateProfile(transcription, profile);
           if (profile) {
-            const updatedProfile = {
-              ...profile,
-              name: data.name || profile.name,
-              location: data.location || profile.location,
-              state: data.state || profile.state,
-              skills: data.skills || profile.skills,
-              experience: data.experience || profile.experience,
-              goals: data.goals || profile.goals
-            };
-            
-            setProfile(updatedProfile);
-            
-            // Save the updated profile to backend
-            const saveResponse = await fetch(`${API_BASE_URL}/api/profile`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
-              },
-              body: JSON.stringify({
-                name: updatedProfile.name,
-                location: updatedProfile.location,
-                district: updatedProfile.location.split(',')[1]?.trim() || '',
-                state: updatedProfile.state,
-                language: language,
-                skills: updatedProfile.skills,
-                customSkills: [],
-                jobTypes: [],
-                customJobTypes: [],
-                needMentor: false
-              }),
-            });
-            
-            if (saveResponse.ok) {
-              setShowVoiceOnboarding(false);
-              // Refresh the profile data
-              fetchProfile();
-            }
+            setPendingProfile({ ...profile, ...llmData });
+            setShowVoiceOnboarding(false);
+            setShowPreviewModal(true);
           }
-        } else {
-          console.error('Profile voice processing failed');
+          toast('Transcription: ' + transcription, { duration: 5000 });
+        } catch (err) {
+          console.error('Error in voiceUpdateProfile:', err);
+          toast.error('Failed to enhance profile with LLM');
+        } finally {
+          setIsProcessing(false);
         }
       } else {
-        // Handle individual field updates
+        if (field === 'experience' || field === 'goals') {
+          setIsProcessing(false);
+          return;
+        }
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        console.log('Sending request to /api/transcribe for field:', field);
         const response = await fetch(`${API_BASE_URL}/api/transcribe`, {
           method: 'POST',
-          body: formData
+          body: formData,
+          signal: controller.signal,
         });
-        
-        if (response.ok) {
-          const data = await response.json();
-          const transcript = data.text.trim();
-          
-          // Process the transcript based on field type
-          let processedValue = transcript;
-          
-          switch (currentVoiceField) {
-            case 'name':
-            case 'organization':
-            case 'location':
-            case 'state':
-              // Capitalize first letter of each word
-              processedValue = transcript.split(' ').map((word: string) => 
-                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-              ).join(' ');
-              break;
-            case 'skills':
-              // Split by commas and clean up
-              processedValue = transcript.split(',').map((skill: string) => skill.trim());
-              break;
-            case 'experience':
-            case 'goals':
-              processedValue = transcript;
-              break;
-            default:
-              processedValue = transcript;
-          }
-          
-          // Only update if the field is empty or if user explicitly wants to replace
-          const currentValue = editForm[currentVoiceField as keyof typeof editForm];
-          if (!currentValue || (typeof currentValue === 'string' && currentValue.trim() === '')) {
-            setEditForm(prev => ({
-              ...prev,
-              [currentVoiceField]: processedValue
-            }));
-          } else {
-            // Ask user if they want to replace existing content
-            if (window.confirm(`Replace "${currentValue}" with "${processedValue}"?`)) {
-              setEditForm(prev => ({
-                ...prev,
-                [currentVoiceField]: processedValue
-              }));
-            }
-          }
-          
-        } else {
-          console.error('Voice transcription failed');
+        clearTimeout(timeoutId);
+        console.log('Transcription response:', response.status, response.statusText);
+        if (!response.ok) {
+          const errorText = await response.text().catch(() => 'Unknown error');
+          console.error('Transcription failed:', response.status, errorText);
+          toast.error(`Failed to transcribe audio: ${errorText}`);
+          setIsProcessing(false);
+          return;
         }
+        const data = await response.json();
+        console.log('Transcription data:', data);
+        const transcription = data.text?.trim() || '';
+        if (!transcription) {
+          console.warn('No transcription result received');
+          toast.error('No transcription result');
+          setIsProcessing(false);
+          return;
+        }
+        let processedValue = transcription;
+        switch (field) {
+          case 'name':
+          case 'organization':
+          case 'location':
+          case 'state':
+            processedValue = transcription.split(' ').map((word: string) =>
+              word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+            ).join(' ');
+            break;
+          case 'skills':
+            processedValue = transcription.split(',').map((skill: string) => skill.trim());
+            break;
+          default:
+            processedValue = transcription;
+        }
+        const currentValue = editForm[field as keyof typeof editForm];
+        if (!currentValue || (typeof currentValue === 'string' && currentValue.trim() === '')) {
+          setEditForm(prev => ({
+            ...prev,
+            [field]: processedValue
+          }));
+        } else {
+          toast((t) => (
+            <span>
+              Replace "{currentValue}" with "{processedValue}"?
+              <div className="mt-2 flex gap-2">
+                <button
+                  onClick={() => {
+                    setEditForm(prev => ({ ...prev, [field]: processedValue }));
+                    toast.dismiss(t.id);
+                  }}
+                  className="bg-green-600 px-3 py-1 rounded text-white"
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => toast.dismiss(t.id)}
+                  className="bg-red-600 px-3 py-1 rounded text-white"
+                >
+                  No
+                </button>
+              </div>
+            </span>
+          ), {
+            duration: 6000,
+            style: {
+              background: 'rgba(50, 20, 50, 0.9)',
+              color: '#fff',
+              borderRadius: '10px',
+              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+            },
+          });
+        }
+        setIsProcessing(false);
+        return;
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error processing voice input:', error);
+      if (error.name === 'AbortError') {
+        toast.error('Transcription request timed out. Please try again.');
+      } else {
+        toast.error('Error processing voice input: ' + error.message);
+      }
     } finally {
       setIsProcessing(false);
       setCurrentVoiceField(null);
     }
   };
 
-  const VoiceInputButton = ({ field, label }: { field: string, label: string }) => (
-    <button
-      type="button"
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (isTyping) {
-          alert('Please finish typing before using voice input');
-          return;
-        }
-        isRecording ? stopVoiceRecording() : startVoiceRecording(field);
-      }}
-      disabled={isProcessing || isTyping}
-      className={`absolute right-2 top-1/2 transform -translate-y-1/2 p-2 transition-colors disabled:opacity-50 pointer-events-auto ${
-        isTyping ? 'text-gray-500 cursor-not-allowed' : 'text-gray-400 hover:text-purple-400'
-      }`}
-    >
-      {isProcessing ? (
-        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-purple-400"></div>
-      ) : isRecording && currentVoiceField === field ? (
-        <Square className="w-4 h-4 text-red-400" />
-      ) : (
-        <Mic className="w-4 h-4" />
-      )}
-    </button>
-  );
-
-  const VoiceInputField = ({ 
-    field, 
-    label, 
-    type = 'text', 
-    placeholder, 
-    value, 
-    onChange, 
-    required = false 
-  }: {
-    field: string;
-    label: string;
-    type?: string;
-    placeholder: string;
-    value: string;
-    onChange: (value: string) => void;
-    required?: boolean;
-  }) => (
-    <div className="relative">
-      <label className="block text-sm font-medium text-gray-300 mb-2">
-        {label}
-        {required && <span className="text-red-400 ml-1">*</span>}
-      </label>
-      <div className="relative">
-        <input
-          type={type}
-          value={value}
-          onChange={(e) => {
-            // Ensure manual typing works properly
-            onChange(e.target.value);
-            setIsTyping(true);
-            // Stop recording if user starts typing
-            if (isRecording && currentVoiceField === field) {
-              stopVoiceRecording();
-            }
-          }}
-          onKeyDown={(e) => {
-            setIsTyping(true);
-            // Stop recording if user starts typing
-            if (isRecording && currentVoiceField === field) {
-              stopVoiceRecording();
-            }
-          }}
-          onBlur={() => {
-            // Reset typing state after a short delay
-            setTimeout(() => setIsTyping(false), 100);
-          }}
-          placeholder={placeholder}
-          required={required}
-          className="w-full p-3 pr-12 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
-        />
-        <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-          <VoiceInputButton field={field} label={label} />
-        </div>
-      </div>
-      {isRecording && currentVoiceField === field && (
-        <div className="mt-2 text-xs text-purple-400 flex items-center">
-          <div className="animate-pulse mr-2">🔴</div>
-          Recording... Click to stop
-        </div>
-      )}
-    </div>
-  );
+  const handleProfileUpdate = async (updatedProfile: UserProfile) => {
+    try {
+      const response = await userAPI.updateProfile({
+        name: updatedProfile.name,
+        organization: updatedProfile.organization,
+        location: updatedProfile.location,
+        state: updatedProfile.state,
+        skills: updatedProfile.skills,
+        experience: updatedProfile.experience,
+        goals: updatedProfile.goals,
+        impact_metrics: updatedProfile.impact_metrics,
+        achievements: updatedProfile.achievements,
+        recent_activities: updatedProfile.recent_activities,
+        recommendations: updatedProfile.recommendations,
+        networking_suggestions: updatedProfile.networking_suggestions,
+      });
+      
+      if (response.data) {
+        setProfile(response.data);
+        toast.success('Profile updated successfully!', {
+          style: {
+            background: 'rgba(30, 144, 255, 0.1)',
+            border: '1px solid rgba(30, 144, 255, 0.3)',
+            color: '#fff',
+            boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+          },
+        });
+      } else {
+        toast.error('Failed to update profile: ' + (response.error || 'Unknown error'), {
+          style: {
+            background: 'rgba(139, 0, 0, 0.1)',
+            border: '1px solid rgba(139, 0, 0, 0.3)',
+            color: '#fff',
+            boxShadow: '0 8px 32px 0 rgba(139, 0, 0, 0.37)',
+          },
+        });
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      toast.error('An unexpected error occurred while updating profile', {
+        style: {
+          background: 'rgba(139, 0, 0, 0.1)',
+          border: '1px solid rgba(139, 0, 0, 0.3)',
+          color: '#fff',
+          boxShadow: '0 8px 32px 0 rgba(139, 0, 0, 0.37)',
+        },
+      });
+    }
+  };
 
   if (loading) {
     return (
@@ -578,12 +630,12 @@ const fetchProfile = async () => {
   }
 
   const UserTypeIcon = getUserTypeIcon(profile.user_type);
+  const skills = profile.skills || [];
 
   return (
     <div className="relative min-h-screen overflow-hidden">
       <ParticleBackground />
       
-      {/* Background gradients */}
       <div className="absolute inset-0 z-0">
         <div className="h-full w-full bg-[radial-gradient(circle_at_center,rgba(38,38,38,0.3)_1px,transparent_1px)] bg-[length:24px_24px]"></div>
       </div>
@@ -594,11 +646,24 @@ const fetchProfile = async () => {
       <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-blue-600 rounded-full filter blur-[128px] opacity-20 z-0"></div>
 
       <div className="relative z-20 max-w-7xl mx-auto px-6 py-16">
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            style: {
+              background: 'rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              color: '#fff',
+              boxShadow: '0 8px 32px 0 rgba(255, 255, 255, 0.37)',
+            },
+            iconTheme: {
+              primary: '#fff',
+              secondary: '#3085d6',
+            },
+          }}
+        />
         <div className={`transform transition-all duration-1000 ${loaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          {/* Profile Header */}
           <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 mb-8">
             {editing ? (
-              // Edit Form
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
                   <h2 className="text-2xl font-bold text-white">Edit Profile</h2>
@@ -644,7 +709,6 @@ const fetchProfile = async () => {
                         required
                         className="w-full p-3 pr-12 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none"
                       />
-                      <VoiceInputButton field="name" label="Name" />
                     </div>
                     {isRecording && currentVoiceField === 'name' && (
                       <div className="mt-2 text-xs text-purple-400 flex items-center">
@@ -661,12 +725,11 @@ const fetchProfile = async () => {
                     <div className="relative">
                       <input
                         type="text"
-                        value={editForm.organization}
+                        value={editForm.organization || ''}
                         onChange={(e) => setEditForm(prev => ({ ...prev, organization: e.target.value }))}
                         placeholder="Enter organization name"
                         className="w-full p-3 pr-12 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none"
                       />
-                      <VoiceInputButton field="organization" label="Organization" />
                     </div>
                     {isRecording && currentVoiceField === 'organization' && (
                       <div className="mt-2 text-xs text-purple-400 flex items-center">
@@ -684,13 +747,12 @@ const fetchProfile = async () => {
                     <div className="relative">
                       <input
                         type="text"
-                        value={editForm.location}
+                        value={editForm.location || ''}
                         onChange={(e) => setEditForm(prev => ({ ...prev, location: e.target.value }))}
                         placeholder="Enter your location"
                         required
                         className="w-full p-3 pr-12 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none"
                       />
-                      <VoiceInputButton field="location" label="Location" />
                     </div>
                     {isRecording && currentVoiceField === 'location' && (
                       <div className="mt-2 text-xs text-purple-400 flex items-center">
@@ -708,13 +770,12 @@ const fetchProfile = async () => {
                     <div className="relative">
                       <input
                         type="text"
-                        value={editForm.state}
+                        value={editForm.state || ''}
                         onChange={(e) => setEditForm(prev => ({ ...prev, state: e.target.value }))}
                         placeholder="Enter your state"
                         required
                         className="w-full p-3 pr-12 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none"
                       />
-                      <VoiceInputButton field="state" label="State" />
                     </div>
                     {isRecording && currentVoiceField === 'state' && (
                       <div className="mt-2 text-xs text-purple-400 flex items-center">
@@ -728,7 +789,7 @@ const fetchProfile = async () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">Skills</label>
                   <div className="flex flex-wrap gap-2 mb-3">
-                    {editForm.skills.map((skill, index) => (
+                    {(editForm.skills ?? []).map((skill, index) => (
                       <Badge key={index} className="bg-purple-600 text-white">
                         {skill}
                         <button
@@ -765,26 +826,8 @@ const fetchProfile = async () => {
                   </div>
                 </div>
                 
-                <VoiceInputField
-                  field="experience"
-                  label="Experience"
-                  placeholder="Enter your experience level"
-                  value={editForm.experience}
-                  onChange={(value) => setEditForm(prev => ({ ...prev, experience: value }))}
-                  required
-                />
-                
-                <VoiceInputField
-                  field="goals"
-                  label="Goals"
-                  placeholder="Enter your goals"
-                  value={editForm.goals}
-                  onChange={(value) => setEditForm(prev => ({ ...prev, goals: value }))}
-                  required
-                />
               </div>
             ) : (
-              // Display Profile
               <div className="flex flex-col lg:flex-row items-start justify-between gap-6">
                 <div className="flex items-center space-x-6">
                   <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full flex items-center justify-center">
@@ -833,7 +876,6 @@ const fetchProfile = async () => {
             )}
           </div>
 
-          {/* Impact Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 backdrop-blur-sm border border-purple-500/30 rounded-2xl p-6">
               <div className="flex items-center justify-between">
@@ -851,7 +893,7 @@ const fetchProfile = async () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-blue-300 text-sm font-medium">People Impacted</p>
-                  <p className="text-3xl font-bold text-white">{formatNumber(profile.impact_metrics.people_impacted|| 0)}</p>
+                  <p className="text-3xl font-bold text-white">{formatNumber(profile.impact_metrics.people_impacted || 0)}</p>
                 </div>
                 <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
                   <Users className="w-6 h-6 text-blue-400" />
@@ -884,7 +926,6 @@ const fetchProfile = async () => {
             </div>
           </div>
 
-          {/* Tabs */}
           <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6">
             <div className="flex flex-wrap gap-2 mb-6">
               {['overview', 'achievements', 'activities', 'recommendations'].map((tab) => (
@@ -902,10 +943,8 @@ const fetchProfile = async () => {
               ))}
             </div>
 
-            {/* Tab Content */}
             {activeTab === 'overview' && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Skills & Experience */}
                 <div className="space-y-6">
                   <div className="bg-gray-800/30 border border-gray-600 rounded-xl p-6">
                     <h3 className="text-xl font-bold text-white mb-4 flex items-center">
@@ -916,7 +955,7 @@ const fetchProfile = async () => {
                       <div>
                         <h4 className="text-gray-300 font-medium mb-2">Skills</h4>
                         <div className="flex flex-wrap gap-2">
-                          {profile.skills.map((skill, index) => (
+                          {(profile.skills || []).map((skill, index) => (
                             <Badge key={index} className="bg-purple-500/20 text-purple-300 border-purple-500/50">
                               {skill}
                             </Badge>
@@ -935,7 +974,6 @@ const fetchProfile = async () => {
                   </div>
                 </div>
 
-                {/* Additional Metrics */}
                 <div className="space-y-6">
                   <div className="bg-gray-800/30 border border-gray-600 rounded-xl p-6">
                     <h3 className="text-xl font-bold text-white mb-4 flex items-center">
@@ -969,14 +1007,13 @@ const fetchProfile = async () => {
                     </div>
                   </div>
 
-                  {/* Networking Suggestions */}
                   <div className="bg-gray-800/30 border border-gray-600 rounded-xl p-6">
                     <h3 className="text-xl font-bold text-white mb-4 flex items-center">
                       <Globe className="w-5 h-5 mr-2 text-purple-400" />
                       Networking Suggestions
                     </h3>
                     <div className="space-y-2">
-                      {profile.networking_suggestions.slice(0, 3).map((suggestion, index) => (
+                      {(profile.networking_suggestions || []).slice(0, 3).map((suggestion, index) => (
                         <div key={index} className="flex items-center space-x-2 text-gray-300">
                           <ArrowRight className="w-4 h-4 text-purple-400" />
                           <span>{suggestion}</span>
@@ -990,7 +1027,7 @@ const fetchProfile = async () => {
 
             {activeTab === 'achievements' && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {profile.achievements.map((achievement) => (
+                {(profile.achievements || []).map((achievement) => (
                   <div key={achievement.id} className="bg-gray-800/30 border border-gray-600 rounded-xl p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center">
@@ -1013,7 +1050,7 @@ const fetchProfile = async () => {
 
             {activeTab === 'activities' && (
               <div className="space-y-4">
-                {profile.recent_activities.map((activity) => (
+                {(profile.recent_activities || []).map((activity) => (
                   <div key={activity.id} className="bg-gray-800/30 border border-gray-600 rounded-xl p-6">
                     <div className="flex items-start justify-between">
                       <div className="flex items-start space-x-4">
@@ -1040,7 +1077,7 @@ const fetchProfile = async () => {
 
             {activeTab === 'recommendations' && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {profile.recommendations.map((recommendation) => (
+                {(profile.recommendations || []).map((recommendation) => (
                   <div key={recommendation.id} className="bg-gray-800/30 border border-gray-600 rounded-xl p-6">
                     <div className="flex items-start justify-between mb-4">
                       <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
@@ -1056,18 +1093,15 @@ const fetchProfile = async () => {
                     </div>
                     <h4 className="text-white font-semibold mb-2">{recommendation.title}</h4>
                     <p className="text-gray-300 text-sm mb-4">{recommendation.description}</p>
-                    {recommendation.action_url && (
-                      <button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 text-sm">
-                        Take Action
-                      </button>
-                    )}
+                    <button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 text-sm">
+                      Take Action
+                    </button>
                   </div>
                 ))}
               </div>
             )}
           </div>
 
-          {/* My Projects Section */}
           {projects.length > 0 && (
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-white mb-4">My Projects</h2>
@@ -1098,7 +1132,6 @@ const fetchProfile = async () => {
             </div>
           )}
 
-          {/* Events Attended Section */}
           {events.length > 0 && (
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-white mb-4">Events Attended</h2>
@@ -1131,7 +1164,6 @@ const fetchProfile = async () => {
         </div>
       </div>
 
-      {/* Voice Onboarding Modal */}
       {showVoiceOnboarding && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
@@ -1170,18 +1202,34 @@ const fetchProfile = async () => {
               </div>
 
               <div className="text-center mt-6">
-                <button
-                  onClick={() => isRecording ? stopVoiceRecording() : startVoiceRecording('profile')}
-                  disabled={isProcessing}
-                  className={`px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 ${
-                    isRecording
-                      ? 'bg-gradient-to-r from-red-600 to-pink-600 text-white hover:from-red-700 hover:to-pink-700'
-                      : 'bg-gradient-to-r from-orange-600 to-red-600 text-white hover:from-orange-700 hover:to-red-700'
-                  } disabled:opacity-50 disabled:cursor-not-allowed`}
-                >
-                  {isProcessing ? 'Processing...' : isRecording ? 'Stop Recording' : 'Start Voice Update'}
-                </button>
-              </div>
+  <button
+    onClick={async () => {
+      console.log('Voice button clicked, isRecording:', isRecording);
+      if (isRecording) {
+        stopVoiceRecording();
+      } else {
+        await startVoiceRecording();
+      }
+    }}
+    disabled={isProcessing}
+    className={`px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 ${
+      isRecording
+        ? 'bg-gradient-to-r from-red-600 to-pink-600 text-white hover:from-red-700 hover:to-pink-700'
+        : 'bg-gradient-to-r from-orange-600 to-red-600 text-white hover:from-orange-700 hover:to-red-700'
+    } disabled:opacity-50 disabled:cursor-not-allowed`}
+  >
+    {isProcessing ? (
+      <span className="flex items-center justify-center">
+        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+        Processing...
+      </span>
+    ) : isRecording ? (
+      'Stop Recording'
+    ) : (
+      'Start Voice Update'
+    )}
+  </button>
+</div>
 
               <div className="text-gray-300 text-lg text-center mt-4">
                 {isRecording && (
@@ -1207,8 +1255,149 @@ const fetchProfile = async () => {
           </div>
         </div>
       )}
+
+      {showPreviewModal && pendingProfile && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-white flex items-center space-x-2">
+                <Edit className="w-6 h-6 text-purple-400" />
+                <span>Review Profile Changes</span>
+              </h2>
+              <button
+                onClick={() => {
+                  setShowPreviewModal(false);
+                  setPendingProfile(null);
+                }}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+              <div className="bg-gray-800/30 border border-gray-600 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
+                  <User className="w-5 h-5 mr-2 text-gray-400" />
+                  Current Profile
+                </h3>
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-gray-400 text-sm">Name</label>
+                    <p className="text-white">{profile?.name || 'Not set'}</p>
+                  </div>
+                  <div>
+                    <label className="text-gray-400 text-sm">Location</label>
+                    <p className="text-white">{profile?.location || 'Not set'}</p>
+                  </div>
+                  <div>
+                    <label className="text-gray-400 text-sm">State</label>
+                    <p className="text-white">{profile?.state || 'Not set'}</p>
+                  </div>
+                  <div>
+                    <label className="text-gray-400 text-sm">Skills</label>
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {(profile?.skills || []).map((skill, index) => (
+                        <Badge key={index} className="bg-gray-600 text-gray-300 text-xs">
+                          {skill}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-gray-400 text-sm">Experience</label>
+                    <p className="text-white text-sm">{profile?.experience || 'Not set'}</p>
+                  </div>
+                  <div>
+                    <label className="text-gray-400 text-sm">Goals</label>
+                    <p className="text-white text-sm">{profile?.goals || 'Not set'}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-purple-900/20 border border-purple-500/30 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
+                  <Edit className="w-5 h-5 mr-2 text-purple-400" />
+                  Updated Profile
+                </h3>
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-gray-400 text-sm">Name</label>
+                    <p className={`${pendingProfile.name !== profile?.name ? 'text-green-400' : 'text-white'}`}>
+                      {pendingProfile.name || 'Not set'}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-gray-400 text-sm">Location</label>
+                    <p className={`${pendingProfile.location !== profile?.location ? 'text-green-400' : 'text-white'}`}>
+                      {pendingProfile.location || 'Not set'}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-gray-400 text-sm">State</label>
+                    <p className={`${pendingProfile.state !== profile?.state ? 'text-green-400' : 'text-white'}`}>
+                      {pendingProfile.state || 'Not set'}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-gray-400 text-sm">Skills</label>
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {pendingProfile.skills.map((skill, index) => (
+                        <Badge 
+                          key={index} 
+                          className={`text-xs ${
+                            !profile?.skills?.includes(skill) 
+                              ? 'bg-green-600 text-white' 
+                              : 'bg-purple-600 text-white'
+                          }`}
+                        >
+                          {skill}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-gray-400 text-sm">Experience</label>
+                    <p className={`text-sm ${pendingProfile.experience !== profile?.experience ? 'text-green-400' : 'text-white'}`}>
+                      {pendingProfile.experience || 'Not set'}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-gray-400 text-sm">Goals</label>
+                    <p className={`text-sm ${pendingProfile.goals !== profile?.goals ? 'text-green-400' : 'text-white'}`}>
+                      {pendingProfile.goals || 'Not set'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={() => {
+                  setShowPreviewModal(false);
+                  setPendingProfile(null);
+                }}
+                className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all duration-200"
+              >
+                Reject Changes
+              </button>
+              <button
+                onClick={async () => {
+                  await handleProfileUpdate(pendingProfile);
+                  setShowPreviewModal(false);
+                  setPendingProfile(null);
+                }}
+                className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-200"
+              >
+                Accept Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default UnifiedProfile; 
+export default UnifiedProfile;

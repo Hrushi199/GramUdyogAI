@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
@@ -20,6 +20,17 @@ interface Company {
   csr_focus_areas: string[];
 }
 
+interface CSREventImpactMetrics {
+  participants_target?: number;
+  skills_developed?: number;
+  projects_created?: number;
+  employment_generated?: number;
+  revenue_generated?: number;
+  social_impact_score?: number;
+  sustainability_score?: number;
+  [key: string]: number | undefined;
+}
+
 interface CSREvent {
   id: number;
   company_name: string;
@@ -32,7 +43,7 @@ interface CSREvent {
   budget_spent: number;
   start_date: string;
   end_date: string;
-  impact_metrics: any;
+  impact_metrics: CSREventImpactMetrics;
 }
 
 interface DashboardMetrics {
@@ -62,13 +73,7 @@ const CSRDashboard: React.FC = () => {
 
   const API_BASE = 'http://localhost:8000/api/csr';
 
-  useEffect(() => {
-    const timer = setTimeout(() => setLoaded(true), 100);
-    initializeDashboard();
-    return () => clearTimeout(timer);
-  }, []);
-
-  const initializeDashboard = async () => {
+  const initializeDashboard = useCallback(async () => {
     try {
       setLoading(true);
       if (!initialized) {
@@ -81,7 +86,13 @@ const CSRDashboard: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [initialized]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoaded(true), 100);
+    initializeDashboard();
+    return () => clearTimeout(timer);
+  }, [initializeDashboard]);
 
   const fetchCompanies = async () => {
     try {

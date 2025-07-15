@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ParticleBackground from "../ui/ParticleBackground";
 import { useTranslation } from "react-i18next"; // Import useTranslation hook
+import { Toaster, toast } from 'react-hot-toast';
 
 type SchemeExplanation = {
   name: string;
@@ -88,7 +89,7 @@ const SchemeRecommendation = () => {
         );
       }
     } catch {
-      alert("Translation failed.");
+      toast.error("Translation failed.", { style: { background: 'rgba(30, 0, 60, 0.8)', color: '#fff', border: '1px solid #a259ec', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)' } });
     }
     setTranslatingIdx(null);
   };
@@ -323,6 +324,7 @@ const SchemeRecommendation = () => {
           </div>
         </div>
       )}
+      <Toaster />
     </div>
   );
 };

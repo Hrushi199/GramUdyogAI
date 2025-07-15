@@ -19,6 +19,7 @@ interface AssistantResponse {
   structured_data?: any;
   summary?: string;
 }
+import { Toaster, toast } from 'react-hot-toast';
 
 export default function AIAssistant({ lang }: { lang: string }) {
   const { t } = useTranslation('ai-assistant');
@@ -35,7 +36,14 @@ export default function AIAssistant({ lang }: { lang: string }) {
   // Enhanced browser STT with better feedback
   const handleStartListening = () => {
     if (!("webkitSpeechRecognition" in window)) {
-      alert(t('alerts.speechNotSupported'));
+      toast.error(t('alerts.speechNotSupported'), {
+        style: {
+          background: 'rgba(100, 50, 100, 0.9)',
+          color: '#fff',
+          borderRadius: '10px',
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+        },
+      });
       return;
     }
     
@@ -328,6 +336,16 @@ export default function AIAssistant({ lang }: { lang: string }) {
           </div>
         </div>
       )}
+      <Toaster
+        toastOptions={{
+          style: {
+            background: 'rgba(50, 20, 50, 0.9)',
+            color: '#fff',
+            borderRadius: '10px',
+            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+          },
+        }}
+      />
     </div>
   );
 }

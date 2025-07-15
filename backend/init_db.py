@@ -30,34 +30,33 @@ def init_database():
 
     # Events Domain
     cursor.execute('''
-    CREATE TABLE IF NOT EXISTS events (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        description TEXT NOT NULL,
-        event_type TEXT NOT NULL,
-        category TEXT NOT NULL,
-        location TEXT NOT NULL,
-        state TEXT NOT NULL,
-        start_date TEXT NOT NULL,
-        end_date TEXT NOT NULL,
-        max_participants INTEGER NOT NULL,
-        current_participants INTEGER DEFAULT 0,
-        budget INTEGER DEFAULT 0,
-        prize_pool INTEGER DEFAULT 0,
-        organizer_id INTEGER NOT NULL,
-        organizer_type TEXT NOT NULL,
-        created_by INTEGER NOT NULL,
-        skills_required TEXT NOT NULL,
-        tags TEXT NOT NULL,
-        status TEXT DEFAULT 'draft',
-        impact_metrics TEXT,
-        marketing_highlights TEXT,
-        success_metrics TEXT,
-        sections TEXT,
-        created_at TEXT NOT NULL,
-        updated_at TEXT NOT NULL,
-        FOREIGN KEY (created_by) REFERENCES users (id)
-    )''')
+CREATE TABLE IF NOT EXISTS events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL,
+    event_type TEXT NOT NULL,
+    category TEXT NOT NULL,
+    location TEXT NOT NULL,
+    state TEXT NOT NULL,
+    start_date TEXT NOT NULL,
+    end_date TEXT NOT NULL,
+    max_participants INTEGER NOT NULL,
+    current_participants INTEGER DEFAULT 0,
+    budget INTEGER DEFAULT 0,
+    prize_pool INTEGER DEFAULT 0,
+    organizer_id INTEGER NOT NULL,
+    organizer_name TEXT NOT NULL,
+    organizer_type TEXT NOT NULL,
+    organizer_logo TEXT,
+    created_by INTEGER NOT NULL,
+    skills_required TEXT NOT NULL,
+    tags TEXT NOT NULL,
+    status TEXT DEFAULT 'draft',
+    impact_metrics TEXT DEFAULT '{"participants_target": 0, "skills_developed": 0, "projects_created": 0, "employment_generated": 0}',
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    FOREIGN KEY (created_by) REFERENCES users (id)
+)''')
 
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS event_participants (
@@ -87,30 +86,31 @@ def init_database():
     # Update team_members structure in projects table
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS projects (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        description TEXT NOT NULL,
-        category TEXT NOT NULL,
-        event_id INTEGER NOT NULL,
-        event_name TEXT NOT NULL,
-        event_type TEXT NOT NULL,
-        technologies TEXT DEFAULT '[]',
-        impact_metrics TEXT DEFAULT '{"users_reached": 0, "revenue_generated": 0}',
-        funding_status TEXT DEFAULT 'seeking',
-        funding_amount INTEGER DEFAULT 0,
-        funding_goal INTEGER DEFAULT 0,
-        location TEXT NOT NULL,
-        state TEXT NOT NULL,
-        created_by INTEGER DEFAULT 1,
-        created_at TEXT NOT NULL,
-        completed_at TEXT,
-        status TEXT DEFAULT 'active',
-        media TEXT DEFAULT '{"images": [], "videos": []}',
-        testimonials TEXT DEFAULT '[]',
-        awards TEXT DEFAULT '[]',
-        tags TEXT DEFAULT '[]',
-        FOREIGN KEY (event_id) REFERENCES events (id)
-    )''')
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL,
+    category TEXT NOT NULL,
+    event_id INTEGER NOT NULL,
+    event_name TEXT NOT NULL,
+    event_type TEXT NOT NULL,
+    team_members TEXT NOT NULL,
+    technologies TEXT DEFAULT '[]',
+    impact_metrics TEXT DEFAULT '{"users_reached": 0, "revenue_generated": 0}',
+    funding_status TEXT DEFAULT 'seeking',
+    funding_amount INTEGER DEFAULT 0,
+    funding_goal INTEGER DEFAULT 0,
+    location TEXT NOT NULL,
+    state TEXT NOT NULL,
+    created_by INTEGER NOT NULL,
+    created_at TEXT NOT NULL,
+    completed_at TEXT,
+    status TEXT DEFAULT 'active',
+    media TEXT DEFAULT '{"images": [], "videos": []}',
+    testimonials TEXT DEFAULT '[]',
+    awards TEXT DEFAULT '[]',
+    tags TEXT DEFAULT '[]',
+    FOREIGN KEY (event_id) REFERENCES events (id)
+)''')
 
 
 
@@ -235,7 +235,7 @@ def init_database():
     # Additional indexes for performance
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_summary_lang ON summary_translations (language)')
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_audio_lang ON audio_files (language)')
-
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_event_organizer ON events (organizer_id, organizer_type)')
     # Create performance indexes
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_event_status ON events (status)')
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_event_created_by ON events (created_by)')

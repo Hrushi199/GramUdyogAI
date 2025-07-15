@@ -9,6 +9,7 @@ import {
   Mic, Square
 } from 'lucide-react';
 import { setAuthToken, getAuthToken, setUserId, getUserId, clearAuth } from '../../lib/api';
+import { Toaster, toast } from 'react-hot-toast';
 interface AuthForm {
   phone: string;
   password: string;
@@ -257,9 +258,9 @@ const Auth: React.FC = () => {
         setAuthToken(data.access_token);
         setUserId(data.user_id);
 
-        setSuccess('Registration successful! Please choose your preferred language.');
+        setSuccess('Registration successful! Redirecting to profile creation...');
         setTimeout(() => {
-          setCurrentStep('language');
+          navigate('/profile/create');
         }, 1500);
       }
     } catch (err: any) {
@@ -267,17 +268,6 @@ const Auth: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const selectLanguage = (languageCode: string) => {
-    // Set language and move to onboarding
-    localStorage.setItem('preferred_language', languageCode);
-    setCurrentStep('onboarding');
-  };
-
-  const completeOnboarding = () => {
-    // Navigate to profile creation
-    navigate('/profile/create');
   };
 
   const updateForm = (field: keyof AuthForm, value: string) => {
@@ -391,19 +381,42 @@ const Auth: React.FC = () => {
         
         // Only update if the field is empty or if user explicitly wants to replace
         const currentValue = form[currentVoiceField];
-        if (!currentValue || currentValue.trim() === '') {
+        if (!currentValue || (typeof currentValue === 'string' && currentValue.trim() === '')) {
           setForm(prev => ({
             ...prev,
             [currentVoiceField]: processedValue
           }));
         } else {
-          // Ask user if they want to replace existing content
-          if (window.confirm(`Replace "${currentValue}" with "${processedValue}"?`)) {
-            setForm(prev => ({
-              ...prev,
-              [currentVoiceField]: processedValue
-            }));
-          }
+          toast((t) => (
+            <span>
+              Replace "{currentValue}" with "{processedValue}"?
+              <div className="mt-2 flex gap-2">
+                <button
+                  onClick={() => {
+                    setForm(prev => ({ ...prev, [currentVoiceField]: processedValue }));
+                    toast.dismiss(t.id);
+                  }}
+                  className="bg-green-600 px-3 py-1 rounded text-white"
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => toast.dismiss(t.id)}
+                  className="bg-red-600 px-3 py-1 rounded text-white"
+                >
+                  No
+                </button>
+              </div>
+            </span>
+          ), {
+            duration: 6000,
+            style: {
+              background: 'rgba(50, 20, 50, 0.9)',
+              color: '#fff',
+              borderRadius: '10px',
+              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+            },
+          });
         }
         
       } else {
@@ -419,162 +432,43 @@ const Auth: React.FC = () => {
     }
   };
 
-  const VoiceInputButton = ({ field, label }: { field: keyof AuthForm, label: string }) => (
-    <button
-      type="button"
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (isTyping) {
-          alert('Please finish typing before using voice input');
-          return;
-        }
-        isRecording ? stopVoiceRecording() : startVoiceRecording(field);
-      }}
-      disabled={isProcessing || isTyping}
-      className={`p-2 transition-colors disabled:opacity-50 pointer-events-auto ${
-        isTyping ? 'text-gray-500 cursor-not-allowed' : 'text-gray-400 hover:text-purple-400'
-      }`}
-    >
-      {isProcessing ? (
-        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-purple-400"></div>
-      ) : isRecording && currentVoiceField === field ? (
-        <Square className="w-4 h-4 text-red-400" />
-      ) : (
-        <Mic className="w-4 h-4" />
-      )}
-    </button>
-  );
+  const handleVoiceFormEdit = async () => {
+    if (isProcessing) {
+      toast.error('Voice input is already in progress.', {
+        style: {
+          background: 'rgba(17, 24, 39, 0.8)',
+          color: '#fff',
+          border: '1px solid #4f46e5',
+          boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+        },
+      });
+      return;
+    }
 
-  const VoiceInputField = ({ 
-    field, 
-    label, 
-    type = 'text', 
-    placeholder, 
-    value, 
-    onChange, 
-    required = false 
-  }: {
-    field: keyof AuthForm;
-    label: string;
-    type?: string;
-    placeholder: string;
-    value: string;
-    onChange: (value: string) => void;
-    required?: boolean;
-  }) => (
-    <div className="relative">
-      <label className="block text-sm font-medium text-gray-300 mb-2">
-        {label}
-        {required && <span className="text-red-400 ml-1">*</span>}
-      </label>
-      <div className="relative">
-        <input
-          type={type}
-          value={value}
-          onChange={(e) => {
-            // Ensure manual typing works properly
-            onChange(e.target.value);
-            setIsTyping(true);
-            // Stop recording if user starts typing
-            if (isRecording && currentVoiceField === field) {
-              stopVoiceRecording();
-            }
-          }}
-          onKeyDown={(e) => {
-            setIsTyping(true);
-            // Stop recording if user starts typing
-            if (isRecording && currentVoiceField === field) {
-              stopVoiceRecording();
-            }
-          }}
-          onBlur={() => {
-            // Reset typing state after a short delay
-            setTimeout(() => setIsTyping(false), 100);
-          }}
-          placeholder={placeholder}
-          required={required}
-          className="w-full p-3 pr-12 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none"
-        />
-        <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-          <VoiceInputButton field={field} label={label} />
-        </div>
-      </div>
-      {isRecording && currentVoiceField === field && (
-        <div className="mt-2 text-xs text-purple-400 flex items-center">
-          <div className="animate-pulse mr-2">🔴</div>
-          Recording... Click to stop
-        </div>
-      )}
-    </div>
-  );
+    if (!isRecording) {
+      toast('Click the microphone icon to start voice input.', {
+        style: {
+          background: 'rgba(17, 24, 39, 0.8)',
+          color: '#fff',
+          border: '1px solid #4f46e5',
+          boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+        },
+      });
+      return;
+    }
 
-
-  if (currentStep === 'language') {
-    return (
-      <div className="relative min-h-screen overflow-hidden">
-        <ParticleBackground />
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 z-10"></div>
-        <div className="relative z-20 flex items-center justify-center min-h-screen p-4">
-          <Card className="w-full max-w-2xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50">
-            <CardHeader className="text-center">
-              <CardTitle className="text-2xl font-bold text-white">Choose Your Language</CardTitle>
-              <p className="text-gray-300">Select your preferred language for the platform</p>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {languages.map((language) => (
-                  <button
-                    key={language.code}
-                    onClick={() => selectLanguage(language.code)}
-                    className="p-4 border border-gray-600 rounded-lg hover:border-purple-500 hover:bg-purple-500/10 transition-colors text-left bg-gray-800/50"
-                  >
-                    <div className="text-2xl mb-2">{language.flag}</div>
-                    <div className="font-medium text-white">{language.name}</div>
-                  </button>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    );
-  }
-
-  if (currentStep === 'onboarding') {
-    return (
-      <div className="relative min-h-screen overflow-hidden">
-        <ParticleBackground />
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20 z-10"></div>
-        <div className="relative z-20 flex items-center justify-center min-h-screen p-4">
-          <Card className="w-full max-w-2xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50">
-            <CardHeader className="text-center">
-              <CardTitle className="text-2xl font-bold text-white">Welcome to GramUdyogAI!</CardTitle>
-              <p className="text-gray-300">Your account has been created successfully. Let's complete your profile to get started.</p>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                <div className="text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full mb-4">
-                    <CheckCircle className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">Account Created Successfully</h3>
-                  <p className="text-gray-300 mb-6">You're now ready to explore the platform and connect with others.</p>
-                </div>
-                
-                <button
-                  onClick={completeOnboarding}
-                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 px-6 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 transform hover:scale-105"
-                >
-                  Complete Your Profile
-                </button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    );
-  }
+    if (isRecording) {
+      stopVoiceRecording();
+      toast.success('Voice input stopped. Processing...', {
+        style: {
+          background: 'rgba(17, 24, 39, 0.8)',
+          color: '#fff',
+          border: '1px solid #4f46e5',
+          boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+        },
+      });
+    }
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -653,7 +547,6 @@ const Auth: React.FC = () => {
                       required
                       autoComplete="tel"
                     />
-                    <VoiceInputButton field="phone" label="Phone Number" />
                   </div>
                 </div>
 
@@ -712,7 +605,6 @@ const Auth: React.FC = () => {
                         placeholder={form.userType === 'individual' ? 'Enter your full name' : 'Enter organization name'}
                         required
                       />
-                      <VoiceInputButton field="name" label={form.userType === 'individual' ? 'Full Name' : 'Organization Name'} />
                     </div>
                   </div>
                 )}
@@ -731,7 +623,6 @@ const Auth: React.FC = () => {
                         className="w-full pl-10 pr-12 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white placeholder-gray-400"
                         placeholder="Enter contact person name"
                       />
-                      <VoiceInputButton field="organization" label="Contact Person Name" />
                     </div>
                   </div>
                 )}
@@ -846,6 +737,19 @@ const Auth: React.FC = () => {
                 >
                   {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account')}
                 </button>
+
+                <button
+                  onClick={handleVoiceFormEdit}
+                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-2 px-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  disabled={isProcessing}
+                >
+                  {isProcessing ? (
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-purple-400"></div>
+                  ) : (
+                    <Mic className="w-4 h-4 mr-2" />
+                  )}
+                  {isProcessing ? 'Processing...' : 'Fill Form by Voice'}
+                </button>
               </form>
 
               <div className="mt-6 text-center">
@@ -872,6 +776,17 @@ const Auth: React.FC = () => {
           </Card>
         </div>
       </div>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          style: {
+            background: 'rgba(17, 24, 39, 0.9)',
+            color: '#fff',
+            border: '1px solid #4f46e5',
+            boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+          },
+        }}
+      />
     </div>
   );
 };

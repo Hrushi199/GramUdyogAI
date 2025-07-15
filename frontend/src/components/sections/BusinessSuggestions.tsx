@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ParticleBackground from '../ui/ParticleBackground';
+import { Toaster, toast } from 'react-hot-toast';
 
 
 interface DetailedStep {
@@ -90,7 +91,7 @@ const BusinessSuggestion: React.FC = () => {
         );
       }
     } catch {
-      alert("Translation failed.");
+      toast.error('Translation failed.', { style: { background: 'rgba(30, 0, 60, 0.8)', color: '#fff', border: '1px solid #a259ec', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)' } });
     }
     setTranslatingIdx(null);
   };
@@ -542,6 +543,7 @@ const BusinessSuggestion: React.FC = () => {
           <p className="text-purple-300/70 mt-2">Try adding more details about your skills and interests.</p>
         </div>
       )}
+      <Toaster />
     </div>
   );
 };

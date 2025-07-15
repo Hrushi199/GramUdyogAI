@@ -915,10 +915,12 @@ async def leave_event(event_id: int, user_id: int):
 async def get_team_members(event_id: int):
     """Fetch team members for a specific event by event ID."""
     async def fetch_team_members_by_event_id(event_id: int):
-        async with get_db() as db:
-            query = "SELECT * FROM team_members WHERE event_id = :event_id"
-            result = await db.fetch_all(query, values={'event_id': event_id})
-            return [TeamMember(**dict(row)) for row in result]
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM team_members WHERE event_id = ?", (event_id,))
+        rows = cursor.fetchall()
+        conn.close()
+        return [TeamMember(**dict(row)) for row in rows]
     team_members = await fetch_team_members_by_event_id(event_id)
     return team_members
 

@@ -1,9 +1,11 @@
-from fastapi import APIRouter, UploadFile, Form
+from fastapi import APIRouter, UploadFile, Form, Request
 from fastapi.responses import JSONResponse
 from core.stt import transcribe_audio_and_extract_profile, normalize_language
 import tempfile
 import os
 from groq import Groq
+from core.enhanced_llm import voice_update_profile
+import json
 
 router = APIRouter()
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
@@ -50,4 +52,28 @@ async def transcribe_audio(audio: UploadFile, language: str = Form("en")):
         return JSONResponse(content={"text": transcription.text})
     except Exception as e:
         print(f"Error transcribing audio: {e}")
+        return JSONResponse(content={"error": str(e)}, status_code=500)
+
+@router.post("/voice-update-profile")
+async def voice_update_profile_endpoint(request: Request):
+    """
+    Accepts JSON: { "transcription": str, "current_profile": dict }
+    Sends both to the LLM to get updated profile fields.
+    Returns the updated profile fields as JSON.
+    """
+    try:
+        data = await request.json()
+        transcription = data.get("transcription", "")
+        current_profile = data.get("current_profile", {})
+        if not transcription or not current_profile:
+            return JSONResponse(content={"error": "Missing transcription or current_profile"}, status_code=400)
+
+        # Call the LLM to update profile fields
+        profile_updates = await voice_update_profile(transcription, current_profile)
+        if profile_updates:
+            return JSONResponse(content=profile_updates)
+        else:
+            return JSONResponse(content={"error": "LLM did not return profile updates"}, status_code=500)
+    except Exception as e:
+        print(f"Error in voice_update_profile_endpoint: {e}")
         return JSONResponse(content={"error": str(e)}, status_code=500)
