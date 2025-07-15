@@ -1,21 +1,41 @@
 {
-  "title": "Ask for help",
+  "title": "AI Assistant",
   "buttons": {
     "speak": "🎤 Speak",
+    "stopListening": "⏹️ Stop",
     "askAssistant": "Ask Assistant"
   },
   "labels": {
     "transcribed": "Transcribed:",
     "assistant": "Assistant:",
-    "requestToLLM": "Request to LLM:"
+    "summary": "Summary:",
+    "requestToLLM": "Request:"
   },
   "placeholders": {
-    "typeOrSpeak": "Type or speak your request..."
+    "typeOrSpeak": "Type your question or use voice input..."
   },
   "status": {
-    "processing": "Processing..."
+    "processing": "Processing...",
+    "listening": "Listening...",
+    "speaking": "Speaking..."
   },
   "alerts": {
-    "speechNotSupported": "Speech recognition not supported in this browser."
+    "speechNotSupported": "Speech recognition not supported in this browser.",
+    "speechError": "Speech recognition error. Please try again."
+  },
+  "settings": {
+    "tts": "Read responses aloud"
+  },
+  "help": {
+    "title": "I can help you with:",
+    "jobs": "Job recommendations",
+    "schemes": "Government schemes", 
+    "business": "Business ideas",
+    "courses": "Course suggestions",
+    "skills": "Skill tutorials",
+    "general": "General questions"
+  },
+  "error": {
+    "processing": "Sorry, I encountered an error while processing your request. Please try again."
   }
 }

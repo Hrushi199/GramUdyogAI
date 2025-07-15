@@ -342,6 +342,107 @@ def generate_visual_summary_json(topic: str, rag: str, language: str = "en", gen
     print(f"Final Summary: {json.dumps(summary.model_dump(), indent=2)}")
     return summary
 
+# Sample tutorial data for the AI Assistant
+SKILL_TUTORIALS = {
+    "cooking": [
+        {
+            "title": "Basic Cooking Techniques",
+            "description": "Learn fundamental cooking methods like boiling, frying, and baking",
+            "url": "https://www.youtube.com/results?search_query=basic+cooking+techniques",
+            "level": "beginner"
+        },
+        {
+            "title": "Indian Cooking Basics",
+            "description": "Master traditional Indian spices and cooking methods",
+            "url": "https://www.youtube.com/results?search_query=indian+cooking+basics",
+            "level": "beginner"
+        }
+    ],
+    "tailoring": [
+        {
+            "title": "Introduction to Tailoring",
+            "description": "Learn basic stitching and garment construction",
+            "url": "https://www.youtube.com/results?search_query=tailoring+basics",
+            "level": "beginner"
+        },
+        {
+            "title": "Sewing Machine Operation",
+            "description": "Master using a sewing machine for professional results",
+            "url": "https://www.youtube.com/results?search_query=sewing+machine+tutorial",
+            "level": "beginner"
+        }
+    ],
+    "farming": [
+        {
+            "title": "Organic Farming Techniques",
+            "description": "Learn sustainable farming methods without chemicals",
+            "url": "https://www.youtube.com/results?search_query=organic+farming+techniques",
+            "level": "intermediate"
+        },
+        {
+            "title": "Crop Rotation and Soil Management",
+            "description": "Understand how to maintain soil health and maximize yield",
+            "url": "https://www.youtube.com/results?search_query=crop+rotation+soil+management",
+            "level": "intermediate"
+        }
+    ],
+    "weaving": [
+        {
+            "title": "Handloom Weaving Basics",
+            "description": "Learn traditional handloom weaving techniques",
+            "url": "https://www.youtube.com/results?search_query=handloom+weaving+tutorial",
+            "level": "beginner"
+        }
+    ],
+    "pottery": [
+        {
+            "title": "Pottery Wheel Basics",
+            "description": "Learn to shape clay on the pottery wheel",
+            "url": "https://www.youtube.com/results?search_query=pottery+wheel+tutorial",
+            "level": "beginner"
+        }
+    ],
+    "computer": [
+        {
+            "title": "Basic Computer Skills",
+            "description": "Learn essential computer operations and software",
+            "url": "https://www.youtube.com/results?search_query=basic+computer+skills",
+            "level": "beginner"
+        },
+        {
+            "title": "Microsoft Office Basics",
+            "description": "Master Word, Excel, and PowerPoint",
+            "url": "https://www.youtube.com/results?search_query=microsoft+office+tutorial",
+            "level": "beginner"
+        }
+    ]
+}
+
+async def get_skill_tutorials(skill: str) -> List[dict]:
+    """
+    Get tutorials for a specific skill
+    """
+    skill_lower = skill.lower()
+    
+    # Direct match
+    if skill_lower in SKILL_TUTORIALS:
+        return SKILL_TUTORIALS[skill_lower]
+    
+    # Partial match
+    for key, tutorials in SKILL_TUTORIALS.items():
+        if skill_lower in key or key in skill_lower:
+            return tutorials
+    
+    # No match found - return generic tutorial
+    return [
+        {
+            "title": f"Learn {skill.title()}",
+            "description": f"Online tutorials and resources for learning {skill}",
+            "url": f"https://www.youtube.com/results?search_query={skill.replace(' ', '+')}+tutorial",
+            "level": "beginner"
+        }
+    ]
+
 if __name__ == "__main__":
     generate_visual_summary_json(
         "Growing bajra in farm , india, madhya pradesh",
