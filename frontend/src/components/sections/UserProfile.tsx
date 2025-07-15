@@ -3,21 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import ParticleBackground from "../ui/ParticleBackground";
 import { useTranslation } from 'react-i18next';
 import { Mic, MicOff, CheckCircle, ArrowRight, ArrowLeft, User, MapPin, Languages, Briefcase, Users } from 'lucide-react';
-import {userAPI, Profile} from '../../lib/api';
+import {userAPI, UserProfile} from '../../lib/api';
 // Interface for our form data
 interface UserProfileForm {
   name: string;
+  organization?: string | null;
   location: string;
   district: string;
   state: string;
   language: string;
   customLanguage: string;
   skills: string[];
-  customSkills: string[];
   jobTypes: string[];
   customJobTypes: string[];
   needMentor: boolean;
-  userType: string; // <-- Add this line
+  userType: 'individual' | 'company' | 'ngo' | 'investor';
+  experience?: string;
+  goals?: string;
 }
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
@@ -35,18 +37,20 @@ export default function VoiceBasedUserProfile() {
 
   // Form data
   const [form, setForm] = useState<UserProfileForm>({
-    name: '', 
-    location: '', 
+    name: '',
+    organization: '',
+    location: '',
     district: '',
     state: '',
-    language: '', 
+    language: '',
     customLanguage: '',
-    skills: [], 
-    customSkills: [],
-    jobTypes: [], 
+    skills: [],
+    jobTypes: [],
     customJobTypes: [],
     needMentor: false,
-    userType: 'individual' // <-- Add this line
+    userType: 'individual',
+    experience: '',
+    goals: '',
   });
 
   // Media recorder reference
@@ -67,6 +71,23 @@ export default function VoiceBasedUserProfile() {
     "Hindi", "Bengali", "Marathi", "Telugu", "Tamil", "Gujarati", "Urdu", "Kannada", 
     "Odia", "Malayalam", "Punjabi", "Assamese", "English", "Other"
   ];
+
+  // Map language names to i18n codes
+  const languageCodeMap: Record<string, string> = {
+    "Hindi": "hi",
+    "Bengali": "bn",
+    "Marathi": "mr",
+    "Telugu": "te",
+    "Tamil": "ta",
+    "Gujarati": "gu",
+    "Urdu": "ur",
+    "Kannada": "kn",
+    "Odia": "or",
+    "Malayalam": "ml",
+    "Punjabi": "pa",
+    "Assamese": "as",
+    "English": "en"
+  };
 
   const commonSkills = [
     "Weaving", "Tailoring", "Embroidery", "Pottery", "Wood Carving", "Carpentry",
@@ -95,12 +116,19 @@ export default function VoiceBasedUserProfile() {
   const selectLanguage = (language: string) => {
     setForm(prev => ({ ...prev, language }));
     // Change app language to match selected language (if supported)
-    if (language !== 'Other') {
-      const langCode = language === 'Hindi' ? 'hi' : 'en'; // Map to supported languages
-      i18n.changeLanguage(langCode);
+    if (language !== 'Other' && languageCodeMap[language]) {
+      i18n.changeLanguage(languageCodeMap[language]);
     }
     setCurrentStep('voice-input');
   };
+
+  // Sync i18n language with form.language on mount (if supported)
+  useEffect(() => {
+    if (form.language && form.language !== 'Other' && languageCodeMap[form.language]) {
+      i18n.changeLanguage(languageCodeMap[form.language]);
+    }
+    // eslint-disable-next-line
+  }, [form.language]);
 
   // Start recording audio
   const startRecording = async () => {
@@ -154,7 +182,6 @@ export default function VoiceBasedUserProfile() {
         state: data.state || prev.state,
         district: data.district || prev.district,
         skills: data.skills || prev.skills,
-        customSkills: data.customSkills || prev.customSkills,
         jobTypes: data.jobTypes || prev.jobTypes,
         customJobTypes: data.customJobTypes || prev.customJobTypes,
         needMentor: data.needMentor !== undefined ? data.needMentor : prev.needMentor
@@ -198,7 +225,7 @@ export default function VoiceBasedUserProfile() {
     if (newCustomSkill.trim()) {
       setForm(prev => ({
         ...prev,
-        customSkills: [...prev.customSkills, newCustomSkill.trim()]
+        skills: [...prev.skills, newCustomSkill.trim()]
       }));
       setNewCustomSkill('');
     }
@@ -208,7 +235,7 @@ export default function VoiceBasedUserProfile() {
   const removeCustomSkill = (skill: string) => {
     setForm(prev => ({
       ...prev,
-      customSkills: prev.customSkills.filter(s => s !== skill)
+      skills: prev.skills.filter(s => s !== skill)
     }));
   };
 
@@ -253,7 +280,7 @@ export default function VoiceBasedUserProfile() {
       setErrorMessage(t('create_profile.review.validation.custom_language_required'));
       return false;
     }
-    if (form.skills.length === 0 && form.customSkills.length === 0) {
+    if (form.skills.length === 0) {
       setErrorMessage(t('create_profile.review.validation.skills_required'));
       return false;
     }
@@ -269,26 +296,33 @@ export default function VoiceBasedUserProfile() {
 
 const saveProfile = async () => {
   const userId = localStorage.getItem('user_id');
-  
   // Merge customSkills into skills
-  const allSkills = Array.isArray(form.skills) ? [...form.skills] : (form.skills ? form.skills.split(',') : []);
-  if (Array.isArray(form.customSkills)) {
-    allSkills.push(...form.customSkills.filter(s => !!s && !allSkills.includes(s)));
-  }
-
-  const profileData: Profile = {
+  const allSkills = form.skills;
+  const profileData: UserProfile = {
     name: form.name,
     organization: form.organization || null,
-    location: form.district,
+    location: form.location,
     state: form.state,
     skills: allSkills,
-    experience: form.experience || '',  // Ensure required fields have defaults
+    experience: form.experience || '',
     goals: form.goals || '',
-    user_type: form.userType || 'individual'
+    user_type: form.userType,
+    // Add other required fields with defaults if needed
+    impact_metrics: {
+      participants_target: 0,
+      skills_developed: 0,
+      projects_created: 0,
+      employment_generated: 0,
+      revenue_generated: 0,
+    },
+    achievements: [],
+    recent_activities: [],
+    recommendations: [],
+    networking_suggestions: [],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   };
-
   const response = await userAPI.createProfile(profileData);
-  
   if (response.data) {
     setCurrentStep('completed');
     navigate('/profile');
@@ -527,10 +561,9 @@ const saveProfile = async () => {
                 className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
                 <option value="individual">Individual</option>
+                <option value="company">Company</option>
+                <option value="ngo">NGO</option>
                 <option value="investor">Investor</option>
-                <option value="organization">Organization</option>
-                <option value="NGO">NGO</option>
-                {/* Add more user types as needed */}
               </select>
             </div>
           </div>
@@ -580,9 +613,9 @@ const saveProfile = async () => {
                 </button>
               </div>
 
-              {form.customSkills.length > 0 && (
+              {form.skills.length > 0 && (
                 <div className="flex flex-wrap gap-2">
-                  {form.customSkills.map((skill) => (
+                  {form.skills.map((skill) => (
                     <span
                       key={skill}
                       className="inline-flex items-center px-3 py-1 bg-purple-500/20 border border-purple-500/50 rounded-full text-sm text-purple-300"

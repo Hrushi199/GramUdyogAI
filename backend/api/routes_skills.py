@@ -16,6 +16,7 @@ from init_db import get_db
 from datetime import datetime
 import json
 from core.audio_generation import TextToSpeech
+import sqlite3
 class VisualSummaryRequest(BaseModel):
     topic: str
     context: str
@@ -72,6 +73,7 @@ async def get_audio_file(audio_name: str):
 
 @router.post("/visual-summary")
 async def create_visual_summary(request: VisualSummaryRequest):
+
     print("\n=== New Visual Summary Request ===")
     print(f"Topic: {request.topic}")
     print(f"Language: {request.language}")
@@ -80,7 +82,8 @@ async def create_visual_summary(request: VisualSummaryRequest):
     
     try:
         # Create tables if they don't exist
-        
+        conn = get_db()
+        cursor = conn.cursor()
         
         # Generate summary
         summary = generate_visual_summary_json(

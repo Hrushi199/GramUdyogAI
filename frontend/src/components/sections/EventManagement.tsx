@@ -11,6 +11,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { eventAPI, projectAPI, userAPI, notificationAPI, sttAPI, Event, EventCreate, EventUpdate, Project, User as ApiUser, SocialMediaPost, TeamInviteCreate } from '../../lib/api';
 import { useNavigate } from 'react-router-dom';
+import { Toaster, toast } from 'react-hot-toast';
 
 interface EventForm {
   title: string;
@@ -29,6 +30,18 @@ interface EventForm {
   marketing_highlights?: string[];
   success_metrics?: string[];
   sections?: { title: string; description: string; key_points?: string[]; target_audience?: string; expected_outcome?: string }[];
+  organizer: {
+    id: number;
+    name: string;
+    type: 'company' | 'ngo' | 'individual';
+    logo?: string;
+  };
+  impact_metrics: {
+    participants_target: number;
+    skills_developed: number;
+    projects_created: number;
+    employment_generated: number;
+  };
 }
 
 interface ValidationErrors {
@@ -80,6 +93,18 @@ const EventManagement: React.FC = () => {
     marketing_highlights: [],
     success_metrics: [],
     sections: [],
+    organizer: {
+      id: 1,
+      name: '',
+      type: 'company',
+      logo: '',
+    },
+    impact_metrics: {
+      participants_target: 0,
+      skills_developed: 0,
+      projects_created: 0,
+      employment_generated: 0,
+    },
   });
   
   // Validation state
@@ -386,9 +411,21 @@ const EventManagement: React.FC = () => {
           marketing_highlights: [],
           success_metrics: [],
           sections: [],
+          organizer: {
+            id: 1,
+            name: '',
+            type: 'company',
+            logo: '',
+          },
+          impact_metrics: {
+            participants_target: 0,
+            skills_developed: 0,
+            projects_created: 0,
+            employment_generated: 0,
+          },
         });
         clearValidationErrors();
-        alert('Event created successfully!');
+        toast.success('Event created successfully!', { style: { background: 'rgba(30, 0, 60, 0.8)', color: '#fff', border: '1px solid #a259ec', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)' } });
       } else if (response.error) {
         console.error('Error creating event:', response.error);
         setValidationErrors({ general: response.error });
@@ -615,6 +652,18 @@ const EventManagement: React.FC = () => {
                     marketing_highlights: [],
                     success_metrics: [],
                     sections: [],
+                    organizer: {
+                      id: 1,
+                      name: '',
+                      type: 'company',
+                      logo: '',
+                    },
+                    impact_metrics: {
+                      participants_target: 0,
+                      skills_developed: 0,
+                      projects_created: 0,
+                      employment_generated: 0,
+                    },
                   });
                   clearValidationErrors();
                 }}
@@ -933,6 +982,7 @@ const EventManagement: React.FC = () => {
             </div>
           </div>
         )}
+        <Toaster />
       </div>
     </div>
   );

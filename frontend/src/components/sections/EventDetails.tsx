@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { eventAPI, projectAPI, userAPI, Event, Project, User as ApiUser, SocialMediaPost } from '../../lib/api';
+import { eventAPI, projectAPI, userAPI, Event, SocialMediaPost } from '../../lib/api';
+import type { TeamMember, User as UserType, Project } from '../../lib/api';
 import { Badge } from '../ui/badge';
 import { 
   Calendar, MapPin, Users, Award, Share2, Target, TrendingUp, DollarSign, Plus, Activity, User, Crown,
@@ -10,6 +11,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { getEventTypeColor, getStatusColor } from '../../lib/utils';
 import { formatCurrency } from '../../lib/utils';
 import { useTranslation } from 'react-i18next';
+import { TeamMember as TeamMemberType } from '../../lib/api';
+import { Toaster, toast } from 'react-hot-toast';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
@@ -36,7 +39,7 @@ export const joinEvent = async (eventId: number, fetchEvent: () => Promise<void>
     const userData = user ? JSON.parse(user) : null;
     const userId = userData?.id || localStorage.getItem('user_id');
     if (!userId) {
-      alert('Please login to join events');
+      toast.error('Please login to join events');
       return;
     }
     const response = await fetch(`${API_BASE_URL}/api/events/${eventId}/join?user_id=${userId}`, {
@@ -45,14 +48,14 @@ export const joinEvent = async (eventId: number, fetchEvent: () => Promise<void>
     });
     if (response.ok) {
       await fetchEvent();
-      alert('Successfully joined the event!');
+      toast.success('Successfully joined the event!');
     } else {
       const error = await response.json();
-      alert(error.detail || 'Failed to join event');
+      toast.error(error.detail || 'Failed to join event');
     }
   } catch (error) {
     console.error('Error joining event:', error);
-    alert('Failed to join event');
+    toast.error('Failed to join event');
   }
 };
 
@@ -61,7 +64,7 @@ export const createProjectForEvent = async (eventId: number, selectedEvent: Even
   const userData = user ? JSON.parse(user) : null;
   const userId = userData?.id || localStorage.getItem('user_id');
   if (!userId) {
-    alert('Please login to create projects');
+    toast.error('Please login to create projects');
     return;
   }
   const projectData = {
@@ -104,16 +107,16 @@ export const createProjectForEvent = async (eventId: number, selectedEvent: Even
     });
 
     if (response.data) {
-      alert(`Project created successfully! Project ID: ${response.data.id}`);
+      toast.success(`Project created successfully! Project ID: ${response.data.id}`);
       if (selectedEvent) {
         await fetchTeamMembers(selectedEvent.id);
       }
     } else {
-      alert('Failed to create project: ' + (response.error || 'Unknown error'));
+      toast.error('Failed to create project: ' + (response.error || 'Unknown error'));
     }
   } catch (error) {
     console.error('Error creating project for event:', error);
-    alert('Failed to create project');
+    toast.error('Failed to create project');
   } finally {
     // Optional: Any cleanup or final actions can go here
   }
@@ -136,6 +139,11 @@ export const removeTeamMember = async (projectId: number, userId: number, select
     console.error('Error removing team member:', error);
   }
 };
+
+interface TeamMemberWithProject extends TeamMember {
+  project_id: number;
+  project_title: string;
+}
 
 const EventDetails: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
@@ -185,19 +193,19 @@ const EventDetails: React.FC = () => {
 
   // Team management state
   const [loadingTeamMembers, setLoadingTeamMembers] = useState(true);
-  const [teamMembers, setTeamMembers] = useState<any[]>([]);
+  const [teamMembers, setTeamMembers] = useState<TeamMemberWithProject[]>([]);
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showSocialMediaModal, setShowSocialMediaModal] = useState(false);
   
   // User search and selection
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<UserType[]>([]);
   const [searchUserQuery, setSearchUserQuery] = useState('');
-  const [selectedUser, setSelectedUser] = useState<any>(null);
+  const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
   const [newMemberRole, setNewMemberRole] = useState('');
   const [newMemberSkills, setNewMemberSkills] = useState('');
-  const [userProjects, setUserProjects] = useState<any[]>([]);
-  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [userProjects, setUserProjects] = useState<Project[]>([]);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
 
   const fetchTeamMembers = async (eventId: number) => {
@@ -212,8 +220,8 @@ const EventDetails: React.FC = () => {
         );
         
         // Extract team members from projects for this specific event
-        const allTeamMembers = eventProjects.flatMap((project: Project) => 
-          project.team_members.map((member: any) => ({
+        const allTeamMembers: TeamMemberWithProject[] = eventProjects.flatMap((project: Project) => 
+          project.team_members.map((member: TeamMember) => ({
             ...member,
             project_id: project.id,
             project_title: project.title
@@ -256,7 +264,7 @@ const EventDetails: React.FC = () => {
       const response = await projectAPI.getProjects();
       if (response.data) {
         // Filter projects created by the current user
-        const userOwnedProjects = response.data.filter((project: any) => 
+        const userOwnedProjects: Project[] = response.data.filter((project: Project) => 
           project.created_by === parseInt(userId)
         );
         setUserProjects(userOwnedProjects);
@@ -268,13 +276,12 @@ const EventDetails: React.FC = () => {
 
   const addTeamMember = async () => {
     if (!selectedProject || !selectedUser || !newMemberRole || !newMemberSkills || !event) {
-      alert('Please select a project, a user, and define a role and skills.');
+      toast.error('Please select a project, a user, and define a role and skills.');
       return;
     }
 
     try {
-      const response = await eventAPI.addTeamMember(
-        event.id,
+      const response = await projectAPI.addTeamMember(
         selectedProject.id,
         {
           user_id: selectedUser.id,
@@ -284,7 +291,7 @@ const EventDetails: React.FC = () => {
       );
 
       if (response.data) {
-        alert('Team member added successfully!');
+        toast.success('Team member added successfully!');
         setShowAddMemberModal(false);
         setSelectedUser(null);
         setNewMemberRole('');
@@ -292,11 +299,11 @@ const EventDetails: React.FC = () => {
         // Refresh team members list
         fetchTeamMembers(event.id);
       } else {
-        alert('Error adding team member: ' + (response.error || 'Unknown error'));
+        toast.error('Error adding team member: ' + (response.error || 'Unknown error'));
       }
     } catch (error) {
       console.error('Error adding team member:', error);
-      alert('An unexpected error occurred.');
+      toast.error('An unexpected error occurred.');
     }
   };
 
@@ -329,14 +336,14 @@ const EventDetails: React.FC = () => {
     try {
       const response = await eventAPI.updateEventStatus(eventId, 'active');
       if (response.data) {
-        alert('Event marked as active!');
+        toast.success('Event marked as active!');
         fetchEvent(); // Refresh the event
       } else {
-        alert('Error marking event as active: ' + (response.error || 'Unknown error'));
+        toast.error('Error marking event as active: ' + (response.error || 'Unknown error'));
       }
     } catch (error) {
       console.error('Error marking event as active:', error);
-      alert('An unexpected error occurred.');
+      toast.error('An unexpected error occurred.');
     }
   };
 
@@ -344,14 +351,14 @@ const EventDetails: React.FC = () => {
     try {
       const response = await eventAPI.updateEventStatus(eventId, 'inactive');
       if (response.data) {
-        alert('Event marked as inactive!');
+        toast.success('Event marked as inactive!');
         fetchEvent(); // Refresh the event
       } else {
-        alert('Error marking event as inactive: ' + (response.error || 'Unknown error'));
+        toast.error('Error marking event as inactive: ' + (response.error || 'Unknown error'));
       }
     } catch (error) {
       console.error('Error marking event as inactive:', error);
-      alert('An unexpected error occurred.');
+      toast.error('An unexpected error occurred.');
     }
   };
 
@@ -401,15 +408,15 @@ const EventDetails: React.FC = () => {
       try {
         const response = await eventAPI.updateEvent(event.id, eventForm);
         if (response.data) {
-          alert('Event updated successfully!');
+          toast.success('Event updated successfully!');
           setEvent(response.data);
           setIsEditing(false);
         } else {
-          alert('Error updating event: ' + (response.error || 'Unknown error'));
+          toast.error('Error updating event: ' + (response.error || 'Unknown error'));
         }
       } catch (error) {
         console.error('Error updating event:', error);
-        alert('An unexpected error occurred.');
+        toast.error('An unexpected error occurred.');
       }
     }
   };
@@ -801,7 +808,7 @@ const EventDetails: React.FC = () => {
                       <p className="text-gray-300 mb-4">{post.content}</p>
                       {post.hashtags && (
                         <div className="flex flex-wrap gap-1 mb-4">
-                          {post.hashtags.map((tag, tagIndex) => (
+                          {post.hashtags.map((tag: string, tagIndex: number) => (
                             <span key={tagIndex} className="text-blue-400 text-sm">#{tag}</span>
                           ))}
                         </div>
@@ -1255,6 +1262,17 @@ const EventDetails: React.FC = () => {
           </div>
         )}
       </div>
+      <Toaster
+        toastOptions={{
+          style: {
+            background: 'rgba(255, 255, 255, 0.1)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            color: '#fff',
+            boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+          },
+        }}
+      />
     </div>
   );
 };

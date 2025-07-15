@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from 'react-i18next';
+import { Toaster, toast } from 'react-hot-toast';
 
 export default function AIAssistant({ lang }: { lang: string }) {
   const { t } = useTranslation('ai-assistant');
@@ -13,7 +14,14 @@ export default function AIAssistant({ lang }: { lang: string }) {
   // Basic browser STT
   const handleStartListening = () => {
     if (!("webkitSpeechRecognition" in window)) {
-      alert(t('alerts.speechNotSupported'));
+      toast.error(t('alerts.speechNotSupported'), {
+        style: {
+          background: 'rgba(100, 50, 100, 0.9)',
+          color: '#fff',
+          borderRadius: '10px',
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+        },
+      });
       return;
     }
     const recognition = new (window as any).webkitSpeechRecognition();
@@ -107,6 +115,16 @@ export default function AIAssistant({ lang }: { lang: string }) {
           <div>{assistantOutput}</div>
         </div>
       )}
+      <Toaster
+        toastOptions={{
+          style: {
+            background: 'rgba(50, 20, 50, 0.9)',
+            color: '#fff',
+            borderRadius: '10px',
+            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+          },
+        }}
+      />
     </div>
   );
 }

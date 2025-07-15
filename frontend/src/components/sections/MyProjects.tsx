@@ -7,6 +7,7 @@ import {
   Target, DollarSign, Activity, Globe, Heart, Search,
   Plus, User, Crown
 } from 'lucide-react';
+import type { Testimonial, Award as AwardType } from '../../lib/api';
 
 interface TeamMember {
   id: number;
@@ -48,8 +49,8 @@ interface Project {
     demo_url?: string;
     github_url?: string;
   };
-  testimonials: any[];
-  awards: any[];
+  testimonials: Testimonial[];
+  awards: AwardType[];
   tags: string[];
   user_role?: string; // User's role in this project
 }

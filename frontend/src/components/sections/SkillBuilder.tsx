@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import ParticleBackground from '../ui/ParticleBackground';
 import { visualSummaryAPI, csrCourseAPI } from '../../lib/api';
+import { Toaster, toast } from 'react-hot-toast';
 
 interface VisualSummary {
   id: number;
@@ -255,11 +256,11 @@ const SkillBuilder = () => {
         setShowSummaryCreator(false);
       } else if (response.error) {
         console.error('Error creating summary:', response.error);
-        alert(t('consumer.summaryCreatorModal.error'));
+        toast.error(t('consumer.summaryCreatorModal.error'));
       }
     } catch (error) {
       console.error('Error creating summary:', error);
-      alert(t('consumer.summaryCreatorModal.error'));
+      toast.error(t('consumer.summaryCreatorModal.error'));
     } finally {
       setIsCreating(false);
     }
@@ -283,7 +284,7 @@ const SkillBuilder = () => {
       }
     } catch (error) {
       console.error('Error translating summary:', error);
-      alert(t('consumer.visualSummaryModal.translateError'));
+      toast.error(t('consumer.visualSummaryModal.translateError'));
     } finally {
       setTranslatingSummaryId(null);
     }
@@ -361,11 +362,11 @@ const SkillBuilder = () => {
       } else {
         console.error('Error fetching CSR courses or enrollments:', 
           coursesResponse.error || enrollmentsResponse.error);
-        alert(t('consumer.contentList.fetchError'));
+        toast.error(t('consumer.contentList.fetchError'));
       }
     } catch (error) {
       console.error('Error fetching CSR courses:', error);
-      alert(t('consumer.contentList.fetchError'));
+      toast.error(t('consumer.contentList.fetchError'));
     }
   };
 
@@ -420,10 +421,10 @@ const SkillBuilder = () => {
           status: newCourse.status,
         },
       ]);
-      alert(t('uploader.contentUpload.success'));
+      toast.success(t('uploader.contentUpload.success'));
     } catch (error: any) {
       console.error('Error creating course:', error);
-      alert(t('uploader.contentUpload.error') + ': ' + error.message);
+      toast.error(t('uploader.contentUpload.error') + ': ' + error.message);
     }
   };
 
@@ -448,13 +449,13 @@ const SkillBuilder = () => {
           : errorData.detail;
         throw new Error(errorMessage);
       }
-      alert(t('consumer.enrollment.success'));
+      toast.success(t('consumer.enrollment.success'));
       setTokens(tokens + (selectedContent?.tokens || 0));
       setProgress(progress + 10);
       await fetchCourses(); // Refresh to update metrics
     } catch (error: any) {
       console.error('Error enrolling in course:', error);
-      alert(t('consumer.enrollment.failure') + ': ' + error.message);
+      toast.error(t('consumer.enrollment.failure') + ': ' + error.message);
     }
   };
 
@@ -469,15 +470,15 @@ const SkillBuilder = () => {
       });
       
       if (response.data) {
-        alert(t('consumer.completion.success'));
+        toast.success(t('consumer.completion.success'));
         await fetchCourses(); // Refresh to update metrics
       } else if (response.error) {
         console.error('Error completing course:', response.error);
-        alert(t('consumer.completion.failure') + ': ' + response.error);
+        toast.error(t('consumer.completion.failure') + ': ' + response.error);
       }
     } catch (error: any) {
       console.error('Error completing course:', error);
-      alert(t('consumer.completion.failure') + ': ' + error.message);
+      toast.error(t('consumer.completion.failure') + ': ' + error.message);
     }
   };
 
@@ -544,7 +545,7 @@ const SkillBuilder = () => {
   const handleContentUpload = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newContent.content_url.match(/^https?:\/\/[^\s$.?#].[^\s]*$/)) {
-      alert(t('uploader.contentUpload.invalidUrl'));
+      toast.error(t('uploader.contentUpload.invalidUrl'));
       return;
     }
     await createCourse(newContent);
@@ -1405,6 +1406,7 @@ const SkillBuilder = () => {
       {currentSummary && (
         <VisualSummaryModal summary={currentSummary} onClose={() => setCurrentSummary(null)} />
       )}
+      <Toaster />
     </div>
   );
 };

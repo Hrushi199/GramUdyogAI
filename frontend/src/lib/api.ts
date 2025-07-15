@@ -69,9 +69,9 @@ class ApiService {
     return this.request<T>(endpoint);
   }
 
-  async post<T>(endpoint: string, data: any): Promise<ApiResponse<T>> {
+  async post<Req, Res>(endpoint: string, data: Req): Promise<ApiResponse<Res>> {
     const isFormData = data instanceof FormData;
-    return this.request<T>(
+    return this.request<Res>(
       endpoint,
       {
         method: 'POST',
@@ -81,8 +81,8 @@ class ApiService {
     );
   }
 
-  async put<T>(endpoint: string, data: any): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, {
+  async put<Req, Res>(endpoint: string, data: Req): Promise<ApiResponse<Res>> {
+    return this.request<Res>(endpoint, {
       method: 'PUT',
       body: JSON.stringify(data),
     });
@@ -94,8 +94,8 @@ class ApiService {
     });
   }
 
-  async patch<T>(endpoint: string, data: any): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, {
+  async patch<Req, Res>(endpoint: string, data: Req): Promise<ApiResponse<Res>> {
+    return this.request<Res>(endpoint, {
       method: 'PATCH',
       body: JSON.stringify(data),
     });
@@ -155,6 +155,18 @@ export interface EventCreate {
   prize_pool: number;
   skills_required: string[];
   tags: string[];
+  organizer: {
+    id: number;
+    name: string;
+    type: 'company' | 'ngo' | 'individual';
+    logo?: string;
+  }
+  impact_metrics: {
+    participants_target: number;
+    skills_developed: number;
+    projects_created: number;
+    employment_generated: number;
+  }
   status?: 'draft' | 'active' | 'ongoing' | 'completed' | 'cancelled' | 'postponed';
   marketing_highlights?: string[];
   success_metrics?: string[];
@@ -188,6 +200,7 @@ export interface SocialMediaPost {
   image_url?: string;
   scheduled_at?: string;
   status: 'draft' | 'scheduled' | 'published';
+  hashtags?: string[];
 }
 
 // Project Types
@@ -253,8 +266,8 @@ export interface ProjectCreate {
     videos?: string[];
     documents?: string[];
   };
-  testimonials?: any[];
-  awards?: any[];
+  testimonials?: Testimonial[];
+  awards?: Award[];
   tags: string[];
 }
 
@@ -502,7 +515,7 @@ export interface CSRCourseUpdate {
 export interface VisualSummary {
   id: number;
   topic: string;
-  summary_data: any;
+  summary_data: Record<string, unknown>;
   created_at: string;
 }
 
@@ -527,7 +540,7 @@ export class EventAPI {
     const queryParams = new URLSearchParams();
     queryParams.append('created_by', userId.toString());
     
-    return this.api.post<Event>(`/api/events?${queryParams.toString()}`, event);
+    return this.api.post<EventCreate, Event>(`/api/events?${queryParams.toString()}`, event);
   }
 
   // READ
@@ -562,7 +575,7 @@ export class EventAPI {
 
   // UPDATE
   async updateEvent(id: number, event: EventUpdate): Promise<ApiResponse<Event>> {
-    return this.api.put<Event>(`/api/events/${id}`, event);
+    return this.api.put<EventUpdate, Event>(`/api/events/${id}`, event);
   }
 
   // DELETE
@@ -572,11 +585,11 @@ export class EventAPI {
 
   // Additional operations
   async joinEvent(eventId: number, userId: number): Promise<ApiResponse<{ message: string }>> {
-    return this.api.post<{ message: string }>(`/api/events/${eventId}/join`, { user_id: userId });
+    return this.api.post<{ user_id: number }, { message: string }>(`/api/events/${eventId}/join`, { user_id: userId });
   }
 
   async leaveEvent(eventId: number, userId: number): Promise<ApiResponse<{ message: string }>> {
-    return this.api.post<{ message: string }>(`/api/events/${eventId}/leave`, { user_id: userId });
+    return this.api.post<{ user_id: number }, { message: string }>(`/api/events/${eventId}/leave`, { user_id: userId });
   }
 
   async generateSocialMediaPosts(eventId: number, setSelectedEvent: React.Dispatch<React.SetStateAction<Event | null>>) {
@@ -595,11 +608,11 @@ export class EventAPI {
   }
 
   async publishSocialMediaPost(eventId: number, postId: number, platform: string): Promise<ApiResponse<{ message: string }>> {
-    return this.api.post<{ message: string }>(`/api/events/${eventId}/publish-social-post`, { post_id: postId, platform });
+    return this.api.post<{ post_id: number; platform: string }, { message: string }>(`/api/events/${eventId}/publish-social-post`, { post_id: postId, platform });
   }
 
   async generateEventWithAI(prompt: string, eventType: string, language?: string): Promise<ApiResponse<EventCreate>> {
-    return this.api.post<EventCreate>('/api/events/generate-with-ai', { prompt, event_type: eventType, language });
+    return this.api.post<{ prompt: string; event_type: string; language?: string }, EventCreate>('/api/events/generate-with-ai', { prompt, event_type: eventType, language });
   }
 
   // Event Status Management
@@ -611,7 +624,7 @@ export class EventAPI {
     const queryParams = new URLSearchParams();
     queryParams.append('changed_by', userId.toString());
     
-    return this.api.put<{ message: string }>(
+    return this.api.put<{ status: string; reason?: string }, { message: string }>(
       `/api/events/${eventId}/status?${queryParams.toString()}`,
       { status, reason }
     );
@@ -622,7 +635,19 @@ export class EventAPI {
   }
 
   async updateAllEventStatuses(): Promise<ApiResponse<{ message: string }>> {
-    return this.api.post<{ message: string }>('/api/events/update-statuses', {});
+    return this.api.post<{}, { message: string }>('/api/events/update-statuses', {});
+  }
+
+  async getEventsByOrganizer(organizerId: number, type: string): Promise<ApiResponse<Event[]>> {
+    const queryParams = new URLSearchParams({
+      organizer_id: organizerId.toString(),
+      organizer_type: type
+    });
+    return this.api.get<Event[]>(`/api/events/organizer?${queryParams}`);
+  }
+
+  async getOrganizerMetrics(organizerId: number, type: string): Promise<ApiResponse<any>> {
+    return this.api.get<any>(`/api/events/organizer/${organizerId}/metrics?type=${type}`);
   }
 }
 
@@ -639,7 +664,7 @@ export class ProjectAPI {
     const queryParams = new URLSearchParams();
     queryParams.append('created_by', userId.toString());
     
-    return this.api.post<Project>(`/api/projects?${queryParams.toString()}`, project);
+    return this.api.post<ProjectCreate, Project>(`/api/projects?${queryParams.toString()}`, project);
   }
 
   // READ
@@ -667,7 +692,7 @@ export class ProjectAPI {
 
   // UPDATE
   async updateProject(id: number, project: ProjectUpdate): Promise<ApiResponse<Project>> {
-    return this.api.put<Project>(`/api/projects/${id}`, project);
+    return this.api.put<ProjectUpdate, Project>(`/api/projects/${id}`, project);
   }
 
   // DELETE
@@ -681,11 +706,19 @@ export class ProjectAPI {
     role: string;
     skills: string[];
   }): Promise<ApiResponse<{ message: string }>> {
-    return this.api.post<{ message: string }>(`/api/projects/${projectId}/team-members`, member);
+    return this.api.post<{ user_id: number; role: string; skills: string[] }, { message: string }>(`/api/projects/${projectId}/team-members`, member);
   }
 
   async removeTeamMember(projectId: number, userId: number): Promise<ApiResponse<{ message: string }>> {
     return this.api.delete<{ message: string }>(`/api/projects/${projectId}/team-members/${userId}`);
+  }
+
+  async getProjectsByOrganizer(organizerId: number, type: string): Promise<ApiResponse<Project[]>> {
+    const queryParams = new URLSearchParams({
+      organizer_id: organizerId.toString(),
+      organizer_type: type
+    });
+    return this.api.get<Project[]>(`/api/projects/organizer?${queryParams}`);
   }
 }
 
@@ -695,7 +728,7 @@ export class JobAPI {
 
   // CREATE
   async createJob(job: JobCreate): Promise<ApiResponse<{ message: string }>> {
-    return this.api.post<{ message: string }>('/api/jobs', job);
+    return this.api.post<JobCreate, { message: string }>('/api/jobs', job);
   }
 
   // READ
@@ -705,7 +738,7 @@ export class JobAPI {
 
   // UPDATE
   async updateJob(id: number, job: JobUpdate): Promise<ApiResponse<{ message: string }>> {
-    return this.api.put<{ message: string }>(`/api/jobs/${id}`, job);
+    return this.api.put<JobUpdate, { message: string }>(`/api/jobs/${id}`, job);
   }
 
   // DELETE
@@ -715,7 +748,7 @@ export class JobAPI {
 
   // Additional operations
   async recommendJob(userInfo: string): Promise<ApiResponse<{ best_job: Job }>> {
-    return this.api.post<{ best_job: Job }>('/api/recommend-job', { user_info: userInfo });
+    return this.api.post<{ user_info: string }, { best_job: Job }>('/api/recommend-job', { user_info: userInfo });
   }
 }
 
@@ -726,7 +759,7 @@ export class UserAPI {
   // Add createProfile method
   async createProfile(profileData: UserProfile): Promise<ApiResponse<UserProfile>> {
     console.log('sending profile data:', profileData);
-    return this.api.post<UserProfile>('/api/profile/', profileData);
+    return this.api.post<UserProfile, UserProfile>('/api/profile', profileData);
   }
 
   // READ methods
@@ -760,11 +793,11 @@ const response = await this.api.get<UserProfile>('/api/profile/');
 
   // UPDATE methods
   async updateUser(id: number, userData: Partial<User>): Promise<ApiResponse<User>> {
-    return this.api.put<User>(`/api/users/${id}`, userData);
+    return this.api.put<Partial<User>, User>(`/api/users/${id}`, userData);
   }
 
   async updateProfile(profileData: UserProfileUpdate): Promise<ApiResponse<UserProfile>> {
-    return this.api.put<UserProfile>('/api/profile/', profileData);
+    return this.api.put<UserProfileUpdate, UserProfile>('/api/profile', profileData);
   }
 
 
@@ -781,7 +814,7 @@ export class CSRCourseAPI {
 
   // CREATE
   async createCourse(course: CSRCourseCreate): Promise<ApiResponse<CSRCourse>> {
-    return this.api.post<CSRCourse>('/api/csr/courses', course);
+    return this.api.post<CSRCourseCreate, CSRCourse>('/api/csr/courses', course);
   }
 
   // READ
@@ -795,7 +828,7 @@ export class CSRCourseAPI {
 
   // UPDATE
   async updateCourse(id: number, course: CSRCourseUpdate): Promise<ApiResponse<{ message: string }>> {
-    return this.api.put<{ message: string }>(`/api/csr/courses/${id}`, course);
+    return this.api.put<CSRCourseUpdate, { message: string }>(`/api/csr/courses/${id}`, course);
   }
 
   // DELETE
@@ -805,16 +838,16 @@ export class CSRCourseAPI {
 
   // Additional operations
   async enrollCourse(courseId: number, userId: number): Promise<ApiResponse<{ message: string }>> {
-    return this.api.post<{ message: string }>(`/api/csr/courses/${courseId}/enroll`, { user_id: userId });
+    return this.api.post<{ user_id: number }, { message: string }>(`/api/csr/courses/${courseId}/enroll`, { user_id: userId });
   }
 
   async updateCourseStatus(courseId: number, status: string): Promise<ApiResponse<{ message: string }>> {
-    return this.api.put<{ message: string }>(`/api/csr/courses/${courseId}/status`, { status });
+    return this.api.put<{ status: string }, { message: string }>(`/api/csr/courses/${courseId}/status`, { status });
   }
 
   // CSR Dashboard methods
   async initializeDashboard(): Promise<ApiResponse<any>> {
-    return this.api.post<any>('/api/csr/dashboard/initialize', {});
+    return this.api.post<{}, any>('/api/csr/dashboard/initialize', {});
   }
 
   async getCompanies(): Promise<ApiResponse<any[]>> {
@@ -836,7 +869,7 @@ export class VisualSummaryAPI {
 
   // CREATE
   async createVisualSummary(summary: VisualSummaryCreate): Promise<ApiResponse<VisualSummary>> {
-    return this.api.post<VisualSummary>('/api/visual-summary', summary);
+    return this.api.post<VisualSummaryCreate, VisualSummary>('/api/visual-summary', summary);
   }
 
   // READ
@@ -850,7 +883,7 @@ export class VisualSummaryAPI {
 
   // UPDATE
   async updateVisualSummary(id: number, summary: Partial<VisualSummary>): Promise<ApiResponse<VisualSummary>> {
-    return this.api.put<VisualSummary>(`/api/visual-summary/${id}`, summary);
+    return this.api.put<Partial<VisualSummary>, VisualSummary>(`/api/visual-summary/${id}`, summary);
   }
 
   // DELETE
@@ -860,7 +893,7 @@ export class VisualSummaryAPI {
 
   // Additional operations
   async updateSummaryAudio(summaryId: number, sectionIndex: number, audioUrl: string): Promise<ApiResponse<{ message: string }>> {
-    return this.api.post<{ message: string }>('/api/update-summary-audio', {
+    return this.api.post<{ summary_id: number; section_index: number; audio_url: string }, { message: string }>('/api/update-summary-audio', {
       summary_id: summaryId,
       section_index: sectionIndex,
       audio_url: audioUrl,
@@ -879,7 +912,7 @@ export interface Notification {
   related_type?: string;
   event_id?: number;
   project_id?: number;
-  metadata?: any;
+  metadata?: Record<string, unknown>;
   is_read: boolean;
   created_at: string;
   updated_at?: string;
@@ -894,14 +927,14 @@ export interface NotificationCreate {
   related_type?: string;
   event_id?: number;
   project_id?: number;
-  metadata?: any;
+  metadata?: Record<string, unknown>;
 }
 
 export interface NotificationUpdate {
   title?: string;
   message?: string;
   is_read?: boolean;
-  metadata?: any;
+  metadata?: Record<string, unknown>;
 }
 
 export interface TeamInviteCreate {
@@ -949,11 +982,11 @@ export class NotificationAPI {
   }
 
   async createNotification(notification: NotificationCreate): Promise<ApiResponse<Notification>> {
-    return this.api.post<Notification>('/api/notifications', notification);
+    return this.api.post<NotificationCreate, Notification>('/api/notifications', notification);
   }
 
   async updateNotification(notification_id: number, update: NotificationUpdate): Promise<ApiResponse<Notification>> {
-    return this.api.put<Notification>(`/api/notifications/${notification_id}`, update);
+    return this.api.put<NotificationUpdate, Notification>(`/api/notifications/${notification_id}`, update);
   }
 
   async deleteNotification(notification_id: number): Promise<ApiResponse<{ message: string }>> {
@@ -961,11 +994,11 @@ export class NotificationAPI {
   }
 
   async markAsRead(notification_id: number): Promise<ApiResponse<{ message: string }>> {
-    return this.api.put<{ message: string }>(`/api/notifications/${notification_id}/read`, {});
+    return this.api.put<{}, { message: string }>(`/api/notifications/${notification_id}/read`, {});
   }
 
   async markAllAsRead(user_id: number): Promise<ApiResponse<{ message: string }>> {
-    return this.api.put<{ message: string }>(`/api/notifications/user/${user_id}/read-all`, {});
+    return this.api.put<{}, { message: string }>(`/api/notifications/user/${user_id}/read-all`, {});
   }
 
   async getUnreadCount(user_id: number): Promise<ApiResponse<{ unread_count: number }>> {
@@ -978,11 +1011,11 @@ export class NotificationAPI {
 
   // Team Invite Methods
   async sendTeamInvite(invite: TeamInviteCreate): Promise<ApiResponse<any>> {
-    return this.api.post<any>('/api/notifications/team-invite', invite);
+    return this.api.post<TeamInviteCreate, any>('/api/notifications/team-invite', invite);
   }
 
   async respondToTeamInvite(invite_id: number, response: TeamInviteResponse): Promise<ApiResponse<any>> {
-    return this.api.post<any>(`/api/notifications/team-invite/${invite_id}/respond`, response);
+    return this.api.post<{ invite_id: number; action: 'accept' | 'reject'; message?: string }, any>(`/api/notifications/team-invite/${invite_id}/respond`, response);
   }
 }
 
@@ -1000,7 +1033,7 @@ export class YoutubeSummaryAPI {
   private api = new ApiService();
 
   async getSummary(youtubeUrl: string, language: string): Promise<ApiResponse<any>> {
-    return this.api.post<any>('/api/youtube-summary/youtube-audio-summary', { youtube_url: youtubeUrl, language });
+    return this.api.post<{ youtube_url: string; language: string }, any>('/api/youtube-summary/youtube-audio-summary', { youtube_url: youtubeUrl, language });
   }
 }
 
@@ -1015,11 +1048,24 @@ export class SttAPI {
     formData.append('audio', audioBlob, 'audio.webm');
     formData.append('language', language);
 
-    return this.api.post<{ text: string }>('/api/transcribe', formData);
+    return this.api.post<FormData, { text: string }>('/api/transcribe', formData);
   }
 }
 
 export const sttAPI = new SttAPI();
+
+// Voice profile update API
+export async function voiceUpdateProfile(transcription: string, current_profile: any) {
+  const response = await fetch(`${API_BASE_URL}/api/voice-update-profile`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ transcription, current_profile })
+  });
+  if (!response.ok) {
+    throw new Error('Failed to update profile with voice');
+  }
+  return await response.json();
+}
 
 // Export types
 export type { ApiResponse }; 
