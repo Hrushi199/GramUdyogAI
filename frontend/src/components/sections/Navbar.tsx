@@ -314,7 +314,7 @@ const Navbar: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const navbarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Check if user is logged in
@@ -332,7 +332,7 @@ const Navbar: React.FC = () => {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (navbarRef.current && !navbarRef.current.contains(event.target as Node)) {
         setActiveDropdown(null);
       }
     };
@@ -364,7 +364,7 @@ const Navbar: React.FC = () => {
     items: { label: string; path: string }[]; 
     dropdownKey: string;
   }) => (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative">
       <button
         onClick={() => toggleDropdown(dropdownKey)}
         className="text-gray-300 hover:text-white transition-colors flex items-center gap-1 whitespace-nowrap min-w-fit"
@@ -383,7 +383,7 @@ const Navbar: React.FC = () => {
         </svg>
       </button>
       {activeDropdown === dropdownKey && (
-        <div className="absolute top-full right-0 mt-2 w-48 bg-black/90 backdrop-blur-lg border border-white/20 rounded-lg shadow-xl z-50">
+        <div className="absolute top-full left-0 mt-2 w-48 bg-black/90 backdrop-blur-lg border border-white/20 rounded-lg shadow-xl z-50">
           {items.map((item, index) => (
             <NavLink
               key={index}
@@ -415,7 +415,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg bg-black/50 border-b border-white/10 h-20">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg bg-black/50 border-b border-white/10 h-20" ref={navbarRef}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center py-4">
           <Link to="/">
