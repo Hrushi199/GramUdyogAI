@@ -236,6 +236,21 @@ import eventManagementMl from './locales/event-management/malayalam.json';
 import eventManagementPa from './locales/event-management/punjabi.json';
 import eventManagementAs from './locales/event-management/assamese.json';
 
+// Job Board translations
+import jobBoardEn from './locales/job-board/english.json';
+import jobBoardHi from './locales/job-board/hindi.json';
+import jobBoardBn from './locales/job-board/bengali.json';
+import jobBoardTa from './locales/job-board/tamil.json';
+import jobBoardTe from './locales/job-board/telugu.json';
+import jobBoardMr from './locales/job-board/marathi.json';
+import jobBoardGu from './locales/job-board/gujarati.json';
+import jobBoardUr from './locales/job-board/urdu.json';
+import jobBoardKn from './locales/job-board/kannada.json';
+import jobBoardOr from './locales/job-board/odia.json';
+import jobBoardMl from './locales/job-board/malayalam.json';
+import jobBoardPa from './locales/job-board/punjabi.json';
+import jobBoardAs from './locales/job-board/assamese.json';
+
 i18n
   .use(initReactI18next)
   .init({
@@ -257,6 +272,7 @@ i18n
         myprojects: myProjectsEn, // Added my-projects namespace
         'event-details': eventDetailsEn, // Added event-details namespace
         'event-management': eventManagementEn, // Added event-management namespace
+        'job-board': jobBoardEn, // Added job-board namespace
       },
       hi: {
         skillbuilder: hiSkillBuilder,
@@ -275,6 +291,7 @@ i18n
         myprojects: myProjectsHi, // Added my-projects namespace
         'event-details': eventDetailsHi, // Added event-details namespace
         'event-management': eventManagementHi, // Added event-management namespace
+        'job-board': jobBoardHi, // Added job-board namespace
       },
       bn: {
         skillbuilder: bnSkillBuilder,
@@ -293,6 +310,7 @@ i18n
         myprojects: myProjectsBn, // Added my-projects namespace
         'event-details': eventDetailsBn, // Added event-details namespace
         'event-management': eventManagementBn, // Added event-management namespace
+        'job-board': jobBoardBn, // Added job-board namespace
       },
       mr: {
         skillbuilder: mrSkillBuilder,
@@ -311,6 +329,7 @@ i18n
         myprojects: myProjectsMr, // Added my-projects namespace
         'event-details': eventDetailsMr, // Added event-details namespace
         'event-management': eventManagementMr, // Added event-management namespace
+        'job-board': jobBoardMr, // Added job-board namespace
       },
       te: {
         skillbuilder: teSkillBuilder,
@@ -329,6 +348,7 @@ i18n
         myprojects: myProjectsTe, // Added my-projects namespace
         'event-details': eventDetailsTe, // Added event-details namespace
         'event-management': eventManagementTe, // Added event-management namespace
+        'job-board': jobBoardTe, // Added job-board namespace
       },
       ta: {
         skillbuilder: taSkillBuilder,
@@ -347,6 +367,7 @@ i18n
         myprojects: myProjectsTa, // Added my-projects namespace
         'event-details': eventDetailsTa, // Added event-details namespace
         'event-management': eventManagementTa, // Added event-management namespace
+        'job-board': jobBoardTa, // Added job-board namespace
       },
       gu: {
         skillbuilder: guSkillBuilder,
@@ -365,6 +386,7 @@ i18n
         myprojects: myProjectsGu, // Added my-projects namespace
         'event-details': eventDetailsGu, // Added event-details namespace
         'event-management': eventManagementGu, // Added event-management namespace
+        'job-board': jobBoardGu, // Added job-board namespace
       },
       ur: {
         skillbuilder: urSkillBuilder,
@@ -383,6 +405,7 @@ i18n
         myprojects: myProjectsUr, // Added my-projects namespace
         'event-details': eventDetailsUr, // Added event-details namespace
         'event-management': eventManagementUr, // Added event-management namespace
+        'job-board': jobBoardUr, // Added job-board namespace
       },
       kn: {
         skillbuilder: knSkillBuilder,
@@ -401,6 +424,7 @@ i18n
         myprojects: myProjectsKn, // Added my-projects namespace
         'event-details': eventDetailsKn, // Added event-details namespace
         'event-management': eventManagementKn, // Added event-management namespace
+        'job-board': jobBoardKn, // Added job-board namespace
       },
       or: {
         skillbuilder: orSkillBuilder,
@@ -419,6 +443,7 @@ i18n
         myprojects: myProjectsOr, // Added my-projects namespace
         'event-details': eventDetailsOr, // Added event-details namespace
         'event-management': eventManagementOr, // Added event-management namespace
+        'job-board': jobBoardOr, // Added job-board namespace
       },
       ml: {
         skillbuilder: mlSkillBuilder,
@@ -437,6 +462,7 @@ i18n
         myprojects: myProjectsMl, // Added my-projects namespace
         'event-details': eventDetailsMl, // Added event-details namespace
         'event-management': eventManagementMl, // Added event-management namespace
+        'job-board': jobBoardMl, // Added job-board namespace
       },
       pa: {
         skillbuilder: paSkillBuilder,
@@ -455,6 +481,7 @@ i18n
         myprojects: myProjectsPa, // Added my-projects namespace
         'event-details': eventDetailsPa, // Added event-details namespace
         'event-management': eventManagementPa, // Added event-management namespace
+        'job-board': jobBoardPa, // Added job-board namespace
       },
       as: {
         skillbuilder: asSkillBuilder,
@@ -473,6 +500,7 @@ i18n
         myprojects: myProjectsAs, // Added my-projects namespace
         'event-details': eventDetailsAs, // Added event-details namespace
         'event-management': eventManagementAs, // Added event-management namespace
+        'job-board': jobBoardAs, // Added job-board namespace
       },
     },
     lng: 'en',
@@ -494,6 +522,7 @@ i18n
       'myprojects', // Added my-projects to namespaces list
       'event-details', // Added event-details to namespaces list
       'event-management', // Added event-management to namespaces list
+      'job-board', // Added job-board to namespaces list
     ],
     defaultNS: 'translation',
     interpolation: {

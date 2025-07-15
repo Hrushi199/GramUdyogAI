@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import ParticleBackground from "../ui/ParticleBackground";
 import { jobAPI } from "../../lib/api";
 
@@ -14,6 +15,7 @@ interface Job {
 }
 
 const JobBoard = () => {
+  const { t } = useTranslation('job-board');
   const [jobs, setJobs] = useState<Job[]>([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -86,7 +88,7 @@ const JobBoard = () => {
         if (updatedJobsResponse.data) {
           setJobs(updatedJobsResponse.data);
         }
-        setActiveTab("view"); // Switch to the "View Jobs" tab after posting
+        setActiveTab("view"); // Switch to the View Jobs tab after posting
       } else if (response.error) {
         console.error("Error posting job:", response.error);
       }
@@ -160,11 +162,11 @@ const JobBoard = () => {
         <div className="flex flex-col items-center gap-16">
           <h1 className="text-5xl md:text-6xl font-bold leading-tight text-center">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
-              Job Board
+              {t('pageTitle')}
             </span>
           </h1>
           <p className="mt-6 text-xl text-gray-300 text-center max-w-2xl">
-            Find your dream job or post opportunities for talented professionals in our community.
+            {t('pageSubtitle')}
           </p>
 
           {/* Enhanced Tabs */}
@@ -177,7 +179,7 @@ const JobBoard = () => {
               }`}
               onClick={() => setActiveTab("view")}
             >
-              View Jobs
+              {t('tabs.viewJobs')}
             </button>
             <button
               className={`flex-1 py-3 px-6 rounded-lg font-medium transition-all ${
@@ -187,7 +189,7 @@ const JobBoard = () => {
               }`}
               onClick={() => setActiveTab("post")}
             >
-              Post a Job
+              {t('tabs.postJob')}
             </button>
             <button
               className={`flex-1 py-3 px-6 rounded-lg font-medium transition-all ${
@@ -197,7 +199,7 @@ const JobBoard = () => {
               }`}
               onClick={() => setActiveTab("recommend")}
             >
-              Get Recommended
+              {t('tabs.getRecommended')}
             </button>
           </div>
 
@@ -205,7 +207,7 @@ const JobBoard = () => {
           {loading && (
             <div className="flex items-center space-x-2">
               <div className="w-5 h-5 rounded-full border-2 border-gray-300 border-t-purple-500 animate-spin"></div>
-              <p className="text-purple-400">Loading...</p>
+              <p className="text-purple-400">{t('loading')}</p>
             </div>
           )}
 
@@ -214,7 +216,7 @@ const JobBoard = () => {
             {/* View Jobs Tab */}
             {activeTab === "view" && (
               <div className="space-y-8">
-                <h2 className="text-2xl font-bold text-white">Available Opportunities</h2>
+                <h2 className="text-2xl font-bold text-white">{t('viewJobs.title')}</h2>
                 {jobs.length > 0 ? (
                   <div className="grid gap-6">
                     {jobs.map((job) => (
@@ -229,19 +231,19 @@ const JobBoard = () => {
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                           <div className="flex flex-col gap-1">
-                            <span className="font-medium text-purple-400">Company</span>
+                            <span className="font-medium text-purple-400">{t('viewJobs.jobCard.company')}</span>
                             <span className="text-gray-300">{job.company}</span>
                           </div>
                           <div className="flex flex-col gap-1">
-                            <span className="font-medium text-purple-400">Location</span>
+                            <span className="font-medium text-purple-400">{t('viewJobs.jobCard.location')}</span>
                             <span className="text-gray-300">{job.location}</span>
                           </div>
                           <div className="flex flex-col gap-1">
-                            <span className="font-medium text-purple-400">Contact</span>
+                            <span className="font-medium text-purple-400">{t('viewJobs.jobCard.contact')}</span>
                             <span className="text-gray-300">{job.company_contact}</span>
                           </div>
                           <div className="flex flex-col gap-1">
-                            <span className="font-medium text-purple-400">Compensation</span>
+                            <span className="font-medium text-purple-400">{t('viewJobs.jobCard.compensation')}</span>
                             <span className="text-gray-300">{job.pay}</span>
                           </div>
                         </div>
@@ -250,7 +252,7 @@ const JobBoard = () => {
                           <button 
                             className="px-4 py-2 text-sm font-medium text-purple-400 hover:text-purple-300 bg-gray-800 rounded-lg border border-purple-500/30 hover:border-purple-500/50 transition-colors"
                           >
-                            Apply Now
+                            {t('viewJobs.jobCard.applyNow')}
                           </button>
                         </div>
                       </div>
@@ -258,8 +260,8 @@ const JobBoard = () => {
                   </div>
                 ) : (
                   <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-xl border border-gray-700 p-8 text-center">
-                    <p className="text-gray-400 text-lg">No jobs available at the moment.</p>
-                    <p className="text-purple-400 mt-2">Be the first to post a job opportunity!</p>
+                    <p className="text-gray-400 text-lg">{t('viewJobs.noJobs.message')}</p>
+                    <p className="text-purple-400 mt-2">{t('viewJobs.noJobs.cta')}</p>
                   </div>
                 )}
               </div>
@@ -275,82 +277,82 @@ const JobBoard = () => {
                 <div className="absolute -top-10 -left-10 w-40 h-40 bg-purple-500 rounded-full filter blur-3xl opacity-10"></div>
                 <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500 rounded-full filter blur-3xl opacity-10"></div>
                 
-                <h2 className="text-2xl font-bold mb-6 text-white">Post a New Opportunity</h2>
+                <h2 className="text-2xl font-bold mb-6 text-white">{t('postJob.title')}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="title" className="text-lg font-medium text-purple-300">Job Title</label>
+                    <label htmlFor="title" className="text-lg font-medium text-purple-300">{t('postJob.fields.jobTitle')}</label>
                     <input
                       type="text"
                       id="title"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
-                      placeholder="e.g. Senior Developer"
+                      placeholder={t('postJob.placeholders.jobTitle')}
                       required
                     />
                   </div>
                   
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="company" className="text-lg font-medium text-purple-300">Company</label>
+                    <label htmlFor="company" className="text-lg font-medium text-purple-300">{t('postJob.fields.company')}</label>
                     <input
                       type="text"
                       id="company"
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
                       className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
-                      placeholder="e.g. Tech Innovations Inc."
+                      placeholder={t('postJob.placeholders.company')}
                       required
                     />
                   </div>
                   
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="location" className="text-lg font-medium text-purple-300">Location</label>
+                    <label htmlFor="location" className="text-lg font-medium text-purple-300">{t('postJob.fields.location')}</label>
                     <input
                       type="text"
                       id="location"
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
                       className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
-                      placeholder="e.g. Remote, New York, NY"
+                      placeholder={t('postJob.placeholders.location')}
                       required
                     />
                   </div>
                   
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="pay" className="text-lg font-medium text-purple-300">Compensation</label>
+                    <label htmlFor="pay" className="text-lg font-medium text-purple-300">{t('postJob.fields.compensation')}</label>
                     <input
                       type="text"
                       id="pay"
                       value={pay}
                       onChange={(e) => setPay(e.target.value)}
                       className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
-                      placeholder="e.g. $80,000 - $120,000"
+                      placeholder={t('postJob.placeholders.compensation')}
                       required
                     />
                   </div>
                   
                   <div className="flex flex-col gap-2 md:col-span-2">
-                    <label htmlFor="company_contact" className="text-lg font-medium text-purple-300">Contact Information</label>
+                    <label htmlFor="company_contact" className="text-lg font-medium text-purple-300">{t('postJob.fields.contactInfo')}</label>
                     <input
                       type="text"
                       id="company_contact"
                       value={companyContact}
                       onChange={(e) => setCompanyContact(e.target.value)}
                       className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
-                      placeholder="e.g. careers@techinnovations.com"
+                      placeholder={t('postJob.placeholders.contactInfo')}
                       required
                     />
                   </div>
                   
                   <div className="flex flex-col gap-2 md:col-span-2">
-                    <label htmlFor="description" className="text-lg font-medium text-purple-300">Job Description</label>
+                    <label htmlFor="description" className="text-lg font-medium text-purple-300">{t('postJob.fields.jobDescription')}</label>
                     <textarea
                       id="description"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
                       rows={6}
-                      placeholder="Describe the job responsibilities, requirements, and benefits..."
+                      placeholder={t('postJob.placeholders.jobDescription')}
                       required
                     ></textarea>
                   </div>
@@ -361,7 +363,7 @@ const JobBoard = () => {
                   className="w-full mt-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg shadow-purple-900/20 font-medium"
                   disabled={loading}
                 >
-                  {loading ? "Posting..." : "Post Job"}
+                  {loading ? t('postJob.posting') : t('postJob.submit')}
                 </button>
               </form>
             )}
@@ -377,18 +379,18 @@ const JobBoard = () => {
                   <div className="absolute -top-10 -left-10 w-40 h-40 bg-purple-500 rounded-full filter blur-3xl opacity-10"></div>
                   <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500 rounded-full filter blur-3xl opacity-10"></div>
                   
-                  <h2 className="text-2xl font-bold mb-6 text-white">Find Your Perfect Match</h2>
-                  <p className="text-gray-300 mb-6">Tell us about your skills, experience, and preferences, and we'll recommend the best job for you.</p>
+                  <h2 className="text-2xl font-bold mb-6 text-white">{t('recommendation.title')}</h2>
+                  <p className="text-gray-300 mb-6">{t('recommendation.subtitle')}</p>
                   
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="user_info" className="text-lg font-medium text-purple-300">Your Profile Information</label>
+                    <label htmlFor="user_info" className="text-lg font-medium text-purple-300">{t('recommendation.fields.profileInfo')}</label>
                     <textarea
                       id="user_info"
                       value={userInfo}
                       onChange={(e) => setUserInfo(e.target.value)}
                       className="w-full p-4 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
                       rows={6}
-                      placeholder="Example: I have 5 years of experience in web development using React and Node.js. I'm looking for remote opportunities in a tech startup with a focus on sustainable products..."
+                      placeholder={t('recommendation.placeholders.profileInfo')}
                       required
                     ></textarea>
                   </div>
@@ -398,7 +400,7 @@ const JobBoard = () => {
                     className="w-full mt-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg shadow-purple-900/20 font-medium"
                     disabled={loading}
                   >
-                    {loading ? "Analyzing..." : "Find My Match"}
+                    {loading ? t('recommendation.analyzing') : t('recommendation.submit')}
                   </button>
                 </form>
 
@@ -408,7 +410,7 @@ const JobBoard = () => {
                     <div className="absolute -top-10 -right-10 w-40 h-40 bg-purple-500 rounded-full filter blur-3xl opacity-10"></div>
                     
                     <h3 className="text-2xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
-                      Your Perfect Match
+                      {t('recommendation.results.title')}
                     </h3>
                     
                     <div className="space-y-6">
