@@ -215,6 +215,26 @@ import eventDetailsGu from './locales/event-details/gujarati.json';
 import eventDetailsPa from './locales/event-details/punjabi.json';
 import eventDetailsAs from './locales/event-details/assamese.json';
 import eventDetailsUr from './locales/event-details/urdu.json';
+import eventDetailsKn from './locales/event-details/kannada.json';
+import eventDetailsOr from './locales/event-details/odia.json';
+import eventDetailsMl from './locales/event-details/malayalam.json';
+
+
+
+// Event Management translations
+import eventManagementEn from './locales/event-management/english.json';
+import eventManagementHi from './locales/event-management/hindi.json';
+import eventManagementBn from './locales/event-management/bengali.json';
+import eventManagementTa from './locales/event-management/tamil.json';
+import eventManagementTe from './locales/event-management/telugu.json';
+import eventManagementMr from './locales/event-management/marathi.json';
+import eventManagementGu from './locales/event-management/gujarati.json';
+import eventManagementUr from './locales/event-management/urdu.json';
+import eventManagementKn from './locales/event-management/kannada.json';
+import eventManagementOr from './locales/event-management/odia.json';
+import eventManagementMl from './locales/event-management/malayalam.json';
+import eventManagementPa from './locales/event-management/punjabi.json';
+import eventManagementAs from './locales/event-management/assamese.json';
 
 i18n
   .use(initReactI18next)
@@ -236,6 +256,7 @@ i18n
         'public-projects': publicProjectsEn, // Added public-projects namespace
         myprojects: myProjectsEn, // Added my-projects namespace
         'event-details': eventDetailsEn, // Added event-details namespace
+        'event-management': eventManagementEn, // Added event-management namespace
       },
       hi: {
         skillbuilder: hiSkillBuilder,
@@ -253,6 +274,7 @@ i18n
         'public-projects': publicProjectsHi, // Added public-projects namespace
         myprojects: myProjectsHi, // Added my-projects namespace
         'event-details': eventDetailsHi, // Added event-details namespace
+        'event-management': eventManagementHi, // Added event-management namespace
       },
       bn: {
         skillbuilder: bnSkillBuilder,
@@ -270,6 +292,7 @@ i18n
         'public-projects': publicProjectsBn, // Added public-projects namespace
         myprojects: myProjectsBn, // Added my-projects namespace
         'event-details': eventDetailsBn, // Added event-details namespace
+        'event-management': eventManagementBn, // Added event-management namespace
       },
       mr: {
         skillbuilder: mrSkillBuilder,
@@ -287,6 +310,7 @@ i18n
         'public-projects': publicProjectsMr, // Added public-projects namespace
         myprojects: myProjectsMr, // Added my-projects namespace
         'event-details': eventDetailsMr, // Added event-details namespace
+        'event-management': eventManagementMr, // Added event-management namespace
       },
       te: {
         skillbuilder: teSkillBuilder,
@@ -304,6 +328,7 @@ i18n
         'public-projects': publicProjectsTe, // Added public-projects namespace
         myprojects: myProjectsTe, // Added my-projects namespace
         'event-details': eventDetailsTe, // Added event-details namespace
+        'event-management': eventManagementTe, // Added event-management namespace
       },
       ta: {
         skillbuilder: taSkillBuilder,
@@ -321,6 +346,7 @@ i18n
         'public-projects': publicProjectsTa, // Added public-projects namespace
         myprojects: myProjectsTa, // Added my-projects namespace
         'event-details': eventDetailsTa, // Added event-details namespace
+        'event-management': eventManagementTa, // Added event-management namespace
       },
       gu: {
         skillbuilder: guSkillBuilder,
@@ -338,6 +364,7 @@ i18n
         'public-projects': publicProjectsGu, // Added public-projects namespace
         myprojects: myProjectsGu, // Added my-projects namespace
         'event-details': eventDetailsGu, // Added event-details namespace
+        'event-management': eventManagementGu, // Added event-management namespace
       },
       ur: {
         skillbuilder: urSkillBuilder,
@@ -355,6 +382,7 @@ i18n
         'public-projects': publicProjectsUr, // Added public-projects namespace
         myprojects: myProjectsUr, // Added my-projects namespace
         'event-details': eventDetailsUr, // Added event-details namespace
+        'event-management': eventManagementUr, // Added event-management namespace
       },
       kn: {
         skillbuilder: knSkillBuilder,
@@ -371,6 +399,8 @@ i18n
         'course-recommender': courseRecommenderKn, // Added course-recommender namespace
         'public-projects': publicProjectsKn, // Added public-projects namespace
         myprojects: myProjectsKn, // Added my-projects namespace
+        'event-details': eventDetailsKn, // Added event-details namespace
+        'event-management': eventManagementKn, // Added event-management namespace
       },
       or: {
         skillbuilder: orSkillBuilder,
@@ -387,6 +417,8 @@ i18n
         'course-recommender': courseRecommenderOr, // Added course-recommender namespace
         'public-projects': publicProjectsOr, // Added public-projects namespace
         myprojects: myProjectsOr, // Added my-projects namespace
+        'event-details': eventDetailsOr, // Added event-details namespace
+        'event-management': eventManagementOr, // Added event-management namespace
       },
       ml: {
         skillbuilder: mlSkillBuilder,
@@ -403,6 +435,8 @@ i18n
         'course-recommender': courseRecommenderMl, // Added course-recommender namespace
         'public-projects': publicProjectsMl, // Added public-projects namespace
         myprojects: myProjectsMl, // Added my-projects namespace
+        'event-details': eventDetailsMl, // Added event-details namespace
+        'event-management': eventManagementMl, // Added event-management namespace
       },
       pa: {
         skillbuilder: paSkillBuilder,
@@ -420,6 +454,7 @@ i18n
         'public-projects': publicProjectsPa, // Added public-projects namespace
         myprojects: myProjectsPa, // Added my-projects namespace
         'event-details': eventDetailsPa, // Added event-details namespace
+        'event-management': eventManagementPa, // Added event-management namespace
       },
       as: {
         skillbuilder: asSkillBuilder,
@@ -437,6 +472,7 @@ i18n
         'public-projects': publicProjectsAs, // Added public-projects namespace
         myprojects: myProjectsAs, // Added my-projects namespace
         'event-details': eventDetailsAs, // Added event-details namespace
+        'event-management': eventManagementAs, // Added event-management namespace
       },
     },
     lng: 'en',
@@ -457,6 +493,7 @@ i18n
       'public-projects', // Added public-projects to namespaces list
       'myprojects', // Added my-projects to namespaces list
       'event-details', // Added event-details to namespaces list
+      'event-management', // Added event-management to namespaces list
     ],
     defaultNS: 'translation',
     interpolation: {

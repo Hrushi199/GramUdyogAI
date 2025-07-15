@@ -1,0 +1,93 @@
+{
+  "pageTitle": "कार्यक्रम प्रबंधन",
+  "pageSubtitle": "AI-संचालित हैकाथॉन और कार्यक्रम प्लेटफॉर्म",
+  "createEvent": "कार्यक्रम बनाएं",
+  "searchPlaceholder": "कार्यक्रम खोजें...",
+  "filters": {
+    "allTypes": "सभी प्रकार",
+    "allStatus": "सभी स्थितियां"
+  },
+  "eventTypes": {
+    "hackathon": "हैकाथॉन",
+    "workshop": "कार्यशाला",
+    "competition": "प्रतियोगिता",
+    "training": "प्रशिक्षण",
+    "meetup": "मीटअप"
+  },
+  "eventStatus": {
+    "draft": "मसौदा",
+    "active": "सक्रिय",
+    "ongoing": "चालू",
+    "completed": "पूर्ण"
+  },
+  "eventCard": {
+    "participants": "प्रतिभागी",
+    "prizePool": "पुरस्कार राशि",
+    "more": "अधिक"
+  },
+  "createEventModal": {
+    "title": "कार्यक्रम बनाएं",
+    "eventTitle": "कार्यक्रम शीर्षक",
+    "eventType": "कार्यक्रम प्रकार",
+    "category": "श्रेणी",
+    "location": "स्थान",
+    "state": "राज्य",
+    "startDate": "प्रारंभ तिथि",
+    "endDate": "समाप्ति तिथि",
+    "maxParticipants": "अधिकतम प्रतिभागी",
+    "budget": "बजट",
+    "prizePool": "पुरस्कार राशि",
+    "description": "विवरण",
+    "requiredSkills": "आवश्यक कौशल (कॉमा से अलग करें)",
+    "tags": "टैग (कॉमा से अलग करें)",
+    "skillsPlaceholder": "जैसे, React, Node.js, Python",
+    "tagsPlaceholder": "जैसे, AI, वेब डेवलपमेंट, मोबाइल",
+    "marketingHighlights": "मार्केटिंग हाइलाइट्स",
+    "marketingHighlightsPlaceholder": "प्रति लाइन एक हाइलाइट",
+    "successMetrics": "सफलता मेट्रिक्स",
+    "successMetricsPlaceholder": "प्रति लाइन एक मेट्रिक",
+    "eventSections": "कार्यक्रम अनुभाग / एजेंडा",
+    "sectionTitle": "अनुभाग शीर्षक",
+    "sectionDescription": "अनुभाग विवरण",
+    "keyPoints": "मुख्य बिंदु (कॉमा से अलग करें)",
+    "targetAudience": "लक्षित दर्शक",
+    "expectedOutcome": "अपेक्षित परिणाम",
+    "removeSection": "अनुभाग हटाएं",
+    "addSection": "अनुभाग जोड़ें",
+    "generateWithAI": "AI के साथ जेनरेट करें",
+    "startVoiceInput": "आवाज इनपुट शुरू करें",
+    "stopListening": "सुनना बंद करें",
+    "cancel": "रद्द करें",
+    "creating": "बनाया जा रहा है...",
+    "createButton": "कार्यक्रम बनाएं"
+  },
+  "validation": {
+    "titleRequired": "कार्यक्रम शीर्षक आवश्यक है",
+    "titleMinLength": "कार्यक्रम शीर्षक कम से कम 5 अक्षर का होना चाहिए",
+    "descriptionRequired": "कार्यक्रम विवरण आवश्यक है",
+    "descriptionMinLength": "कार्यक्रम विवरण कम से कम 20 अक्षर का होना चाहिए",
+    "categoryRequired": "कार्यक्रम श्रेणी आवश्यक है",
+    "locationRequired": "कार्यक्रम स्थान आवश्यक है",
+    "stateRequired": "कार्यक्रम राज्य आवश्यक है",
+    "startDateRequired": "प्रारंभ तिथि आवश्यक है",
+    "endDateRequired": "समाप्ति तिथि आवश्यक है",
+    "startDatePast": "प्रारंभ तिथि भूतकाल में नहीं हो सकती",
+    "endDateInvalid": "समाप्ति तिथि प्रारंभ तिथि के बाद होनी चाहिए",
+    "maxParticipantsPositive": "अधिकतम प्रतिभागी 0 से अधिक होना चाहिए",
+    "maxParticipantsLimit": "अधिकतम प्रतिभागी 10,000 से अधिक नहीं हो सकते",
+    "budgetNegative": "बजट नकारात्मक नहीं हो सकता",
+    "prizePoolNegative": "पुरस्कार राशि नकारात्मक नहीं हो सकती",
+    "skillsRequired": "कम से कम एक कौशल आवश्यक है",
+    "tagsRequired": "कम से कम एक टैग आवश्यक है",
+    "createFailed": "कार्यक्रम बनाने में विफल। कृपया पुनः प्रयास करें।"
+  },
+  "loading": "कार्यक्रम लोड हो रहे हैं...",
+  "toast": {
+    "eventCreated": "कार्यक्रम सफलतापूर्वक बनाया गया!",
+    "microphoneAccessDenied": "माइक्रोफोन एक्सेस अस्वीकृत",
+    "speechNotSupported": "वाक् पहचान समर्थित नहीं है",
+    "noTranscript": "कोई ट्रांसक्रिप्ट प्राप्त नहीं हुई",
+    "aiGenerationFailed": "AI कार्यक्रम जेनरेशन विफल",
+    "transcriptionError": "ट्रांसक्रिप्शन या कार्यक्रम जेनरेशन में त्रुटि"
+  }
+}
