@@ -1,0 +1,100 @@
+{
+  "welcome": {
+    "back": "परत आपले स्वागत आहे",
+    "join": "GramUdyogAI मध्ये सामील व्हा",
+    "signInSubtitle": "तुमच्या खात्यात साइन इन करा",
+    "createAccountSubtitle": "सुरुवात करण्यासाठी तुमचे खाते तयार करा"
+  },
+  "userTypes": {
+    "label": "मी आहे...",
+    "individual": {
+      "title": "व्यक्तिगत",
+      "description": "कुशल व्यक्ती, शिकणारे आणि व्यावसायिक"
+    },
+    "company": {
+      "title": "कंपनी", 
+      "description": "कॉर्पोरेट आणि व्यवसाय"
+    },
+    "ngo": {
+      "title": "एनजीओ",
+      "description": "ना-नफा संस्था"
+    },
+    "investor": {
+      "title": "गुंतवणूकदार",
+      "description": "एंजेल गुंतवणूकदार आणि व्हीसी"
+    }
+  },
+  "form": {
+    "fields": {
+      "phoneNumber": "फोन नंबर",
+      "password": "पासवर्ड",
+      "confirmPassword": "पासवर्डची पुष्टी करा",
+      "fullName": "पूर्ण नाव",
+      "organizationName": "संस्थेचे नाव",
+      "contactPersonName": "संपर्क व्यक्तीचे नाव"
+    },
+    "placeholders": {
+      "phoneNumber": "तुमचा फोन नंबर टाका",
+      "password": "तुमचा पासवर्ड टाका",
+      "confirmPassword": "तुमच्या पासवर्डची पुष्टी करा",
+      "fullName": "तुमचे पूर्ण नाव टाका",
+      "organizationName": "संस्थेचे नाव टाका",
+      "contactPersonName": "संपर्क व्यक्तीचे नाव टाका"
+    },
+    "required": "*",
+    "forgotPassword": "पासवर्ड विसरलात?",
+    "forgotPasswordTooltip": "वैशिष्ट्य विकसित होत आहे"
+  },
+  "passwordRequirements": {
+    "title": "पासवर्ड आवश्यकता:",
+    "length": "किमान 8 अक्षरे",
+    "uppercase": "किमान एक मोठे अक्षर",
+    "lowercase": "किमान एक छोटे अक्षर", 
+    "number": "किमान एक संख्या",
+    "special": "किमान एक विशेष वर्ण (#@$!%*?&)"
+  },
+  "validation": {
+    "phoneRequired": "फोन नंबर आवश्यक आहे",
+    "phoneInvalid": "फोन नंबर वैध असावा आणि 0 ने सुरू होऊ नये.",
+    "passwordRequired": "पासवर्ड आवश्यक आहे",
+    "nameRequired": "नाव आवश्यक आहे",
+    "passwordRequirements": "पासवर्ड आवश्यकता पूर्ण करत नाही.",
+    "passwordMismatch": "पासवर्ड जुळत नाहीत",
+    "passwordLength": "पासवर्ड किमान 8 अक्षरांचा असावा.",
+    "passwordUppercase": "पासवर्डमध्ये एक मोठे अक्षर असावे.",
+    "passwordLowercase": "पासवर्डमध्ये एक छोटे अक्षर असावे.",
+    "passwordNumber": "पासवर्डमध्ये एक संख्या असावी.",
+    "passwordSpecial": "पासवर्डमध्ये एक विशेष वर्ण (@$!%*?&) असावे.",
+    "passwordsNoMatch": "पासवर्ड जुळत नाहीत."
+  },
+  "buttons": {
+    "signIn": "साइन इन करा",
+    "createAccount": "खाते तयार करा",
+    "processing": "प्रक्रिया करत आहे...",
+    "fillFormByVoice": "आवाजाने फॉर्म भरा",
+    "voiceProcessing": "प्रक्रिया करत आहे..."
+  },
+  "links": {
+    "noAccount": "खाते नाही? साइन अप करा",
+    "hasAccount": "आधीच खाते आहे? साइन इन करा"
+  },
+  "messages": {
+    "loginSuccess": "लॉगिन यशस्वी! तुमच्या प्रोफाइलवर रिडायरेक्ट करत आहे...",
+    "registrationSuccess": "नोंदणी यशस्वी! प्रोफाइल निर्मितीवर रिडायरेक्ट करत आहे...",
+    "accountDeactivated": "खाते निष्क्रिय आहे. कृपया सहाय्याशी संपर्क साधा.",
+    "invalidCredentials": "चुकीचा फोन नंबर किंवा पासवर्ड. कृपया तुमची माहिती तपासा.",
+    "loginFailed": "लॉगिन अयशस्वी. कृपया पुन्हा प्रयत्न करा.",
+    "phoneExists": "या फोन नंबरसह खाते आधीच अस्तित्वात आहे. कृपया लॉगिन करा.",
+    "checkInput": "कृपया तुमची माहिती तपासा आणि पुन्हा प्रयत्न करा.",
+    "registrationFailed": "नोंदणी अयशस्वी. कृपया पुन्हा प्रयत्न करा.",
+    "authFailed": "प्रमाणीकरण अयशस्वी. कृपया पुन्हा प्रयत्न करा.",
+    "microphoneError": "मायक्रोफोन वापरता आला नाही. कृपया परवानग्या तपासा.",
+    "voiceInProgress": "आवाज इनपुट आधीच चालू आहे.",
+    "voiceInstructions": "आवाज इनपुट सुरू करण्यासाठी मायक्रोफोन आयकनवर क्लिक करा.",
+    "voiceStopped": "आवाज इनपुट बंद. प्रक्रिया करत आहे...",
+    "voiceTranscriptionFailed": "आवाज ट्रान्सक्रिप्शन अयशस्वी. कृपया पुन्हा प्रयत्न करा.",
+    "replaceConfirm": "\"{currentValue}\" ला \"{newValue}\" ने बदलावे?",
+    "yes": "होय",
+    "no": "नाही"
+  }
+}

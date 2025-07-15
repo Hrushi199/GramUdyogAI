@@ -1,0 +1,100 @@
+{
+  "welcome": {
+    "back": "Welcome Back",
+    "join": "Join GramUdyogAI",
+    "signInSubtitle": "Sign in to your account",
+    "createAccountSubtitle": "Create your account to get started"
+  },
+  "userTypes": {
+    "label": "I am a...",
+    "individual": {
+      "title": "Individual",
+      "description": "Skillers, learners, and professionals"
+    },
+    "company": {
+      "title": "Company", 
+      "description": "Corporates and businesses"
+    },
+    "ngo": {
+      "title": "NGO",
+      "description": "Non-profit organizations"
+    },
+    "investor": {
+      "title": "Investor",
+      "description": "Angel investors and VCs"
+    }
+  },
+  "form": {
+    "fields": {
+      "phoneNumber": "Phone Number",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "fullName": "Full Name",
+      "organizationName": "Organization Name",
+      "contactPersonName": "Contact Person Name"
+    },
+    "placeholders": {
+      "phoneNumber": "Enter your phone number",
+      "password": "Enter your password",
+      "confirmPassword": "Confirm your password",
+      "fullName": "Enter your full name",
+      "organizationName": "Enter organization name",
+      "contactPersonName": "Enter contact person name"
+    },
+    "required": "*",
+    "forgotPassword": "Forgot Password?",
+    "forgotPasswordTooltip": "Feature under development"
+  },
+  "passwordRequirements": {
+    "title": "Password Requirements:",
+    "length": "At least 8 characters",
+    "uppercase": "At least one uppercase letter",
+    "lowercase": "At least one lowercase letter", 
+    "number": "At least one number",
+    "special": "At least one special character (#@$!%*?&)"
+  },
+  "validation": {
+    "phoneRequired": "Phone number is required",
+    "phoneInvalid": "Phone number must be valid and not start with 0.",
+    "passwordRequired": "Password is required",
+    "nameRequired": "Name is required",
+    "passwordRequirements": "Password does not meet requirements.",
+    "passwordMismatch": "Passwords do not match",
+    "passwordLength": "Password must be at least 8 characters.",
+    "passwordUppercase": "Password must contain an uppercase letter.",
+    "passwordLowercase": "Password must contain a lowercase letter.",
+    "passwordNumber": "Password must contain a number.",
+    "passwordSpecial": "Password must contain a special character (@$!%*?&).",
+    "passwordsNoMatch": "Passwords do not match."
+  },
+  "buttons": {
+    "signIn": "Sign In",
+    "createAccount": "Create Account",
+    "processing": "Processing...",
+    "fillFormByVoice": "Fill Form by Voice",
+    "voiceProcessing": "Processing..."
+  },
+  "links": {
+    "noAccount": "Don't have an account? Sign up",
+    "hasAccount": "Already have an account? Sign in"
+  },
+  "messages": {
+    "loginSuccess": "Login successful! Redirecting to your profile...",
+    "registrationSuccess": "Registration successful! Redirecting to profile creation...",
+    "accountDeactivated": "Account is deactivated. Please contact support.",
+    "invalidCredentials": "Invalid phone number or password. Please check your credentials.",
+    "loginFailed": "Login failed. Please try again.",
+    "phoneExists": "An account with this phone number already exists. Please login instead.",
+    "checkInput": "Please check your input and try again.",
+    "registrationFailed": "Registration failed. Please try again.",
+    "authFailed": "Authentication failed. Please try again.",
+    "microphoneError": "Could not access microphone. Please check permissions.",
+    "voiceInProgress": "Voice input is already in progress.",
+    "voiceInstructions": "Click the microphone icon to start voice input.",
+    "voiceStopped": "Voice input stopped. Processing...",
+    "voiceTranscriptionFailed": "Voice transcription failed. Please try again.",
+    "replaceConfirm": "Replace \"{currentValue}\" with \"{newValue}\"?",
+    "yes": "Yes",
+    "no": "No"
+  }
+}

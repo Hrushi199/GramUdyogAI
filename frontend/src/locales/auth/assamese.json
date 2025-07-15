@@ -1,0 +1,100 @@
+{
+  "welcome": {
+    "back": "পুনর্বার আপোনাক স্বাগতম",
+    "join": "GramUdyogAI ত যোগ দিয়ক",
+    "signInSubtitle": "আপোনাৰ একাউণ্টত চাইন ইন কৰক",
+    "createAccountSubtitle": "আৰম্ভ কৰিবলৈ আপোনাৰ একাউণ্ট সৃষ্টি কৰক"
+  },
+  "userTypes": {
+    "label": "মই...",
+    "individual": {
+      "title": "ব্যক্তিগত",
+      "description": "দক্ষ ব্যক্তি, শিক্ষার্থী আৰু পেছাদাৰ"
+    },
+    "company": {
+      "title": "কোম্পানী", 
+      "description": "কৰ্পৰেট আৰু ব্যৱসায়"
+    },
+    "ngo": {
+      "title": "এনজিঅ'",
+      "description": "অলাভজনক সংস্থা"
+    },
+    "investor": {
+      "title": "বিনিয়োগকাৰী",
+      "description": "এঞ্জেল বিনিয়োগকাৰী আৰু ভিচি"
+    }
+  },
+  "form": {
+    "fields": {
+      "phoneNumber": "ফোন নম্বৰ",
+      "password": "পাছৱৰ্ড",
+      "confirmPassword": "পাছৱৰ্ড নিশ্চিত কৰক",
+      "fullName": "সম্পূৰ্ণ নাম",
+      "organizationName": "সংস্থাৰ নাম",
+      "contactPersonName": "যোগাযোগ ব্যক্তিৰ নাম"
+    },
+    "placeholders": {
+      "phoneNumber": "আপোনাৰ ফোন নম্বৰ দিয়ক",
+      "password": "আপোনাৰ পাছৱৰ্ড দিয়ক",
+      "confirmPassword": "আপোনাৰ পাছৱৰ্ড নিশ্চিত কৰক",
+      "fullName": "আপোনাৰ সম্পূৰ্ণ নাম দিয়ক",
+      "organizationName": "সংস্থাৰ নাম দিয়ক",
+      "contactPersonName": "যোগাযোগ ব্যক্তিৰ নাম দিয়ক"
+    },
+    "required": "*",
+    "forgotPassword": "পাছৱৰ্ড পাহৰিলে?",
+    "forgotPasswordTooltip": "সুবিধা উন্নয়ন হৈ আছে"
+  },
+  "passwordRequirements": {
+    "title": "পাছৱৰ্ড প্ৰয়োজনীয়তা:",
+    "length": "কমেও ৮টা আখৰ",
+    "uppercase": "কমেও এটা ডাঙৰ আখৰ",
+    "lowercase": "কমেও এটা সৰু আখৰ", 
+    "number": "কমেও এটা সংখ্যা",
+    "special": "কমেও এটা বিশেষ আখৰ (#@$!%*?&)"
+  },
+  "validation": {
+    "phoneRequired": "ফোন নম্বৰ প্ৰয়োজন",
+    "phoneInvalid": "ফোন নম্বৰ বৈধ হ'ব লাগিব আৰু ০ ৰে আৰম্ভ হ'ব নালাগে।",
+    "passwordRequired": "পাছৱৰ্ড প্ৰয়োজন",
+    "nameRequired": "নাম প্ৰয়োজন",
+    "passwordRequirements": "পাছৱৰ্ডে প্ৰয়োজনীয়তা পূৰণ নকৰে।",
+    "passwordMismatch": "পাছৱৰ্ড মিলা নাই",
+    "passwordLength": "পাছৱৰ্ড কমেও ৮টা আখৰৰ হ'ব লাগিব।",
+    "passwordUppercase": "পাছৱৰ্ডত এটা ডাঙৰ আখৰ থাকিব লাগিব।",
+    "passwordLowercase": "পাছৱৰ্ডত এটা সৰু আখৰ থাকিব লাগিব।",
+    "passwordNumber": "পাছৱৰ্ডত এটা সংখ্যা থাকিব লাগিব।",
+    "passwordSpecial": "পাছৱৰ্ডত এটা বিশেষ আখৰ (@$!%*?&) থাকিব লাগিব।",
+    "passwordsNoMatch": "পাছৱৰ্ড মিলা নাই।"
+  },
+  "buttons": {
+    "signIn": "চাইন ইন কৰক",
+    "createAccount": "একাউণ্ট সৃষ্টি কৰক",
+    "processing": "প্ৰক্ৰিয়াকৰণ...",
+    "fillFormByVoice": "কণ্ঠস্বৰেৰে ফৰ্ম পূৰণ কৰক",
+    "voiceProcessing": "প্ৰক্ৰিয়াকৰণ..."
+  },
+  "links": {
+    "noAccount": "একাউণ্ট নাই? চাইন আপ কৰক",
+    "hasAccount": "ইতিমধ্যে একাউণ্ট আছে? চাইন ইন কৰক"
+  },
+  "messages": {
+    "loginSuccess": "লগইন সফল! আপোনাৰ প্ৰফাইললৈ ৰিডাইৰেক্ট কৰি আছো...",
+    "registrationSuccess": "পঞ্জীয়ন সফল! প্ৰফাইল সৃষ্টিলৈ ৰিডাইৰেক্ট কৰি আছো...",
+    "accountDeactivated": "একাউণ্ট নিষ্ক্ৰিয়। অনুগ্ৰহ কৰি সহায়ৰ সৈতে যোগাযোগ কৰক।",
+    "invalidCredentials": "ভুল ফোন নম্বৰ বা পাছৱৰ্ড। অনুগ্ৰহ কৰি আপোনাৰ বিৱৰণ পৰীক্ষা কৰক।",
+    "loginFailed": "লগইন বিফল। অনুগ্ৰহ কৰি পুনৰ চেষ্টা কৰক।",
+    "phoneExists": "এই ফোন নম্বৰৰ সৈতে একাউণ্ট ইতিমধ্যে আছে। অনুগ্ৰহ কৰি লগইন কৰক।",
+    "checkInput": "অনুগ্ৰহ কৰি আপোনাৰ বিৱৰণ পৰীক্ষা কৰক আৰু পুনৰ চেষ্টা কৰক।",
+    "registrationFailed": "পঞ্জীয়ন বিফল। অনুগ্ৰহ কৰি পুনৰ চেষ্টা কৰক।",
+    "authFailed": "প্ৰমাণীকৰণ বিফল। অনুগ্ৰহ কৰি পুনৰ চেষ্টা কৰক।",
+    "microphoneError": "মাইক্ৰফোন ব্যৱহাৰ কৰিব পৰা নগ'ল। অনুগ্ৰহ কৰি অনুমতি পৰীক্ষা কৰক।",
+    "voiceInProgress": "কণ্ঠস্বৰ ইনপুট ইতিমধ্যে চলি আছে।",
+    "voiceInstructions": "কণ্ঠস্বৰ ইনপুট আৰম্ভ কৰিবলৈ মাইক্ৰফোন আইকনত ক্লিক কৰক।",
+    "voiceStopped": "কণ্ঠস্বৰ ইনপুট বন্ধ। প্ৰক্ৰিয়াকৰণ...",
+    "voiceTranscriptionFailed": "কণ্ঠস্বৰ ট্ৰান্সক্ৰিপচন বিফল। অনুগ্ৰহ কৰি পুনৰ চেষ্টা কৰক।",
+    "replaceConfirm": "\"{currentValue}\" ক \"{newValue}\" ৰে সলনি কৰিব?",
+    "yes": "হয়",
+    "no": "নহয়"
+  }
+}

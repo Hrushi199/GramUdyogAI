@@ -29,6 +29,7 @@ interface AuthResponse {
 }
 
 const Auth: React.FC = () => {
+  const { t } = useTranslation('auth');
   const { i18n } = useTranslation();
   const [isLogin, setIsLogin] = useState(true);
   const [showLoginPassword, setShowLoginPassword] = useState(false);
@@ -141,31 +142,31 @@ const Auth: React.FC = () => {
 
   const validateForm = () => {
     if (!form.phone.trim()) {
-      setError('Phone number is required');
+      setError(t('validation.phoneRequired'));
       return false;
     }
     // Phone validation (same as backend)
     if (!/^\+?[1-9]\d{1,14}$/.test(form.phone.trim())) {
-      setError('Phone number must be valid and not start with 0.');
+      setError(t('validation.phoneInvalid'));
       return false;
     }
     if (!form.password.trim()) {
-      setError('Password is required');
+      setError(t('validation.passwordRequired'));
       return false;
     }
     if (!isLogin) {
       if (!form.name.trim()) {
-        setError('Name is required');
+        setError(t('validation.nameRequired'));
         return false;
       }
       const pw = form.password;
       const pwValid = validatePasswordStrength(pw);
       if (!pwValid.length || !pwValid.uppercase || !pwValid.lowercase || !pwValid.number || !pwValid.special) {
-        setError('Password does not meet requirements.');
+        setError(t('validation.passwordRequirements'));
         return false;
       }
       if (form.password !== form.confirmPassword) {
-        setError('Passwords do not match');
+        setError(t('validation.passwordMismatch'));
         return false;
       }
     }
@@ -205,12 +206,12 @@ const Auth: React.FC = () => {
           // Handle specific error cases
           if (response.status === 401) {
             if (data.detail?.includes('deactivated')) {
-              throw new Error('Account is deactivated. Please contact support.');
+              throw new Error(t('messages.accountDeactivated'));
             } else {
-              throw new Error('Invalid phone number or password. Please check your credentials.');
+              throw new Error(t('messages.invalidCredentials'));
             }
           } else {
-            throw new Error(data.detail || 'Login failed. Please try again.');
+            throw new Error(data.detail || t('messages.loginFailed'));
           }
         }
 
@@ -219,7 +220,7 @@ const Auth: React.FC = () => {
         setAuthToken(data.access_token);
         setUserId(data.user_id);
         
-        setSuccess('Login successful! Redirecting to your profile...');
+        setSuccess(t('messages.loginSuccess'));
         setTimeout(() => {
           navigate('/profile');
         }, 1500);
@@ -246,11 +247,11 @@ const Auth: React.FC = () => {
         if (!response.ok) {
           // Handle specific registration errors
           if (response.status === 409) {
-            throw new Error('An account with this phone number already exists. Please login instead.');
+            throw new Error(t('messages.phoneExists'));
           } else if (response.status === 422) {
-            throw new Error('Please check your input and try again.');
+            throw new Error(t('messages.checkInput'));
           } else {
-            throw new Error(data.detail || 'Registration failed. Please try again.');
+            throw new Error(data.detail || t('messages.registrationFailed'));
           }
         }
 
@@ -258,13 +259,13 @@ const Auth: React.FC = () => {
         setAuthToken(data.access_token);
         setUserId(data.user_id);
 
-        setSuccess('Registration successful! Redirecting to profile creation...');
+        setSuccess(t('messages.registrationSuccess'));
         setTimeout(() => {
           navigate('/profile/create');
         }, 1500);
       }
     } catch (err: any) {
-      setError(err.message || 'Authentication failed. Please try again.');
+      setError(err.message || t('messages.authFailed'));
     } finally {
       setIsLoading(false);
     }
@@ -315,7 +316,7 @@ const Auth: React.FC = () => {
       setIsRecording(true);
     } catch (error) {
       console.error('Error starting recording:', error);
-      setError('Could not access microphone. Please check permissions.');
+      setError(t('messages.microphoneError'));
       setCurrentVoiceField(null);
     }
   };
@@ -434,7 +435,7 @@ const Auth: React.FC = () => {
 
   const handleVoiceFormEdit = async () => {
     if (isProcessing) {
-      toast.error('Voice input is already in progress.', {
+      toast.error(t('messages.voiceInProgress'), {
         style: {
           background: 'rgba(17, 24, 39, 0.8)',
           color: '#fff',
@@ -446,7 +447,7 @@ const Auth: React.FC = () => {
     }
 
     if (!isRecording) {
-      toast('Click the microphone icon to start voice input.', {
+      toast(t('messages.voiceInstructions'), {
         style: {
           background: 'rgba(17, 24, 39, 0.8)',
           color: '#fff',
@@ -459,7 +460,7 @@ const Auth: React.FC = () => {
 
     if (isRecording) {
       stopVoiceRecording();
-      toast.success('Voice input stopped. Processing...', {
+      toast.success(t('messages.voiceStopped'), {
         style: {
           background: 'rgba(17, 24, 39, 0.8)',
           color: '#fff',
@@ -492,17 +493,17 @@ const Auth: React.FC = () => {
                 <Globe className="w-8 h-8 text-white" />
               </div>
               <CardTitle className="text-2xl font-bold text-white">
-                {isLogin ? 'Welcome Back' : 'Join GramUdyogAI'}
+                {isLogin ? t('welcome.back') : t('welcome.join')}
               </CardTitle>
               <p className="text-gray-300">
-                {isLogin ? 'Sign in to your account' : 'Create your account to get started'}
+                {isLogin ? t('welcome.signInSubtitle') : t('welcome.createAccountSubtitle')}
               </p>
             </CardHeader>
             <CardContent>
               {!isLogin && (
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-300 mb-3">
-                    I am a...
+                    {t('userTypes.label')}
                   </label>
                   <div className="grid grid-cols-2 gap-3">
                     {userTypes.map((userType) => (
@@ -520,8 +521,8 @@ const Auth: React.FC = () => {
                             <userType.icon className="w-4 h-4 text-white" />
                           </div>
                           <div>
-                            <div className="font-medium text-sm text-white">{userType.title}</div>
-                            <div className="text-xs text-gray-400">{userType.description}</div>
+                            <div className="font-medium text-sm text-white">{t(`userTypes.${userType.type}.title`)}</div>
+                            <div className="text-xs text-gray-400">{t(`userTypes.${userType.type}.description`)}</div>
                           </div>
                         </div>
                       </button>
@@ -533,8 +534,8 @@ const Auth: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Phone Number
-                    <span className="text-red-400 ml-1">*</span>
+                    {t('form.fields.phoneNumber')}
+                    <span className="text-red-400 ml-1">{t('form.required')}</span>
                   </label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -543,7 +544,7 @@ const Auth: React.FC = () => {
                       value={form.phone}
                       onChange={(e) => updateForm('phone', e.target.value)}
                       className="w-full pl-10 pr-12 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-900 text-white placeholder-gray-400"
-                      placeholder="Enter your phone number"
+                      placeholder={t('form.placeholders.phoneNumber')}
                       required
                       autoComplete="tel"
                     />
@@ -554,7 +555,7 @@ const Auth: React.FC = () => {
                 {isLogin && (
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Password
+                      {t('form.fields.password')}
                     </label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -563,7 +564,7 @@ const Auth: React.FC = () => {
                         value={form.password}
                         onChange={(e) => updateForm('password', e.target.value)}
                         className="w-full pl-10 pr-10 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white placeholder-gray-400"
-                        placeholder="Enter your password"
+                        placeholder={t('form.placeholders.password')}
                         required
                         autoComplete="current-password"
                       />
@@ -581,9 +582,9 @@ const Auth: React.FC = () => {
                         href="#"
                         onClick={(e) => e.preventDefault()}
                         className="text-sm text-purple-400 hover:text-purple-300 transition-colors disabled:opacity-50 cursor-not-allowed"
-                        title="Feature under development"
+                        title={t('form.forgotPasswordTooltip')}
                       >
-                        Forgot Password?
+                        {t('form.forgotPassword')}
                       </a>
                     </div>
                   </div>
@@ -592,8 +593,8 @@ const Auth: React.FC = () => {
                 {!isLogin && (
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      {form.userType === 'individual' ? 'Full Name' : 'Organization Name'}
-                      <span className="text-red-400 ml-1">*</span>
+                      {form.userType === 'individual' ? t('form.fields.fullName') : t('form.fields.organizationName')}
+                      <span className="text-red-400 ml-1">{t('form.required')}</span>
                     </label>
                     <div className="relative">
                       <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -602,7 +603,7 @@ const Auth: React.FC = () => {
                         value={form.name}
                         onChange={(e) => updateForm('name', e.target.value)}
                         className="w-full pl-10 pr-12 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white placeholder-gray-400"
-                        placeholder={form.userType === 'individual' ? 'Enter your full name' : 'Enter organization name'}
+                        placeholder={form.userType === 'individual' ? t('form.placeholders.fullName') : t('form.placeholders.organizationName')}
                         required
                       />
                     </div>
@@ -612,7 +613,7 @@ const Auth: React.FC = () => {
                 {!isLogin && form.userType !== 'individual' && (
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Contact Person Name
+                      {t('form.fields.contactPersonName')}
                     </label>
                     <div className="relative">
                       <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -621,7 +622,7 @@ const Auth: React.FC = () => {
                         value={form.organization || ''}
                         onChange={(e) => updateForm('organization', e.target.value)}
                         className="w-full pl-10 pr-12 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white placeholder-gray-400"
-                        placeholder="Enter contact person name"
+                        placeholder={t('form.placeholders.contactPersonName')}
                       />
                     </div>
                   </div>
@@ -630,7 +631,7 @@ const Auth: React.FC = () => {
                 {!isLogin && (
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Password
+                      {t('form.fields.password')}
                     </label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -654,7 +655,13 @@ const Auth: React.FC = () => {
                     </div>
                     {/* Password requirements */}
                     <ul className="mt-2 text-xs text-gray-400 space-y-1">
-                      {passwordRequirements.map((req, idx) => {
+                      {[
+                        t('passwordRequirements.length'),
+                        t('passwordRequirements.uppercase'),
+                        t('passwordRequirements.lowercase'),
+                        t('passwordRequirements.number'),
+                        t('passwordRequirements.special')
+                      ].map((req, idx) => {
                         const pwValid = validatePasswordStrength(form.password);
                         let met = false;
                         if (idx === 0) met = pwValid.length;
@@ -673,11 +680,11 @@ const Auth: React.FC = () => {
                       <div className="mt-1 text-xs text-red-500">
                         {(() => {
                           const pwValid = validatePasswordStrength(form.password);
-                          if (!pwValid.length) return 'Password must be at least 8 characters.';
-                          if (!pwValid.uppercase) return 'Password must contain an uppercase letter.';
-                          if (!pwValid.lowercase) return 'Password must contain a lowercase letter.';
-                          if (!pwValid.number) return 'Password must contain a number.';
-                          if (!pwValid.special) return 'Password must contain a special character (@$!%*?&).';
+                          if (!pwValid.length) return t('validation.passwordLength');
+                          if (!pwValid.uppercase) return t('validation.passwordUppercase');
+                          if (!pwValid.lowercase) return t('validation.passwordLowercase');
+                          if (!pwValid.number) return t('validation.passwordNumber');
+                          if (!pwValid.special) return t('validation.passwordSpecial');
                           return '';
                         })()}
                       </div>
@@ -688,7 +695,7 @@ const Auth: React.FC = () => {
                 {!isLogin && (
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Confirm Password
+                      {t('form.fields.confirmPassword')}
                     </label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -698,7 +705,7 @@ const Auth: React.FC = () => {
                         onChange={(e) => { updateForm('confirmPassword', e.target.value); setConfirmPasswordTouched(true); }}
                         onBlur={() => setConfirmPasswordTouched(true)}
                         className="w-full pl-10 pr-10 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white placeholder-gray-400"
-                        placeholder="Confirm your password"
+                        placeholder={t('form.placeholders.confirmPassword')}
                         required
                         autoComplete="new-password"
                       />
@@ -711,7 +718,7 @@ const Auth: React.FC = () => {
                       </button>
                     </div>
                     {confirmPasswordTouched && form.confirmPassword && form.password !== form.confirmPassword && (
-                      <div className="mt-1 text-xs text-red-500">Passwords do not match.</div>
+                      <div className="mt-1 text-xs text-red-500">{t('validation.passwordsNoMatch')}</div>
                     )}
                   </div>
                 )}
@@ -735,7 +742,7 @@ const Auth: React.FC = () => {
                   disabled={loading || (!isLogin && (!form.phone.trim() || !form.name.trim() || !form.password.trim() || !form.confirmPassword || form.password !== form.confirmPassword || Object.values(validatePasswordStrength(form.password)).includes(false) || !/^\+?[1-9]\d{1,14}$/.test(form.phone.trim())))}
                   className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-2 px-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account')}
+                  {loading ? t('buttons.processing') : (isLogin ? t('buttons.signIn') : t('buttons.createAccount'))}
                 </button>
 
                 <button
@@ -748,7 +755,7 @@ const Auth: React.FC = () => {
                   ) : (
                     <Mic className="w-4 h-4 mr-2" />
                   )}
-                  {isProcessing ? 'Processing...' : 'Fill Form by Voice'}
+                  {isProcessing ? t('buttons.voiceProcessing') : t('buttons.fillFormByVoice')}
                 </button>
               </form>
 
@@ -769,7 +776,7 @@ const Auth: React.FC = () => {
                   }}
                   className="text-purple-400 hover:text-purple-300 text-sm"
                 >
-                  {isLogin ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
+                  {isLogin ? t('links.noAccount') : t('links.hasAccount')}
                 </button>
               </div>
             </CardContent>

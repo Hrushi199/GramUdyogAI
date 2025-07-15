@@ -226,13 +226,28 @@
       }
     },
     "navbar": {
-      "features": "ವೈಶಿಷ್ಟ್ಯಗಳು",
-      "about": "ಬಗ್ಗೆ",
-      "contact": "ಸಂಪರ್ಕ",
-      "profile": "ಪ್ರೊಫೈಲ್",
-      "dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
-      "community": "ಸಮುದಾಯ",
-      "skills": "ಕೌಶಲ್ಯಗಳು",
-      "signUp": "ಸೈನ್ ಅಪ್"
-    }
+    "home": "ಮುಖಪುಟ",
+    "jobs": "ಉದ್ಯೋಗಗಳು",
+    "schemes": "ಯೋಜನೆಗಳು",
+    "learning": "ಕಲಿಕೆ",
+    "skills": "ಕೌಶಲ್ಯಗಳು",
+    "courseRecommender": "ಕೋರ್ಸ್ ಸಿಫಾರಸುಗಾರ",
+    "business": "ವ್ಯಾಪಾರ",
+    "businessIdeas": "ವ್ಯಾಪಾರ ಆಲೋಚನೆಗಳು",
+    "projects": "ಯೋಜನೆಗಳು",
+    "myProjects": "ನನ್ನ ಯೋಜನೆಗಳು",
+    "events": "ಕಾರ್ಯಕ್ರಮಗಳು",
+    "csr": "ಸಿಎಸ್ಆರ್",
+    "profile": "ಪ್ರೊಫೈಲ್",
+    "dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+    "welcome": "ಸ್ವಾಗತ",
+    "login": "ಲಾಗಿನ್",
+    "logout": "ಲಾಗ್ಔಟ್",
+    "community": "ಸಮುದಾಯ",
+    "createProfile": "ಪ್ರೊಫೈಲ್ ರಚಿಸಿ",
+    "features": "ವೈಶಿಷ್ಟ್ಯಗಳು",
+    "about": "ನಮ್ಮ ಬಗ್ಗೆ",
+    "contact": "ಸಂಪರ್ಕ",
+    "signUp": "ಸೈನ್ ಅಪ್"
+  }
   }

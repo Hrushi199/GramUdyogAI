@@ -17,6 +17,21 @@ import jobMentorDashboardMl from './locales/jobmentordashboard/malayalam.json';
 import jobMentorDashboardPa from './locales/jobmentordashboard/punjabi.json';
 import jobMentorDashboardAs from './locales/jobmentordashboard/assamese.json';
 
+// Import auth translations
+import authEn from './locales/auth/english.json';
+import authHi from './locales/auth/hindi.json';
+import authBn from './locales/auth/bengali.json';
+import authMr from './locales/auth/marathi.json';
+import authTe from './locales/auth/telugu.json';
+import authTa from './locales/auth/tamil.json';
+import authGu from './locales/auth/gujarati.json';
+import authUr from './locales/auth/urdu.json';
+import authKn from './locales/auth/kannada.json';
+import authOr from './locales/auth/odia.json';
+import authMl from './locales/auth/malayalam.json';
+import authPa from './locales/auth/punjabi.json';
+import authAs from './locales/auth/assamese.json';
+
 // Existing namespace translations
 import enSkillBuilder from './locales/skill-builder/english.json';
 import hiSkillBuilder from './locales/skill-builder/hindi.json';
@@ -256,6 +271,7 @@ i18n
   .init({
     resources: {
       en: {
+        auth: authEn, // Added auth namespace
         skillbuilder: enSkillBuilder,
         hero: enHero,
         featuresname: enFeatures,
@@ -275,6 +291,7 @@ i18n
         'job-board': jobBoardEn, // Added job-board namespace
       },
       hi: {
+        auth: authHi, // Added auth namespace
         skillbuilder: hiSkillBuilder,
         hero: hiHero,
         featuresname: hiFeatures,
@@ -294,6 +311,7 @@ i18n
         'job-board': jobBoardHi, // Added job-board namespace
       },
       bn: {
+        auth: authBn, // Added auth namespace
         skillbuilder: bnSkillBuilder,
         hero: bnHero,
         featuresname: bnFeatures,
@@ -313,6 +331,7 @@ i18n
         'job-board': jobBoardBn, // Added job-board namespace
       },
       mr: {
+        auth: authMr, // Added auth namespace
         skillbuilder: mrSkillBuilder,
         hero: mrHero,
         featuresname: mrFeatures,
@@ -332,6 +351,7 @@ i18n
         'job-board': jobBoardMr, // Added job-board namespace
       },
       te: {
+        auth: authTe, // Added auth namespace
         skillbuilder: teSkillBuilder,
         hero: teHero,
         featuresname: teFeatures,
@@ -351,6 +371,7 @@ i18n
         'job-board': jobBoardTe, // Added job-board namespace
       },
       ta: {
+        auth: authTa, // Added auth namespace
         skillbuilder: taSkillBuilder,
         hero: taHero,
         featuresname: taFeatures,
@@ -370,6 +391,7 @@ i18n
         'job-board': jobBoardTa, // Added job-board namespace
       },
       gu: {
+        auth: authGu, // Added auth namespace
         skillbuilder: guSkillBuilder,
         hero: guHero,
         featuresname: guFeatures,
@@ -389,6 +411,7 @@ i18n
         'job-board': jobBoardGu, // Added job-board namespace
       },
       ur: {
+        auth: authUr, // Added auth namespace
         skillbuilder: urSkillBuilder,
         hero: urHero,
         featuresname: urFeatures,
@@ -408,6 +431,7 @@ i18n
         'job-board': jobBoardUr, // Added job-board namespace
       },
       kn: {
+        auth: authKn, // Added auth namespace
         skillbuilder: knSkillBuilder,
         hero: knHero,
         featuresname: knFeatures,
@@ -427,6 +451,7 @@ i18n
         'job-board': jobBoardKn, // Added job-board namespace
       },
       or: {
+        auth: authOr, // Added auth namespace
         skillbuilder: orSkillBuilder,
         hero: orHero,
         featuresname: orFeatures,
@@ -446,6 +471,7 @@ i18n
         'job-board': jobBoardOr, // Added job-board namespace
       },
       ml: {
+        auth: authMl, // Added auth namespace
         skillbuilder: mlSkillBuilder,
         hero: mlHero,
         featuresname: mlFeatures,
@@ -465,6 +491,7 @@ i18n
         'job-board': jobBoardMl, // Added job-board namespace
       },
       pa: {
+        auth: authPa, // Added auth namespace
         skillbuilder: paSkillBuilder,
         hero: paHero,
         featuresname: paFeatures,
@@ -484,6 +511,7 @@ i18n
         'job-board': jobBoardPa, // Added job-board namespace
       },
       as: {
+        auth: authAs, // Added auth namespace
         skillbuilder: asSkillBuilder,
         hero: asHero,
         featuresname: asFeatures,
@@ -506,6 +534,7 @@ i18n
     lng: 'en',
     fallbackLng: 'en',
     ns: [
+      'auth', // Added auth to namespaces list
       'skillbuilder',
       'hero',
       'featuresname',

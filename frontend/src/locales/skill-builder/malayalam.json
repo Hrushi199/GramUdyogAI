@@ -226,13 +226,28 @@
       }
     },
     "navbar": {
-      "features": "സവിശേഷതകൾ",
-      "about": "കുറിച്ച്",
-      "contact": "ബന്ധപ്പെടുക",
-      "profile": "പ്രൊഫൈൽ",
-      "dashboard": "ഡാഷ്‌ബോർഡ്",
-      "community": "സമൂഹം",
-      "skills": "നൈപുണ്യങ്ങൾ",
-      "signUp": "സൈൻ അപ്പ്"
-    }
+    "home": "ഹോം",
+    "jobs": "ജോലികൾ",
+    "schemes": "പദ്ധതികൾ",
+    "learning": "പഠനം",
+    "skills": "കഴിവുകൾ",
+    "courseRecommender": "കോഴ്‌സ് ശുപാർശക്കാരൻ",
+    "business": "ബിസിനസ്",
+    "businessIdeas": "ബിസിനസ് ആശയങ്ങൾ",
+    "projects": "പ്രോജക്റ്റുകൾ",
+    "myProjects": "എന്റെ പ്രോജക്റ്റുകൾ",
+    "events": "പരിപാടികൾ",
+    "csr": "സിഎസ്ആർ",
+    "profile": "പ്രൊഫൈൽ",
+    "dashboard": "ഡാഷ്‌ബോർഡ്",
+    "welcome": "സ്വാഗതം",
+    "login": "ലോഗിൻ",
+    "logout": "ലോഗൗട്ട്",
+    "community": "കമ്മ്യൂണിറ്റി",
+    "createProfile": "പ്രൊഫൈൽ സൃഷ്ടിക്കുക",
+    "features": "സവിശേഷതകൾ",
+    "about": "ഞങ്ങളെ കുറിച്ച്",
+    "contact": "ബന്ധപ്പെടുക",
+    "signUp": "സൈൻ അപ്പ്"
+  }
   }

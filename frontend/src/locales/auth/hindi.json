@@ -1,0 +1,100 @@
+{
+  "welcome": {
+    "back": "वापस आपका स्वागत है",
+    "join": "GramUdyogAI में शामिल हों",
+    "signInSubtitle": "अपने खाते में साइन इन करें",
+    "createAccountSubtitle": "शुरू करने के लिए अपना खाता बनाएं"
+  },
+  "userTypes": {
+    "label": "मैं हूं...",
+    "individual": {
+      "title": "व्यक्तिगत",
+      "description": "कुशल व्यक्ति, शिक्षार्थी और पेशेवर"
+    },
+    "company": {
+      "title": "कंपनी", 
+      "description": "कॉर्पोरेट्स और व्यवसाय"
+    },
+    "ngo": {
+      "title": "एनजीओ",
+      "description": "गैर-लाभकारी संगठन"
+    },
+    "investor": {
+      "title": "निवेशक",
+      "description": "एंजेल निवेशक और वीसी"
+    }
+  },
+  "form": {
+    "fields": {
+      "phoneNumber": "फोन नंबर",
+      "password": "पासवर्ड",
+      "confirmPassword": "पासवर्ड की पुष्टि करें",
+      "fullName": "पूरा नाम",
+      "organizationName": "संगठन का नाम",
+      "contactPersonName": "संपर्क व्यक्ति का नाम"
+    },
+    "placeholders": {
+      "phoneNumber": "अपना फोन नंबर दर्ज करें",
+      "password": "अपना पासवर्ड दर्ज करें",
+      "confirmPassword": "अपने पासवर्ड की पुष्टि करें",
+      "fullName": "अपना पूरा नाम दर्ज करें",
+      "organizationName": "संगठन का नाम दर्ज करें",
+      "contactPersonName": "संपर्क व्यक्ति का नाम दर्ज करें"
+    },
+    "required": "*",
+    "forgotPassword": "पासवर्ड भूल गए?",
+    "forgotPasswordTooltip": "फीचर विकसित हो रहा है"
+  },
+  "passwordRequirements": {
+    "title": "पासवर्ड आवश्यकताएं:",
+    "length": "कम से कम 8 अक्षर",
+    "uppercase": "कम से कम एक बड़ा अक्षर",
+    "lowercase": "कम से कम एक छोटा अक्षर", 
+    "number": "कम से कम एक संख्या",
+    "special": "कम से कम एक विशेष वर्ण (#@$!%*?&)"
+  },
+  "validation": {
+    "phoneRequired": "फोन नंबर आवश्यक है",
+    "phoneInvalid": "फोन नंबर वैध होना चाहिए और 0 से शुरू नहीं होना चाहिए।",
+    "passwordRequired": "पासवर्ड आवश्यक है",
+    "nameRequired": "नाम आवश्यक है",
+    "passwordRequirements": "पासवर्ड आवश्यकताओं को पूरा नहीं करता।",
+    "passwordMismatch": "पासवर्ड मेल नहीं खाते",
+    "passwordLength": "पासवर्ड कम से कम 8 अक्षरों का होना चाहिए।",
+    "passwordUppercase": "पासवर्ड में एक बड़ा अक्षर होना चाहिए।",
+    "passwordLowercase": "पासवर्ड में एक छोटा अक्षर होना चाहिए।",
+    "passwordNumber": "पासवर्ड में एक संख्या होनी चाहिए।",
+    "passwordSpecial": "पासवर्ड में एक विशेष वर्ण (@$!%*?&) होना चाहिए।",
+    "passwordsNoMatch": "पासवर्ड मेल नहीं खाते।"
+  },
+  "buttons": {
+    "signIn": "साइन इन करें",
+    "createAccount": "खाता बनाएं",
+    "processing": "प्रसंस्करण...",
+    "fillFormByVoice": "आवाज से फॉर्म भरें",
+    "voiceProcessing": "प्रसंस्करण..."
+  },
+  "links": {
+    "noAccount": "खाता नहीं है? साइन अप करें",
+    "hasAccount": "पहले से खाता है? साइन इन करें"
+  },
+  "messages": {
+    "loginSuccess": "लॉगिन सफल! आपकी प्रोफाइल पर रीडायरेक्ट कर रहे हैं...",
+    "registrationSuccess": "पंजीकरण सफल! प्रोफाइल निर्माण पर रीडायरेक्ट कर रहे हैं...",
+    "accountDeactivated": "खाता निष्क्रिय है। कृपया सहायता से संपर्क करें।",
+    "invalidCredentials": "गलत फोन नंबर या पासवर्ड। कृपया अपनी जानकारी जांचें।",
+    "loginFailed": "लॉगिन असफल। कृपया पुनः प्रयास करें।",
+    "phoneExists": "इस फोन नंबर के साथ खाता पहले से मौजूद है। कृपया लॉगिन करें।",
+    "checkInput": "कृपया अपनी जानकारी जांचें और पुनः प्रयास करें।",
+    "registrationFailed": "पंजीकरण असफल। कृपया पुनः प्रयास करें।",
+    "authFailed": "प्रमाणीकरण असफल। कृपया पुनः प्रयास करें।",
+    "microphoneError": "माइक्रोफोन का उपयोग नहीं हो सका। कृपया अनुमतियां जांचें।",
+    "voiceInProgress": "आवाज इनपुट पहले से चल रहा है।",
+    "voiceInstructions": "आवाज इनपुट शुरू करने के लिए माइक्रोफोन आइकन पर क्लिक करें।",
+    "voiceStopped": "आवाज इनपुट बंद। प्रसंस्करण...",
+    "voiceTranscriptionFailed": "आवाज ट्रांसक्रिप्शन असफल। कृपया पुनः प्रयास करें।",
+    "replaceConfirm": "\"{currentValue}\" को \"{newValue}\" से बदलें?",
+    "yes": "हां",
+    "no": "नहीं"
+  }
+}

@@ -226,14 +226,28 @@
       }
     },
     "navbar": {
-      "features": "அம்சங்கள்",
-      "about": "பற்றி",
-      "contact": "தொடர்பு",
-      "profile": "சுயவிவரம்",
-      "dashboard": "டாஷ்போர்டு",
-      "community": "சமூகம்",
-      "skills": "திறன்கள்",
-      "signUp": "பதிவு செய்",
-      "courseRecommender": "பாடநெறி பரிந்துரை"
-    }
+    "home": "முகப்பு",
+    "jobs": "வேலைகள்",
+    "schemes": "திட்டங்கள்",
+    "learning": "கற்றல்",
+    "skills": "திறன்கள்",
+    "courseRecommender": "படிப்பு பரிந்துரையாளர்",
+    "business": "வணிகம்",
+    "businessIdeas": "வணிக யோசனைகள்",
+    "projects": "திட்டங்கள்",
+    "myProjects": "என் திட்டங்கள்",
+    "events": "நிகழ்வுகள்",
+    "csr": "சிஎஸ்ஆர்",
+    "profile": "சுயவிவரம்",
+    "dashboard": "டாஷ்போர்டு",
+    "welcome": "வரவேற்கிறோம்",
+    "login": "உள்நுழைய",
+    "logout": "வெளியேறு",
+    "community": "சமூகம்",
+    "createProfile": "சுயவிவரம் உருவாக்கு",
+    "features": "அம்சங்கள்",
+    "about": "எங்களைப் பற்றி",
+    "contact": "தொடர்பு",
+    "signUp": "பதிவு செய்க"
+  }
   }
