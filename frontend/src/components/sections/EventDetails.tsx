@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { eventAPI, projectAPI, userAPI, Event, SocialMediaPost } from '../../lib/api';
-import type { TeamMember, User as UserType, Project } from '../../lib/api';
+import { eventAPI, projectAPI, userAPI, Event } from '../../lib/api';
+import type { User as UserType, Project } from '../../lib/api';
 import { Badge } from '../ui/badge';
 import { 
   Calendar, MapPin, Users, Award, Share2, Target, TrendingUp, DollarSign, Plus, Activity, User, Crown,
-  Search, UserPlus, Eye, Edit, Trash2, MessageSquare, Mic, MicOff, Building2, Globe, Star, Tag, Clock
+  Search, UserPlus, Edit, Trash2
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { getEventTypeColor, getStatusColor } from '../../lib/utils';
 import { formatCurrency } from '../../lib/utils';
 import { useTranslation } from 'react-i18next';
-import { TeamMember as TeamMemberType } from '../../lib/api';
+import { TeamMember } from '../../lib/api';
 import { Toaster, toast } from 'react-hot-toast';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
@@ -33,13 +33,13 @@ export const generateSocialMediaPosts = async (eventId: number, setSelectedEvent
   }
 };
 
-export const joinEvent = async (eventId: number, fetchEvent: () => Promise<void>, API_BASE_URL: string) => {
+export const joinEvent = async (eventId: number, fetchEvent: () => Promise<void>, API_BASE_URL: string, t: any) => {
   try {
     const user = localStorage.getItem('user');
     const userData = user ? JSON.parse(user) : null;
     const userId = userData?.id || localStorage.getItem('user_id');
     if (!userId) {
-      toast.error('Please login to join events');
+      toast.error(t('toasts.loginRequired'));
       return;
     }
     const response = await fetch(`${API_BASE_URL}/api/events/${eventId}/join?user_id=${userId}`, {
@@ -48,23 +48,23 @@ export const joinEvent = async (eventId: number, fetchEvent: () => Promise<void>
     });
     if (response.ok) {
       await fetchEvent();
-      toast.success('Successfully joined the event!');
+      toast.success(t('toasts.joinSuccess'));
     } else {
       const error = await response.json();
-      toast.error(error.detail || 'Failed to join event');
+      toast.error(error.detail || t('toasts.joinError'));
     }
   } catch (error) {
     console.error('Error joining event:', error);
-    toast.error('Failed to join event');
+    toast.error(t('toasts.joinError'));
   }
 };
 
-export const createProjectForEvent = async (eventId: number, selectedEvent: Event | null, fetchTeamMembers: (eventId: number) => Promise<void>, API_BASE_URL: string) => {
+export const createProjectForEvent = async (eventId: number, selectedEvent: Event | null, fetchTeamMembers: (eventId: number) => Promise<void>, t: any) => {
   const user = localStorage.getItem('user');
   const userData = user ? JSON.parse(user) : null;
   const userId = userData?.id || localStorage.getItem('user_id');
   if (!userId) {
-    toast.error('Please login to create projects');
+    toast.error(t('toasts.projectCreateLoginRequired'));
     return;
   }
   const projectData = {
@@ -107,16 +107,16 @@ export const createProjectForEvent = async (eventId: number, selectedEvent: Even
     });
 
     if (response.data) {
-      toast.success(`Project created successfully! Project ID: ${response.data.id}`);
+      toast.success(t('toasts.projectCreated', { id: response.data.id }));
       if (selectedEvent) {
         await fetchTeamMembers(selectedEvent.id);
       }
     } else {
-      toast.error('Failed to create project: ' + (response.error || 'Unknown error'));
+      toast.error(t('toasts.projectCreateError', { error: response.error || t('toasts.projectCreateErrorGeneric') }));
     }
   } catch (error) {
     console.error('Error creating project for event:', error);
-    toast.error('Failed to create project');
+    toast.error(t('toasts.projectCreateErrorGeneric'));
   } finally {
     // Optional: Any cleanup or final actions can go here
   }
@@ -148,11 +148,8 @@ interface TeamMemberWithProject extends TeamMember {
 const EventDetails: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
   const navigate = useNavigate();
-  const { i18n } = useTranslation();
+  const { t } = useTranslation('event-details');
   
-  // Language state
-  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language || 'en');
-
   // Event state
   const [event, setEvent] = useState<Event | null>(null);
   const [loading, setLoading] = useState(true);
@@ -195,7 +192,6 @@ const EventDetails: React.FC = () => {
   const [loadingTeamMembers, setLoadingTeamMembers] = useState(true);
   const [teamMembers, setTeamMembers] = useState<TeamMemberWithProject[]>([]);
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
-  const [showCreateModal, setShowCreateModal] = useState(false);
   const [showSocialMediaModal, setShowSocialMediaModal] = useState(false);
   
   // User search and selection
@@ -276,7 +272,7 @@ const EventDetails: React.FC = () => {
 
   const addTeamMember = async () => {
     if (!selectedProject || !selectedUser || !newMemberRole || !newMemberSkills || !event) {
-      toast.error('Please select a project, a user, and define a role and skills.');
+      toast.error(t('toasts.selectAllFields'));
       return;
     }
 
@@ -291,7 +287,7 @@ const EventDetails: React.FC = () => {
       );
 
       if (response.data) {
-        toast.success('Team member added successfully!');
+        toast.success(t('toasts.teamMemberAdded'));
         setShowAddMemberModal(false);
         setSelectedUser(null);
         setNewMemberRole('');
@@ -299,11 +295,11 @@ const EventDetails: React.FC = () => {
         // Refresh team members list
         fetchTeamMembers(event.id);
       } else {
-        toast.error('Error adding team member: ' + (response.error || 'Unknown error'));
+        toast.error(t('toasts.teamMemberError', { error: response.error || t('toasts.unexpectedError') }));
       }
     } catch (error) {
       console.error('Error adding team member:', error);
-      toast.error('An unexpected error occurred.');
+      toast.error(t('toasts.unexpectedError'));
     }
   };
 
@@ -336,14 +332,14 @@ const EventDetails: React.FC = () => {
     try {
       const response = await eventAPI.updateEventStatus(eventId, 'active');
       if (response.data) {
-        toast.success('Event marked as active!');
+        toast.success(t('toasts.eventActivated'));
         fetchEvent(); // Refresh the event
       } else {
-        toast.error('Error marking event as active: ' + (response.error || 'Unknown error'));
+        toast.error(t('toasts.eventActivateError', { error: response.error || t('toasts.unexpectedError') }));
       }
     } catch (error) {
       console.error('Error marking event as active:', error);
-      toast.error('An unexpected error occurred.');
+      toast.error(t('toasts.unexpectedError'));
     }
   };
 
@@ -351,14 +347,14 @@ const EventDetails: React.FC = () => {
     try {
       const response = await eventAPI.updateEventStatus(eventId, 'inactive');
       if (response.data) {
-        toast.success('Event marked as inactive!');
+        toast.success(t('toasts.eventDeactivated'));
         fetchEvent(); // Refresh the event
       } else {
-        toast.error('Error marking event as inactive: ' + (response.error || 'Unknown error'));
+        toast.error(t('toasts.eventDeactivateError', { error: response.error || t('toasts.unexpectedError') }));
       }
     } catch (error) {
       console.error('Error marking event as inactive:', error);
-      toast.error('An unexpected error occurred.');
+      toast.error(t('toasts.unexpectedError'));
     }
   };
 
@@ -393,11 +389,6 @@ const EventDetails: React.FC = () => {
     }
   }, [showAddMemberModal]);
 
-  // Update selectedLanguage if i18n.language changes
-  useEffect(() => {
-    setSelectedLanguage(i18n.language || 'en');
-  }, [i18n.language]);
-
   const handleEdit = () => {
     setIsEditing(true);
   };
@@ -408,15 +399,15 @@ const EventDetails: React.FC = () => {
       try {
         const response = await eventAPI.updateEvent(event.id, eventForm);
         if (response.data) {
-          toast.success('Event updated successfully!');
+          toast.success(t('toasts.eventUpdated'));
           setEvent(response.data);
           setIsEditing(false);
         } else {
-          toast.error('Error updating event: ' + (response.error || 'Unknown error'));
+          toast.error(t('toasts.eventUpdateError', { error: response.error || t('toasts.unexpectedError') }));
         }
       } catch (error) {
         console.error('Error updating event:', error);
-        toast.error('An unexpected error occurred.');
+        toast.error(t('toasts.unexpectedError'));
       }
     }
   };
@@ -426,7 +417,7 @@ const EventDetails: React.FC = () => {
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
-          <p className="mt-4 text-lg text-white">Loading Event...</p>
+          <p className="mt-4 text-lg text-white">{t('loading')}</p>
         </div>
       </div>
     );
@@ -436,12 +427,12 @@ const EventDetails: React.FC = () => {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">Event not found</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">{t('eventNotFound')}</h2>
           <button
             onClick={() => navigate('/events')}
             className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition"
           >
-            Back to Events
+            {t('backToEvents')}
           </button>
         </div>
       </div>
@@ -451,7 +442,6 @@ const EventDetails: React.FC = () => {
   const isCreator = event.created_by === parseInt(localStorage.getItem('user_id') || '0');
   const eventTypeColor = getEventTypeColor(event.event_type);
   const statusColor = getStatusColor(event.status);
-  const formattedBudget = formatCurrency(event.budget);
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-purple-900/20 via-black/60 to-blue-900/20">
@@ -471,10 +461,10 @@ const EventDetails: React.FC = () => {
               onClick={() => navigate('/events')}
               className="text-purple-400 hover:text-purple-300 mb-2 flex items-center"
             >
-              ← Back to Events
+              ← {t('backToEvents')}
             </button>
             <h1 className="text-3xl font-bold text-white">{event.title}</h1>
-            <p className="text-gray-300">Event Details & Management</p>
+            <p className="text-gray-300">{t('eventDetails')}</p>
           </div>
           {isCreator && (
             <div className="flex items-center space-x-3">
@@ -483,14 +473,14 @@ const EventDetails: React.FC = () => {
                 className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition flex items-center"
               >
                 <Edit className="h-4 w-4 mr-2" />
-                Edit Event
+                {t('editEvent')}
               </button>
               {event.status === 'draft' && (
                 <button
                   onClick={() => markEventActive(event.id)}
                   className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-2 rounded-lg hover:from-green-700 hover:to-emerald-700 transition"
                 >
-                  Activate Event
+                  {t('activateEvent')}
                 </button>
               )}
               {event.status === 'active' && (
@@ -498,7 +488,7 @@ const EventDetails: React.FC = () => {
                   onClick={() => markEventInactive(event.id)}
                   className="bg-gradient-to-r from-red-600 to-pink-600 text-white px-4 py-2 rounded-lg hover:from-red-700 hover:to-pink-700 transition"
                 >
-                  Deactivate Event
+                  {t('deactivateEvent')}
                 </button>
               )}
             </div>
@@ -533,14 +523,14 @@ const EventDetails: React.FC = () => {
                     className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition flex items-center shadow-lg hover:shadow-xl"
                   >
                     <Share2 className="h-4 w-4 mr-2" />
-                    Social Media
+                    {t('socialMedia')}
                   </button>
                   <button
-                    onClick={() => joinEvent(event.id, fetchEvent, API_BASE_URL)}
+                    onClick={() => joinEvent(event.id, fetchEvent, API_BASE_URL, t)}
                     className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-2 rounded-lg hover:from-green-700 hover:to-emerald-700 transition flex items-center shadow-lg hover:shadow-xl"
                   >
                     <Users className="h-4 w-4 mr-2" />
-                    Join Event
+                    {t('joinEvent')}
                   </button>
                 </div>
               </div>
@@ -555,7 +545,7 @@ const EventDetails: React.FC = () => {
             <CardHeader>
               <CardTitle className="text-white flex items-center">
                 <Calendar className="h-5 w-5 mr-2 text-purple-400" />
-                Event Details
+                {t('eventDetailsSection')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -569,17 +559,17 @@ const EventDetails: React.FC = () => {
               </div>
               <div className="flex items-center text-gray-300">
                 <Users className="h-4 w-4 mr-2 text-purple-400" />
-                <span>{event.current_participants}/{event.max_participants} participants</span>
+                <span>{event.current_participants}/{event.max_participants} {t('participants')}</span>
               </div>
               {event.prize_pool > 0 && (
                 <div className="flex items-center text-gray-300">
                   <Award className="h-4 w-4 mr-2 text-yellow-400" />
-                  <span>{formatCurrency(event.prize_pool)} prize pool</span>
+                  <span>{formatCurrency(event.prize_pool)} {t('prizePool')}</span>
                 </div>
               )}
               <div className="flex items-center text-gray-300">
                 <DollarSign className="h-4 w-4 mr-2 text-green-400" />
-                <span>{formatCurrency(event.budget)} budget</span>
+                <span>{formatCurrency(event.budget)} {t('budget')}</span>
               </div>
             </CardContent>
           </Card>
@@ -589,13 +579,13 @@ const EventDetails: React.FC = () => {
             <CardHeader>
               <CardTitle className="text-white flex items-center">
                 <Target className="h-5 w-5 mr-2 text-blue-400" />
-                Skills & Requirements
+                {t('skillsRequirements')}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 <div>
-                  <h4 className="text-sm font-medium text-gray-300 mb-2">Required Skills:</h4>
+                  <h4 className="text-sm font-medium text-gray-300 mb-2">{t('requiredSkills')}</h4>
                   <div className="flex flex-wrap gap-1">
                     {event.skills_required.map((skill, index) => (
                       <Badge key={index} variant="outline" className="text-xs border-blue-700 text-blue-300">
@@ -605,7 +595,7 @@ const EventDetails: React.FC = () => {
                   </div>
                 </div>
                 <div>
-                  <h4 className="text-sm font-medium text-gray-300 mb-2">Tags:</h4>
+                  <h4 className="text-sm font-medium text-gray-300 mb-2">{t('tags')}</h4>
                   <div className="flex flex-wrap gap-2">
                     {event.tags.map((tag, index) => (
                       <span key={index} className="bg-purple-900/50 text-purple-300 border border-purple-700 px-2 py-1 rounded text-xs">
@@ -623,24 +613,24 @@ const EventDetails: React.FC = () => {
             <CardHeader>
               <CardTitle className="text-white flex items-center">
                 <TrendingUp className="h-5 w-5 mr-2 text-green-400" />
-                Impact Metrics
+                {t('impactMetrics')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-gray-300">Target Participants</span>
+                <span className="text-gray-300">{t('targetParticipants')}</span>
                 <span className="text-white font-semibold">{event.impact_metrics.participants_target}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-gray-300">Skills Developed</span>
+                <span className="text-gray-300">{t('skillsDeveloped')}</span>
                 <span className="text-white font-semibold">{event.impact_metrics.skills_developed}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-gray-300">Projects Created</span>
+                <span className="text-gray-300">{t('projectsCreated')}</span>
                 <span className="text-white font-semibold">{event.impact_metrics.projects_created}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-gray-300">Employment Generated</span>
+                <span className="text-gray-300">{t('employmentGenerated')}</span>
                 <span className="text-white font-semibold">{event.impact_metrics.employment_generated}</span>
               </div>
             </CardContent>
@@ -653,7 +643,7 @@ const EventDetails: React.FC = () => {
             <div className="flex items-center justify-between">
               <CardTitle className="text-white flex items-center">
                 <Users className="h-5 w-5 mr-2 text-purple-400" />
-                Team Management
+                {t('teamManagement')}
               </CardTitle>
               <div className="flex items-center space-x-2">
                 <button
@@ -661,14 +651,14 @@ const EventDetails: React.FC = () => {
                   className="bg-gradient-to-r from-green-600 to-teal-600 text-white px-4 py-2 rounded-lg hover:from-green-700 hover:to-teal-700 transition flex items-center"
                 >
                   <Plus className="h-4 w-4 mr-2" />
-                  Add Member
+                  {t('addMember')}
                 </button>
                 <button
-                  onClick={() => createProjectForEvent(event.id, event, fetchTeamMembers, API_BASE_URL)}
+                  onClick={() => createProjectForEvent(event.id, event, fetchTeamMembers, t)}
                   className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-blue-700 transition flex items-center"
                 >
                   <Activity className="h-4 w-4 mr-2" />
-                  Create Project
+                  {t('createProject')}
                 </button>
               </div>
             </div>
@@ -677,17 +667,17 @@ const EventDetails: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Team Members */}
               <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Current Team</h4>
+                <h4 className="text-lg font-semibold text-white mb-3">{t('currentTeam')}</h4>
                 {loadingTeamMembers ? (
                   <div className="text-center py-4">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto"></div>
-                    <p className="text-gray-400 mt-2">Loading team members...</p>
-                                      </div>
+                    <p className="text-gray-400 mt-2">{t('loadingTeamMembers')}</p>
+                  </div>
                 ) : teamMembers.length === 0 ? (
                   <div className="text-center py-4">
                     <Users className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                    <p className="text-gray-400">No team members yet</p>
-                    <p className="text-gray-500 text-sm">Start by adding team members to your projects</p>
+                    <p className="text-gray-400">{t('noTeamMembers')}</p>
+                    <p className="text-gray-500 text-sm">{t('noTeamMembersMessage')}</p>
                   </div>
                 ) : (
                   <div className="space-y-3">
@@ -700,19 +690,19 @@ const EventDetails: React.FC = () => {
                               {member.user_id && (
                                 <Badge className="bg-green-900/50 text-green-300 border-green-700 text-xs">
                                   <User className="h-3 w-3 mr-1" />
-                                  Real User
+                                  {t('realUser')}
                                 </Badge>
                               )}
                               {member.user_id === getCurrentUserId() && (
                                 <Badge className="bg-purple-900/50 text-purple-300 border-purple-700 text-xs">
                                   <Crown className="h-3 w-3 mr-1" />
-                                  You
+                                  {t('you')}
                                 </Badge>
                               )}
                             </div>
                             <p className="text-gray-400 text-sm">{member.role}</p>
                             {member.project_title && (
-                              <p className="text-gray-500 text-xs">Project: {member.project_title}</p>
+                              <p className="text-gray-500 text-xs">{t('project')} {member.project_title}</p>
                             )}
                             <div className="flex flex-wrap gap-1 mt-1">
                               {member.skills.slice(0, 3).map((skill: string, skillIndex: number) => (
@@ -722,7 +712,7 @@ const EventDetails: React.FC = () => {
                               ))}
                               {member.skills.length > 3 && (
                                 <Badge variant="outline" className="text-xs border-gray-700 text-gray-400">
-                                  +{member.skills.length - 3} more
+                                  {t('moreSkills', { count: member.skills.length - 3 })}
                                 </Badge>
                               )}
                             </div>
@@ -745,30 +735,30 @@ const EventDetails: React.FC = () => {
 
               {/* Project Ideas */}
               <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Project Ideas</h4>
+                <h4 className="text-lg font-semibold text-white mb-3">{t('projectIdeas')}</h4>
                 <div className="space-y-3">
                   <div className="bg-gray-800/30 border border-gray-600 rounded-lg p-3">
-                    <h5 className="text-white font-medium mb-1">AI-Powered Crop Disease Detection</h5>
-                    <p className="text-gray-400 text-sm mb-2">Mobile app using computer vision to detect crop diseases in real-time</p>
+                    <h5 className="text-white font-medium mb-1">{t('projectIdeasList.cropDisease.title')}</h5>
+                    <p className="text-gray-400 text-sm mb-2">{t('projectIdeasList.cropDisease.description')}</p>
                     <div className="flex items-center justify-between">
                       <Badge className="bg-purple-900/50 text-purple-300 border-purple-700">
-                        AI/ML
+                        {t('categories.ai_ml')}
                       </Badge>
                       <button className="text-blue-400 hover:text-blue-300 text-sm">
-                        View Details →
+                        {t('viewDetails')}
                       </button>
                     </div>
                   </div>
                   
                   <div className="bg-gray-800/30 border border-gray-600 rounded-lg p-3">
-                    <h5 className="text-white font-medium mb-1">Digital Literacy Platform</h5>
-                    <p className="text-gray-400 text-sm mb-2">Comprehensive platform for rural women's digital education</p>
+                    <h5 className="text-white font-medium mb-1">{t('projectIdeasList.digitalLiteracy.title')}</h5>
+                    <p className="text-gray-400 text-sm mb-2">{t('projectIdeasList.digitalLiteracy.description')}</p>
                     <div className="flex items-center justify-between">
                       <Badge className="bg-blue-900/50 text-blue-300 border-blue-700">
-                        Education
+                        {t('categories.education')}
                       </Badge>
                       <button className="text-blue-400 hover:text-blue-300 text-sm">
-                        View Details →
+                        {t('viewDetails')}
                       </button>
                     </div>
                   </div>
@@ -791,7 +781,7 @@ const EventDetails: React.FC = () => {
                 </svg>
               </button>
               
-              <h2 className="text-2xl font-bold text-white mb-6">Social Media Posts</h2>
+              <h2 className="text-2xl font-bold text-white mb-6">{t('socialMediaPosts')}</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {event.social_media_posts.map((post, index) => (
@@ -800,7 +790,7 @@ const EventDetails: React.FC = () => {
                       <CardTitle className="text-white flex items-center justify-between">
                         <span className="capitalize">{post.platform}</span>
                         <Badge className={post.status === 'published' ? 'bg-green-900/50 text-green-300' : 'bg-yellow-900/50 text-yellow-300'}>
-                          {post.status}
+                          {post.status === 'published' ? t('published') : t('draft')}
                         </Badge>
                       </CardTitle>
                     </CardHeader>
@@ -818,7 +808,7 @@ const EventDetails: React.FC = () => {
                           onClick={() => publishSocialMediaPost(event.id, post.id, post.platform)}
                           className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition"
                         >
-                          Publish to {post.platform}
+                          {t('publishTo', { platform: post.platform })}
                         </button>
                       )}
                     </CardContent>
@@ -848,17 +838,17 @@ const EventDetails: React.FC = () => {
                 </svg>
               </button>
               
-              <h2 className="text-2xl font-bold mb-6 text-white">Add Team Member</h2>
+              <h2 className="text-2xl font-bold mb-6 text-white">{t('addTeamMember')}</h2>
               
               <div className="space-y-4">
                 {/* Search Users */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Search Users</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('searchUsers')}</label>
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                     <input
                       type="text"
-                      placeholder="Search by name or phone..."
+                      placeholder={t('searchByNameOrPhone')}
                       className="w-full pl-10 pr-4 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white placeholder-gray-400"
                       value={searchUserQuery}
                       onChange={(e) => {
@@ -906,10 +896,10 @@ const EventDetails: React.FC = () => {
                 
                 {/* Role */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Role</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('role')}</label>
                   <input
                     type="text"
-                    placeholder="e.g., Frontend Developer, Team Lead"
+                    placeholder={t('rolePlaceholder')}
                     className="w-full px-3 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white placeholder-gray-400"
                     value={newMemberRole}
                     onChange={(e) => setNewMemberRole(e.target.value)}
@@ -918,10 +908,10 @@ const EventDetails: React.FC = () => {
                 
                 {/* Skills */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Skills (comma-separated)</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('skills')}</label>
                   <input
                     type="text"
-                    placeholder="e.g., React, Node.js, Python"
+                    placeholder={t('skillsPlaceholder')}
                     className="w-full px-3 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white placeholder-gray-400"
                     value={newMemberSkills}
                     onChange={(e) => setNewMemberSkills(e.target.value)}
@@ -930,7 +920,7 @@ const EventDetails: React.FC = () => {
                 
                 {/* Project Selection */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Add to Project</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('addToProject')}</label>
                   <select 
                     value={selectedProject?.id || ''}
                     onChange={(e) => {
@@ -939,7 +929,7 @@ const EventDetails: React.FC = () => {
                     }}
                     className="w-full px-3 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white"
                   >
-                    <option value="">Select a project...</option>
+                    <option value="">{t('selectProject')}</option>
                     {userProjects.map((project) => (
                       <option key={project.id} value={project.id}>
                         {project.title}
@@ -947,7 +937,7 @@ const EventDetails: React.FC = () => {
                     ))}
                   </select>
                   {userProjects.length === 0 && (
-                    <p className="text-gray-500 text-sm mt-1">No projects found. Create a project first.</p>
+                    <p className="text-gray-500 text-sm mt-1">{t('noProjectsFound')}</p>
                   )}
                 </div>
                 
@@ -957,7 +947,7 @@ const EventDetails: React.FC = () => {
                     onClick={() => setShowAddMemberModal(false)}
                     className="px-4 py-2 border border-gray-600 rounded-lg hover:bg-gray-700/50 transition text-gray-300 hover:text-white"
                   >
-                    Cancel
+                    {t('cancel')}
                   </button>
                   <button
                     onClick={() => addTeamMember()}
@@ -965,7 +955,7 @@ const EventDetails: React.FC = () => {
                     className="bg-gradient-to-r from-green-600 to-teal-600 text-white px-4 py-2 rounded-lg hover:from-green-700 hover:to-teal-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                   >
                     <UserPlus className="h-4 w-4 mr-2" />
-                    Add Member
+                    {t('addMember')}
                   </button>
                 </div>
               </div>
@@ -986,12 +976,12 @@ const EventDetails: React.FC = () => {
                 </svg>
               </button>
               
-              <h2 className="text-2xl font-bold text-white mb-6">Edit Event</h2>
+              <h2 className="text-2xl font-bold text-white mb-6">{t('editEventTitle')}</h2>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Event Title</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('eventTitle')}</label>
                     <input
                       type="text"
                       value={eventForm.title}
@@ -1002,22 +992,22 @@ const EventDetails: React.FC = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Event Type</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('eventType')}</label>
                     <select
                       value={eventForm.event_type}
                       onChange={(e) => setEventForm(prev => ({ ...prev, event_type: e.target.value as any }))}
                       className="w-full px-3 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white"
                     >
-                      <option value="hackathon">Hackathon</option>
-                      <option value="workshop">Workshop</option>
-                      <option value="competition">Competition</option>
-                      <option value="training">Training</option>
-                      <option value="meetup">Meetup</option>
+                      <option value="hackathon">{t('eventTypes.hackathon')}</option>
+                      <option value="workshop">{t('eventTypes.workshop')}</option>
+                      <option value="competition">{t('eventTypes.competition')}</option>
+                      <option value="training">{t('eventTypes.training')}</option>
+                      <option value="meetup">{t('eventTypes.meetup')}</option>
                     </select>
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Category</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('category')}</label>
                     <input
                       type="text"
                       value={eventForm.category}
@@ -1028,7 +1018,7 @@ const EventDetails: React.FC = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Location</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('location')}</label>
                     <input
                       type="text"
                       value={eventForm.location}
@@ -1039,7 +1029,7 @@ const EventDetails: React.FC = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">State</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('state')}</label>
                     <input
                       type="text"
                       value={eventForm.state}
@@ -1050,7 +1040,7 @@ const EventDetails: React.FC = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Start Date</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('startDate')}</label>
                     <input
                       type="datetime-local"
                       value={eventForm.start_date}
@@ -1061,7 +1051,7 @@ const EventDetails: React.FC = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">End Date</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('endDate')}</label>
                     <input
                       type="datetime-local"
                       value={eventForm.end_date}
@@ -1072,7 +1062,7 @@ const EventDetails: React.FC = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Max Participants</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('maxParticipants')}</label>
                     <input
                       type="number"
                       value={eventForm.max_participants}
@@ -1084,7 +1074,7 @@ const EventDetails: React.FC = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Budget</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('budget')}</label>
                     <input
                       type="number"
                       value={eventForm.budget}
@@ -1095,7 +1085,7 @@ const EventDetails: React.FC = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Prize Pool</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t('prizePool')}</label>
                     <input
                       type="number"
                       value={eventForm.prize_pool}
@@ -1107,7 +1097,7 @@ const EventDetails: React.FC = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Description</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('description')}</label>
                   <textarea
                     value={eventForm.description}
                     onChange={(e) => setEventForm(prev => ({ ...prev, description: e.target.value }))}
@@ -1118,7 +1108,7 @@ const EventDetails: React.FC = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Required Skills (comma-separated)</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('requiredSkillsInput')}</label>
                   <input
                     type="text"
                     value={eventForm.skills_required.join(', ')}
@@ -1127,12 +1117,12 @@ const EventDetails: React.FC = () => {
                       skills_required: e.target.value.split(',').map(s => s.trim()).filter(s => s) 
                     }))}
                     className="w-full px-3 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white placeholder-gray-400"
-                    placeholder="e.g., React, Node.js, Python"
+                    placeholder={t('skillsPlaceholderInput')}
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Tags (comma-separated)</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('tagsInput')}</label>
                   <input
                     type="text"
                     value={eventForm.tags.join(', ')}
@@ -1141,7 +1131,7 @@ const EventDetails: React.FC = () => {
                       tags: e.target.value.split(',').map(s => s.trim()).filter(s => s) 
                     }))}
                     className="w-full px-3 py-2 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-800/50 text-white placeholder-gray-400"
-                    placeholder="e.g., AI, Web Development, Mobile"
+                    placeholder={t('tagsPlaceholderInput')}
                   />
                 </div>
                 

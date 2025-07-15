@@ -1,0 +1,81 @@
+{
+  "title": "میرے پروجیکٹس",
+  "subtitle": "تمام ایونٹس اور ہیکاتھون میں اپنے پروجیکٹ کی شراکت، ٹیم تعاون اور اثرات کو ٹریک کریں۔",
+  "loading": "آپ کے پروجیکٹس لوڈ ہو رہے ہیں...",
+  "stats": {
+    "totalProjects": "کل پروجیکٹس",
+    "peopleImpacted": "متاثر لوگ",
+    "jobsCreated": "بنائی گئی نوکریاں",
+    "avgImpactScore": "اوسط اثر کا اسکور"
+  },
+  "search": {
+    "placeholder": "اپنے پروجیکٹس تلاش کریں...",
+    "allCategories": "تمام کیٹگریز",
+    "allStatus": "تمام حالت",
+    "allFunding": "تمام فنڈنگ",
+    "sortBy": {
+      "recent": "سب سے حالیہ",
+      "impact": "سب سے زیادہ اثر",
+      "funding": "سب سے زیادہ فنڈڈ",
+      "people": "سب سے زیادہ لوگ متاثر"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "ویب ڈیولپمنٹ",
+    "mobile_app": "موبائل ایپ",
+    "iot": "IoT",
+    "blockchain": "بلاک چین",
+    "healthcare": "صحت کی دیکھ بھال",
+    "education": "تعلیم",
+    "agriculture": "زراعت",
+    "finance": "مالیات",
+    "social_impact": "سماجی اثر"
+  },
+  "status": {
+    "active": "فعال",
+    "completed": "مکمل",
+    "scaled": "سکیلڈ"
+  },
+  "funding": {
+    "seeking": "فنڈنگ کی تلاش",
+    "funded": "فنڈڈ",
+    "self_sustaining": "خود کفیل"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} ٹیم ممبرز",
+    "teamMembers_one": "{{count}} ٹیم ممبر",
+    "peopleImpacted": "متاثر لوگ",
+    "impactScore": "اثر کا اسکور",
+    "fundingProgress": "فنڈنگ کی پیش قدمی",
+    "awards": "{{count}} انعامات",
+    "awards_one": "{{count}} انعام",
+    "moretech": "+{{count}} اور"
+  },
+  "noProjects": {
+    "title": "ابھی تک کوئی پروجیکٹ نہیں",
+    "message": "آپ ابھی تک کسی بھی پروجیکٹ میں شامل نہیں ہوئے۔ ایونٹس میں حصہ لے کر اور ٹیموں سے جڑ کر شروعات کریں!",
+    "browseEvents": "ایونٹس براؤز کریں",
+    "viewAllProjects": "تمام پروجیکٹس دیکھیں"
+  },
+  "modal": {
+    "description": "تفصیل",
+    "team": "ٹیم",
+    "technologiesUsed": "استعمال شدہ ٹیکنالوجیز",
+    "impactMetrics": "اثر کی میٹرکس",
+    "projectDetails": "پروجیکٹ کی تفصیلات",
+    "actions": "اعمال",
+    "created": "بنایا گیا:",
+    "yourRole": "آپ کا کردار:",
+    "peopleImpacted": "متاثر لوگ",
+    "revenueGenerated": "پیدا شدہ آمدنی",
+    "jobsCreated": "بنائی گئی نوکریاں",
+    "socialImpactScore": "سماجی اثر کا اسکور",
+    "sustainabilityScore": "پائیداری کا اسکور",
+    "viewDemo": "ڈیمو دیکھیں",
+    "viewCode": "کوڈ دیکھیں",
+    "investInProject": "پروجیکٹ میں سرمایہ کاری کریں",
+    "realUser": "حقیقی صارف",
+    "you": "آپ"
+  }
+}

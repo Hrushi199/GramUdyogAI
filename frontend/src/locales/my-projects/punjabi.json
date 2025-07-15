@@ -1,0 +1,81 @@
+{
+  "title": "ਮੇਰੇ ਪ੍ਰੋਜੈਕਟ",
+  "subtitle": "ਸਾਰੇ ਇਵੈਂਟਸ ਅਤੇ ਹੈਕਾਥੋਨਾਂ ਵਿੱਚ ਆਪਣੇ ਪ੍ਰੋਜੈਕਟ ਯੋਗਦਾਨ, ਟੀਮ ਸਹਿਯੋਗ ਅਤੇ ਪ੍ਰਭਾਵ ਨੂੰ ਟਰੈਕ ਕਰੋ।",
+  "loading": "ਤੁਹਾਡੇ ਪ੍ਰੋਜੈਕਟ ਲੋਡ ਹੋ ਰਹੇ ਹਨ...",
+  "stats": {
+    "totalProjects": "ਕੁੱਲ ਪ੍ਰੋਜੈਕਟ",
+    "peopleImpacted": "ਪ੍ਰਭਾਵਿਤ ਲੋਕ",
+    "jobsCreated": "ਬਣਾਈਆਂ ਨੌਕਰੀਆਂ",
+    "avgImpactScore": "ਔਸਤ ਪ੍ਰਭਾਵ ਸਕੋਰ"
+  },
+  "search": {
+    "placeholder": "ਆਪਣੇ ਪ੍ਰੋਜੈਕਟ ਖੋਜੋ...",
+    "allCategories": "ਸਾਰੀਆਂ ਸ਼ਰੇਣੀਆਂ",
+    "allStatus": "ਸਾਰੀ ਸਥਿਤੀ",
+    "allFunding": "ਸਾਰੀ ਫੰਡਿੰਗ",
+    "sortBy": {
+      "recent": "ਸਭ ਤੋਂ ਤਾਜ਼ੇ",
+      "impact": "ਸਭ ਤੋਂ ਵੱਧ ਪ੍ਰਭਾਵ",
+      "funding": "ਸਭ ਤੋਂ ਵੱਧ ਫੰਡੇਡ",
+      "people": "ਸਭ ਤੋਂ ਵੱਧ ਲੋਕ ਪ੍ਰਭਾਵਿਤ"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "ਵੈੱਬ ਡਿਵੈਲਪਮੈਂਟ",
+    "mobile_app": "ਮੋਬਾਈਲ ਐਪ",
+    "iot": "IoT",
+    "blockchain": "ਬਲੌਕਚੇਨ",
+    "healthcare": "ਸਿਹਤ ਸੇਵਾ",
+    "education": "ਸਿੱਖਿਆ",
+    "agriculture": "ਖੇਤੀਬਾੜੀ",
+    "finance": "ਵਿੱਤ",
+    "social_impact": "ਸਮਾਜਿਕ ਪ੍ਰਭਾਵ"
+  },
+  "status": {
+    "active": "ਸਰਗਰਮ",
+    "completed": "ਪੂਰਾ",
+    "scaled": "ਸਕੇਲਡ"
+  },
+  "funding": {
+    "seeking": "ਫੰਡਿੰਗ ਦੀ ਭਾਲ",
+    "funded": "ਫੰਡੇਡ",
+    "self_sustaining": "ਸਵੈ-ਨਿਰਭਰ"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} ਟੀਮ ਮੈਂਬਰ",
+    "teamMembers_one": "{{count}} ਟੀਮ ਮੈਂਬਰ",
+    "peopleImpacted": "ਪ੍ਰਭਾਵਿਤ ਲੋਕ",
+    "impactScore": "ਪ੍ਰਭਾਵ ਸਕੋਰ",
+    "fundingProgress": "ਫੰਡਿੰਗ ਪ੍ਰਗਤੀ",
+    "awards": "{{count}} ਪੁਰਸਕਾਰ",
+    "awards_one": "{{count}} ਪੁਰਸਕਾਰ",
+    "moretech": "+{{count}} ਹੋਰ"
+  },
+  "noProjects": {
+    "title": "ਅਜੇ ਤੱਕ ਕੋਈ ਪ੍ਰੋਜੈਕਟ ਨਹੀਂ",
+    "message": "ਤੁਸੀਂ ਅਜੇ ਤੱਕ ਕਿਸੇ ਪ੍ਰੋਜੈਕਟ ਵਿੱਚ ਸ਼ਾਮਲ ਨਹੀਂ ਹੋਏ। ਇਵੈਂਟਾਂ ਵਿੱਚ ਹਿੱਸਾ ਲੈ ਕੇ ਅਤੇ ਟੀਮਾਂ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋ ਕੇ ਸ਼ੁਰੂਆਤ ਕਰੋ!",
+    "browseEvents": "ਇਵੈਂਟਸ ਬ੍ਰਾਊਜ਼ ਕਰੋ",
+    "viewAllProjects": "ਸਾਰੇ ਪ੍ਰੋਜੈਕਟ ਦੇਖੋ"
+  },
+  "modal": {
+    "description": "ਵਰਣਨ",
+    "team": "ਟੀਮ",
+    "technologiesUsed": "ਵਰਤੀਆਂ ਤਕਨੀਕਾਂ",
+    "impactMetrics": "ਪ੍ਰਭਾਵ ਮੈਟ੍ਰਿਕਸ",
+    "projectDetails": "ਪ੍ਰੋਜੈਕਟ ਵੇਰਵੇ",
+    "actions": "ਕਾਰਵਾਈਆਂ",
+    "created": "ਬਣਾਇਆ:",
+    "yourRole": "ਤੁਹਾਡੀ ਭੂਮਿਕਾ:",
+    "peopleImpacted": "ਪ੍ਰਭਾਵਿਤ ਲੋਕ",
+    "revenueGenerated": "ਪੈਦਾ ਹੋਈ ਆਮਦਨੀ",
+    "jobsCreated": "ਬਣਾਈਆਂ ਨੌਕਰੀਆਂ",
+    "socialImpactScore": "ਸਮਾਜਿਕ ਪ੍ਰਭਾਵ ਸਕੋਰ",
+    "sustainabilityScore": "ਸਥਿਰਤਾ ਸਕੋਰ",
+    "viewDemo": "ਡੈਮੋ ਦੇਖੋ",
+    "viewCode": "ਕੋਡ ਦੇਖੋ",
+    "investInProject": "ਪ੍ਰੋਜੈਕਟ ਵਿੱਚ ਨਿਵੇਸ਼ ਕਰੋ",
+    "realUser": "ਅਸਲ ਯੂਜ਼ਰ",
+    "you": "ਤੁਸੀਂ"
+  }
+}

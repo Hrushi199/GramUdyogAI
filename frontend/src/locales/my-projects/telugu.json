@@ -1,0 +1,81 @@
+{
+  "title": "నా ప్రాజెక్టులు",
+  "subtitle": "అన్ని ఈవెంట్లు మరియు హ్యాకథాన్లలో మీ ప్రాజెక్ట్ సహకారం, టీమ్ సహకారం మరియు ప్రభావాన్ని ట్రాక్ చేయండి।",
+  "loading": "మీ ప్రాజెక్టులు లోడ్ అవుతున్నాయి...",
+  "stats": {
+    "totalProjects": "మొత్తం ప్రాజెక్టులు",
+    "peopleImpacted": "ప్రభావితమైన వ్యక్తులు",
+    "jobsCreated": "సృష్టించిన ఉద్యోగాలు",
+    "avgImpactScore": "సగటు ప్రభావ స్కోర్"
+  },
+  "search": {
+    "placeholder": "మీ ప్రాజెక్టులను వెతకండి...",
+    "allCategories": "అన్ని వర్గాలు",
+    "allStatus": "అన్ని స్థితి",
+    "allFunding": "అన్ని నిధులు",
+    "sortBy": {
+      "recent": "అత్యంత తాజా",
+      "impact": "అత్యధిక ప్రభావం",
+      "funding": "అత్యధిక నిధులు",
+      "people": "అత్యధిక వ్యక్తులు ప్రభావితం"
+    }
+  },
+  "categories": {
+    "ai_ml": "AI/ML",
+    "web_development": "వెబ్ డెవలప్మెంట్",
+    "mobile_app": "మొబైల్ యాప్",
+    "iot": "IoT",
+    "blockchain": "బ్లాక్చైన్",
+    "healthcare": "ఆరోగ్య సేవలు",
+    "education": "విద్య",
+    "agriculture": "వ్యవసాయం",
+    "finance": "ఆర్థిక",
+    "social_impact": "సామాజిక ప్రభావం"
+  },
+  "status": {
+    "active": "సక్రియం",
+    "completed": "పూర్తి",
+    "scaled": "స్కేల్డ్"
+  },
+  "funding": {
+    "seeking": "నిధుల అన్వేషణ",
+    "funded": "నిధులు పొందిన",
+    "self_sustaining": "స్వయం నిర్వహణ"
+  },
+  "projectCard": {
+    "teamMembers": "{{count}} టీమ్ సభ్యులు",
+    "teamMembers_one": "{{count}} టీమ్ సభ్యుడు",
+    "peopleImpacted": "ప్రభావితమైన వ్యక్తులు",
+    "impactScore": "ప్రభావ స్కోర్",
+    "fundingProgress": "నిధుల పురోగతి",
+    "awards": "{{count}} పురస్కారాలు",
+    "awards_one": "{{count}} పురస్కారం",
+    "moretech": "+{{count}} మరియు"
+  },
+  "noProjects": {
+    "title": "ఇంకా ప్రాజెక్టులు లేవు",
+    "message": "మీరు ఇంకా ఏ ప్రాజెక్ట్లో పాల్గొనలేదు. ఈవెంట్లలో పాల్గొని టీమ్లతో కలిసి ప్రారంభించండి!",
+    "browseEvents": "ఈవెంట్లను బ్రౌజ్ చేయండి",
+    "viewAllProjects": "అన్ని ప్రాజెక్టులను చూడండి"
+  },
+  "modal": {
+    "description": "వివరణ",
+    "team": "టీమ్",
+    "technologiesUsed": "ఉపయోగించిన సాంకేతికతలు",
+    "impactMetrics": "ప్రభావ మెట్రిక్స్",
+    "projectDetails": "ప్రాజెక్ట్ వివరాలు",
+    "actions": "చర్యలు",
+    "created": "సృష్టించబడింది:",
+    "yourRole": "మీ పాత్ర:",
+    "peopleImpacted": "ప్రభావితమైన వ్యక్తులు",
+    "revenueGenerated": "వచ్చిన ఆదాయం",
+    "jobsCreated": "సృష్టించిన ఉద్యోగాలు",
+    "socialImpactScore": "సామాజిక ప్రభావ స్కోర్",
+    "sustainabilityScore": "స్థిరత్వ స్కోర్",
+    "viewDemo": "డెమో చూడండి",
+    "viewCode": "కోడ్ చూడండి",
+    "investInProject": "ప్రాజెక్ట్లో పెట్టుబడి పెట్టండి",
+    "realUser": "నిజమైన వినియోగదారు",
+    "you": "మీరు"
+  }
+}

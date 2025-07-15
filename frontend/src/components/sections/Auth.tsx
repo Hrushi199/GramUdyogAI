@@ -126,7 +126,7 @@ const Auth: React.FC = () => {
     'At least one uppercase letter',
     'At least one lowercase letter',
     'At least one number',
-    'At least one special character (@$!%*?&)',
+    'At least one special character (#@$!%*?&)',
   ];
 
   function validatePasswordStrength(password: string) {
@@ -135,7 +135,7 @@ const Auth: React.FC = () => {
       uppercase: /[A-Z]/.test(password),
       lowercase: /[a-z]/.test(password),
       number: /[0-9]/.test(password),
-      special: /[@$!%*?&]/.test(password),
+      special: /[#@$!%*?&]/.test(password),
     };
   }
 

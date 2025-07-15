@@ -190,6 +190,32 @@ import publicProjectsMl from './locales/public-projects/malayalam.json';
 import publicProjectsPa from './locales/public-projects/punjabi.json';
 import publicProjectsAs from './locales/public-projects/assamese.json';
 
+import myProjectsEn from './locales/my-projects/english.json';
+import myProjectsHi from './locales/my-projects/hindi.json';
+import myProjectsBn from './locales/my-projects/bengali.json';
+import myProjectsMr from './locales/my-projects/marathi.json';
+import myProjectsTe from './locales/my-projects/telugu.json';
+import myProjectsTa from './locales/my-projects/tamil.json';
+import myProjectsGu from './locales/my-projects/gujarati.json';
+import myProjectsUr from './locales/my-projects/urdu.json';
+import myProjectsKn from './locales/my-projects/kannada.json';
+import myProjectsOr from './locales/my-projects/odia.json';
+import myProjectsMl from './locales/my-projects/malayalam.json';
+import myProjectsPa from './locales/my-projects/punjabi.json';
+import myProjectsAs from './locales/my-projects/assamese.json';
+
+// Event Details namespace imports
+import eventDetailsEn from './locales/event-details/english.json';
+import eventDetailsHi from './locales/event-details/hindi.json';
+import eventDetailsBn from './locales/event-details/bengali.json';
+import eventDetailsMr from './locales/event-details/marathi.json';
+import eventDetailsTe from './locales/event-details/telugu.json';
+import eventDetailsTa from './locales/event-details/tamil.json';
+import eventDetailsGu from './locales/event-details/gujarati.json';
+import eventDetailsPa from './locales/event-details/punjabi.json';
+import eventDetailsAs from './locales/event-details/assamese.json';
+import eventDetailsUr from './locales/event-details/urdu.json';
+
 i18n
   .use(initReactI18next)
   .init({
@@ -208,6 +234,8 @@ i18n
         'ai-assistant': aiAssistantEn, // Added ai-assistant namespace
         'course-recommender': courseRecommenderEn, // Added course-recommender namespace
         'public-projects': publicProjectsEn, // Added public-projects namespace
+        myprojects: myProjectsEn, // Added my-projects namespace
+        'event-details': eventDetailsEn, // Added event-details namespace
       },
       hi: {
         skillbuilder: hiSkillBuilder,
@@ -223,6 +251,8 @@ i18n
         'ai-assistant': aiAssistantHi, // Added ai-assistant namespace
         'course-recommender': courseRecommenderHi, // Added course-recommender namespace
         'public-projects': publicProjectsHi, // Added public-projects namespace
+        myprojects: myProjectsHi, // Added my-projects namespace
+        'event-details': eventDetailsHi, // Added event-details namespace
       },
       bn: {
         skillbuilder: bnSkillBuilder,
@@ -238,6 +268,8 @@ i18n
         'ai-assistant': aiAssistantBn, // Added ai-assistant namespace
         'course-recommender': courseRecommenderBn, // Added course-recommender namespace
         'public-projects': publicProjectsBn, // Added public-projects namespace
+        myprojects: myProjectsBn, // Added my-projects namespace
+        'event-details': eventDetailsBn, // Added event-details namespace
       },
       mr: {
         skillbuilder: mrSkillBuilder,
@@ -253,6 +285,8 @@ i18n
         'ai-assistant': aiAssistantMr, // Added ai-assistant namespace
         'course-recommender': courseRecommenderMr, // Added course-recommender namespace
         'public-projects': publicProjectsMr, // Added public-projects namespace
+        myprojects: myProjectsMr, // Added my-projects namespace
+        'event-details': eventDetailsMr, // Added event-details namespace
       },
       te: {
         skillbuilder: teSkillBuilder,
@@ -268,6 +302,8 @@ i18n
         'ai-assistant': aiAssistantTe, // Added ai-assistant namespace
         'course-recommender': courseRecommenderTe, // Added course-recommender namespace
         'public-projects': publicProjectsTe, // Added public-projects namespace
+        myprojects: myProjectsTe, // Added my-projects namespace
+        'event-details': eventDetailsTe, // Added event-details namespace
       },
       ta: {
         skillbuilder: taSkillBuilder,
@@ -283,6 +319,8 @@ i18n
         'ai-assistant': aiAssistantTa, // Added ai-assistant namespace
         'course-recommender': courseRecommenderTa, // Added course-recommender namespace
         'public-projects': publicProjectsTa, // Added public-projects namespace
+        myprojects: myProjectsTa, // Added my-projects namespace
+        'event-details': eventDetailsTa, // Added event-details namespace
       },
       gu: {
         skillbuilder: guSkillBuilder,
@@ -298,6 +336,8 @@ i18n
         'ai-assistant': aiAssistantGu, // Added ai-assistant namespace
         'course-recommender': courseRecommenderGu, // Added course-recommender namespace
         'public-projects': publicProjectsGu, // Added public-projects namespace
+        myprojects: myProjectsGu, // Added my-projects namespace
+        'event-details': eventDetailsGu, // Added event-details namespace
       },
       ur: {
         skillbuilder: urSkillBuilder,
@@ -313,6 +353,8 @@ i18n
         'ai-assistant': aiAssistantUr, // Added ai-assistant namespace
         'course-recommender': courseRecommenderUr, // Added course-recommender namespace
         'public-projects': publicProjectsUr, // Added public-projects namespace
+        myprojects: myProjectsUr, // Added my-projects namespace
+        'event-details': eventDetailsUr, // Added event-details namespace
       },
       kn: {
         skillbuilder: knSkillBuilder,
@@ -328,6 +370,7 @@ i18n
         'ai-assistant': aiAssistantKn, // Added ai-assistant namespace
         'course-recommender': courseRecommenderKn, // Added course-recommender namespace
         'public-projects': publicProjectsKn, // Added public-projects namespace
+        myprojects: myProjectsKn, // Added my-projects namespace
       },
       or: {
         skillbuilder: orSkillBuilder,
@@ -343,6 +386,7 @@ i18n
         'ai-assistant': aiAssistantOr, // Added ai-assistant namespace
         'course-recommender': courseRecommenderOr, // Added course-recommender namespace
         'public-projects': publicProjectsOr, // Added public-projects namespace
+        myprojects: myProjectsOr, // Added my-projects namespace
       },
       ml: {
         skillbuilder: mlSkillBuilder,
@@ -358,6 +402,7 @@ i18n
         'ai-assistant': aiAssistantMl, // Added ai-assistant namespace
         'course-recommender': courseRecommenderMl, // Added course-recommender namespace
         'public-projects': publicProjectsMl, // Added public-projects namespace
+        myprojects: myProjectsMl, // Added my-projects namespace
       },
       pa: {
         skillbuilder: paSkillBuilder,
@@ -373,6 +418,8 @@ i18n
         'ai-assistant': aiAssistantPa, // Added ai-assistant namespace
         'course-recommender': courseRecommenderPa, // Added course-recommender namespace
         'public-projects': publicProjectsPa, // Added public-projects namespace
+        myprojects: myProjectsPa, // Added my-projects namespace
+        'event-details': eventDetailsPa, // Added event-details namespace
       },
       as: {
         skillbuilder: asSkillBuilder,
@@ -388,6 +435,8 @@ i18n
         'ai-assistant': aiAssistantAs, // Added ai-assistant namespace
         'course-recommender': courseRecommenderAs, // Added course-recommender namespace
         'public-projects': publicProjectsAs, // Added public-projects namespace
+        myprojects: myProjectsAs, // Added my-projects namespace
+        'event-details': eventDetailsAs, // Added event-details namespace
       },
     },
     lng: 'en',
@@ -406,6 +455,8 @@ i18n
       'ai-assistant', // Added ai-assistant to namespaces list
       'course-recommender', // Added course-recommender to namespaces list
       'public-projects', // Added public-projects to namespaces list
+      'myprojects', // Added my-projects to namespaces list
+      'event-details', // Added event-details to namespaces list
     ],
     defaultNS: 'translation',
     interpolation: {
