@@ -1426,6 +1426,6 @@ const getCurrentUserId = (): number => {
     return 0;
   }
 };
-
+}
 export default EventDetails;
 
