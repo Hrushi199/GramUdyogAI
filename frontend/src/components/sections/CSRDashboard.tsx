@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '../ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import ParticleBackground from "../ui/ParticleBackground";
 import { 
   Building2, Users, DollarSign, Target, TrendingUp, 
-  Award, MapPin, Calendar, Activity, Search, BarChart3,
-  PieChart, LineChart, Globe, Heart, Star, Zap
+  MapPin, Calendar, Search, BarChart3,
+  PieChart, Globe, Heart, Star
 } from 'lucide-react';
 import { csrCourseAPI } from '../../lib/api';
 import PublicProfileAvatar from '../ui/PublicProfileAvatar';
@@ -63,6 +63,7 @@ interface DashboardMetrics {
 }
 
 const CSRDashboard: React.FC = () => {
+  const { t } = useTranslation('csr-dashboard');
   const [companies, setCompanies] = useState<Company[]>([]);
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [dashboardMetrics, setDashboardMetrics] = useState<DashboardMetrics | null>(null);
@@ -71,8 +72,6 @@ const CSRDashboard: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [initialized, setInitialized] = useState(false);
   const [loaded, setLoaded] = useState(false);
-
-  const API_BASE = 'http://localhost:8000/api/csr';
 
   const initializeDashboard = useCallback(async () => {
     try {
@@ -83,7 +82,7 @@ const CSRDashboard: React.FC = () => {
       }
       await fetchCompanies();
     } catch (error) {
-      console.error('Error initializing dashboard:', error);
+      console.error(t('errors.initializingDashboard'), error);
     } finally {
       setLoading(false);
     }
@@ -106,10 +105,10 @@ const CSRDashboard: React.FC = () => {
           await fetchCompanyEvents(response.data[0].id);
         }
       } else if (response.error) {
-        console.error('Error fetching companies:', response.error);
+        console.error(t('errors.fetchingCompanies'), response.error);
       }
     } catch (error) {
-      console.error('Error fetching companies:', error);
+      console.error(t('errors.fetchingCompanies'), error);
     }
   };
 
@@ -119,10 +118,10 @@ const CSRDashboard: React.FC = () => {
       if (response.data) {
         setDashboardMetrics(response.data);
       } else if (response.error) {
-        console.error('Error fetching company metrics:', response.error);
+        console.error(t('errors.fetchingMetrics'), response.error);
       }
     } catch (error) {
-      console.error('Error fetching company metrics:', error);
+      console.error(t('errors.fetchingMetrics'), error);
     }
   };
 
@@ -132,10 +131,10 @@ const CSRDashboard: React.FC = () => {
       if (response.data) {
         setCompanyEvents(response.data);
       } else if (response.error) {
-        console.error('Error fetching company events:', response.error);
+        console.error(t('errors.fetchingEvents'), response.error);
       }
     } catch (error) {
-      console.error('Error fetching company events:', error);
+      console.error(t('errors.fetchingEvents'), error);
     }
   };
 
@@ -177,6 +176,10 @@ const CSRDashboard: React.FC = () => {
     return colors[type] || 'bg-gray-500/20 text-gray-300 border-gray-500/50';
   };
 
+  const getEventTypeLabel = (type: string) => {
+    return t(`eventTypes.${type}`) || type.replace('_', ' ');
+  };
+
   if (loading && !initialized) {
     return (
       <div className="relative min-h-screen overflow-hidden">
@@ -185,7 +188,7 @@ const CSRDashboard: React.FC = () => {
         <div className="relative z-20 flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-500"></div>
-            <p className="mt-4 text-lg text-white">Initializing CSR Dashboard...</p>
+            <p className="mt-4 text-lg text-white">{t('loading.initializing')}</p>
           </div>
         </div>
       </div>
@@ -215,11 +218,11 @@ const CSRDashboard: React.FC = () => {
             </div>
             <h1 className="text-5xl font-bold text-white mb-4">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
-                CSR Impact Dashboard
+                {t('header.title')}
               </span>
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Corporate Social Responsibility Metrics & Analytics - Track your company's social impact and community development initiatives
+              {t('header.subtitle')}
             </p>
           </div>
 
@@ -229,7 +232,7 @@ const CSRDashboard: React.FC = () => {
               <div className="flex-1">
                 <h2 className="text-2xl font-bold text-white mb-4 flex items-center">
                   <Building2 className="w-6 h-6 mr-3 text-purple-400" />
-                  Select Company
+                  {t('companySelector.title')}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {companies.map((company) => (
@@ -249,7 +252,7 @@ const CSRDashboard: React.FC = () => {
                         <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/50">
                           {company.csr_rating}/5
                         </Badge>
-                        <span className="text-xs text-gray-400">{formatNumber(company.total_employees)} employees</span>
+                        <span className="text-xs text-gray-400">{formatNumber(company.total_employees)} {t('companySelector.employees')}</span>
                       </div>
                     </div>
                   ))}
@@ -260,7 +263,7 @@ const CSRDashboard: React.FC = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <input
                   type="text"
-                  placeholder="Search events..."
+                  placeholder={t('companySelector.searchPlaceholder')}
                   className="pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-white placeholder-gray-400"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -276,7 +279,7 @@ const CSRDashboard: React.FC = () => {
                 <div className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 backdrop-blur-sm border border-purple-500/30 rounded-2xl p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-purple-300 text-sm font-medium">Total Events</p>
+                      <p className="text-purple-300 text-sm font-medium">{t('metrics.totalEvents')}</p>
                       <p className="text-3xl font-bold text-white">{formatNumber(dashboardMetrics.total_events)}</p>
                     </div>
                     <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
@@ -288,7 +291,7 @@ const CSRDashboard: React.FC = () => {
                 <div className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 backdrop-blur-sm border border-blue-500/30 rounded-2xl p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-blue-300 text-sm font-medium">Beneficiaries</p>
+                      <p className="text-blue-300 text-sm font-medium">{t('metrics.beneficiaries')}</p>
                       <p className="text-3xl font-bold text-white">{formatNumber(dashboardMetrics.total_beneficiaries)}</p>
                     </div>
                     <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
@@ -300,7 +303,7 @@ const CSRDashboard: React.FC = () => {
                 <div className="bg-gradient-to-br from-green-600/20 to-green-800/20 backdrop-blur-sm border border-green-500/30 rounded-2xl p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-green-300 text-sm font-medium">Budget Allocated</p>
+                      <p className="text-green-300 text-sm font-medium">{t('metrics.budgetAllocated')}</p>
                       <p className="text-3xl font-bold text-white">{formatCurrency(dashboardMetrics.total_budget_allocated)}</p>
                     </div>
                     <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
@@ -312,7 +315,7 @@ const CSRDashboard: React.FC = () => {
                 <div className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 backdrop-blur-sm border border-orange-500/30 rounded-2xl p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-orange-300 text-sm font-medium">Impact Score</p>
+                      <p className="text-orange-300 text-sm font-medium">{t('metrics.impactScore')}</p>
                       <p className="text-3xl font-bold text-white">{dashboardMetrics.average_impact_score}/100</p>
                     </div>
                     <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center">
@@ -327,15 +330,15 @@ const CSRDashboard: React.FC = () => {
                 <TabsList className="bg-gray-800/50 border border-gray-600 rounded-lg p-1">
                   <TabsTrigger value="overview" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
                     <BarChart3 className="w-4 h-4 mr-2" />
-                    Overview
+                    {t('tabs.overview')}
                   </TabsTrigger>
                   <TabsTrigger value="events" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
                     <Calendar className="w-4 h-4 mr-2" />
-                    Events
+                    {t('tabs.events')}
                   </TabsTrigger>
                   <TabsTrigger value="analytics" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
                     <PieChart className="w-4 h-4 mr-2" />
-                    Analytics
+                    {t('tabs.analytics')}
                   </TabsTrigger>
                 </TabsList>
 
@@ -345,17 +348,16 @@ const CSRDashboard: React.FC = () => {
                     <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6">
                       <h3 className="text-xl font-bold text-white mb-4 flex items-center">
                         <TrendingUp className="w-5 h-5 mr-2 text-purple-400" />
-                        Budget Efficiency
-                      </h3>
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-300">Allocated</span>
-                          <span className="text-white font-semibold">{formatCurrency(dashboardMetrics.total_budget_allocated)}</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-300">Spent</span>
-                          <span className="text-white font-semibold">{formatCurrency(dashboardMetrics.total_budget_spent)}</span>
-                        </div>
+                        {t('overview.budgetEfficiency.title')}
+                      </h3>                        <div className="space-y-4">
+                          <div className="flex justify-between items-center">
+                            <span className="text-gray-300">{t('overview.budgetEfficiency.allocated')}</span>
+                            <span className="text-white font-semibold">{formatCurrency(dashboardMetrics.total_budget_allocated)}</span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-gray-300">{t('overview.budgetEfficiency.spent')}</span>
+                            <span className="text-white font-semibold">{formatCurrency(dashboardMetrics.total_budget_spent)}</span>
+                          </div>
                         <div className="w-full bg-gray-700 rounded-full h-2">
                           <div 
                             className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full transition-all duration-500"
@@ -363,7 +365,7 @@ const CSRDashboard: React.FC = () => {
                           ></div>
                         </div>
                         <div className="text-center">
-                          <span className="text-purple-400 font-semibold">{dashboardMetrics.budget_efficiency}% Efficiency</span>
+                          <span className="text-purple-400 font-semibold">{dashboardMetrics.budget_efficiency}% {t('overview.budgetEfficiency.efficiency')}</span>
                         </div>
                       </div>
                     </div>
@@ -372,29 +374,28 @@ const CSRDashboard: React.FC = () => {
                     <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6">
                       <h3 className="text-xl font-bold text-white mb-4 flex items-center">
                         <Heart className="w-5 h-5 mr-2 text-purple-400" />
-                        Impact Metrics
-                      </h3>
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-300">Sustainability Score</span>
-                          <div className="flex items-center">
-                            {[...Array(5)].map((_, i) => (
-                              <Star 
-                                key={i} 
-                                className={`w-4 h-4 ${i < Math.floor(dashboardMetrics.sustainability_score / 20) ? 'text-yellow-400 fill-current' : 'text-gray-600'}`} 
-                              />
-                            ))}
+                        {t('overview.impactMetrics.title')}
+                      </h3>                        <div className="space-y-4">
+                          <div className="flex justify-between items-center">
+                            <span className="text-gray-300">{t('overview.impactMetrics.sustainabilityScore')}</span>
+                            <div className="flex items-center">
+                              {[...Array(5)].map((_, i) => (
+                                <Star 
+                                  key={i} 
+                                  className={`w-4 h-4 ${i < Math.floor(dashboardMetrics.sustainability_score / 20) ? 'text-yellow-400 fill-current' : 'text-gray-600'}`} 
+                                />
+                              ))}
+                            </div>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-gray-300">{t('overview.impactMetrics.communityFeedback')}</span>
+                            <span className="text-white font-semibold">{dashboardMetrics.community_feedback_score}/10</span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-gray-300">{t('overview.impactMetrics.averageImpact')}</span>
+                            <span className="text-white font-semibold">{dashboardMetrics.average_impact_score}/100</span>
                           </div>
                         </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-300">Community Feedback</span>
-                          <span className="text-white font-semibold">{dashboardMetrics.community_feedback_score}/10</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-300">Average Impact</span>
-                          <span className="text-white font-semibold">{dashboardMetrics.average_impact_score}/100</span>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </TabsContent>
@@ -403,7 +404,7 @@ const CSRDashboard: React.FC = () => {
                   <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6">
                     <h3 className="text-xl font-bold text-white mb-6 flex items-center">
                       <Calendar className="w-5 h-5 mr-2 text-purple-400" />
-                      Recent Events
+                      {t('events.title')}
                     </h3>
                     <div className="space-y-4">
                       {companyEvents.map((event) => (
@@ -411,7 +412,7 @@ const CSRDashboard: React.FC = () => {
                           <div className="flex items-center justify-between mb-2">
                             <h4 className="font-semibold text-white">{event.event_title}</h4>
                             <Badge className={getEventTypeColor(event.event_type)}>
-                              {event.event_type.replace('_', ' ')}
+                              {getEventTypeLabel(event.event_type)}
                             </Badge>
                           </div>
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -421,11 +422,11 @@ const CSRDashboard: React.FC = () => {
                             </div>
                             <div className="flex items-center text-gray-300">
                               <Users className="w-4 h-4 mr-2 text-blue-400" />
-                              {formatNumber(event.beneficiaries_count)} beneficiaries
+                              {formatNumber(event.beneficiaries_count)} {t('events.beneficiaries')}
                             </div>
                             <div className="flex items-center text-gray-300">
                               <DollarSign className="w-4 h-4 mr-2 text-green-400" />
-                              {formatCurrency(event.budget_spent)} spent
+                              {formatCurrency(event.budget_spent)} {t('events.spent')}
                             </div>
                           </div>
                         </div>
@@ -440,12 +441,12 @@ const CSRDashboard: React.FC = () => {
                     <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6">
                       <h3 className="text-xl font-bold text-white mb-4 flex items-center">
                         <PieChart className="w-5 h-5 mr-2 text-purple-400" />
-                        Event Types
+                        {t('analytics.eventTypes')}
                       </h3>
                       <div className="space-y-3">
                         {Object.entries(dashboardMetrics.events_by_type).map(([type, count]) => (
                           <div key={type} className="flex items-center justify-between">
-                            <span className="text-gray-300 capitalize">{type.replace('_', ' ')}</span>
+                            <span className="text-gray-300 capitalize">{getEventTypeLabel(type)}</span>
                             <div className="flex items-center space-x-2">
                               <div className="w-20 bg-gray-700 rounded-full h-2">
                                 <div 
@@ -464,7 +465,7 @@ const CSRDashboard: React.FC = () => {
                     <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6">
                       <h3 className="text-xl font-bold text-white mb-4 flex items-center">
                         <Globe className="w-5 h-5 mr-2 text-purple-400" />
-                        Geographical Reach
+                        {t('analytics.geographicalReach')}
                       </h3>
                       <div className="space-y-3">
                         {Object.entries(dashboardMetrics.geographical_reach).map(([state, count]) => (

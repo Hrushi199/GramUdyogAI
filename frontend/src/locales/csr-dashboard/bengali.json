@@ -1,0 +1,64 @@
+{
+  "header": {
+    "title": "CSR প্রভাব ড্যাশবোর্ড",
+    "subtitle": "কর্পোরেট সামাজিক দায়বদ্ধতা মেট্রিক্স এবং অ্যানালিটিক্স - আপনার কোম্পানির সামাজিক প্রভাব এবং সম্প্রদায়ের উন্নয়ন উদ্যোগ ট্র্যাক করুন"
+  },
+  "loading": {
+    "initializing": "CSR ড্যাশবোর্ড প্রারম্ভ করা হচ্ছে..."
+  },
+  "companySelector": {
+    "title": "কোম্পানি নির্বাচন করুন",
+    "employees": "কর্মচারী",
+    "searchPlaceholder": "ইভেন্ট খুঁজুন..."
+  },
+  "metrics": {
+    "totalEvents": "মোট ইভেন্ট",
+    "beneficiaries": "সুবিধাভোগী",
+    "budgetAllocated": "বাজেট বরাদ্দ",
+    "impactScore": "প্রভাব স্কোর"
+  },
+  "tabs": {
+    "overview": "সংক্ষিপ্ত বিবরণ",
+    "events": "ইভেন্ট",
+    "analytics": "অ্যানালিটিক্স"
+  },
+  "overview": {
+    "budgetEfficiency": {
+      "title": "বাজেট দক্ষতা",
+      "allocated": "বরাদ্দকৃত",
+      "spent": "ব্যয়িত",
+      "efficiency": "দক্ষতা"
+    },
+    "impactMetrics": {
+      "title": "প্রভাব মেট্রিক্স",
+      "sustainabilityScore": "স্থায়িত্ব স্কোর",
+      "communityFeedback": "সম্প্রদায়ের মতামত",
+      "averageImpact": "গড় প্রভাব"
+    }
+  },
+  "events": {
+    "title": "সাম্প্রতিক ইভেন্ট",
+    "beneficiaries": "সুবিধাভোগী",
+    "spent": "ব্যয়িত"
+  },
+  "analytics": {
+    "eventTypes": "ইভেন্টের ধরন",
+    "geographicalReach": "ভৌগোলিক পৌঁছানো"
+  },
+  "eventTypes": {
+    "education": "শিক্ষা",
+    "healthcare": "স্বাস্থ্যসেবা",
+    "environment": "পরিবেশ",
+    "skill_development": "দক্ষতা উন্নয়ন",
+    "rural_development": "গ্রামীণ উন্নয়ন",
+    "women_empowerment": "নারী ক্ষমতায়ন",
+    "digital_literacy": "ডিজিটাল সাক্ষরতা",
+    "poverty_alleviation": "দারিদ্র্য নিরসন"
+  },
+  "errors": {
+    "initializingDashboard": "ড্যাশবোর্ড প্রারম্ভ করতে ত্রুটি:",
+    "fetchingCompanies": "কোম্পানি আনতে ত্রুটি:",
+    "fetchingMetrics": "কোম্পানি মেট্রিক্স আনতে ত্রুটি:",
+    "fetchingEvents": "কোম্পানি ইভেন্ট আনতে ত্রুটি:"
+  }
+}

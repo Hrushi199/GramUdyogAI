@@ -1,0 +1,64 @@
+{
+  "header": {
+    "title": "CSR ప్రభావ డ్యాష్‌బోర్డ్",
+    "subtitle": "కార్పొరేట్ సామాజిక బాధ్యత మెట్రిక్స్ & అనలిటిక్స్ - మీ కంపెనీ యొక్క సామాజిక ప్రభావం మరియు కమ్యూనిటీ అభివృద్ధి కార్యక్రమాలను ట్రాక్ చేయండి"
+  },
+  "loading": {
+    "initializing": "CSR డ్యాష్‌బోర్డ్ ప్రారంభిస్తోంది..."
+  },
+  "companySelector": {
+    "title": "కంపెనీని ఎంచుకోండి",
+    "employees": "ఉద్యోగులు",
+    "searchPlaceholder": "ఈవెంట్లను వెతకండి..."
+  },
+  "metrics": {
+    "totalEvents": "మొత్తం ఈవెంట్లు",
+    "beneficiaries": "లబ్ధిదారులు",
+    "budgetAllocated": "బడ్జెట్ కేటాయింపు",
+    "impactScore": "ప్రభావ స్కోర్"
+  },
+  "tabs": {
+    "overview": "అవలోకనం",
+    "events": "ఈవెంట్లు",
+    "analytics": "అనలిటిక్స్"
+  },
+  "overview": {
+    "budgetEfficiency": {
+      "title": "బడ్జెట్ సామర్థ్యం",
+      "allocated": "కేటాయించిన",
+      "spent": "ఖర్చు",
+      "efficiency": "సామర్థ్యం"
+    },
+    "impactMetrics": {
+      "title": "ప్రభావ మెట్రిక్స్",
+      "sustainabilityScore": "స్థిరత్వ స్కోర్",
+      "communityFeedback": "కమ్యూనిటీ అభిప్రాయం",
+      "averageImpact": "సగటు ప్రభావం"
+    }
+  },
+  "events": {
+    "title": "ఇటీవలి ఈవెంట్లు",
+    "beneficiaries": "లబ్ధిదారులు",
+    "spent": "ఖర్చు"
+  },
+  "analytics": {
+    "eventTypes": "ఈవెంట్ రకాలు",
+    "geographicalReach": "భౌగోళిక పరిధి"
+  },
+  "eventTypes": {
+    "education": "విద్య",
+    "healthcare": "ఆరోగ్య సంరక్షణ",
+    "environment": "పర్యావరణం",
+    "skill_development": "నైపుణ్య అభివృద్ధి",
+    "rural_development": "గ్రామీణ అభివృద్ధి",
+    "women_empowerment": "మహిళా సాధికారత",
+    "digital_literacy": "డిజిటల్ అక్షరాస్యత",
+    "poverty_alleviation": "దారిద్య్ర నిర్మూలన"
+  },
+  "errors": {
+    "initializingDashboard": "డ్యాష్‌బోర్డ్ ప్రారంభించడంలో లోపం:",
+    "fetchingCompanies": "కంపెనీలను తీసుకురావడంలో లోపం:",
+    "fetchingMetrics": "కంపెనీ మెట్రిక్స్ తీసుకురావడంలో లోపం:",
+    "fetchingEvents": "కంపెనీ ఈవెంట్లను తీసుకురావడంలో లోపం:"
+  }
+}
