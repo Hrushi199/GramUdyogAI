@@ -2,12 +2,24 @@ from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from core.job_recommender import *
 from init_db import get_db
-from core.translation import llama_translate_string as translate_text
+from groq import Groq
+import os
+from dotenv import load_dotenv, find_dotenv
+import json
+import time
+from core.translation import llama_translate_string as translate_text, llama_chat_completion
 from typing import Optional, List
 import json
+import os
 
 router = APIRouter()
+# os.environ.pop("GROQ_API_KEY", None)
+# load_dotenv(find_dotenv())
+api_key = os.getenv("GROQ_API_KEY")
 
+client = Groq(api_key=api_key)
+
+LLAMA_MODEL = "llama-3.3-70b-versatile"
 class JobPosting(BaseModel):
     title: str
     description: str
@@ -437,7 +449,493 @@ async def recommend_job(user_info: UserInfo):
 @router.post("/recommend-job-smart")
 async def smart_recommend_job(user_info: UserInfo):
     """
-    Smart job recommendation using advanced keyword matching and scoring
+    AI-powered smart job recommendation using Llama model via Groq
+    """
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        
+        user_text = user_info.user_info.lower()
+        
+        # Step 1: Use AI to analyze user intent and extract key information
+        intent_analysis = await analyze_user_intent_with_ai(user_text)
+        
+        # Step 2: Get relevant jobs based on AI analysis
+        jobs = await get_jobs_based_on_ai_analysis(cursor, intent_analysis, user_text)
+        
+        if not jobs:
+            conn.close()
+            return {"best_job": None, "alternative_jobs": [], "message": "No relevant jobs found. Please try a different search."}
+        
+        # Step 3: Use AI to score and rank jobs
+        scored_jobs = await score_jobs_with_ai(jobs, user_text, intent_analysis)
+        
+        conn.close()
+        
+        if not scored_jobs:
+            return {"best_job": None, "alternative_jobs": [], "message": "No relevant jobs found. Please try a different search."}
+
+        # Format the best job and alternatives
+        best_job_formatted = format_job_response(scored_jobs[0][1], scored_jobs[0][0])
+        alternative_jobs_formatted = [
+            format_job_response(job_data[1], job_data[0]) for job_data in scored_jobs[1:6]
+        ]
+        
+        return {
+            "best_job": best_job_formatted,
+            "alternative_jobs": alternative_jobs_formatted,
+            "ai_analysis": intent_analysis
+        }
+        
+    except Exception as e:
+        print(f"Error in AI-powered recommendation: {str(e)}")
+        # Fallback to the original smart recommendation
+        return await smart_recommend_job_fallback(user_info)
+
+async def analyze_user_intent_with_ai(user_text: str) -> dict:
+    """
+    Use Llama to analyze user intent and extract key job search criteria with precise categorization
+    """
+    try:
+        system_prompt = """You are an expert job search analyst. Analyze the user's job search request and extract key information with PRECISE job categorization.
+
+        Return your analysis in JSON format with these fields:
+        {
+            "job_roles": ["list of EXACT job titles/roles the user is looking for"],
+            "skills": ["list of specific technical/professional skills mentioned"],
+            "industries": ["list of industries mentioned or strongly implied"],
+            "experience_level": "entry/junior/mid/senior/expert",
+            "location_preferences": ["list of locations if mentioned"],
+            "job_types": ["full-time/part-time/contract/freelance"],
+            "salary_expectations": "any salary mentions or 'not_mentioned'",
+            "key_requirements": ["list of important requirements"],
+            "career_goals": "brief description of what user wants to achieve",
+            "search_intent": "job_search/career_change/skill_development/specific_company",
+            "primary_category": "one primary job category: software_engineer/data_analyst/sales/marketing/teacher/healthcare/finance/delivery/customer_service/management/other"
+        }
+        
+        IMPORTANT RULES:
+        1. If user mentions "software engineer" or "developer" or "programming", set primary_category to "software_engineer"
+        2. If user mentions "analyst" or "data", set primary_category to "data_analyst"  
+        3. If user mentions "sales" or "business development", set primary_category to "sales"
+        4. If user mentions "teacher" or "education", set primary_category to "teacher"
+        5. If user mentions "delivery" or "driver", set primary_category to "delivery"
+        6. Be VERY specific about job_roles - don't include generic terms
+        7. Distinguish clearly between different job categories to avoid mismatches
+        
+        If information is not clear or missing, use reasonable defaults based on context but be conservative."""
+
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": f"Analyze this job search request: {user_text}"}
+        ]
+        
+        response = llama_chat_completion(messages, temperature=0.1, max_tokens=800)
+        analysis = json.loads(response)
+        
+        # Additional validation and cleanup
+        if not analysis.get("primary_category"):
+            # Determine primary category from job_roles if not set
+            job_roles = analysis.get("job_roles", [])
+            for role in job_roles:
+                role_lower = role.lower()
+                if any(term in role_lower for term in ['software', 'developer', 'engineer', 'programmer']):
+                    analysis["primary_category"] = "software_engineer"
+                    break
+                elif any(term in role_lower for term in ['analyst', 'data']):
+                    analysis["primary_category"] = "data_analyst"
+                    break
+                elif 'sales' in role_lower:
+                    analysis["primary_category"] = "sales"
+                    break
+                elif any(term in role_lower for term in ['teacher', 'education']):
+                    analysis["primary_category"] = "teacher"
+                    break
+                elif any(term in role_lower for term in ['delivery', 'driver']):
+                    analysis["primary_category"] = "delivery"
+                    break
+            
+            if not analysis.get("primary_category"):
+                analysis["primary_category"] = "other"
+        
+        return analysis
+        
+    except Exception as e:
+        print(f"Error in AI intent analysis: {str(e)}")
+        # Fallback analysis with basic categorization
+        user_lower = user_text.lower()
+        primary_category = "other"
+        
+        if any(term in user_lower for term in ['software', 'developer', 'engineer', 'programmer', 'coding']):
+            primary_category = "software_engineer"
+        elif any(term in user_lower for term in ['analyst', 'data']):
+            primary_category = "data_analyst"
+        elif 'sales' in user_lower:
+            primary_category = "sales"
+        elif any(term in user_lower for term in ['teacher', 'education']):
+            primary_category = "teacher"
+        elif any(term in user_lower for term in ['delivery', 'driver']):
+            primary_category = "delivery"
+        
+        return {
+            "job_roles": [user_text],
+            "skills": user_text.split(),
+            "industries": [],
+            "experience_level": "entry",
+            "location_preferences": [],
+            "job_types": ["full-time"],
+            "salary_expectations": "not_mentioned",
+            "key_requirements": [],
+            "career_goals": "Find relevant job opportunities",
+            "search_intent": "job_search",
+            "primary_category": primary_category
+        }
+
+async def get_jobs_based_on_ai_analysis(cursor, intent_analysis: dict, user_text: str) -> list:
+    """
+    Query database for jobs based on AI analysis with robust filtering
+    """
+    # Define job category exclusions to prevent mismatches
+    job_category_exclusions = {
+        'software': ['telecaller', 'telemarketing', 'call center', 'sales', 'delivery', 'driver', 'cook', 'cleaner', 'guard', 'security'],
+        'engineer': ['telecaller', 'telemarketing', 'call center', 'sales', 'delivery', 'driver', 'cook', 'cleaner'],
+        'developer': ['telecaller', 'telemarketing', 'call center', 'sales', 'delivery', 'driver', 'cook', 'cleaner'],
+        'analyst': ['telecaller', 'telemarketing', 'delivery', 'driver', 'cook', 'cleaner', 'guard'],
+        'teacher': ['telecaller', 'telemarketing', 'delivery', 'driver', 'software', 'developer'],
+        'healthcare': ['telecaller', 'software', 'developer', 'delivery', 'driver'],
+        'finance': ['delivery', 'driver', 'cook', 'cleaner']
+    }
+    
+    # Build dynamic query conditions based on AI analysis
+    conditions = []
+    exclusion_conditions = []
+    params = []
+    
+    # Get primary job roles for more precise matching
+    primary_roles = intent_analysis.get("job_roles", [])
+    primary_skills = intent_analysis.get("skills", [])
+    
+    # Job roles and titles - More precise matching
+    if primary_roles:
+        role_conditions = []
+        for role in primary_roles:
+            role_lower = role.lower()
+            # Primary match in job title (most important)
+            role_conditions.append("(job_title LIKE ? OR title LIKE ?)")
+            params.extend([f"%{role}%", f"%{role}%"])
+            
+            # Add exclusions for this role category
+            for category, exclusions in job_category_exclusions.items():
+                if category in role_lower:
+                    for exclusion in exclusions:
+                        exclusion_conditions.append("job_title NOT LIKE ?")
+                        exclusion_conditions.append("title NOT LIKE ?")
+                        params.extend([f"%{exclusion}%", f"%{exclusion}%"])
+        
+        if role_conditions:
+            conditions.append(f"({' OR '.join(role_conditions)})")
+    
+    # Skills - Focus on job title and skills_required field
+    if primary_skills:
+        skill_conditions = []
+        for skill in primary_skills:
+            if len(skill) > 2:  # Avoid short words
+                skill_lower = skill.lower()
+                # Primary match in job title and skills
+                skill_conditions.append("(job_title LIKE ? OR skills_required LIKE ?)")
+                params.extend([f"%{skill}%", f"%{skill}%"])
+                
+                # Add exclusions for this skill category
+                for category, exclusions in job_category_exclusions.items():
+                    if category in skill_lower:
+                        for exclusion in exclusions:
+                            exclusion_conditions.append("job_title NOT LIKE ?")
+                            exclusion_conditions.append("title NOT LIKE ?")
+                            params.extend([f"%{exclusion}%", f"%{exclusion}%"])
+        
+        if skill_conditions:
+            conditions.append(f"({' OR '.join(skill_conditions)})")
+    
+    # Industries - More precise industry matching
+    if intent_analysis.get("industries"):
+        industry_conditions = []
+        for industry in intent_analysis["industries"]:
+            industry_conditions.append("(industry LIKE ? OR sector LIKE ?)")
+            params.extend([f"%{industry}%", f"%{industry}%"])
+        if industry_conditions:
+            conditions.append(f"({' OR '.join(industry_conditions)})")
+    
+    # Location
+    if intent_analysis.get("location_preferences"):
+        location_conditions = []
+        for location in intent_analysis["location_preferences"]:
+            location_conditions.append("location LIKE ?")
+            params.append(f"%{location}%")
+        if location_conditions:
+            conditions.append(f"({' OR '.join(location_conditions)})")
+    
+    # Experience level mapping
+    experience_mapping = {
+        "entry": "0",
+        "junior": "12",
+        "mid": "24",
+        "senior": "60",
+        "expert": "120"
+    }
+    experience_level = experience_mapping.get(intent_analysis.get("experience_level", "entry"), "0")
+    
+    # Build the final query with robust filtering
+    base_query = """
+        SELECT id, job_title, company_name, location, salary_range, description,
+               industry, sector, job_type, employment_type, experience_required, 
+               skills_required, posted_date, application_deadline, tags, source, 
+               is_active, created_at, title, company, company_contact, pay, apply_url
+        FROM job_postings 
+        WHERE is_active = 1
+    """
+    
+    # Add positive conditions (what we want)
+    if conditions:
+        base_query += " AND (" + " OR ".join(conditions) + ")"
+    
+    # Add exclusion conditions (what we don't want)
+    if exclusion_conditions:
+        base_query += " AND (" + " AND ".join(exclusion_conditions) + ")"
+    
+    # Add experience filter
+    base_query += " AND (experience_required <= ? OR experience_required IS NULL)"
+    params.append(str(int(experience_level) + 24))  # Allow some flexibility
+    
+    # If no specific conditions, fall back to broad search with strong exclusions
+    if not conditions:
+        # Extract key terms from user text for fallback
+        user_words = [word for word in user_text.lower().split() if len(word) > 2]
+        if user_words:
+            fallback_conditions = []
+            for word in user_words[:3]:  # Use top 3 words
+                fallback_conditions.append("(job_title LIKE ? OR description LIKE ?)")
+                params.extend([f"%{word}%", f"%{word}%"])
+            
+            if fallback_conditions:
+                base_query = base_query.replace("WHERE is_active = 1", 
+                    f"WHERE is_active = 1 AND ({' OR '.join(fallback_conditions)})")
+    
+    # Order by relevance and recency
+    base_query += """ 
+        ORDER BY 
+            CASE 
+                WHEN job_title LIKE ? OR title LIKE ? THEN 3
+                WHEN skills_required LIKE ? THEN 2
+                ELSE 1
+            END DESC,
+            created_at DESC 
+        LIMIT 30
+    """
+    
+    # Add ordering parameters
+    if primary_roles:
+        main_role = primary_roles[0]
+        params.extend([f"%{main_role}%", f"%{main_role}%", f"%{main_role}%"])
+    else:
+        params.extend(['%software%', '%software%', '%software%'])  # Default
+    
+    cursor.execute(base_query, params)
+    return cursor.fetchall()
+
+async def score_jobs_with_ai(jobs: list, user_text: str, intent_analysis: dict) -> list:
+    """
+    Use AI to score and rank jobs based on relevance with enhanced category matching
+    """
+    if not jobs:
+        return []
+    
+    try:
+        # Prepare job summaries for AI scoring
+        job_summaries = []
+        primary_category = intent_analysis.get("primary_category", "other")
+        
+        for i, job in enumerate(jobs[:20]):  # Limit to top 20 for AI processing
+            job_summary = {
+                "index": i,
+                "job_title": job[1] or job[18],
+                "company": job[2] or job[19],
+                "location": job[3],
+                "salary": job[4] or job[21],
+                "description": (job[5] or "")[:300],  # Increased for better analysis
+                "industry": job[6],
+                "job_type": job[8],
+                "experience_required": job[10],
+                "skills": job[11]
+            }
+            job_summaries.append(job_summary)
+        
+        # Enhanced AI scoring prompt with category awareness
+        system_prompt = f"""You are an expert job matching specialist. Score each job based on how well it matches the user's requirements.
+
+        CRITICAL MATCHING RULES:
+        1. The user is looking for "{primary_category}" category jobs
+        2. Jobs outside this category should get VERY LOW scores (0-30)
+        3. Exact job title matches should get highest priority
+        4. Consider semantic similarity but prioritize category alignment
+        
+        CATEGORY DEFINITIONS:
+        - software_engineer: Developer, programmer, software engineer, coding roles
+        - data_analyst: Data analyst, business analyst, research analyst
+        - sales: Sales representative, business development, account manager
+        - teacher: Teacher, instructor, trainer, education roles
+        - delivery: Delivery driver, courier, logistics
+        - customer_service: Customer service, call center, telecaller, support
+        
+        Return a JSON object with job scores:
+        {{
+            "scores": {{
+                "0": 85,
+                "1": 72,
+                "2": 90,
+                ...
+            }},
+            "reasoning": {{
+                "0": "Excellent match for skills and experience level",
+                "1": "Good match but location might not be ideal",
+                ...
+            }}
+        }}
+        
+        Score from 0-100 where:
+        - 90-100: Perfect match (exact job title + category match)
+        - 80-89: Excellent match (close job title + category match)
+        - 70-79: Good match (related role in same category)
+        - 60-69: Fair match (loosely related)
+        - 30-59: Poor match (wrong category but some overlap)
+        - 0-29: Very poor match (completely different category)
+        
+        PRIORITIZE: Job title relevance > Category alignment > Skills > Experience > Location"""
+
+        user_prompt = f"""
+        User Search: {user_text}
+        User's Target Category: {primary_category}
+        
+        User Intent Analysis: {json.dumps(intent_analysis, indent=2)}
+        
+        Jobs to Score: {json.dumps(job_summaries, indent=2)}
+        
+        Score each job focusing on category alignment and job title relevance. 
+        Be STRICT about category mismatches - if someone wants a software engineer job, don't give high scores to telecaller positions.
+        """
+
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ]
+        
+        response = llama_chat_completion(messages, temperature=0.1, max_tokens=2000)
+        ai_scores = json.loads(response)
+        
+        # Combine AI scores with jobs and add additional category-based filtering
+        scored_jobs = []
+        for i, job in enumerate(jobs[:20]):
+            ai_score = ai_scores.get("scores", {}).get(str(i), 30)  # Lower default score
+            
+            # Additional category validation to prevent mismatches
+            job_title_lower = (job[1] or job[18] or "").lower()
+            job_desc_lower = (job[5] or "").lower()
+            
+            # Apply strict category filtering
+            category_mismatch_penalty = 0
+            if primary_category == "software_engineer":
+                if any(term in job_title_lower for term in ['telecaller', 'call center', 'sales', 'delivery', 'driver', 'cook', 'cleaner']):
+                    category_mismatch_penalty = 50
+            elif primary_category == "data_analyst":
+                if any(term in job_title_lower for term in ['telecaller', 'delivery', 'driver', 'cook', 'cleaner', 'guard']):
+                    category_mismatch_penalty = 50
+            elif primary_category == "sales":
+                if any(term in job_title_lower for term in ['developer', 'engineer', 'programmer', 'analyst']):
+                    category_mismatch_penalty = 30
+            
+            # Apply penalty
+            final_score = max(0, ai_score - category_mismatch_penalty)
+            scored_jobs.append((final_score, job))
+        
+        # Sort by AI score
+        scored_jobs.sort(key=lambda x: x[0], reverse=True)
+        
+        # Add remaining jobs with very low default score
+        for job in jobs[20:]:
+            scored_jobs.append((20, job))  # Very low score for unprocessed jobs
+        
+        # Filter out jobs with very low scores if we have enough good matches
+        high_score_jobs = [job for score, job in scored_jobs if score >= 60]
+        if len(high_score_jobs) >= 5:
+            scored_jobs = [(score, job) for score, job in scored_jobs if score >= 40]
+        
+        return scored_jobs
+        
+    except Exception as e:
+        print(f"Error in AI scoring: {str(e)}")
+        # Fallback to simple scoring with category awareness
+        primary_category = intent_analysis.get("primary_category", "other")
+        fallback_scored = []
+        
+        for job in jobs:
+            job_title_lower = (job[1] or job[18] or "").lower()
+            score = 40  # Base score
+            
+            # Category-based scoring
+            if primary_category == "software_engineer":
+                if any(term in job_title_lower for term in ['software', 'developer', 'engineer', 'programmer']):
+                    score = 70
+                elif any(term in job_title_lower for term in ['telecaller', 'sales', 'delivery']):
+                    score = 10
+            elif primary_category == "data_analyst":
+                if 'analyst' in job_title_lower:
+                    score = 70
+                elif any(term in job_title_lower for term in ['telecaller', 'delivery']):
+                    score = 10
+            
+            fallback_scored.append((score, job))
+        
+        fallback_scored.sort(key=lambda x: x[0], reverse=True)
+        return fallback_scored
+        
+        # Sort by AI score
+        scored_jobs.sort(key=lambda x: x[0], reverse=True)
+        
+        # Add remaining jobs with default score
+        for job in jobs[20:]:
+            scored_jobs.append((30, job))  # Lower default score for unprocessed jobs
+        
+        return scored_jobs
+        
+    except Exception as e:
+        print(f"Error in AI scoring: {str(e)}")
+        # Fallback to simple scoring
+        return [(50, job) for job in jobs]
+
+def format_job_response(job_data, score=0):
+    """Format job data for API response"""
+    return {
+        "id": job_data[0],
+        "job_title": job_data[1] or job_data[18],
+        "company_name": job_data[2] or job_data[19],
+        "location": job_data[3],
+        "salary_range": job_data[4] or job_data[21],
+        "description": job_data[5][:250] + "..." if job_data[5] and len(job_data[5]) > 250 else job_data[5],
+        "industry": job_data[6],
+        "sector": job_data[7],
+        "job_type": job_data[8],
+        "employment_type": job_data[9],
+        "experience_required": job_data[10],
+        "skills_required": json.loads(job_data[11]) if job_data[11] and job_data[11] != "null" else [],
+        "source": job_data[15],
+        "company_contact": job_data[20],
+        "apply_url": job_data[22],
+        "relevance_score": score,
+        "ai_powered": True
+    }
+
+async def smart_recommend_job_fallback(user_info: UserInfo):
+    """
+    Fallback to original smart recommendation if AI fails
     """
     conn = get_db()
     cursor = conn.cursor()
@@ -615,33 +1113,11 @@ async def smart_recommend_job(user_info: UserInfo):
         if not final_jobs:
             return {"best_job": None, "alternative_jobs": [], "message": "No relevant jobs found. Please try a different search."}
 
-        # Prepare response
-        def format_job(job_data, score=0):
-            return {
-                "id": job_data[0],
-                "job_title": job_data[1] or job_data[18],
-                "company_name": job_data[2] or job_data[19],
-                "location": job_data[3],
-                "salary_range": job_data[4] or job_data[21],
-                "description": job_data[5][:250] + "..." if job_data[5] and len(job_data[5]) > 250 else job_data[5],
-                "industry": job_data[6],
-                "sector": job_data[7],
-                "job_type": job_data[8],
-                "employment_type": job_data[9],
-                "experience_required": job_data[10],
-                "skills_required": json.loads(job_data[11]) if job_data[11] and job_data[11] != "null" else [],
-                "source": "Not Mentioned",
-                "company_contact": job_data[20],  # This was missing!
-                "apply_url": job_data[22],
-                "relevance_score": score,
-                "debug_info": f"Query: '{user_text}', Score: {score}"
-            }
-
         best_job_data = unique_scored_jobs[0]
-        best_job_formatted = format_job(best_job_data[1], best_job_data[0])
+        best_job_formatted = format_job_response(best_job_data[1], best_job_data[0])
 
         alternative_jobs_formatted = [
-            format_job(job_data[1], job_data[0]) for job_data in unique_scored_jobs[1:6]
+            format_job_response(job_data[1], job_data[0]) for job_data in unique_scored_jobs[1:6]
         ]
         
         return {
