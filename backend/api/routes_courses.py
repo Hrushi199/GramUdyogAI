@@ -80,22 +80,22 @@ async def get_courses(
 
     return {
         "courses": [
-            {
-                "id": course[0],
-                "name": course[1],
-                "link": course[2],
-                "category": course[3],
-                "skill_level": course[4],
-                "duration": course[5],
-                "provider": course[6],
-                "description": course[7],
-                "tags": json.loads(course[8]) if course[8] else [],
-                "source": course[9],
-                "is_active": course[10],
-                "created_at": course[11]
-            }
-            for course in courses
-        ],
+    {
+        "id": course['id'],
+        "name": course['name'],
+        "link": course['link'],
+        "category": course['category'],
+        "skill_level": course['skill_level'],
+        "duration": course['duration'],
+        "provider": course['provider'],
+        "description": course['description'],
+        "tags": json.loads(course['tags'] or '[]'),
+        "source": course['source'],
+        "is_active": bool(course['is_active']),
+        "created_at": course['created_at'],
+    }
+    for course in courses
+],
         "total_count": total_count,
         "limit": limit,
         "offset": offset
@@ -162,19 +162,19 @@ async def search_courses(
     return {
         "courses": [
             {
-                "id": course[0],
-                "name": course[1],
-                "link": course[2],
-                "category": course[3],
-                "skill_level": course[4],
-                "duration": course[5],
-                "provider": course[6],
-                "description": course[7],
-                "tags": json.loads(course[8]) if course[8] else [],
-                "source": course[9],
-                "is_active": course[10],
-                "created_at": course[11]
-            }
+        "id": course['id'],
+        "name": course['name'],
+        "link": course['link'],
+        "category": course['category'],
+        "skill_level": course['skill_level'],
+        "duration": course['duration'],
+        "provider": course['provider'],
+        "description": course['description'],
+        "tags": json.loads(course['tags'] or '[]'),
+        "source": course['source'],
+        "is_active": bool(course['is_active']),
+        "created_at": course['created_at'],
+    }
             for course in courses
         ],
         "total_count": total_count,
@@ -199,19 +199,19 @@ async def get_course_by_id(course_id: int):
     if not course:
         raise HTTPException(status_code=404, detail="Course not found")
 
-    return {
-        "id": course[0],
-        "name": course[1],
-        "link": course[2],
-        "category": course[3],
-        "skill_level": course[4],
-        "duration": course[5],
-        "provider": course[6],
-        "description": course[7],
-        "tags": json.loads(course[8]) if course[8] else [],
-        "source": course[9],
-        "is_active": course[10],
-        "created_at": course[11]
+    return  {
+        "id": course['id'],
+        "name": course['name'],
+        "link": course['link'],
+        "category": course['category'],
+        "skill_level": course['skill_level'],
+        "duration": course['duration'],
+        "provider": course['provider'],
+        "description": course['description'],
+        "tags": json.loads(course['tags'] or '[]'),
+        "source": course['source'],
+        "is_active": bool(course['is_active']),
+        "created_at": course['created_at'],
     }
 
 @router.get("/courses/categories")
@@ -326,12 +326,12 @@ async def get_course_enrollments(course_id: int):
 
     return [
         {
-            "enrollment_id": enrollment[0],
-            "user_id": enrollment[1],
-            "enrolled_at": enrollment[2],
-            "status": enrollment[3],
-            "progress": enrollment[4],
-            "completion_date": enrollment[5]
+            "enrollment_id": enrollment["id"],
+            "user_id": enrollment["user_id"],
+            "enrolled_at": enrollment["enrolled_at"],
+            "status": enrollment["status"],
+            "progress": enrollment["progress"],
+            "completion_date": enrollment["completion_date"]
         }
         for enrollment in enrollments
     ]
@@ -356,16 +356,16 @@ async def get_user_courses(user_id: int):
 
     return [
         {
-            "course_id": course[0],
-            "name": course[1],
-            "link": course[2],
-            "category": course[3],
-            "skill_level": course[4],
-            "provider": course[5],
-            "enrolled_at": course[6],
-            "status": course[7],
-            "progress": course[8],
-            "completion_date": course[9]
+            "course_id": course["id"],
+            "name": course["name"],
+            "link": course["link"],
+            "category": course["category"],
+            "skill_level": course["skill_level"],
+            "provider": course["provider"],
+            "enrolled_at": course["enrolled_at"],
+            "status": course["status"],
+            "progress": course["progress"],
+            "completion_date": course["completion_date"]
         }
         for course in courses
     ]
@@ -437,15 +437,15 @@ async def recommend_courses(user_query: dict):
     courses_context = []
     for course in all_courses:
         course_info = {
-            "id": course[0],
-            "name": course[1],
-            "link": course[2],
-            "category": course[3],
-            "skill_level": course[4],
-            "duration": course[5],
-            "provider": course[6],
-            "description": course[7] or "No description available",
-            "tags": json.loads(course[8]) if course[8] else []
+            "id": course["id"],
+            "name": course["name"],
+            "link": course["link"],
+            "category": course["category"],
+            "skill_level": course["skill_level"],
+            "duration": course["duration"],
+            "provider": course["provider"],
+            "description": course["description"] or "No description available",
+            "tags": json.loads(course["tags"]) if course["tags"] else []
         }
         courses_context.append(course_info)
     

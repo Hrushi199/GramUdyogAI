@@ -22,6 +22,7 @@ def check_json_status():
 
     # Check database status
     conn = sqlite3.connect('gramudyogai.db')
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
     cursor.execute('SELECT COUNT(*) FROM job_postings')

@@ -7,7 +7,7 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 from init_db import get_db
 from api.routes_events import get_user_name_by_id
-
+from init_db import get_db
 async def get_recent_events(args: str, limit: int = 5) -> List[Dict[str, Any]]:
     """Get recent events based on user query"""
     try:
@@ -42,14 +42,14 @@ async def get_recent_events(args: str, limit: int = 5) -> List[Dict[str, Any]]:
                     return default
             
             event = {
-                "id": row[0],
-                "title": row[1],
-                "description": row[2],
-                "type": row[3],
-                "location": row[5],
-                "date": row[7],  # start_date
+                "id": row["id"],
+                "title": row["title"],
+                "description": row["description"],
+                "type": row["event_type"],
+                "location": row["location"],
+                "date": row["start_date"],  # start_date
                 "organizer": "Event Team",  # Could be enhanced with actual organizer data
-                "registration_link": f"/events/{row[0]}"  # Generate registration link
+                "registration_link": f"/events/{row['id']}"  # Generate registration link
             }
             events.append(event)
         
@@ -90,13 +90,13 @@ async def get_featured_projects(args: str, limit: int = 5) -> List[Dict[str, Any
                     return default
             
             project = {
-                "id": row[0],
-                "title": row[1],
-                "description": row[2],
+                "id": row["id"],
+                "title": row["title"],
+                "description": row["description"],
                 "creator": "Project Team",  # Could be enhanced with actual creator data
-                "status": row[14],  # status
-                "investment_needed": row[12] if row[12] else "Not specified",  # funding_status
-                "tags": safe_json_loads(row[6], []),  # technologies
+                "status": row["status"],  # status
+                "investment_needed": row["funding_status"] if row["funding_status"] else "Not specified",  # funding_status
+                "tags": safe_json_loads(row["technologies"], []),  # technologies
             }
             projects.append(project)
         
@@ -186,10 +186,10 @@ async def get_user_profile_summary(user_id: Optional[int] = None) -> Dict[str, A
         achievements = [row[0] for row in achievements_data] if achievements_data else []
         
         return {
-            "name": profile_data[1],  # name
-            "experience": profile_data[6],  # experience
-            "goals": profile_data[7],  # goals
-            "skills": safe_json_loads(profile_data[5], []),  # skills
+            "name": profile_data["name"],  # name
+            "experience": profile_data["experience"],  # experience
+            "goals": profile_data["goals"],  # goals
+            "skills": safe_json_loads(profile_data["skills"], []),  # skills
             "achievements": achievements
         }
     except Exception as e:
@@ -230,41 +230,40 @@ async def get_event_by_id(event_id: int):
                 return default
 
         event = {
-                "id": row[0],
-                "title": row[1],
-                "description": row[2],
-                "event_type": row[3],
-                "category": row[4],
-                "location": row[5],
-                "state": row[6],
-                "start_date": row[7],
-                "end_date": row[8],
-                "max_participants": row[9],
-                "current_participants": row[10],
-                "budget": row[11],
-                "prize_pool": row[12],
-                "organizer": {
-                    "id": row[13],
-                    "type": row[14],
-                    "name": get_user_name_by_id(row[13])
-                },
-                "skills_required": safe_json_loads(row[16], []),
-                "tags": safe_json_loads(row[17], []),
-                "status": row[18],
-                "impact_metrics": safe_json_loads(row[19], {
-                    "participants_target": 0,
-                    "skills_developed": 0,
-                    "projects_created": 0,
-                    "employment_generated": 0
-                }),
-                "marketing_highlights": safe_json_loads(row[20], []),
-                "success_metrics": safe_json_loads(row[21], []),
-                "sections": safe_json_loads(row[22], []),
-                "social_media_posts": [],
-                "created_at": row[23],
-                "updated_at": row[24]
-            }
-        
+            "id": row["id"],
+            "title": row["title"],
+            "description": row["description"],
+            "event_type": row["event_type"],
+            "category": row["category"],
+            "location": row["location"],
+            "state": row["state"],
+            "start_date": row["start_date"],
+            "end_date": row["end_date"],
+            "max_participants": row["max_participants"],
+            "current_participants": row["current_participants"],
+            "budget": row["budget"],
+            "prize_pool": row["prize_pool"],
+            "organizer": {
+                "id": row["organizer_id"],
+                "type": row["organizer_type"],
+                "name": get_user_name_by_id(row["organizer_id"])
+            },
+            "skills_required": safe_json_loads(row["skills_required"], []),
+            "tags": safe_json_loads(row["tags"], []),
+            "status": row["status"],
+            "impact_metrics": safe_json_loads(row["impact_metrics"], {
+                "participants_target": 0,
+                "skills_developed": 0,
+                "projects_created": 0,
+                "employment_generated": 0
+            }),
+            "marketing_highlights": safe_json_loads(row["marketing_highlights"], []),
+            "success_metrics": safe_json_loads(row["success_metrics"], []),
+            "sections": safe_json_loads(row["sections"], []),
+            "social_media_posts": [],
+            "created_at": row["created_at"],
+            "updated_at": row["updated_at"]
+        }
         # Fetch social media posts
         cursor.execute("SELECT * FROM social_media_posts WHERE event_id = ?", (event_id,))
         posts_data = cursor.fetchall()
@@ -375,12 +374,12 @@ async def get_events(
             posts_data = cursor.fetchall()
             event["social_media_posts"] = [
                 {
-                    "id": post[0],
-                    "platform": post[2],
-                    "content": post[3],
-                    "image_url": post[4],
-                    "scheduled_at": post[5],
-                    "status": post[6]
+                    "id": post["id"],
+                    "platform": post["platform"],
+                    "content": post["content"],
+                    "image_url": post["image_url"],
+                    "scheduled_at": post["scheduled_at"],
+                    "status": post["status"]
                 }
                 for post in posts_data
             ]
@@ -417,29 +416,29 @@ async def search_projects(query: str, limit: int = 10):
         projects = []
         for row in projects_data:
             project = {
-                "id": row[0],
-                "title": row[1],
-                "description": row[2],
-                "category": row[3],
-                "event_id": row[4],
-                "event_name": row[5],
-                "event_type": row[6],
-                "team_members": safe_json_loads(row[7], []),
-                "technologies": safe_json_loads(row[8], []),
-                "impact_metrics": safe_json_loads(row[9], {}),
-                "funding_status": row[10],
-                "funding_amount": row[11],
-                "funding_goal": row[12],
-                "location": row[13],
-                "state": row[14],
-                "created_by": row[15],
-                "created_at": row[16],
-                "completed_at": row[17],
-                "status": row[18],
-                "media": safe_json_loads(row[19], {}),
-                "testimonials": safe_json_loads(row[20], []),
-                "awards": safe_json_loads(row[21], []),
-                "tags": safe_json_loads(row[22], [])
+                "id": row["id"],
+                "title": row["title"],
+                "description": row["description"],
+                "category": row["category"],
+                "event_id": row["event_id"],
+                "event_name": row["event_name"],
+                "event_type": row["event_type"],
+                "team_members": safe_json_loads(row["team_members"], []),
+                "technologies": safe_json_loads(row["technologies"], []),
+                "impact_metrics": safe_json_loads(row["impact_metrics"], {}),
+                "funding_status": row["funding_status"],
+                "funding_amount": row["funding_amount"],
+                "funding_goal": row["funding_goal"],
+                "location": row["location"],
+                "state": row["state"],
+                "created_by": row["created_by"],
+                "created_at": row["created_at"],
+                "completed_at": row["completed_at"],
+                "status": row["status"],
+                "media": safe_json_loads(row["media"], {}),
+                "testimonials": safe_json_loads(row["testimonials"], []),
+                "awards": safe_json_loads(row["awards"], []),
+                "tags": safe_json_loads(row["tags"], [])
             }
             projects.append(project)
         conn.close()
@@ -519,29 +518,29 @@ async def get_projects(
                 team_members.append(team_member)
             
             project = {
-                "id": row[0],
-                "title": row[1],
-                "description": row[2],
-                "category": row[3],
-                "event_id": row[4],
-                "event_name": row[5],
-                "event_type": row[6],
+                "id": row["id"],
+                "title": row["title"],
+                "description": row["description"],
+                "category": row["category"],
+                "event_id": row["event_id"],
+                "event_name": row["event_name"],
+                "event_type": row["event_type"],
                 "team_members": team_members,  # Now using relational data
-                "technologies": json.loads(row[7]) if row[7] else [],
-                "impact_metrics": json.loads(row[8]) if row[8] else {},
-                "funding_status": row[9],
-                "funding_amount": row[10],
-                "funding_goal": row[11],
-                "location": row[12],
-                "state": row[13],
-                "created_by": row[14],
-                "created_at": row[15],
-                "completed_at": row[16],
-                "status": row[17],
-                "media": json.loads(row[18]) if row[18] else {},
-                "testimonials": json.loads(row[19]) if row[19] else [],
-                "awards": json.loads(row[20]) if row[20] else [],
-                "tags": json.loads(row[21]) if row[21] else []
+                "technologies": json.loads(row["technologies"]) if row["technologies"] else [],
+                "impact_metrics": json.loads(row["impact_metrics"]) if row["impact_metrics"] else {},
+                "funding_status": row["funding_status"],
+                "funding_amount": row["funding_amount"],
+                "funding_goal": row["funding_goal"],
+                "location": row["location"],
+                "state": row["state"],
+                "created_by": row["created_by"],
+                "created_at": row["created_at"],
+                "completed_at": row["completed_at"],
+                "status": row["status"],
+                "media": json.loads(row["media"]) if row["media"] else {},
+                "testimonials": json.loads(row["testimonials"]) if row["testimonials"] else [],
+                "awards": json.loads(row["awards"]) if row["awards"] else [],
+                "tags": json.loads(row["tags"]) if row["tags"] else []
             }
             projects.append(project)
         
@@ -563,16 +562,16 @@ async def search_users(query: str, limit: int = 10):
         users = []
         for row in users_data:
             user = {
-                "id": row[0],
-                "phone": row[1],
-                "user_type": row[2],
-                "name": row[3],
-                "organization": row[4],
-                "is_active": row[5],
-                "is_verified": row[6],
-                "created_at": row[7],
-                "last_login": row[8],
-                "skills": row[9] if len(row) > 9 else None
+                "id": row['id'],
+                "phone": row['phone'],
+                "user_type": row['user_type'],
+                "name": row['name'],
+                "organization": row['organization'],
+                "is_active": row['is_active'],
+                "is_verified": row['is_verified'],
+                "created_at": row['created_at'],
+                "last_login": row['last_login'],
+                "skills": row['skills'] if len(row) > 9 else None
             }
             users.append(user)
         conn.close()
@@ -600,28 +599,28 @@ async def get_jobs(limit: int = 20):
 
     return [
         {
-            "id": job[0],
-            "job_title": job[1] or job[18],  # Use enhanced job_title or fallback to title
-            "title": job[1] or job[18],
-            "company_name": job[2] or job[19],  # Use enhanced company_name or fallback to company
-            "company": job[2] or job[19],
-            "location": job[3],
-            "salary_range": job[4] or job[21],  # Use enhanced salary_range or fallback to pay
-            "pay": job[4] or job[21],
-            "description": job[5],
-            "industry": job[6],
-            "sector": job[7],
-            "job_type": job[8],
-            "employment_type": job[9],
-            "experience_required": job[10],
-            "skills_required": json.loads(job[11]) if job[11] else [],
-            "posted_date": job[12],
-            "application_deadline": job[13],
-            "tags": json.loads(job[14]) if job[14] else [],
-            "source": job[15],
-            "is_active": job[16],
-            "created_at": job[17],
-            "company_contact": job[20]
+            "id": job["id"],
+            "job_title": job["job_title"] or job["title"],  # Use enhanced job_title or fallback to title
+            "title": job["job_title"] or job["title"],
+            "company_name": job["company_name"] or job["company"],  # Use enhanced company_name or fallback to company
+            "company": job["company_name"] or job["company"],
+            "location": job["location"],
+            "salary_range": job["salary_range"] or job["pay"],  # Use enhanced salary_range or fallback to pay
+            "pay": job["salary_range"] or job["pay"],
+            "description": job["description"],
+            "industry": job["industry"],
+            "sector": job["sector"],
+            "job_type": job["job_type"],
+            "employment_type": job["employment_type"],
+            "experience_required": job["experience_required"],
+            "skills_required": json.loads(job["skills_required"]) if job["skills_required"] else [],
+            "posted_date": job["posted_date"],
+            "application_deadline": job["application_deadline"],
+            "tags": json.loads(job["tags"]) if job["tags"] else [],
+            "source": job["source"],
+            "is_active": job["is_active"],
+            "created_at": job["created_at"],
+            "company_contact": job["company_contact"]
         }
         for job in jobs
     ]
@@ -685,17 +684,17 @@ async def search_schemes(query: str, limit: int = 10):
         schemes = []
         for row in schemes_data:
             scheme = {
-                "id": row[0],
-                "name": row[1],
-                "description": row[2],
-                "target_group": row[3],
-                "benefits": row[4],
-                "eligibility": row[5],
-                "application_process": row[6],
-                "documents_required": row[7],
-                "contact_info": row[8],
-                "created_at": row[9],
-                "updated_at": row[10]
+                "id": row["id"],
+                "name": row["name"],
+                "description": row["description"],
+                "target_group": row["target_group"],
+                "benefits": row["benefits"],
+                "eligibility": row["eligibility"],
+                "application_process": row["application_process"],
+                "documents_required": row["documents_required"],
+                "contact_info": row["contact_info"],
+                "created_at": row["created_at"],
+                "updated_at": row["updated_at"]
             }
             schemes.append(scheme)
         conn.close()
@@ -737,22 +736,22 @@ async def get_profile(user_id: Optional[int] = None) -> Dict[str, Any]:
             except:
                 return default
         return {
-            "user_id": profile_data[0],
-            "user_type": profile_data[1],
-            "name": profile_data[2],
-            "organization": profile_data[3],
-            "location": profile_data[4],
-            "state": profile_data[5],
-            "skills": safe_json_loads(profile_data[6], []),
-            "experience": profile_data[7],
-            "goals": profile_data[8],
-            "impact_metrics": safe_json_loads(profile_data[10], {}),
-            "achievements": safe_json_loads(profile_data[11], []),
-            "recent_activities": safe_json_loads(profile_data[12], []),
-            "recommendations": safe_json_loads(profile_data[13], []),
-            "networking_suggestions": safe_json_loads(profile_data[14], []),
-            "created_at": profile_data[15],
-            "updated_at": profile_data[16],
+            "user_id": profile_data["user_id"],
+            "user_type": profile_data["user_type"],
+            "name": profile_data["name"],
+            "organization": profile_data["organization"],
+            "location": profile_data["location"],
+            "state": profile_data["state"],
+            "skills": safe_json_loads(profile_data["skills"], []),
+            "experience": profile_data["experience"],
+            "goals": profile_data["goals"],
+            "impact_metrics": safe_json_loads(profile_data["impact_metrics"], {}),
+            "achievements": safe_json_loads(profile_data["achievements"], []),
+            "recent_activities": safe_json_loads(profile_data["recent_activities"], []),
+            "recommendations": safe_json_loads(profile_data["recommendations"], []),
+            "networking_suggestions": safe_json_loads(profile_data["networking_suggestions"], []),
+            "created_at": profile_data["created_at"],
+            "updated_at": profile_data["updated_at"],
         }
     except Exception as e:
         print(f"Error fetching profile: {e}")
@@ -772,17 +771,17 @@ async def get_schemes(limit: int = 10) -> List[Dict[str, Any]]:
         schemes = []
         for row in schemes_data:
             scheme = {
-                "id": row[0],
-                "name": row[1],
-                "description": row[2],
-                "target_group": row[3],
-                "benefits": row[4],
-                "eligibility": row[5],
-                "application_process": row[6],
-                "documents_required": row[7],
-                "contact_info": row[8],
-                "created_at": row[9],
-                "updated_at": row[10]
+                "id": row["id"],
+                "name": row["name"],
+                "description": row["description"],
+                "target_group": row["target_group"],
+                "benefits": row["benefits"],
+                "eligibility": row["eligibility"],
+                "application_process": row["application_process"],
+                "documents_required": row["documents_required"],
+                "contact_info": row["contact_info"],
+                "created_at": row["created_at"],
+                "updated_at": row["updated_at"]
             }
             schemes.append(scheme)
         return schemes
@@ -1298,10 +1297,18 @@ async def smart_recommend_job_fallback(user_info: UserInfo):
         scored_jobs = []
         for job in jobs:
             score = 0
-            job_title_lower = (job[1] or "").lower()
-            description_lower = (job[5] or "").lower()
-            industry_lower = (job[6] or "").lower()
-            tags_lower = (job[14] or "").lower()
+            # Use string keys for dict-like access, with safety for both Row and dict types
+            def safe_get(j, key):
+                if isinstance(j, dict):
+                    return j.get(key, "")
+                try:
+                    return j[key]
+                except (KeyError, IndexError, TypeError):
+                    return ""
+            job_title_lower = (safe_get(job, "job_title") or safe_get(job, "title") or "").lower()
+            description_lower = (safe_get(job, "description") or "").lower()
+            industry_lower = (safe_get(job, "industry") or "").lower()
+            tags_lower = (safe_get(job, "tags") or "").lower()
             job_text = f"{job_title_lower} {description_lower} {industry_lower} {tags_lower}"
             
             # Direct exact phrase matching gets highest score
@@ -1338,7 +1345,21 @@ async def smart_recommend_job_fallback(user_info: UserInfo):
         seen_jobs = set()
         unique_scored_jobs = []
         for score, job in scored_jobs:
-            job_key = (job[1] or job[18], job[2] or job[19])  # (job_title, company_name)
+            # Use string keys if possible, fallback to index if not a dict
+            if isinstance(job, dict):
+                job_title = job.get("job_title") or job.get("title")
+                company_name = job.get("company_name") or job.get("company")
+            else:
+                # Fallback for Row or tuple-like
+                try:
+                    job_title = job["job_title"] if "job_title" in job.keys() else job["title"]
+                except Exception:
+                    job_title = job[1] if len(job) > 1 else (job[18] if len(job) > 18 else None)
+                try:
+                    company_name = job["company_name"] if "company_name" in job.keys() else job["company"]
+                except Exception:
+                    company_name = job[2] if len(job) > 2 else (job[19] if len(job) > 19 else None)
+            job_key = (job_title, company_name)
             if job_key not in seen_jobs:
                 seen_jobs.add(job_key)
                 unique_scored_jobs.append((score, job))

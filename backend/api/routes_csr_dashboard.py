@@ -9,15 +9,13 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 import json
 import logging
+from init_db import get_db
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
-
-def get_db():
-    return sqlite3.connect('gramudyogai.db')
 
 @router.post("/dashboard/initialize")
 async def initialize_csr_dashboard():
@@ -40,7 +38,7 @@ async def get_all_companies():
         rows = cursor.fetchall()
         companies = []
         for row in rows:
-            company = dict(zip([col[0] for col in cursor.description], row))
+            company = dict(row)
             company['csr_focus_areas'] = json.loads(company['csr_focus_areas'])
             companies.append(company)
         return companies
@@ -61,7 +59,7 @@ async def get_company_profile(company_id: int):
         if not row:
             raise HTTPException(status_code=404, detail="Company not found")
         
-        company = dict(zip([col[0] for col in cursor.description], row))
+        company = dict(row)
         company['csr_focus_areas'] = json.loads(company['csr_focus_areas'])
         return company
     except Exception as e:
@@ -82,7 +80,7 @@ async def get_company_dashboard_metrics(company_id: int):
         if not company_row:
             raise HTTPException(status_code=404, detail="Company not found")
         
-        company_name = company_row[0]
+        company_name = company_row['company_name']
         
         # Get all events for this company
         cursor.execute('''
@@ -111,27 +109,27 @@ async def get_company_dashboard_metrics(company_id: int):
         
         # Calculate metrics
         total_events = len(events)
-        total_beneficiaries = sum(event[8] for event in events)  # beneficiaries_count
-        total_budget_allocated = sum(event[9] for event in events)  # budget_allocated
-        total_budget_spent = sum(event[10] for event in events)  # budget_spent
+        total_beneficiaries = sum(event['beneficiaries_count'] for event in events)
+        total_budget_allocated = sum(event['budget_allocated'] for event in events)
+        total_budget_spent = sum(event['budget_spent'] for event in events)
         budget_efficiency = (total_budget_spent / total_budget_allocated * 100) if total_budget_allocated > 0 else 0
         
         # Events by type
         events_by_type = {}
         for event in events:
-            event_type = event[4]  # event_type
+            event_type = event['event_type']
             events_by_type[event_type] = events_by_type.get(event_type, 0) + 1
         
         # Geographical reach
         geographical_reach = {}
         for event in events:
-            state = event[7]  # state
+            state = event['state']
             geographical_reach[state] = geographical_reach.get(state, 0) + 1
         
         # Yearly progress
         yearly_progress = {}
         for event in events:
-            year = event[11][:4]  # Extract year from start_date
+            year = event['start_date'][:4]  # Extract year from start_date
             if year not in yearly_progress:
                 yearly_progress[year] = {
                     "events": 0,
@@ -140,23 +138,23 @@ async def get_company_dashboard_metrics(company_id: int):
                     "impact_score": 0
                 }
             yearly_progress[year]["events"] += 1
-            yearly_progress[year]["beneficiaries"] += event[8]
-            yearly_progress[year]["budget_spent"] += event[10]
+            yearly_progress[year]["beneficiaries"] += event['beneficiaries_count']
+            yearly_progress[year]["budget_spent"] += event['budget_spent']
         
         # Calculate impact scores and sustainability
         impact_scores = []
         sustainability_scores = []
         
         for event in events:
-            impact_metrics = json.loads(event[14]) if event[14] else {}  # impact_metrics
+            impact_metrics = json.loads(event['impact_metrics']) if event['impact_metrics'] else {}
             
             # Calculate impact score based on beneficiaries and budget efficiency
-            event_impact = (event[8] / 1000) * (event[10] / event[9]) * 100 if event[9] > 0 else 0
+            event_impact = (event['beneficiaries_count'] / 1000) * (event['budget_spent'] / event['budget_allocated']) * 100 if event['budget_allocated'] > 0 else 0
             impact_scores.append(min(event_impact, 100))
             
             # Calculate sustainability score based on event type and duration
-            start_date = datetime.fromisoformat(event[11])
-            end_date = datetime.fromisoformat(event[12])
+            start_date = datetime.fromisoformat(event['start_date'])
+            end_date = datetime.fromisoformat(event['end_date'])
             duration_days = (end_date - start_date).days
             
             sustainability_score = min((duration_days / 365) * 50 + 50, 100)
@@ -226,7 +224,7 @@ async def get_company_events(
         
         events = []
         for row in rows:
-            event = dict(zip([col[0] for col in cursor.description], row))
+            event = dict(row)
             event['impact_metrics'] = json.loads(event['impact_metrics']) if event['impact_metrics'] else {}
             events.append(event)
         
@@ -245,22 +243,22 @@ async def get_csr_analytics_overview():
     cursor = conn.cursor()
     try:
         # Total companies
-        cursor.execute('SELECT COUNT(*) FROM csr_companies')
-        total_companies = cursor.fetchone()[0]
+        cursor.execute('SELECT COUNT(*) as count FROM csr_companies')
+        total_companies = cursor.fetchone()['count']
         
         # Total events
-        cursor.execute('SELECT COUNT(*) FROM csr_events')
-        total_events = cursor.fetchone()[0]
+        cursor.execute('SELECT COUNT(*) as count FROM csr_events')
+        total_events = cursor.fetchone()['count']
         
         # Total beneficiaries
-        cursor.execute('SELECT SUM(beneficiaries_count) FROM csr_events')
-        total_beneficiaries = cursor.fetchone()[0] or 0
+        cursor.execute('SELECT SUM(beneficiaries_count) as total FROM csr_events')
+        total_beneficiaries = cursor.fetchone()['total'] or 0
         
         # Total budget
-        cursor.execute('SELECT SUM(budget_allocated), SUM(budget_spent) FROM csr_events')
+        cursor.execute('SELECT SUM(budget_allocated) as allocated, SUM(budget_spent) as spent FROM csr_events')
         budget_row = cursor.fetchone()
-        total_budget_allocated = budget_row[0] or 0
-        total_budget_spent = budget_row[1] or 0
+        total_budget_allocated = budget_row['allocated'] or 0
+        total_budget_spent = budget_row['spent'] or 0
         
         # Top performing companies by impact
         cursor.execute('''
@@ -274,10 +272,10 @@ async def get_csr_analytics_overview():
         top_companies = []
         for row in cursor.fetchall():
             top_companies.append({
-                "company_name": row[0],
-                "total_beneficiaries": row[1],
-                "total_events": row[2],
-                "efficiency": round(row[3], 2) if row[3] else 0
+                "company_name": row['company_name'],
+                "total_beneficiaries": row['total_beneficiaries'],
+                "total_events": row['total_events'],
+                "efficiency": round(row['efficiency'], 2) if row['efficiency'] else 0
             })
         
         # Events by type across all companies
@@ -289,9 +287,9 @@ async def get_csr_analytics_overview():
         ''')
         events_by_type = {}
         for row in cursor.fetchall():
-            events_by_type[row[0]] = {
-                "count": row[1],
-                "beneficiaries": row[2]
+            events_by_type[row['event_type']] = {
+                "count": row['count'],
+                "beneficiaries": row['beneficiaries']
             }
         
         # Geographical distribution
@@ -304,9 +302,9 @@ async def get_csr_analytics_overview():
         ''')
         geographical_distribution = {}
         for row in cursor.fetchall():
-            geographical_distribution[row[0]] = {
-                "events": row[1],
-                "beneficiaries": row[2]
+            geographical_distribution[row['state']] = {
+                "events": row['events'],
+                "beneficiaries": row['beneficiaries']
             }
         
         return {
@@ -353,14 +351,14 @@ async def get_csr_leaderboard():
         for i, row in enumerate(cursor.fetchall(), 1):
             leaderboard.append({
                 "rank": i,
-                "company_name": row[0],
-                "industry": row[1],
-                "csr_rating": row[2],
-                "total_events": row[3] or 0,
-                "total_beneficiaries": row[4] or 0,
-                "total_budget_spent": row[5] or 0,
-                "budget_efficiency": round(row[6], 2) if row[6] else 0,
-                "states_covered": row[7] or 0
+                "company_name": row['company_name'],
+                "industry": row['industry'],
+                "csr_rating": row['csr_rating'],
+                "total_events": row['total_events'] or 0,
+                "total_beneficiaries": row['total_beneficiaries'] or 0,
+                "total_budget_spent": row['total_budget_spent'] or 0,
+                "budget_efficiency": round(row['budget_efficiency'], 2) if row['budget_efficiency'] else 0,
+                "states_covered": row['states_covered'] or 0
             })
         
         return leaderboard
@@ -385,7 +383,7 @@ async def get_recent_csr_events(limit: int = Query(20, ge=1, le=100)):
         
         events = []
         for row in cursor.fetchall():
-            event = dict(zip([col[0] for col in cursor.description], row))
+            event = dict(row)
             event['impact_metrics'] = json.loads(event['impact_metrics']) if event['impact_metrics'] else {}
             events.append(event)
         
@@ -430,7 +428,7 @@ async def search_csr_events(
         
         events = []
         for row in cursor.fetchall():
-            event = dict(zip([col[0] for col in cursor.description], row))
+            event = dict(row)
             event['impact_metrics'] = json.loads(event['impact_metrics']) if event['impact_metrics'] else {}
             events.append(event)
         

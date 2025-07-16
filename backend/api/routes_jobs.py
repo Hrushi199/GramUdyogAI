@@ -202,30 +202,30 @@ async def get_jobs(
     return {
         "jobs": [
             {
-                "id": job[0],
-                "job_title": job[1] or job[18],  # job_title or title (legacy)
-                "company_name": job[2] or job[2],  # company field
-                "location": job[3],
-                "salary_range": job[4] or job[20],  # salary_range or pay (legacy)
-                "description": job[5],
-                "industry": job[6],
-                "sector": job[7],
-                "job_type": job[8],
-                "employment_type": job[9],
-                "experience_required": job[10],
-                "skills_required": json.loads(job[11]) if job[11] else [],
-                "posted_date": job[12],
-                "application_deadline": job[13],
-                "tags": json.loads(job[14]) if job[14] else [],
-                "source": job[15],
-                "is_active": job[16],
-                "created_at": job[17],
-                "apply_url": job[21],
+                "id": job["id"],
+                "job_title": job["job_title"] or job["title"],  # job_title or title (legacy)
+                "company_name": job["company_name"] if "company_name" in job.keys() else job.get("company", ""),  # company_name or company
+                "location": job["location"],
+                "salary_range": job["salary_range"] or job.get("pay", ""),  # salary_range or pay (legacy)
+                "description": job["description"],
+                "industry": job["industry"],
+                "sector": job["sector"],
+                "job_type": job["job_type"],
+                "employment_type": job["employment_type"],
+                "experience_required": job["experience_required"],
+                "skills_required": json.loads(job["skills_required"]) if job["skills_required"] else [],
+                "posted_date": job["posted_date"],
+                "application_deadline": job["application_deadline"],
+                "tags": json.loads(job["tags"]) if job["tags"] else [],
+                "source": job["source"],
+                "is_active": job["is_active"],
+                "created_at": job["created_at"],
+                "apply_url": job["apply_url"],
                 # Legacy fields for backward compatibility
-                "title": job[1] or job[18],
-                "company": job[2] or job[2],
-                "company_contact": job[19],
-                "pay": job[4] or job[20]
+                "title": job["job_title"] or job["title"],
+                "company": job["company_name"] if "company_name" in job.keys() else job.get("company", ""),
+                "company_contact": job.get("company_contact", ""),
+                "pay": job["salary_range"] or job.get("pay", "")
             }
             for job in jobs
         ],
@@ -308,30 +308,30 @@ async def search_jobs(
     return {
         "jobs": [
             {
-                "id": job[0],
-                "job_title": job[1] or job[18],
-                "company_name": job[2] or job[2],
-                "location": job[3],
-                "salary_range": job[4] or job[20],
-                "description": job[5],
-                "industry": job[6],
-                "sector": job[7],
-                "job_type": job[8],
-                "employment_type": job[9],
-                "experience_required": job[10],
-                "skills_required": json.loads(job[11]) if job[11] else [],
-                "posted_date": job[12],
-                "application_deadline": job[13],
-                "tags": json.loads(job[14]) if job[14] else [],
-                "source": job[15],
-                "is_active": job[16],
-                "created_at": job[17],
-                "apply_url": job[21],
+                "id": job["id"],
+                "job_title": job.get("job_title") or job.get("title"),
+                "company_name": job.get("company") or job.get("company"),
+                "location": job.get("location"),
+                "salary_range": job.get("salary_range") or job.get("pay"),
+                "description": job.get("description"),
+                "industry": job.get("industry"),
+                "sector": job.get("sector"),
+                "job_type": job.get("job_type"),
+                "employment_type": job.get("employment_type"),
+                "experience_required": job.get("experience_required"),
+                "skills_required": json.loads(job["skills_required"]) if job.get("skills_required") else [],
+                "posted_date": job.get("posted_date"),
+                "application_deadline": job.get("application_deadline"),
+                "tags": json.loads(job["tags"]) if job.get("tags") else [],
+                "source": job.get("source"),
+                "is_active": job.get("is_active"),
+                "created_at": job.get("created_at"),
+                "apply_url": job.get("apply_url"),
                 # Legacy fields for backward compatibility
-                "title": job[1] or job[18],
-                "company": job[2] or job[2],
-                "company_contact": job[19],
-                "pay": job[4] or job[20]
+                "title": job.get("job_title") or job.get("title"),
+                "company": job.get("company") or job.get("company"),
+                "company_contact": job.get("company_contact"),
+                "pay": job.get("salary_range") or job.get("pay")
             }
             for job in jobs
         ],
@@ -361,29 +361,29 @@ async def get_job_by_id(job_id: int):
         raise HTTPException(status_code=404, detail="Job not found")
 
     return {
-        "id": job[0],
-        "job_title": job[1] or job[18],
-        "company_name": job[2] or job[2],
-        "location": job[3],
-        "salary_range": job[4] or job[20],
-        "description": job[5],
-        "industry": job[6],
-        "sector": job[7],
-        "job_type": job[8],
-        "employment_type": job[9],
-        "experience_required": job[10],
-        "skills_required": json.loads(job[11]) if job[11] else [],
-        "posted_date": job[12],
-        "application_deadline": job[13],
-        "tags": json.loads(job[14]) if job[14] else [],
-        "source": job[15],
-        "is_active": job[16],
-        "created_at": job[17],
+        "id": job["id"],
+        "job_title": job["job_title"] or job.get("title"),
+        "company_name": job.get("company_name") or job.get("company"),
+        "location": job["location"],
+        "salary_range": job.get("salary_range") or job.get("pay"),
+        "description": job["description"],
+        "industry": job["industry"],
+        "sector": job["sector"],
+        "job_type": job["job_type"],
+        "employment_type": job["employment_type"],
+        "experience_required": job["experience_required"],
+        "skills_required": json.loads(job["skills_required"]) if job["skills_required"] else [],
+        "posted_date": job["posted_date"],
+        "application_deadline": job["application_deadline"],
+        "tags": json.loads(job["tags"]) if job["tags"] else [],
+        "source": job["source"],
+        "is_active": job["is_active"],
+        "created_at": job["created_at"],
         # Legacy fields for backward compatibility
-        "title": job[1] or job[18],
-        "company": job[2] or job[2],
-        "company_contact": job[19],
-        "pay": job[4] or job[20]
+        "title": job["job_title"] or job.get("title"),
+        "company": job.get("company_name") or job.get("company"),
+        "company_contact": job.get("company_contact"),
+        "pay": job.get("salary_range") or job.get("pay")
     }
 
 @router.put("/jobs/{job_id}")
@@ -914,21 +914,21 @@ async def score_jobs_with_ai(jobs: list, user_text: str, intent_analysis: dict) 
 def format_job_response(job_data, score=0):
     """Format job data for API response"""
     return {
-        "id": job_data[0],
-        "job_title": job_data[1] or job_data[18],
-        "company_name": job_data[2] or job_data[2],
-        "location": job_data[3],
-        "salary_range": job_data[4] or job_data[21],
-        "description": job_data[5][:250] + "..." if job_data[5] and len(job_data[5]) > 250 else job_data[5],
-        "industry": job_data[6],
-        "sector": job_data[7],
-        "job_type": job_data[8],
-        "employment_type": job_data[9],
-        "experience_required": job_data[10],
-        "skills_required": json.loads(job_data[11]) if job_data[11] and job_data[11] != "null" else [],
-        "source": job_data[15],
-        "company_contact": job_data[20],
-        "apply_url": job_data[22],
+        "id": job_data["id"],
+        "job_title": job_data.get("job_title") or job_data.get("alternate_job_title"),
+        "company_name": job_data.get("company_name") or job_data.get("company_name"),
+        "location": job_data.get("location"),
+        "salary_range": job_data.get("salary_range") or job_data.get("alternate_salary_range"),
+        "description": job_data.get("description")[:250] + "..." if job_data.get("description") and len(job_data.get("description")) > 250 else job_data.get("description"),
+        "industry": job_data.get("industry"),
+        "sector": job_data.get("sector"),
+        "job_type": job_data.get("job_type"),
+        "employment_type": job_data.get("employment_type"),
+        "experience_required": job_data.get("experience_required"),
+        "skills_required": json.loads(job_data.get("skills_required")) if job_data.get("skills_required") and job_data.get("skills_required") != "null" else [],
+        "source": job_data.get("source"),
+        "company_contact": job_data.get("company_contact"),
+        "apply_url": job_data.get("apply_url"),
         "relevance_score": score,
         "ai_powered": True
     }
@@ -1059,10 +1059,18 @@ async def smart_recommend_job_fallback(user_info: UserInfo):
         scored_jobs = []
         for job in jobs:
             score = 0
-            job_title_lower = (job[1] or "").lower()
-            description_lower = (job[5] or "").lower()
-            industry_lower = (job[6] or "").lower()
-            tags_lower = (job[14] or "").lower()
+            # Convert job (which may be a Row or tuple) to a dict for string indices
+            if isinstance(job, dict):
+                job_title_lower = (job.get("job_title") or "").lower()
+                description_lower = (job.get("description") or "").lower()
+                industry_lower = (job.get("industry") or "").lower()
+                tags_lower = (job.get("tags") or "").lower()
+            else:
+                # fallback for tuple/Row with known indices
+                job_title_lower = (job[1] or "").lower()
+                description_lower = (job[5] or "").lower()
+                industry_lower = (job[6] or "").lower()
+                tags_lower = (job[14] or "").lower()
             job_text = f"{job_title_lower} {description_lower} {industry_lower} {tags_lower}"
             
             # Direct exact phrase matching gets highest score
@@ -1099,7 +1107,13 @@ async def smart_recommend_job_fallback(user_info: UserInfo):
         seen_jobs = set()
         unique_scored_jobs = []
         for score, job in scored_jobs:
-            job_key = (job[1] or job[18], job[2] or job[2])  # (job_title, company)
+            if isinstance(job, dict):
+                job_title = job.get("job_title")
+                company = job.get("company")
+            else:
+                job_title = job[1] if len(job) > 1 else None
+                company = job[2] if len(job) > 2 else None
+            job_key = (job_title, company)
             if job_key not in seen_jobs:
                 seen_jobs.add(job_key)
                 unique_scored_jobs.append((score, job))
@@ -1117,7 +1131,9 @@ async def smart_recommend_job_fallback(user_info: UserInfo):
         best_job_formatted = format_job_response(best_job_data[1], best_job_data[0])
 
         alternative_jobs_formatted = [
-            format_job_response(job_data[1], job_data[0]) for job_data in unique_scored_jobs[1:6]
+            format_job_response(job_data["job"], job_data["score"]) if isinstance(job_data, dict)
+            else format_job_response(job_data[1], job_data[0])
+            for job_data in unique_scored_jobs[1:6]
         ]
         
         return {
@@ -1182,22 +1198,23 @@ async def simple_recommend_job(user_info: UserInfo):
     conn.close()
     
     if job:
+        # Use string indices (dict-style access) for job row if cursor.row_factory is set to sqlite3.Row
         return {
             "best_job": {
-                "id": job[0],
-                "job_title": job[1] or job[18],
-                "company_name": job[2] or job[2],
-                "location": job[3],
-                "salary_range": job[4] or job[19],
-                "description": job[5][:500] + "..." if len(job[5]) > 500 else job[5],
-                "industry": job[6],
-                "sector": job[7],
-                "job_type": job[8],
-                "employment_type": job[9],
-                "experience_required": job[10],
-                "skills_required": json.loads(job[11]) if job[11] else [],
-                "source": job[15],
-                "created_at": job[17]
+                "id": job["id"],
+                "job_title": job["job_title"] or job.get("title"),
+                "company_name": job["company"] or job.get("company"),
+                "location": job["location"],
+                "salary_range": job["salary_range"] or job.get("pay"),
+                "description": job["description"][:500] + "..." if len(job["description"]) > 500 else job["description"],
+                "industry": job["industry"],
+                "sector": job["sector"],
+                "job_type": job["job_type"],
+                "employment_type": job["employment_type"],
+                "experience_required": job["experience_required"],
+                "skills_required": json.loads(job["skills_required"]) if job["skills_required"] else [],
+                "source": job["source"],
+                "created_at": job["created_at"]
             }
         }
     else:
@@ -1216,8 +1233,8 @@ async def get_job_industries():
 
     return [
         {
-            "industry": industry[0],
-            "count": industry[1]
+            "industry": industry["industry"],
+            "count": industry["count"]
         }
         for industry in industries
     ]
@@ -1235,8 +1252,8 @@ async def get_job_locations():
 
     return [
         {
-            "location": location[0],
-            "count": location[1]
+            "location": location["location"],
+            "count": location["count"]
         }
         for location in locations
     ]
@@ -1254,8 +1271,8 @@ async def get_job_sectors():
 
     return [
         {
-            "sector": sector[0],
-            "count": sector[1]
+            "sector": sector["sector"],
+            "count": sector["count"]
         }
         for sector in sectors
     ]
@@ -1267,8 +1284,12 @@ async def get_job_statistics():
     cursor = conn.cursor()
 
     # Total jobs
-    cursor.execute("SELECT COUNT(*) FROM job_postings WHERE is_active = 1")
-    total_jobs = cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) as total FROM job_postings WHERE is_active = 1")
+    total_jobs_row = cursor.fetchone()
+    if isinstance(total_jobs_row, dict):
+        total_jobs = total_jobs_row.get("total")
+    else:
+        total_jobs = total_jobs_row[0]
 
     # Jobs by experience level
     cursor.execute("SELECT experience_required, COUNT(*) as count FROM job_postings WHERE is_active = 1 GROUP BY experience_required ORDER BY experience_required")
@@ -1289,10 +1310,15 @@ async def get_job_statistics():
     # Try to extract average salary from salary_range strings
     total_salary = 0
     salary_count = 0
+    import re
     for salary_range in salary_ranges:
-        salary_str = salary_range[0]
+        if isinstance(salary_range, dict):
+            salary_str = salary_range.get("salary_range")
+        else:
+            salary_str = salary_range[0]
+        if not salary_str:
+            continue
         # Try to extract numbers from salary strings
-        import re
         numbers = re.findall(r'\d+', salary_str.replace(',', ''))
         if numbers:
             try:
@@ -1311,10 +1337,34 @@ async def get_job_statistics():
 
     conn.close()
 
+    def get_val(row, key, idx):
+        if isinstance(row, dict):
+            return row.get(key)
+        else:
+            return row[idx]
+
     return {
         "total_jobs": total_jobs,
-        "experience_levels": [{"experience_required": exp[0], "count": exp[1]} for exp in exp_levels],
-        "top_industries": [{"industry": ind[0], "count": ind[1]} for ind in top_industries],
-        "top_locations": [{"location": loc[0], "count": loc[1]} for loc in top_locations],
+        "experience_levels": [
+            {
+                "experience_required": get_val(exp, "experience_required", 0),
+                "count": get_val(exp, "count", 1)
+            }
+            for exp in exp_levels
+        ],
+        "top_industries": [
+            {
+                "industry": get_val(ind, "industry", 0),
+                "count": get_val(ind, "count", 1)
+            }
+            for ind in top_industries
+        ],
+        "top_locations": [
+            {
+                "location": get_val(loc, "location", 0),
+                "count": get_val(loc, "count", 1)
+            }
+            for loc in top_locations
+        ],
         "average_salary": round(avg_salary, 2) if avg_salary else None
     }

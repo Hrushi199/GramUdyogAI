@@ -13,7 +13,9 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 def get_db():
-    return sqlite3.connect('gramudyogai.db')
+    conn = sqlite3.connect('gramudyogai.db')
+    conn.row_factory = sqlite3.Row
+    return conn
 
 # Company Routes
 @router.post("/courses")

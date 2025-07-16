@@ -135,6 +135,7 @@ async def update_summary_audio(request: AudioUpdateRequest):
     
     try:
         conn = sqlite3.connect("gramudyogai.db")
+        conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         
         # Get current summary data
@@ -172,6 +173,7 @@ async def update_summary_audio(request: AudioUpdateRequest):
 @router.get("/visual-summary/{summary_id}")
 async def get_visual_summary(summary_id: int):
     conn = sqlite3.connect("gramudyogai.db")
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     
     cursor.execute(
@@ -195,6 +197,7 @@ async def get_visual_summary(summary_id: int):
 @router.get("/visual-summaries")
 async def list_visual_summaries():
     conn = sqlite3.connect("gramudyogai.db")
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     
     cursor.execute("SELECT * FROM visual_summaries ORDER BY created_at DESC")

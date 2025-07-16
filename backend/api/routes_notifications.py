@@ -391,7 +391,7 @@ def respond_to_team_invite(invite_id: int, response: TeamInviteResponse, db = De
         if response.action == "accept":
             # Add user to team
             cursor.execute("""
-                INSERT INTO team_members (project_id, user_id, role, skills, joined_at, status)
+                INSERT INTO project_team_members (project_id, user_id, role, skills, joined_at, status)
                 VALUES (?, ?, ?, ?, ?, ?)
             """, (metadata["project_id"], notification["user_id"], metadata["role"], 
                   json.dumps(metadata["skills"]), datetime.utcnow(), "active"))

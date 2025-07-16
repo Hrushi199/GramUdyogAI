@@ -6,7 +6,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 def get_db():
-    return sqlite3.connect('gramudyogai.db')
+    conn = sqlite3.connect('gramudyogai.db')
+    conn.row_factory = sqlite3.Row
+    return conn
 
 def migrate_database_schema():
     """Migrate existing database to new schema if needed"""
@@ -65,9 +67,11 @@ def init_database():
         name TEXT NOT NULL,
         organization TEXT,
         is_active BOOLEAN DEFAULT 1,
+        is_verified BOOLEAN DEFAULT 1,
         created_at TEXT NOT NULL,
         updated_at TEXT NOT NULL,
-        last_login TEXT DEFAULT NULL
+        last_login TEXT DEFAULT NULL,
+        skills TEXT DEFAULT ''
     )''')
 
     # Events Domain
@@ -165,6 +169,7 @@ CREATE TABLE IF NOT EXISTS events (
         event_id INTEGER,  -- Added event_id
         role TEXT NOT NULL,
         skills TEXT NOT NULL,
+        status TEXT DEFAULT 'active',
         joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (project_id) REFERENCES projects (id),
         FOREIGN KEY (user_id) REFERENCES users (id)
@@ -221,18 +226,23 @@ CREATE TABLE IF NOT EXISTS events (
 
     # Notifications Domain
     cursor.execute('''
-    CREATE TABLE IF NOT EXISTS notifications (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER NOT NULL,
-        title TEXT NOT NULL,
-        message TEXT NOT NULL,
-        notification_type TEXT NOT NULL,
-        related_id INTEGER,
-        related_type TEXT,
-        is_read BOOLEAN DEFAULT 0,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
-    )''')
+CREATE TABLE IF NOT EXISTS notifications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    message TEXT NOT NULL,
+    notification_type TEXT NOT NULL,
+    related_id INTEGER,
+    related_type TEXT,
+    event_id INTEGER,
+    project_id INTEGER,
+    metadata TEXT,
+    is_read BOOLEAN DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+)
+''')
     
     # Skills & Learning Domain
     cursor.execute('''

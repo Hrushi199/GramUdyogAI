@@ -40,6 +40,7 @@ async def get_all_job_names() -> List[str]:
     Fetch all job names from the database.
     """
     conn = sqlite3.connect(DATABASE_PATH)
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
     cursor.execute("SELECT DISTINCT COALESCE(job_title, title) FROM job_postings WHERE is_active = 1 LIMIT 20")
@@ -84,6 +85,7 @@ async def load_selected_jobs(selected_names: List[str]) -> List[Dict]:
     Load the details of the selected jobs from the database.
     """
     conn = sqlite3.connect(DATABASE_PATH)
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
     placeholders = ",".join("?" for _ in selected_names)

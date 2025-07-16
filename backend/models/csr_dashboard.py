@@ -68,6 +68,7 @@ class CSRDashboardMetrics(BaseModel):
 def init_csr_dashboard_db():
     """Initialize CSR dashboard database tables"""
     conn = sqlite3.connect('gramudyogai.db')
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     
     # Create companies table
@@ -137,6 +138,7 @@ def init_csr_dashboard_db():
 def populate_dummy_csr_data():
     """Populate database with realistic dummy CSR data"""
     conn = sqlite3.connect('gramudyogai.db')
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     
     # Sample companies data

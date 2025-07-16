@@ -124,7 +124,7 @@ def get_user_name_by_id(user_id):
     cursor.execute('SELECT name FROM users WHERE id = ?', (user_id,))
     row = cursor.fetchone()
     conn.close()
-    return row[0] if row else 'Unknown'
+    return row['name'] if row else 'Unknown'
 
 @router.get("/events")
 async def get_events(
@@ -177,39 +177,39 @@ async def get_events(
                     return default
 
             event = {
-                "id": row[0],
-                "title": row[1],
-                "description": row[2],
-                "event_type": row[3],
-                "category": row[4],
-                "location": row[5],
-                "state": row[6],
-                "start_date": row[7],
-                "end_date": row[8],
-                "max_participants": row[9],
-                "current_participants": row[10],
-                "budget": row[11],
-                "prize_pool": row[12],
+                "id": row['id'],
+                "title": row['title'],
+                "description": row['description'],
+                "event_type": row['event_type'],
+                "category": row['category'],
+                "location": row['location'],
+                "state": row['state'],
+                "start_date": row['start_date'],
+                "end_date": row['end_date'],
+                "max_participants": row['max_participants'],
+                "current_participants": row['current_participants'],
+                "budget": row['budget'],
+                "prize_pool": row['prize_pool'],
                 "organizer": {
-                    "id": row[13],
-                    "type": row[14],
-                    "name": get_user_name_by_id(row[13])
+                    "id": row['organizer_id'],
+                    "type": row['organizer_type'],
+                    "name": get_user_name_by_id(row['organizer_id'])
                 },
-                "skills_required": safe_json_loads(row[16], []),
-                "tags": safe_json_loads(row[17], []),
-                "status": row[18],
-                "impact_metrics": safe_json_loads(row[19], {
+                "skills_required": safe_json_loads(row['skills_required'], []),
+                "tags": safe_json_loads(row['tags'], []),
+                "status": row['status'],
+                "impact_metrics": safe_json_loads(row['impact_metrics'], {
                     "participants_target": 0,
                     "skills_developed": 0,
                     "projects_created": 0,
                     "employment_generated": 0
                 }),
-                "marketing_highlights": safe_json_loads(row[20], []),
-                "success_metrics": safe_json_loads(row[21], []),
-                "sections": safe_json_loads(row[22], []),
+                "marketing_highlights": safe_json_loads(row['marketing_highlights'], []),
+                "success_metrics": safe_json_loads(row['success_metrics'], []),
+                "sections": safe_json_loads(row['sections'], []),
                 "social_media_posts": [],
-                "created_at": row[23],
-                "updated_at": row[24]
+                "created_at": row['created_at'],
+                "updated_at": row['updated_at']
             }
             
             # Fetch social media posts for this event
@@ -217,12 +217,12 @@ async def get_events(
             posts_data = cursor.fetchall()
             event["social_media_posts"] = [
                 {
-                    "id": post[0],
-                    "platform": post[2],
-                    "content": post[3],
-                    "image_url": post[4],
-                    "scheduled_at": post[5],
-                    "status": post[6]
+                    "id": post['id'],
+                    "platform": post['platform'],
+                    "content": post['content'],
+                    "image_url": post['image_url'],
+                    "scheduled_at": post['scheduled_at'],
+                    "status": post['status']
                 }
                 for post in posts_data
             ]
@@ -352,39 +352,39 @@ async def get_event_by_id(event_id: int):
                 return default
 
         event = {
-                "id": row[0],
-                "title": row[1],
-                "description": row[2],
-                "event_type": row[3],
-                "category": row[4],
-                "location": row[5],
-                "state": row[6],
-                "start_date": row[7],
-                "end_date": row[8],
-                "max_participants": row[9],
-                "current_participants": row[10],
-                "budget": row[11],
-                "prize_pool": row[12],
+                "id": row['id'],
+                "title": row['title'],
+                "description": row['description'],
+                "event_type": row['event_type'],
+                "category": row['category'],
+                "location": row['location'],
+                "state": row['state'],
+                "start_date": row['start_date'],
+                "end_date": row['end_date'],
+                "max_participants": row['max_participants'],
+                "current_participants": row['current_participants'],
+                "budget": row['budget'],
+                "prize_pool": row['prize_pool'],
                 "organizer": {
-                    "id": row[13],
-                    "type": row[14],
-                    "name": get_user_name_by_id(row[13])
+                    "id": row['organizer_id'],
+                    "type": row['organizer_type'],
+                    "name": get_user_name_by_id(row['organizer_id'])
                 },
-                "skills_required": safe_json_loads(row[16], []),
-                "tags": safe_json_loads(row[17], []),
-                "status": row[18],
-                "impact_metrics": safe_json_loads(row[19], {
+                "skills_required": safe_json_loads(row['skills_required'], []),
+                "tags": safe_json_loads(row['tags'], []),
+                "status": row['status'],
+                "impact_metrics": safe_json_loads(row['impact_metrics'], {
                     "participants_target": 0,
                     "skills_developed": 0,
                     "projects_created": 0,
                     "employment_generated": 0
                 }),
-                "marketing_highlights": safe_json_loads(row[20], []),
-                "success_metrics": safe_json_loads(row[21], []),
-                "sections": safe_json_loads(row[22], []),
+                "marketing_highlights": safe_json_loads(row['marketing_highlights'], []),
+                "success_metrics": safe_json_loads(row['success_metrics'], []),
+                "sections": safe_json_loads(row['sections'], []),
                 "social_media_posts": [],
-                "created_at": row[23],
-                "updated_at": row[24]
+                "created_at": row['created_at'],
+                "updated_at": row['updated_at']
             }
         
         # Fetch social media posts
@@ -392,12 +392,12 @@ async def get_event_by_id(event_id: int):
         posts_data = cursor.fetchall()
         event["social_media_posts"] = [
             {
-                "id": post[0],
-                "platform": post[2],
-                "content": post[3],
-                "image_url": post[4],
-                "scheduled_at": post[5],
-                "status": post[6]
+                "id": post['id'],
+                "platform": post['platform'],
+                "content": post['content'],
+                "image_url": post['image_url'],
+                "scheduled_at": post['scheduled_at'],
+                "status": post['status']
             }
             for post in posts_data
         ]
@@ -731,7 +731,8 @@ async def update_event_status(event_id: int, status_update: EventStatusUpdate, c
         if not event_data:
             raise HTTPException(status_code=404, detail="Event not found")
         
-        current_status, event_creator = event_data
+        current_status = event_data['status']
+        event_creator = event_data['created_by']
         
         # Only event creator can change status
         if event_creator != changed_by:
@@ -805,11 +806,11 @@ async def get_event_status_history(event_id: int):
         history = []
         for row in cursor.fetchall():
             history.append({
-                "old_status": row[0],
-                "new_status": row[1],
-                "reason": row[2],
-                "changed_at": row[3],
-                "changed_by_name": row[4] or "System"
+                "old_status": row['old_status'],
+                "new_status": row['new_status'],
+                "reason": row['reason'],
+                "changed_at": row['changed_at'],
+                "changed_by_name": row['changed_by_name'] or "System"
             })
         
         conn.close()
@@ -848,7 +849,9 @@ async def join_event(event_id: int, user_id: int):
         if not event_data:
             raise HTTPException(status_code=404, detail="Event not found")
         
-        max_participants, current_participants, status = event_data
+        max_participants = event_data['max_participants']
+        current_participants = event_data['current_participants']
+        status = event_data['status']
         
         if status != 'active':
             raise HTTPException(status_code=400, detail="Event is not accepting participants")
@@ -935,7 +938,7 @@ async def get_team_members(event_id: int):
     async def fetch_team_members_by_event_id(event_id: int):
         conn = get_db()
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM team_members WHERE event_id = ?", (event_id,))
+        cursor.execute("SELECT * FROM project_team_members WHERE event_id = ?", (event_id,))
         rows = cursor.fetchall()
         conn.close()
         return [TeamMember(**dict(row)) for row in rows]
@@ -991,49 +994,49 @@ async def get_user_events(user_id: int):
         unique_events = []
         
         for row in all_events:
-            if row[0] not in seen_event_ids:
-                seen_event_ids.add(row[0])
+            if row['id'] not in seen_event_ids:
+                seen_event_ids.add(row['id'])
                 unique_events.append(row)
         
         # Sort by creation date
-        unique_events.sort(key=lambda x: x[19], reverse=True)  # created_at is at index 19
+        unique_events.sort(key=lambda x: x['created_at'], reverse=True)
         
         events = []
         for row in unique_events:
             event = {
-                "id": row[0],
-                "title": row[1],
-                "description": row[2],
-                "event_type": row[3],
-                "category": row[4],
-                "location": row[5],
-                "state": row[6],
-                "start_date": row[7],
-                "end_date": row[8],
-                "max_participants": row[9],
-                "current_participants": row[10],
-                "budget": row[11],
-                "prize_pool": row[12],
+                "id": row['id'],
+                "title": row['title'],
+                "description": row['description'],
+                "event_type": row['event_type'],
+                "category": row['category'],
+                "location": row['location'],
+                "state": row['state'],
+                "start_date": row['start_date'],
+                "end_date": row['end_date'],
+                "max_participants": row['max_participants'],
+                "current_participants": row['current_participants'],
+                "budget": row['budget'],
+                "prize_pool": row['prize_pool'],
                 "organizer": {
-                    "id": row[13],
-                    "type": row[14],
-                    "name": get_user_name_by_id(row[13])
+                    "id": row['organizer_id'],
+                    "type": row['organizer_type'],
+                    "name": get_user_name_by_id(row['organizer_id'])
                 },
-                "skills_required": safe_json_loads(row[16], []),
-                "tags": safe_json_loads(row[17], []),
-                "status": row[18],
-                "impact_metrics": safe_json_loads(row[19], {
+                "skills_required": safe_json_loads(row['skills_required'], []),
+                "tags": safe_json_loads(row['tags'], []),
+                "status": row['status'],
+                "impact_metrics": safe_json_loads(row['impact_metrics'], {
                     "participants_target": 0,
                     "skills_developed": 0,
                     "projects_created": 0,
                     "employment_generated": 0
                 }),
-                "marketing_highlights": safe_json_loads(row[20], []),
-                "success_metrics": safe_json_loads(row[21], []),
-                "sections": safe_json_loads(row[22], []),
+                "marketing_highlights": safe_json_loads(row['marketing_highlights'], []),
+                "success_metrics": safe_json_loads(row['success_metrics'], []),
+                "sections": safe_json_loads(row['sections'], []),
                 "social_media_posts": [],
-                "created_at": row[23],
-                "updated_at": row[24]
+                "created_at": row['created_at'],
+                "updated_at": row['updated_at']
             }
             
             # Fetch social media posts for this event
@@ -1041,12 +1044,12 @@ async def get_user_events(user_id: int):
             posts_data = cursor.fetchall()
             event["social_media_posts"] = [
                 {
-                    "id": post[0],
-                    "platform": post[2],
-                    "content": post[3],
-                    "image_url": post[4],
-                    "scheduled_at": post[5],
-                    "status": post[6]
+                    "id": post['id'],
+                    "platform": post['platform'],
+                    "content": post['content'],
+                    "image_url": post['image_url'],
+                    "scheduled_at": post['scheduled_at'],
+                    "status": post['status']
                 }
                 for post in posts_data
             ]
@@ -1139,43 +1142,43 @@ async def search_events(query: str, limit: int = 10):
         events = []
         for row in events_data:
             event = {
-                "id": row[0],
-                "title": row[1],
-                "description": row[2],
-                "event_type": row[3],
-                "category": row[4],
-                "location": row[5],
-                "state": row[6],
-                "start_date": row[7],
-                "end_date": row[8],
-                "max_participants": row[9],
-                "current_participants": row[10],
-                "budget": row[11],
-                "prize_pool": row[12],
+                "id": row['id'],
+                "title": row['title'],
+                "description": row['description'],
+                "event_type": row['event_type'],
+                "category": row['category'],
+                "location": row['location'],
+                "state": row['state'],
+                "start_date": row['start_date'],
+                "end_date": row['end_date'],
+                "max_participants": row['max_participants'],
+                "current_participants": row['current_participants'],
+                "budget": row['budget'],
+                "prize_pool": row['prize_pool'],
                 "organizer": {
-                    "id": row[13],
-                    "type": row[14],
-                    "name": get_user_name_by_id(row[13])
+                    "id": row['organizer_id'],
+                    "type": row['organizer_type'],
+                    "name": get_user_name_by_id(row['organizer_id'])
                 },
-                "skills_required": safe_json_loads(row[16], []),
-                "tags": safe_json_loads(row[17], []),
-                "status": row[18],
-                "impact_metrics": safe_json_loads(row[19], {
+                "skills_required": safe_json_loads(row['skills_required'], []),
+                "tags": safe_json_loads(row['tags'], []),
+                "status": row['status'],
+                "impact_metrics": safe_json_loads(row['impact_metrics'], {
                     "participants_target": 0,
                     "skills_developed": 0,
                     "projects_created": 0,
                     "employment_generated": 0
                 }),
-                "marketing_highlights": safe_json_loads(row[20], []),
-                "success_metrics": safe_json_loads(row[21], []),
-                "sections": safe_json_loads(row[22], []),
+                "marketing_highlights": safe_json_loads(row['marketing_highlights'], []),
+                "success_metrics": safe_json_loads(row['success_metrics'], []),
+                "sections": safe_json_loads(row['sections'], []),
                 "social_media_posts": [],
-                "created_at": row[23],
-                "updated_at": row[24]
+                "created_at": row['created_at'],
+                "updated_at": row['updated_at']
             }
             events.append(event)
         conn.close()
         return events
     except Exception as e:
         logger.error(f"Error searching events: {e}")
-        raise HTTPException(status_code=500, detail=str(e)) 
+        raise HTTPException(status_code=500, detail=str(e))

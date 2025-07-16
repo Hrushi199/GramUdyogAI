@@ -6,7 +6,6 @@ from core.job_recommender import get_all_job_names, get_relevant_jobs, load_sele
 from core.scheme_recommender import get_all_scheme_names, get_relevant_scheme_names, load_selected_schemes
 from core.business_suggestion_generation import generate_prompt_from_skills, get_business_suggestions
 from core.llm_function_selector import select_function_and_args, llama_summarize_items
-from core.skill_tutorial import get_skill_tutorials
 from core.ai_assistant_data import get_recent_events, get_featured_projects, get_youtube_summaries, get_user_profile_summary, UserInfo, YoutubeSummaryRequest
 import re
 
@@ -273,7 +272,7 @@ async def ai_assistant_enhanced(req: AssistantRequest, request: Request = None):
                 vs_req = {"topic": args if isinstance(args, str) else (args.get("topic") if isinstance(args, dict) else ""),
                           "context": args.get("context") if isinstance(args, dict) and "context" in args else "",
                           "language": req.lang or "en"}
-                vs_response = await client.post(f"http://localhost:8000/api/skills/visual-summary", json=vs_req)
+                vs_response = await client.post(f"http://localhost:8000/api/visual-summary", json=vs_req)
                 if vs_response.status_code == 200:
                     summary = vs_response.json()
                     response_data.structured_data = {"visual_summary": summary}

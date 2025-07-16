@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 interface Section {
   title: string;
   text: string;
-  imageUrl: string;
+  imageUrl: string; // Contains YouTube video URL or search URL
   audioUrl: string;
 }
 
@@ -46,6 +46,14 @@ const VisualSummary: React.FC<VisualSummaryProps> = ({ summary, onClose, show = 
 
   if (!show) return null;
 
+  // Check if the imageUrl is a YouTube URL
+  const isYouTubeUrl = section.imageUrl.includes('youtube.com') || section.imageUrl.includes('youtu.be');
+  const isYouTubeSearch = section.imageUrl.includes('youtube.com/results');
+  // Convert direct video URL to embed URL
+  const embedUrl = isYouTubeUrl && !isYouTubeSearch
+    ? section.imageUrl.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/')
+    : '';
+
   return (
     <AnimatePresence>
       <motion.div
@@ -70,13 +78,33 @@ const VisualSummary: React.FC<VisualSummaryProps> = ({ summary, onClose, show = 
             </svg>
           </button>
           <div className="relative h-[60vh] bg-black">
-            <img
-              src={`${apiBaseUrl}/api${section.imageUrl}`}
-              alt={section.title}
-              className="w-full h-full object-cover object-center transition-all duration-300"
-              style={{ minHeight: 320, background: '#222' }}
-              loading="lazy"
-            />
+            {isYouTubeUrl ? (
+              isYouTubeSearch ? (
+                <div className="w-full h-full flex items-center justify-center bg-[#222] p-4">
+                  <a
+                    href={section.imageUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/90 text-lg text-center hover:underline"
+                  >
+                    View YouTube tutorials for "{section.title}" (Click to open)
+                  </a>
+                </div>
+              ) : (
+                <iframe
+                  src={embedUrl}
+                  title={section.title}
+                  className="w-full h-full object-cover object-center transition-all duration-300"
+                  style={{ minHeight: 320, background: '#222' }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              )
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-[#222] p-4">
+                <p className="text-white/90 text-lg text-center">No video available for this section</p>
+              </div>
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
             <button
               className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white p-2 rounded-full"
@@ -111,7 +139,7 @@ const VisualSummary: React.FC<VisualSummaryProps> = ({ summary, onClose, show = 
             </div>
             <p className="text-white/90 text-lg leading-relaxed mb-2">{section.text}</p>
             {section.audioUrl && section.audioUrl.length > 0 && (
-              <audio controls src={section.audioUrl} className="mt-2 w-full" />
+              <audio controls src={`${apiBaseUrl}/api${section.audioUrl}`} className="mt-2 w-full" />
             )}
             <div className="flex justify-center gap-2 mt-6">
               {sections.map((_, idx) => (
@@ -132,4 +160,4 @@ const VisualSummary: React.FC<VisualSummaryProps> = ({ summary, onClose, show = 
   );
 };
 
-export default VisualSummary; 
+export default VisualSummary;

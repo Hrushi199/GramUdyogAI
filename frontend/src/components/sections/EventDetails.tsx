@@ -5,7 +5,7 @@ import type { User as UserType, Project } from '../../lib/api';
 import { Badge } from '../ui/badge';
 import { 
   Calendar, MapPin, Users, Award, Share2, Target, TrendingUp, DollarSign, Plus, Activity, User, Crown,
-  Search, UserPlus, Edit, Trash2
+  Search, UserPlus, Edit, Trash2, Star, Clock
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { getEventTypeColor, getStatusColor } from '../../lib/utils';
@@ -207,7 +207,31 @@ const EventDetails: React.FC = () => {
   // Add state for pending invites
   const [pendingInvites, setPendingInvites] = useState<any[]>([]);
 
-
+  // Better user management utility function
+const getCurrentUserId = (): number => {
+  try {
+    // First try to get from parsed user object
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      const user = JSON.parse(userStr);
+      if (user && user.id) {
+        return parseInt(user.id);
+      }
+    }
+    
+    // Fallback to user_id
+    const userId = localStorage.getItem('user_id');
+    if (userId) {
+      return parseInt(userId);
+    }
+    
+    // Default fallback
+    return 0;
+  } catch (error) {
+    console.error('Error getting current user ID:', error);
+    return 0;
+  }
+};
   const fetchTeamMembers = async (eventId: number) => {
     try {
       setLoadingTeamMembers(true);
@@ -292,19 +316,15 @@ const EventDetails: React.FC = () => {
         message: ''
       });
       if (response.data) {
-        toast.success(t('toasts.teamMemberAdded'));
         toast.success('Team invite sent successfully!');
         setShowAddMemberModal(false);
         setSelectedUser(null);
         setNewMemberSkills('');
         // Optionally refresh invites list
       } else {
-        toast.error(t('toasts.teamMemberError', { error: response.error || t('toasts.unexpectedError') }));
         toast.error('Error sending invite: ' + (response.error || 'Unknown error'));
       }
     } catch (error) {
-      console.error('Error adding team member:', error);
-      toast.error(t('toasts.unexpectedError'));
       console.error('Error sending invite:', error);
       toast.error('An unexpected error occurred.');
     }
@@ -1399,30 +1419,5 @@ const EventDetails: React.FC = () => {
   );
 };
 
-// Better user management utility function
-const getCurrentUserId = (): number => {
-  try {
-    // First try to get from parsed user object
-    const userStr = localStorage.getItem('user');
-    if (userStr) {
-      const user = JSON.parse(userStr);
-      if (user && user.id) {
-        return parseInt(user.id);
-      }
-    }
-    
-    // Fallback to user_id
-    const userId = localStorage.getItem('user_id');
-    if (userId) {
-      return parseInt(userId);
-    }
-    
-    // Default fallback
-    return 0;
-  } catch (error) {
-    console.error('Error getting current user ID:', error);
-    return 0;
-  }
-};
-}
+
 export default EventDetails;

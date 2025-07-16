@@ -4,23 +4,36 @@ import { useTranslation } from 'react-i18next';
 import ParticleBackground from '../ui/ParticleBackground';
 import { visualSummaryAPI, csrCourseAPI, courseAPI } from '../../lib/api';
 import { Toaster, toast } from 'react-hot-toast';
-
-interface VisualSummary {
-  id: number;
-  topic: string;
-  summary_data: {
-    type: string;
-    title: string;
-    sections: {
-      title: string;
-      text: string;
-      imageUrl: string;
-      audioUrl: string;
-    }[];
-  };
-  created_at: string;
+interface Section {
+  title: string;
+  text: string;
+  imageUrl: string; // Contains YouTube video URL or search URL
+  audioUrl: string;
 }
 
+interface VisualSummaryData {
+  type: string;
+  title: string;
+  sections: Section[];
+}
+
+interface VisualSummary {
+  id?: number;
+  topic?: string;
+  summary_data: VisualSummaryData;
+  created_at?: string;
+}
+
+interface VisualSummaryProps {
+  summary: VisualSummary;
+  onClose: () => void;
+  API_BASE_URL?: string; // Added to match backend audio/image URL resolution
+  translatingSummaryId?: number; // For translation button
+  handleTranslateSummary: (summary: VisualSummary) => void; // For translation button
+  generateSectionAudio: (text: string, language: string, summaryId: number | undefined, sectionIdx: number) => Promise<string | null>; // For audio generation
+  setCurrentSummary: (summary: VisualSummary) => void; // For updating current summary
+  setSummaries: (updater: (prevSummaries: VisualSummary[]) => VisualSummary[]) => void; // For updating summaries list
+}
 interface CSRCourse {
   id: number;
   company_id: number;
@@ -572,18 +585,22 @@ const SkillBuilder = () => {
     window.URL.revokeObjectURL(url);
   };
 
-  const VisualSummaryModal = ({
+  const VisualSummaryModal: React.FC<VisualSummaryProps> = ({
     summary,
     onClose,
-  }: {
-    summary: VisualSummary;
-    onClose: () => void;
+    API_BASE_URL = '',
+    translatingSummaryId,
+    handleTranslateSummary,
+    generateSectionAudio,
+    setCurrentSummary,
+    setSummaries,
   }) => {
+    const { t, i18n } = useTranslation(); // For internationalization
     const [sectionIdx, setSectionIdx] = useState(0);
     const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
     const sections = summary.summary_data?.sections || [];
     const section = sections[sectionIdx] || { title: '', text: '', imageUrl: '', audioUrl: '' };
-
+  
     useEffect(() => {
       const handleKey = (e: KeyboardEvent) => {
         if (e.key === 'ArrowLeft') setSectionIdx((idx) => Math.max(0, idx - 1));
@@ -593,7 +610,15 @@ const SkillBuilder = () => {
       window.addEventListener('keydown', handleKey);
       return () => window.removeEventListener('keydown', handleKey);
     }, [sections, onClose]);
-
+  
+    // Check if the imageUrl is a YouTube URL
+    const isYouTubeUrl = section.imageUrl.includes('youtube.com') || section.imageUrl.includes('youtu.be');
+    const isYouTubeSearch = section.imageUrl.includes('youtube.com/results');
+    // Convert direct video URL to embed URL
+    const embedUrl = isYouTubeUrl && !isYouTubeSearch
+      ? section.imageUrl.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/')
+      : '';
+  
     return (
       <AnimatePresence>
         <motion.div
@@ -628,13 +653,33 @@ const SkillBuilder = () => {
                 : t('consumer.visualSummaryModal.translate')}
             </button>
             <div className="relative h-[60vh] bg-black">
-              <img
-                src={`${API_BASE_URL}/api${section.imageUrl}`}
-                alt={section.title}
-                className="w-full h-full object-cover object-center transition-all duration-300"
-                style={{ minHeight: 320, background: '#222' }}
-                loading="lazy"
-              />
+              {isYouTubeUrl ? (
+                isYouTubeSearch ? (
+                  <div className="w-full h-full flex items-center justify-center bg-[#222] p-4">
+                    <a
+                      href={section.imageUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/90 text-lg text-center hover:underline"
+                    >
+                      {t('consumer.visualSummaryModal.viewYouTubeTutorials', { sectionTitle: section.title })}
+                    </a>
+                  </div>
+                ) : (
+                  <iframe
+                    src={embedUrl}
+                    title={section.title}
+                    className="w-full h-full object-cover object-center transition-all duration-300"
+                    style={{ minHeight: 320, background: '#222' }}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                )
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-[#222] p-4">
+                  <p className="text-white/90 text-lg text-center">{t('consumer.visualSummaryModal.noVideoAvailable')}</p>
+                </div>
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
               <button
                 className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white p-2 rounded-full"
@@ -671,14 +716,11 @@ const SkillBuilder = () => {
                 </span>
               </div>
               <p className="text-white/90 text-lg leading-relaxed mb-2">{section.text}</p>
-              {section.audioUrl && section.audioUrl.length > 0 && (
-                <audio controls src={section.audioUrl} className="mt-2 w-full" />
-              )}
               <div className="mt-4 flex items-center gap-4">
                 {section.audioUrl ? (
                   <audio
                     controls
-                    src={`${API_BASE_URL}/audio/${i18n.language}/${section.audioUrl}`}
+                    src={`${API_BASE_URL}/api/audio/${i18n.language}/${section.audioUrl}`}
                     className="flex-1"
                   />
                 ) : (
@@ -731,7 +773,7 @@ const SkillBuilder = () => {
       </AnimatePresence>
     );
   };
-
+  
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
       <div className="absolute inset-0 z-0 pointer-events-none">

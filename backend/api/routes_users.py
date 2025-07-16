@@ -47,7 +47,7 @@ async def get_users(
         conn = get_db()
         cursor = conn.cursor()
         
-        query = "SELECT id, phone, user_type, name, organization, is_active, is_verified, created_at, last_login FROM users WHERE 1=1"
+        query = "SELECT id, phone, user_type, name, organization, is_active, created_at, last_login FROM users WHERE 1=1"
         params = []
         
         if user_type:
@@ -73,7 +73,7 @@ async def get_users(
                 "name": row['name'],
                 "organization": row['organization'],
                 "is_active": bool(row['is_active']),
-                "is_verified": bool(row['is_verified']),
+                "is_verified": True,
                 "created_at": row['created_at'],
                 "last_login": row['last_login']
             }
@@ -99,16 +99,16 @@ async def search_users(query: str, limit: int = 10):
         users = []
         for row in users_data:
             user = {
-                "id": row[0],
-                "phone": row[1],
-                "user_type": row[2],
-                "name": row[3],
-                "organization": row[4],
-                "is_active": row[5],
-                "is_verified": row[6],
-                "created_at": row[7],
-                "last_login": row[8],
-                "skills": row[9] if len(row) > 9 else None
+                "id": row['id'],
+                "phone": row['phone'],
+                "user_type": row['user_type'],
+                "name": row['name'],
+                "organization": row['organization'],
+                "is_active": row['is_active'],
+                "is_verified": row['is_verified'],
+                "created_at": row['created_at'],
+                "last_login": row['last_login'],
+                "skills": row['skills'] if len(row) > 9 else None
             }
             users.append(user)
         conn.close()

@@ -38,6 +38,7 @@ class CourseEnrollment(BaseModel):
 
 def init_db():
     conn = sqlite3.connect('gramudyogai.db')
+    conn.row_factory = sqlite3.Row
     c = conn.cursor()
     
     # Create user_profiles table (minimal, assuming needed for foreign key)

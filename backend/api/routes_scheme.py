@@ -65,17 +65,17 @@ async def search_schemes(query: str, limit: int = 10):
         schemes = []
         for row in schemes_data:
             scheme = {
-                "id": row[0],
-                "name": row[1],
-                "description": row[2],
-                "target_group": row[3],
-                "benefits": row[4],
-                "eligibility": row[5],
-                "application_process": row[6],
-                "documents_required": row[7],
-                "contact_info": row[8],
-                "created_at": row[9],
-                "updated_at": row[10]
+                "id": row["id"],
+                "name": row["name"],
+                "description": row["description"],
+                "target_group": row["target_group"],
+                "benefits": row["benefits"],
+                "eligibility": row["eligibility"],
+                "application_process": row["application_process"],
+                "documents_required": row["documents_required"],
+                "contact_info": row["contact_info"],
+                "created_at": row["created_at"],
+                "updated_at": row["updated_at"]
             }
             schemes.append(scheme)
         conn.close()
