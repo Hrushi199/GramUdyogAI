@@ -4,17 +4,35 @@ import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 
-// --- TypeScript Interfaces for the new structured API response ---
-interface RecommendationItem {
-    course_title: string;
-    reason: string;
-    type: "Platform Course" | "Live Course";
-    url: string;
+// --- TypeScript Interfaces for the AI-enhanced course recommendation API response ---
+interface CourseItem {
+    id: number;
+    name: string;
+    link: string;
+    category: string;
+    skill_level: string;
+    duration: string;
+    provider: string;
+    description: string;
+    tags: string[];
+    source: string;
+    is_active: boolean;
+    created_at: string;
+    // AI enhancement fields
+    relevance_score?: number;
+    recommendation_reason?: string;
+    skill_match?: string;
+    learning_path?: string;
 }
 
-interface SuggestionResponse {
-    introduction: string;
-    recommendations: RecommendationItem[];
+interface CourseRecommendationResponse {
+    courses: CourseItem[];
+    total_found: number;
+    query: string;
+    analysis?: string;
+    suggested_next_steps?: string;
+    ai_powered?: boolean;
+    fallback_used?: boolean;
 }
 
 // --- SVG Icons for Visual Distinction ---
@@ -26,9 +44,9 @@ const Icons = {
 
 // --- Main Component ---
 export default function CourseRecommender() {
-  const { t, i18n } = useTranslation('course-recommender');
+  const { t } = useTranslation('course-recommender');
   const [query, setQuery] = useState("");
-  const [data, setData] = useState<SuggestionResponse | null>(null);
+  const [data, setData] = useState<CourseRecommendationResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cooldown, setCooldown] = useState(0);
@@ -56,10 +74,9 @@ export default function CourseRecommender() {
     setData(null);
 
     try {
-      const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/suggest-courses`;
-      const response = await axios.post<SuggestionResponse>(apiUrl, { 
-        query,
-        language: i18n.language 
+      const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/courses/recommend`;
+      const response = await axios.post<CourseRecommendationResponse>(apiUrl, { 
+        query
       });
       setData(response.data);
       setCooldown(10); 
@@ -152,7 +169,7 @@ export default function CourseRecommender() {
 }
 
 // --- Sub-components for Display ---
-const ResultsDisplay = ({ data, t }: { data: SuggestionResponse; t: any }) => (
+const ResultsDisplay = ({ data, t }: { data: CourseRecommendationResponse; t: any }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -164,26 +181,78 @@ const ResultsDisplay = ({ data, t }: { data: SuggestionResponse; t: any }) => (
         <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
           <Icons.ai className="w-8 h-8 text-white" />
         </div>
-        <div>
-          <h2 className="text-3xl font-bold text-white">{t('results.title', 'AI-Powered Suggestions')}</h2>
-          <p className="text-gray-400">{t('results.subtitle', 'Personalized recommendations for your learning journey')}</p>
+        <div className="flex-1">
+          <div className="flex items-center gap-3 mb-2">
+            <h2 className="text-3xl font-bold text-white">
+              {data.ai_powered ? 'AI-Powered Recommendations' : 'Course Recommendations'}
+            </h2>
+            {data.ai_powered && (
+              <span className="px-3 py-1 bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-purple-300 text-sm rounded-full border border-purple-500/30">
+                <Icons.ai className="w-4 h-4 inline mr-1" />
+                AI Enhanced
+              </span>
+            )}
+            {data.fallback_used && (
+              <span className="px-3 py-1 bg-orange-500/20 text-orange-300 text-sm rounded-full border border-orange-500/30">
+                Keyword Match
+              </span>
+            )}
+          </div>
+          <p className="text-gray-400">{t('results.subtitle', `Found ${data.total_found} courses for "${data.query}"`)}</p>
         </div>
       </div>
-      <p className="text-gray-300 mb-8 text-lg leading-relaxed">{data.introduction}</p>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {data.recommendations.map((rec, i) => (
-            <RecommendationCard key={i} item={rec} index={i} t={t} />
-        ))}
-      </div>
+      {/* AI Analysis Section */}
+      {data.analysis && (
+        <div className="mb-8 p-6 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl border border-blue-500/20">
+          <h3 className="text-lg font-semibold text-blue-300 mb-3 flex items-center gap-2">
+            <Icons.ai className="w-5 h-5" />
+            AI Analysis
+          </h3>
+          <p className="text-gray-300 leading-relaxed">{data.analysis}</p>
+          
+          {data.suggested_next_steps && (
+            <div className="mt-4 pt-4 border-t border-blue-500/20">
+              <h4 className="text-md font-medium text-blue-400 mb-2">Suggested Learning Path:</h4>
+              <p className="text-gray-400 text-sm">{data.suggested_next_steps}</p>
+            </div>
+          )}
+        </div>
+      )}
+      
+      {data.courses.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {data.courses.map((course, i) => (
+              <CourseRecommendationCard key={course.id} item={course} index={i} t={t} />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-12">
+          <div className="w-16 h-16 rounded-2xl bg-gray-500/20 flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.007-5.824-2.636M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-medium text-gray-300 mb-2">No courses found</h3>
+          <p className="text-gray-400 text-lg">{t('results.noResults', 'No courses found for your query. Try searching with different keywords.')}</p>
+        </div>
+      )}
     </div>
   </motion.div>
 );
 
-const RecommendationCard = ({ item, index, t }: { item: RecommendationItem; index: number; t: any }) => {
-    const isPlatform = item.type === "Platform Course";
-    const typeColor = isPlatform ? "bg-purple-500/20 text-purple-300 border-purple-500/30" : "bg-blue-500/20 text-blue-300 border-blue-500/30";
-    const icon = isPlatform ? <Icons.platform className="w-4 h-4" /> : <Icons.live className="w-4 h-4" />;
+const CourseRecommendationCard = ({ item, index, t }: { item: CourseItem; index: number; t: any }) => {
+    const skillLevel = item.skill_level || 'Beginner';
+    const relevanceScore = item.relevance_score || 0;
+    const typeColor = item.provider === 'CSR' ? "bg-blue-500/20 text-blue-300 border-blue-500/30" : "bg-purple-500/20 text-purple-300 border-purple-500/30";
+    const icon = item.provider === 'CSR' ? <Icons.live className="w-4 h-4" /> : <Icons.platform className="w-4 h-4" />;
+    
+    // Color for relevance score
+    const getScoreColor = (score: number) => {
+        if (score >= 80) return "text-green-400 bg-green-500/20";
+        if (score >= 60) return "text-yellow-400 bg-yellow-500/20";
+        return "text-orange-400 bg-orange-500/20";
+    };
 
     return (
         <motion.div 
@@ -193,20 +262,92 @@ const RecommendationCard = ({ item, index, t }: { item: RecommendationItem; inde
             className="group bg-gradient-to-br from-white/5 to-white/0 p-6 rounded-2xl border border-white/10 backdrop-blur-sm hover:border-purple-500/50 transition-all duration-300 h-full flex flex-col transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/10"
         >
             <div className="flex justify-between items-start mb-4">
-                <h4 className="font-bold text-lg text-white flex-1 pr-3 group-hover:text-purple-300 transition-colors">{item.course_title}</h4>
-                <span className={`flex-shrink-0 text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 border ${typeColor}`}>
-                    {icon}
-                    {item.type}
-                </span>
+                <h4 className="font-bold text-lg text-white flex-1 pr-3 group-hover:text-purple-300 transition-colors">{item.name}</h4>
+                <div className="flex flex-col gap-2 flex-shrink-0">
+                    <span className={`text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 border ${typeColor}`}>
+                        {icon}
+                        {item.provider}
+                    </span>
+                    {relevanceScore > 0 && (
+                        <span className={`text-xs font-bold px-2 py-1 rounded-full ${getScoreColor(relevanceScore)}`}>
+                            {relevanceScore}% match
+                        </span>
+                    )}
+                </div>
             </div>
-            <p className="text-gray-400 text-sm flex-grow mb-6 leading-relaxed">{item.reason}</p>
+            
+            {/* AI Recommendation Reason */}
+            {item.recommendation_reason && (
+                <div className="mb-4 p-3 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl border border-blue-500/20">
+                    <div className="flex items-start gap-2">
+                        <Icons.ai className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                            <p className="text-blue-300 text-sm font-medium mb-1">Why this course?</p>
+                            <p className="text-gray-300 text-xs leading-relaxed">{item.recommendation_reason}</p>
+                        </div>
+                    </div>
+                </div>
+            )}
+            
+            <div className="mb-4 space-y-2">
+                <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <span className="w-2 h-2 bg-purple-400 rounded-full"></span>
+                    <span>Level: {skillLevel}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+                    <span>Duration: {item.duration}</span>
+                </div>
+                {item.category && (
+                    <div className="flex items-center gap-2 text-sm text-gray-400">
+                        <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                        <span>Category: {item.category}</span>
+                    </div>
+                )}
+            </div>
+            
+            {/* AI Skill Match and Learning Path */}
+            {(item.skill_match || item.learning_path) && (
+                <div className="mb-4 space-y-2">
+                    {item.skill_match && (
+                        <div className="flex items-start gap-2 text-xs">
+                            <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></span>
+                            <span className="text-emerald-300">{item.skill_match}</span>
+                        </div>
+                    )}
+                    {item.learning_path && (
+                        <div className="flex items-start gap-2 text-xs">
+                            <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-1.5 flex-shrink-0"></span>
+                            <span className="text-cyan-300">{item.learning_path}</span>
+                        </div>
+                    )}
+                </div>
+            )}
+            
+            {item.description && (
+                <p className="text-gray-400 text-sm flex-grow mb-4 leading-relaxed line-clamp-2">{item.description}</p>
+            )}
+            
+            {item.tags && item.tags.length > 0 && (
+                <div className="mb-4 flex flex-wrap gap-1">
+                    {item.tags.slice(0, 3).map((tag, idx) => (
+                        <span key={idx} className="text-xs bg-purple-900/30 text-purple-300 px-2 py-1 rounded-full">
+                            {tag}
+                        </span>
+                    ))}
+                    {item.tags.length > 3 && (
+                        <span className="text-xs text-gray-500">+{item.tags.length - 3} more</span>
+                    )}
+                </div>
+            )}
+            
             <a 
-                href={item.url}
+                href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-auto block w-full text-center px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 rounded-xl font-semibold text-white transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
             >
-                {t('actions.knowMore', 'Know More')}
+                {t('actions.startLearning', 'Start Learning')}
             </a>
         </motion.div>
     )

@@ -336,11 +336,14 @@ export const BusinessSuggestionRenderer: React.FC<{ suggestions: BusinessSuggest
 // Course Renderer Component
 export const CourseRenderer: React.FC<{ courses: UpdatedCourse[]; compact?: boolean }> = ({ courses, compact = true }) => {
   const { t } = useTranslation('courses');
+  const [showAll, setShowAll] = React.useState(!compact);
+
+  const displayedCourses = showAll ? courses : courses.slice(0, 3);
 
   return (
     <div className="space-y-3">
       <h3 className="text-lg font-semibold text-green-400 mb-3">📚 {t('recommended_courses', 'Recommended Courses')}</h3>
-      {courses.slice(0, compact ? 3 : courses.length).map((course, index) => (
+      {displayedCourses.map((course) => (
         <div key={course.id} className="bg-gradient-to-r from-green-900/20 to-emerald-900/20 rounded-lg p-4 border border-green-700/50">
           <div className="flex justify-between items-start mb-2">
             <h4 className="font-semibold text-white text-sm line-clamp-1">{course.name}</h4>
@@ -400,8 +403,13 @@ export const CourseRenderer: React.FC<{ courses: UpdatedCourse[]; compact?: bool
           </div>
         </div>
       ))}
-      {compact && courses.length > 3 && (
-        <p className="text-gray-400 text-xs text-center">+ {courses.length - 3} more courses available</p>
+      {compact && courses.length > 3 && !showAll && (
+        <button 
+          onClick={() => setShowAll(true)} 
+          className="w-full text-center text-green-400 text-xs py-2 hover:bg-gray-800/50 rounded-lg transition-colors"
+        >
+          + {courses.length - 3} more courses...
+        </button>
       )}
     </div>
   );
