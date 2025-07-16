@@ -706,35 +706,27 @@ async def get_project_investments(
         if not project:
             raise HTTPException(status_code=404, detail="Project not found")
         
-        # Only project owner can see all investments
-        if project['created_by'] != current_user["id"]:
-            # Regular users can only see their own investments
-            cursor.execute('''
-                SELECT id, investor_name, investor_email, investor_phone, investment_amount,
-                       investment_type, equity_percentage, expected_returns, terms_conditions,
-                       message, status, invested_at, response_message, response_at
-                FROM project_investments 
-                WHERE project_id = ? AND investor_id = ?
-                ORDER BY invested_at DESC
-            ''', (project_id, current_user["id"]))
-        else:
-            # Project owner sees all investments
-            cursor.execute('''
-                SELECT id, investor_id, investor_name, investor_email, investor_phone,
-                       investment_amount, investment_type, equity_percentage, expected_returns,
-                       terms_conditions, message, status, invested_at, response_message, response_at
-                FROM project_investments 
-                WHERE project_id = ?
-                ORDER BY invested_at DESC
-            ''', (project_id,))
+        # Everyone can see all investments for a project (public information)
+        cursor.execute('''
+            SELECT id, investor_id, investor_name, investor_email, investor_phone,
+                   investment_amount, investment_type, equity_percentage, expected_returns,
+                   terms_conditions, message, status, invested_at, response_message, response_at
+            FROM project_investments 
+            WHERE project_id = ?
+            ORDER BY invested_at DESC
+        ''', (project_id,))
         
         investments_data = cursor.fetchall()
+        print(f"DEBUG: Found {len(investments_data)} investments for project {project_id}")
+        if investments_data:
+            print(f"DEBUG: First investment: {dict(investments_data[0])}")
         conn.close()
         
         investments = []
         for row in investments_data:
             investment = {
                 "id": row['id'],
+                "investor_id": row['investor_id'],  # Always include investor_id since investments are public
                 "investor_name": row['investor_name'],
                 "investor_email": row['investor_email'],
                 "investor_phone": row['investor_phone'],
@@ -750,12 +742,9 @@ async def get_project_investments(
                 "response_at": row['response_at']
             }
             
-            # Add investor_id only for project owner
-            if project['created_by'] == current_user["id"]:
-                investment["investor_id"] = row['investor_id']
-            
             investments.append(investment)
         
+        print(f"DEBUG: Returning {len(investments)} investments")
         return investments
         
     except HTTPException:

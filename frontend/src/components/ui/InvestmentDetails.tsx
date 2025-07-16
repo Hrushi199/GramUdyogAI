@@ -31,14 +31,20 @@ const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log('InvestmentDetails mounted for project ID:', projectId, 'isProjectOwner:', isProjectOwner);
     fetchInvestments();
   }, [projectId]);
 
   const fetchInvestments = async () => {
     try {
+      console.log('Fetching investments for project ID:', projectId);
       const response = await projectAPI.getProjectInvestments(projectId);
+      console.log('Investment API response:', response);
       if (response.data) {
+        console.log('Setting investments:', response.data);
         setInvestments(response.data);
+      } else {
+        console.log('No data in response:', response);
       }
     } catch (error) {
       console.error('Error fetching investments:', error);
@@ -141,11 +147,11 @@ const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({
           <DollarSign className="h-12 w-12 text-gray-400 mx-auto mb-4" />
           <h3 className="text-lg font-semibold text-white mb-2">No Investments Yet</h3>
           <p className="text-gray-400">
-            {isProjectOwner 
-              ? "No investors have shown interest in your project yet."
-              : "You haven't invested in any projects yet."
-            }
+            No investors have shown interest in this project yet.
           </p>
+          <div className="mt-4 text-xs text-gray-500">
+            Debug: Project ID = {projectId}, Loading = {loading ? 'true' : 'false'}
+          </div>
         </CardContent>
       </Card>
     );
@@ -155,7 +161,7 @@ const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold text-white">
-          Investment {isProjectOwner ? 'Proposals' : 'History'} ({investments.length})
+          Investment Proposals ({investments.length})
         </h3>
         <div className="text-sm text-gray-400">
           Total: {formatCurrency(investments.reduce((sum, inv) => sum + inv.investment_amount, 0))}
