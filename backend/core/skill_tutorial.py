@@ -8,6 +8,7 @@ import pathlib
 import time
 import re
 from core.audio_generation import TextToSpeech
+from core.translation import translate_text_safely
 import requests
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -260,14 +261,16 @@ def slugify(text):
 tts = TextToSpeech()
 
 def translate_text(text: str, target_language: str) -> str:
+    """
+    Translate text using the translation module's safe translation function
+    """
     try:
         if target_language == "en":
             return text
-        response = requests.post(
-            "http://localhost:8000/translate",  # Replace with actual translation endpoint
-            json={"text": text, "target_language": target_language}
-        )
-        return response.json()["translated_text"]
+        
+        # Use the safe translation function from translation.py
+        return translate_text_safely(text, target_language, max_length=200)
+        
     except Exception as e:
         print(f"Translation failed: {e}")
         return text
