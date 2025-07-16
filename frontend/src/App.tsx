@@ -97,7 +97,7 @@ export default function App() {
           <Route path="/csr-dashboard" element={<ProtectedRoute><CSRDashboard /></ProtectedRoute>} />
           <Route path="/course-recommender" element={<ProtectedRoute><CourseRecommender /></ProtectedRoute>} />
           <Route path="/events" element={<ProtectedRoute><EventManagement /></ProtectedRoute>} />
-          <Route path="/events/:eventId" element={<ProtectedRoute><EventDetails /></ProtectedRoute>} />
+          <Route path="/events/:eventId" element={<EventDetails />} />
           <Route path="/projects" element={<ProtectedRoute><PublicProjects /></ProtectedRoute>} />
           <Route path="/my-projects" element={<ProtectedRoute><MyProjects /></ProtectedRoute>} />
         </Routes>

@@ -230,40 +230,40 @@ async def get_event_by_id(event_id: int):
                 return default
 
         event = {
-            "id": row[0],
-            "title": row[1],
-            "description": row[2],
-            "event_type": row[3],
-            "category": row[4],
-            "location": row[5],
-            "state": row[6],
-            "start_date": row[7],
-            "end_date": row[8],
-            "max_participants": row[9],
-            "current_participants": row[10],
-            "budget": row[11],
-            "prize_pool": row[12],
-            "organizer": {
-                "id": row[13],
-                "type": row[14],
-                "name": get_user_name_by_id(row[13])
-            },
-            "skills_required": safe_json_loads(row[15], []),
-            "tags": safe_json_loads(row[16], []),
-            "status": row[17],
-            "impact_metrics": safe_json_loads(row[18], {
-                "participants_target": 0,
-                "skills_developed": 0,
-                "projects_created": 0,
-                "employment_generated": 0
-            }),
-            "marketing_highlights": safe_json_loads(row[19], []),
-            "success_metrics": safe_json_loads(row[20], []),
-            "sections": safe_json_loads(row[21], []),
-            "social_media_posts": [],
-            "created_at": row[19],
-            "updated_at": row[20]
-        }
+                "id": row[0],
+                "title": row[1],
+                "description": row[2],
+                "event_type": row[3],
+                "category": row[4],
+                "location": row[5],
+                "state": row[6],
+                "start_date": row[7],
+                "end_date": row[8],
+                "max_participants": row[9],
+                "current_participants": row[10],
+                "budget": row[11],
+                "prize_pool": row[12],
+                "organizer": {
+                    "id": row[13],
+                    "type": row[14],
+                    "name": get_user_name_by_id(row[13])
+                },
+                "skills_required": safe_json_loads(row[16], []),
+                "tags": safe_json_loads(row[17], []),
+                "status": row[18],
+                "impact_metrics": safe_json_loads(row[19], {
+                    "participants_target": 0,
+                    "skills_developed": 0,
+                    "projects_created": 0,
+                    "employment_generated": 0
+                }),
+                "marketing_highlights": safe_json_loads(row[20], []),
+                "success_metrics": safe_json_loads(row[21], []),
+                "sections": safe_json_loads(row[22], []),
+                "social_media_posts": [],
+                "created_at": row[23],
+                "updated_at": row[24]
+            }
         
         # Fetch social media posts
         cursor.execute("SELECT * FROM social_media_posts WHERE event_id = ?", (event_id,))
@@ -353,21 +353,21 @@ async def get_events(
                     "type": row[14],
                     "name": get_user_name_by_id(row[13])
                 },
-                "skills_required": safe_json_loads(row[15], []),
-                "tags": safe_json_loads(row[16], []),
-                "status": row[17],
-                "impact_metrics": safe_json_loads(row[18], {
+                "skills_required": safe_json_loads(row[16], []),
+                "tags": safe_json_loads(row[17], []),
+                "status": row[18],
+                "impact_metrics": safe_json_loads(row[19], {
                     "participants_target": 0,
                     "skills_developed": 0,
                     "projects_created": 0,
                     "employment_generated": 0
                 }),
-                "marketing_highlights": safe_json_loads(row[19], []),
-                "success_metrics": safe_json_loads(row[20], []),
-                "sections": safe_json_loads(row[21], []),
+                "marketing_highlights": safe_json_loads(row[20], []),
+                "success_metrics": safe_json_loads(row[21], []),
+                "sections": safe_json_loads(row[22], []),
                 "social_media_posts": [],
-                "created_at": row[19],
-                "updated_at": row[20]
+                "created_at": row[23],
+                "updated_at": row[24]
             }
             
             # Fetch social media posts for this event

@@ -275,8 +275,6 @@ const EventDetails: React.FC = () => {
   };
 
   const addTeamMember = async () => {
-    if (!selectedProject || !selectedUser || !newMemberRole || !newMemberSkills || !event) {
-      toast.error(t('toasts.selectAllFields'));
     if (!selectedProject || !selectedUser || !newMemberSkills || !event) {
       toast.error('Please select a project, a user, and define skills.');
       return;
@@ -1428,4 +1426,3 @@ const getCurrentUserId = (): number => {
 };
 }
 export default EventDetails;
-
