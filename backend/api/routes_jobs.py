@@ -630,7 +630,8 @@ async def smart_recommend_job(user_info: UserInfo):
                 "employment_type": job_data[9],
                 "experience_required": job_data[10],
                 "skills_required": json.loads(job_data[11]) if job_data[11] and job_data[11] != "null" else [],
-                "source": job_data[15],
+                "source": "Not Mentioned",
+                "company_contact": job_data[20],  # This was missing!
                 "apply_url": job_data[22],
                 "relevance_score": score,
                 "debug_info": f"Query: '{user_text}', Score: {score}"
