@@ -119,7 +119,7 @@ export default function JobMentorDashboard() {
           </button>
           <div className="relative h-[60vh] bg-black/50">
             <img
-              src={`${API_BASE_URL}/api/images/${section.imageUrl}`}
+              src={`${API_BASE_URL}/api${section.imageUrl}`}
               alt={section.title}
               className="w-full h-full object-cover object-center transition-all duration-500 ease-in-out"
               style={{ minHeight: 320, background: '#222' }}
@@ -159,7 +159,7 @@ export default function JobMentorDashboard() {
             </div>
             <p className="text-white/90 text-lg leading-relaxed mb-6">{section.text}</p>
             {section.audioUrl && section.audioUrl.length > 0 && (
-              <audio controls src={`${API_BASE_URL}/api/audio/${section.audioUrl}`} className="w-full rounded-lg" />
+              <audio controls src={`${API_BASE_URL}/audio/${section.audioUrl}`} className="w-full rounded-lg" />
             )}
             <div className="flex justify-center gap-3 mt-8">
               {sections.map((_, idx) => (
@@ -208,13 +208,13 @@ export default function JobMentorDashboard() {
                   <p className="text-gray-300 leading-relaxed">{section.text}</p>
                   {section.imageUrl && (
                     <img
-                      src={`${API_BASE_URL}/api/images/${section.imageUrl}`}
+                      src={`${API_BASE_URL}/api${section.imageUrl}`}
                       alt={section.title}
                       className="my-4 rounded-lg max-w-full object-cover h-48 shadow-md"
                     />
                   )}
                   {section.audioUrl && (
-                    <audio controls src={`${API_BASE_URL}/api/audio/${section.audioUrl}`} className="w-full rounded-lg" />
+                    <audio controls src={`${API_BASE_URL}/audio/${section.audioUrl}`} className="w-full rounded-lg" />
                   )}
                 </div>
               ))}

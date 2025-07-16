@@ -629,7 +629,7 @@ const SkillBuilder = () => {
             </button>
             <div className="relative h-[60vh] bg-black">
               <img
-                src={`${API_BASE_URL}/api/images/${section.imageUrl}`}
+                src={`${API_BASE_URL}/api${section.imageUrl}`}
                 alt={section.title}
                 className="w-full h-full object-cover object-center transition-all duration-300"
                 style={{ minHeight: 320, background: '#222' }}
@@ -678,7 +678,7 @@ const SkillBuilder = () => {
                 {section.audioUrl ? (
                   <audio
                     controls
-                    src={`${API_BASE_URL}/api/audio/${i18n.language}/${section.audioUrl}`}
+                    src={`${API_BASE_URL}/audio/${i18n.language}/${section.audioUrl}`}
                     className="flex-1"
                   />
                 ) : (
@@ -1181,7 +1181,7 @@ const SkillBuilder = () => {
                     >
                       <div className="relative h-48 w-full">
                         <img
-                          src={`${API_BASE_URL}/api/images/${firstSection.imageUrl}`}
+                          src={`${API_BASE_URL}/api${firstSection.imageUrl}`}
                           alt={firstSection.title}
                           className="w-full h-full object-cover object-center transition-all duration-300 group-hover:scale-105"
                           loading="lazy"

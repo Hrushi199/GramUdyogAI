@@ -108,7 +108,7 @@ export default function YoutubeAudioSummary() {
                 {insight.audio && (
                   <audio
                     controls
-                    src={`${API_BASE_URL}/api/audio/${language}/${insight.audio}`}
+                    src={`${API_BASE_URL}/audio/${language}/${insight.audio}`}
                     className="w-full rounded-lg"
                   />
                 )}

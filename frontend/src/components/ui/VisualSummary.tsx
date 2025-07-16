@@ -71,7 +71,7 @@ const VisualSummary: React.FC<VisualSummaryProps> = ({ summary, onClose, show = 
           </button>
           <div className="relative h-[60vh] bg-black">
             <img
-              src={`${apiBaseUrl}/api/images/${section.imageUrl}`}
+              src={`${apiBaseUrl}/api${section.imageUrl}`}
               alt={section.title}
               className="w-full h-full object-cover object-center transition-all duration-300"
               style={{ minHeight: 320, background: '#222' }}

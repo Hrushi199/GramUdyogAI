@@ -87,14 +87,15 @@ CREATE TABLE IF NOT EXISTS events (
     budget INTEGER DEFAULT 0,
     prize_pool INTEGER DEFAULT 0,
     organizer_id INTEGER NOT NULL,
-    organizer_name TEXT NOT NULL,
     organizer_type TEXT NOT NULL,
-    organizer_logo TEXT,
     created_by INTEGER NOT NULL,
     skills_required TEXT NOT NULL,
     tags TEXT NOT NULL,
     status TEXT DEFAULT 'draft',
     impact_metrics TEXT DEFAULT '{"participants_target": 0, "skills_developed": 0, "projects_created": 0, "employment_generated": 0}',
+    marketing_highlights TEXT DEFAULT '[]',
+    success_metrics TEXT DEFAULT '[]',
+    sections TEXT DEFAULT '[]',
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL,
     FOREIGN KEY (created_by) REFERENCES users (id)
@@ -808,7 +809,10 @@ def seed_db():
                 "skills_developed": 0,
                 "projects_created": 0,
                 "employment_generated": 0
-            })
+            }),
+            "marketing_highlights": json.dumps(["Featured on TechCrunch", "Won Best Hackathon Award"]),
+            "success_metrics": json.dumps(["100+ participants", "50+ projects submitted", "10+ employment opportunities"]),
+            "sections": json.dumps(["Introduction", "Problem Statement", "Solution", "Impact"])
         },
         {
             "title": "AgriTech Innovation Challenge",
@@ -832,7 +836,10 @@ def seed_db():
                 "skills_developed": 0,
                 "projects_created": 0,
                 "employment_generated": 0
-            })
+            }),
+            "marketing_highlights": json.dumps(["Pitch to top investors", "Winners get funding"]),
+            "success_metrics": json.dumps(["50+ participants", "10+ innovative solutions"]),
+            "sections": json.dumps(["Introduction", "Problem Statement", "Solution", "Impact"])
         }
     ]
 
@@ -843,15 +850,19 @@ def seed_db():
                 title, description, event_type, category, location, state,
                 start_date, end_date, max_participants, budget, prize_pool,
                 organizer_id, organizer_type, created_by, skills_required, 
-                tags, impact_metrics, status, created_at, updated_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active', ?, ?)
+                tags, status, impact_metrics, marketing_highlights, success_metrics, sections, created_at, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             event["title"], event["description"], event["event_type"],
             event["category"], event["location"], event["state"],
             event["start_date"], event["end_date"], event["max_participants"],
             event["budget"], event["prize_pool"], event["organizer_id"],
             event["organizer_type"], event["created_by"], event["skills_required"],
-            event["tags"], event["impact_metrics"], now, now
+            event["tags"], 'active', event["impact_metrics"],
+            event.get("marketing_highlights", json.dumps([])),
+            event.get("success_metrics", json.dumps([])),
+            event.get("sections", json.dumps([])),
+            now, now
         ))
 
     # Sample Projects
