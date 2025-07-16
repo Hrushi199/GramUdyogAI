@@ -56,6 +56,22 @@ class ProjectTeamMemberUpdate(BaseModel):
     role: Optional[str] = None
     skills: Optional[List[str]] = None
 
+class ProjectInvestmentCreate(BaseModel):
+    project_id: int
+    investor_name: str
+    investor_email: Optional[str] = None
+    investor_phone: str
+    investment_amount: int
+    investment_type: str  # equity, loan, grant, partnership
+    equity_percentage: Optional[float] = 0
+    expected_returns: str
+    terms_conditions: Optional[str] = None
+    message: Optional[str] = None
+
+class ProjectInvestmentUpdate(BaseModel):
+    status: str  # pending, accepted, rejected, negotiating
+    response_message: Optional[str] = None
+
 @router.get("/projects")
 async def get_projects(
     limit: int = Query(50, ge=1, le=100),
@@ -590,4 +606,285 @@ async def delete_team_member(project_id: int, team_member_id: int, current_user:
         raise
     except Exception as e:
         logger.error(f"Error deleting team member: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# Investment endpoints
+@router.post("/projects/{project_id}/invest")
+async def create_investment(
+    project_id: int, 
+    investment: ProjectInvestmentCreate,
+    current_user: Dict[str, Any] = Depends(get_current_user)
+):
+    """Create a new investment proposal for a project"""
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        
+        # Check if project exists
+        cursor.execute("SELECT id, title, created_by FROM projects WHERE id = ?", (project_id,))
+        project = cursor.fetchone()
+        if not project:
+            raise HTTPException(status_code=404, detail="Project not found")
+        
+        # Check if investor already has an investment for this project
+        cursor.execute("SELECT id FROM project_investments WHERE project_id = ? AND investor_id = ?",
+                      (project_id, current_user["id"]))
+        if cursor.fetchone():
+            raise HTTPException(status_code=400, detail="You have already invested in this project")
+        
+        # Validate investment data
+        if investment.investment_amount <= 0:
+            raise HTTPException(status_code=400, detail="Investment amount must be positive")
+        
+        if investment.investment_type not in ['equity', 'loan', 'grant', 'partnership']:
+            raise HTTPException(status_code=400, detail="Invalid investment type")
+        
+        if investment.investment_type == 'equity' and (investment.equity_percentage < 0 or investment.equity_percentage > 100):
+            raise HTTPException(status_code=400, detail="Equity percentage must be between 0 and 100")
+        
+        cursor.execute('''
+            INSERT INTO project_investments (
+                project_id, investor_id, investor_name, investor_email, investor_phone,
+                investment_amount, investment_type, equity_percentage, expected_returns,
+                terms_conditions, message, status, invested_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (
+            project_id, current_user["id"], investment.investor_name, investment.investor_email,
+            investment.investor_phone, investment.investment_amount, investment.investment_type,
+            investment.equity_percentage, investment.expected_returns, investment.terms_conditions,
+            investment.message, 'pending', datetime.now().isoformat()
+        ))
+        
+        investment_id = cursor.lastrowid
+        
+        # Create notification for project owner
+        cursor.execute('''
+            INSERT INTO notifications (
+                user_id, title, message, notification_type, related_id, related_type,
+                project_id, metadata, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (
+            project['created_by'],
+            'New Investment Proposal',
+            f'{investment.investor_name} wants to invest ₹{investment.investment_amount:,} in your project "{project["title"]}"',
+            'investment_proposal',
+            investment_id,
+            'investment',
+            project_id,
+            json.dumps({
+                'investor_name': investment.investor_name,
+                'amount': investment.investment_amount,
+                'type': investment.investment_type
+            }),
+            datetime.now().isoformat()
+        ))
+        
+        conn.commit()
+        conn.close()
+        
+        return {"id": investment_id, "message": "Investment proposal submitted successfully"}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error creating investment: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/projects/{project_id}/investments")
+async def get_project_investments(
+    project_id: int,
+    current_user: Dict[str, Any] = Depends(get_current_user)
+):
+    """Get all investments for a specific project"""
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        
+        # Check if project exists
+        cursor.execute("SELECT id, created_by FROM projects WHERE id = ?", (project_id,))
+        project = cursor.fetchone()
+        if not project:
+            raise HTTPException(status_code=404, detail="Project not found")
+        
+        # Only project owner can see all investments
+        if project['created_by'] != current_user["id"]:
+            # Regular users can only see their own investments
+            cursor.execute('''
+                SELECT id, investor_name, investor_email, investor_phone, investment_amount,
+                       investment_type, equity_percentage, expected_returns, terms_conditions,
+                       message, status, invested_at, response_message, response_at
+                FROM project_investments 
+                WHERE project_id = ? AND investor_id = ?
+                ORDER BY invested_at DESC
+            ''', (project_id, current_user["id"]))
+        else:
+            # Project owner sees all investments
+            cursor.execute('''
+                SELECT id, investor_id, investor_name, investor_email, investor_phone,
+                       investment_amount, investment_type, equity_percentage, expected_returns,
+                       terms_conditions, message, status, invested_at, response_message, response_at
+                FROM project_investments 
+                WHERE project_id = ?
+                ORDER BY invested_at DESC
+            ''', (project_id,))
+        
+        investments_data = cursor.fetchall()
+        conn.close()
+        
+        investments = []
+        for row in investments_data:
+            investment = {
+                "id": row['id'],
+                "investor_name": row['investor_name'],
+                "investor_email": row['investor_email'],
+                "investor_phone": row['investor_phone'],
+                "investment_amount": row['investment_amount'],
+                "investment_type": row['investment_type'],
+                "equity_percentage": row['equity_percentage'],
+                "expected_returns": row['expected_returns'],
+                "terms_conditions": row['terms_conditions'],
+                "message": row['message'],
+                "status": row['status'],
+                "invested_at": row['invested_at'],
+                "response_message": row['response_message'],
+                "response_at": row['response_at']
+            }
+            
+            # Add investor_id only for project owner
+            if project['created_by'] == current_user["id"]:
+                investment["investor_id"] = row['investor_id']
+            
+            investments.append(investment)
+        
+        return investments
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error fetching investments: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.put("/projects/{project_id}/investments/{investment_id}")
+async def update_investment_status(
+    project_id: int,
+    investment_id: int,
+    update_data: ProjectInvestmentUpdate,
+    current_user: Dict[str, Any] = Depends(get_current_user)
+):
+    """Update investment status (only project owner can do this)"""
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        
+        # Check if project exists and user is the owner
+        cursor.execute("SELECT id, created_by, title FROM projects WHERE id = ?", (project_id,))
+        project = cursor.fetchone()
+        if not project:
+            raise HTTPException(status_code=404, detail="Project not found")
+        
+        if project['created_by'] != current_user["id"]:
+            raise HTTPException(status_code=403, detail="Only project owner can update investment status")
+        
+        # Check if investment exists
+        cursor.execute('''
+            SELECT id, investor_id, investor_name, investment_amount, investment_type, status
+            FROM project_investments 
+            WHERE id = ? AND project_id = ?
+        ''', (investment_id, project_id))
+        
+        investment = cursor.fetchone()
+        if not investment:
+            raise HTTPException(status_code=404, detail="Investment not found")
+        
+        # Validate status
+        if update_data.status not in ['pending', 'accepted', 'rejected', 'negotiating']:
+            raise HTTPException(status_code=400, detail="Invalid status")
+        
+        # Update investment status
+        cursor.execute('''
+            UPDATE project_investments 
+            SET status = ?, response_message = ?, response_at = ?
+            WHERE id = ? AND project_id = ?
+        ''', (
+            update_data.status, 
+            update_data.response_message, 
+            datetime.now().isoformat(),
+            investment_id, 
+            project_id
+        ))
+        
+        # Create notification for investor
+        cursor.execute('''
+            INSERT INTO notifications (
+                user_id, title, message, notification_type, related_id, related_type,
+                project_id, metadata, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (
+            investment['investor_id'],
+            f'Investment {update_data.status.title()}',
+            f'Your investment proposal of ₹{investment["investment_amount"]:,} for "{project["title"]}" has been {update_data.status}',
+            'investment_update',
+            investment_id,
+            'investment',
+            project_id,
+            json.dumps({
+                'status': update_data.status,
+                'amount': investment['investment_amount'],
+                'type': investment['investment_type']
+            }),
+            datetime.now().isoformat()
+        ))
+        
+        conn.commit()
+        conn.close()
+        
+        return {"message": f"Investment status updated to {update_data.status}"}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error updating investment status: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/investments/my")
+async def get_my_investments(current_user: Dict[str, Any] = Depends(get_current_user)):
+    """Get all investments made by the current user"""
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT pi.id, pi.project_id, p.title as project_title, pi.investment_amount,
+                   pi.investment_type, pi.equity_percentage, pi.expected_returns,
+                   pi.status, pi.invested_at, pi.response_message, pi.response_at
+            FROM project_investments pi
+            JOIN projects p ON pi.project_id = p.id
+            WHERE pi.investor_id = ?
+            ORDER BY pi.invested_at DESC
+        ''', (current_user["id"],))
+        
+        investments_data = cursor.fetchall()
+        conn.close()
+        
+        investments = []
+        for row in investments_data:
+            investment = {
+                "id": row['id'],
+                "project_id": row['project_id'],
+                "project_title": row['project_title'],
+                "investment_amount": row['investment_amount'],
+                "investment_type": row['investment_type'],
+                "equity_percentage": row['equity_percentage'],
+                "expected_returns": row['expected_returns'],
+                "status": row['status'],
+                "invested_at": row['invested_at'],
+                "response_message": row['response_message'],
+                "response_at": row['response_at']
+            }
+            investments.append(investment)
+        
+        return investments
+        
+    except Exception as e:
+        logger.error(f"Error fetching user investments: {e}")
         raise HTTPException(status_code=500, detail=str(e))

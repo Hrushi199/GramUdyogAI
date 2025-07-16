@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import type { Testimonial, Award as AwardType } from '../../lib/api';
 import PublicProfileAvatar from '../ui/PublicProfileAvatar';
+import InvestmentDetails from '../ui/InvestmentDetails';
 
 interface TeamMember {
   id: number;
@@ -660,6 +661,12 @@ const MyProjects: React.FC = () => {
                         )}
                       </CardContent>
                     </Card>
+
+                    {/* Investment Details Section */}
+                    <InvestmentDetails 
+                      projectId={selectedProject.id} 
+                      isProjectOwner={true}
+                    />
                   </div>
                 </div>
               </div>

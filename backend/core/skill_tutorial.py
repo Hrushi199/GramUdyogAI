@@ -147,64 +147,106 @@ def get_skill_tutorials(skill: str) -> List[dict]:
 
 def generate_youtube_url(topic: str, section_content: str) -> str:
     """Fetch a direct YouTube video URL using YouTube Data API v3"""
+    print(f"Generating YouTube URL for topic: '{topic}', section: '{section_content[:50]}...'")
+    
     if not youtube_client:
         print("YouTube API client not initialized. Falling back to search URL.")
         section_keywords = section_content.lower().replace(" ", "+")[:50]
         return f"https://www.youtube.com/results?search_query={section_keywords}+{topic.replace(' ', '+')}"
 
-    # Extract a general skill from the topic (e.g., "farming" from "Growing bajra in farm, India, Madhya Pradesh")
-    skill = topic.lower().split(" in ")[0].split()[-1]  # Simplistic extraction, e.g., "farming"
-    
-    # Get tutorials for the skill
-    tutorials = get_skill_tutorials(skill)
-    
-    # Select the most relevant tutorial based on section content
-    for tutorial in tutorials:
-        if (
-            any(word in tutorial["title"].lower() for word in section_content.lower().split()) or
-            any(word in tutorial["description"].lower() for word in section_content.lower().split())
-        ):
-            if tutorial["url"].startswith("https://www.youtube.com/watch?v="):
-                print(f"Selected YouTube video URL: {tutorial['url']}")
-                return tutorial["url"]
-
-    # If no relevant tutorial is found, generate a specific search query with LLM
+    # Use LLM to generate a specific search query for this section
     prompt = f"""
-    You are an educational assistant tasked with generating a concise search query for YouTube videos.
-    For the topic "{topic}" and section content "{section_content}", provide a search query string (max 50 characters) that captures the key concepts for finding an educational or tutorial video.
-    Return your response as a JSON object: {{"query": "<your search query here>"}}.
-    Example: {{"query": "soil preparation bajra farming madhya pradesh"}}
+    You are an expert at creating YouTube search queries for educational content.
+    
+    Topic: "{topic}"
+    Section Content: "{section_content}"
+    
+    Create a specific, focused YouTube search query (max 50 characters) that will find the most relevant educational video for this particular section. The query should:
+    1. Include key terms from the section content
+    2. Be specific to the subtopic discussed in this section
+    3. Include relevant technical terms or location-specific terms if mentioned
+    4. Focus on practical, tutorial, or educational content
+    
+    Return your response as a JSON object: {{"query": "<your search query here>"}}
+    
+    Examples:
+    - For "soil preparation for bajra farming": {{"query": "bajra soil preparation farming techniques"}}
+    - For "pest control in cotton farming": {{"query": "cotton pest control methods organic"}}
+    - For "irrigation methods for wheat": {{"query": "wheat irrigation drip sprinkler methods"}}
     """
+    
     try:
         messages = [{"role": "user", "content": prompt}]
-        result = llama_chat_completion(messages, temperature=0.7, max_tokens=128)
+        result = llama_chat_completion(messages, temperature=0.3, max_tokens=128)
         url_json = json.loads(result)
-        search_query = url_json.get("query", f"{section_content.lower()[:50]} {topic.lower()}".replace(" ", "+"))
+        search_query = url_json.get("query", "").strip()
+        print(f"LLM generated search query: '{search_query}'")
+        
+        # Validate the query
+        if not search_query or len(search_query) < 5:
+            raise ValueError("Generated query too short or empty")
+            
     except Exception as e:
         print(f"Error generating search query with LLM: {e}")
-        search_query = f"{section_content.lower()[:50]} {topic.lower()}".replace(" ", "+")
+        # Fallback: create a more intelligent query manually
+        section_words = section_content.lower().split()
+        topic_words = topic.lower().split()
+        
+        # Extract key terms (remove common words)
+        stop_words = {'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'is', 'are', 'was', 'were', 'a', 'an'}
+        key_terms = [word for word in section_words[:5] if word not in stop_words and len(word) > 2]
+        topic_terms = [word for word in topic_words[:3] if word not in stop_words and len(word) > 2]
+        
+        # Combine terms with priority to section-specific terms
+        search_query = " ".join(key_terms[:3] + topic_terms[:2])[:50]
+        print(f"Fallback search query: '{search_query}'")
 
-    # Use YouTube Data API to search for a more specific video
+    # Use YouTube Data API to search for a specific video
     try:
+        print(f"Searching YouTube with query: '{search_query}'")
         request = youtube_client.search().list(
             part="id,snippet",
             q=search_query,
             type="video",
-            maxResults=1,  # Get the top result
-            videoEmbeddable="true",  # Ensure videos can be embedded
-            videoSyndicated="true",  # Ensure videos are accessible
-            order="relevance",  # Prioritize relevance
-            safeSearch="moderate"
+            maxResults=3,  # Get top 3 results to choose from
+            videoEmbeddable="true",
+            videoSyndicated="true",
+            order="relevance",
+            safeSearch="moderate",
+            videoDuration="medium",  # Prefer medium duration videos (4-20 minutes)
+            relevanceLanguage="en"  # Prefer English content
         )
         response = request.execute()
 
-        # Extract the video ID from the top result
-        if response.get("items") and len(response["items"]) > 0:
+        # Filter and select the best video
+        if response.get("items"):
+            for item in response["items"]:
+                video_id = item["id"]["videoId"]
+                title = item["snippet"]["title"].lower()
+                description = item["snippet"]["description"].lower()
+                
+                # Check if video is relevant to the section content
+                section_keywords = [word.lower() for word in section_content.split() if len(word) > 3][:5]
+                relevance_score = sum(1 for keyword in section_keywords if keyword in title or keyword in description)
+                
+                # Also check for educational indicators
+                educational_indicators = ['tutorial', 'how to', 'guide', 'tips', 'method', 'technique', 'learn', 'farming', 'agriculture']
+                has_educational_content = any(indicator in title or indicator in description for indicator in educational_indicators)
+                
+                if relevance_score > 0 or has_educational_content:
+                    video_url = f"https://www.youtube.com/watch?v={video_id}"
+                    print(f"Selected relevant video: {item['snippet']['title'][:50]}... (Score: {relevance_score})")
+                    return video_url
+            
+            # If no highly relevant video found, use the first result
             video_id = response["items"][0]["id"]["videoId"]
-            return f"https://www.youtube.com/watch?v={video_id}"
+            video_url = f"https://www.youtube.com/watch?v={video_id}"
+            print(f"Using first result: {response['items'][0]['snippet']['title'][:50]}...")
+            return video_url
         else:
             print("No videos found for query. Falling back to search URL.")
             return f"https://www.youtube.com/results?search_query={search_query.replace(' ', '+')}"
+            
     except HttpError as e:
         print(f"YouTube API error: {e}")
         return f"https://www.youtube.com/results?search_query={search_query.replace(' ', '+')}"
@@ -242,12 +284,17 @@ def generate_visual_summary_json(topic: str, rag: str, language: str = "en", gen
         "You are an educational assistant that outputs visual summaries in JSON.\n"
         f"The JSON object must use the schema: {schema}\n"
         f"Generate a Visual Summary for the topic '{topic}'. The summary should be divided into 3-5 sections, "
-        "each representing a key event or era. For each section, include:\n"
-        "- A 'title' (short, descriptive heading),\n"
-        "- A 'text' field (2-3 sentences summarizing the event/era),\n"
-        "- Placeholder fields for 'imageUrl' and 'audioUrl' (set as empty strings for now).\n"
-        f"{rag}\n"
-        "Ensure the content is engaging, concise, and suitable for an immersive, story-like presentation with visuals and audio narration.\n"
+        "each representing a distinct aspect, step, or component of the topic. For each section, include:\n"
+        "- A 'title' (short, specific heading that captures the unique aspect),\n"
+        "- A 'text' field (2-3 sentences that are specific to this particular aspect, avoid generic content),\n"
+        "- Placeholder fields for 'imageUrl' and 'audioUrl' (set as empty strings for now).\n\n"
+        "IMPORTANT: Make each section focus on a DIFFERENT aspect of the topic. For example:\n"
+        "- If topic is about farming: cover soil preparation, seed selection, irrigation, pest control, harvesting\n"
+        "- If topic is about cooking: cover ingredients, preparation, cooking technique, seasoning, presentation\n"
+        "- If topic is about business: cover planning, funding, marketing, operations, growth\n\n"
+        "Each section should have distinct, specific content that would require different YouTube videos to explain.\n"
+        f"Context information: {rag}\n\n"
+        "Ensure the content is engaging, specific, and suitable for finding relevant educational videos.\n"
         "Respond in JSON format."
     )
     
@@ -302,12 +349,21 @@ def generate_visual_summary_json(topic: str, rag: str, language: str = "en", gen
     # Process each section
     print("\n=== Processing Sections ===")
     for idx, section in enumerate(summary.sections):
-        print(f"\n--- Processing Section {idx + 1} ---")
+        print(f"\n--- Processing Section {idx + 1}: '{section.title}' ---")
         
         # Assign YouTube video URL using YouTube Data API
         print("Assigning YouTube Video URL...")
-        youtube_url =  generate_youtube_url(topic, section.text)
-        print(f"YouTube URL: {youtube_url}")
+        
+        # Create a more specific topic for this section by combining main topic with section title
+        section_specific_topic = f"{topic} {section.title}"
+        print(f"Section-specific topic: '{section_specific_topic}'")
+        
+        # Add some delay between API calls to avoid rate limiting
+        if idx > 0:
+            time.sleep(1)
+        
+        youtube_url = generate_youtube_url(section_specific_topic, section.text)
+        print(f"YouTube URL for section {idx + 1}: {youtube_url}")
         section.imageUrl = youtube_url  # Store in imageUrl for compatibility
 
         # Generate audio if requested

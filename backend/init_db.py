@@ -43,6 +43,124 @@ def migrate_database_schema():
         if 'last_login' not in user_columns:
             cursor.execute('ALTER TABLE users ADD COLUMN last_login TEXT DEFAULT NULL')
         
+        # Check if events table has marketing_highlights and other new columns
+        cursor.execute("PRAGMA table_info(events)")
+        event_columns = [col[1] for col in cursor.fetchall()]
+        if 'marketing_highlights' not in event_columns:
+            cursor.execute('ALTER TABLE events ADD COLUMN marketing_highlights TEXT DEFAULT "[]"')
+        if 'success_metrics' not in event_columns:
+            cursor.execute('ALTER TABLE events ADD COLUMN success_metrics TEXT DEFAULT "[]"')
+        if 'sections' not in event_columns:
+            cursor.execute('ALTER TABLE events ADD COLUMN sections TEXT DEFAULT "[]"')
+        
+        # Check if project_investments table exists
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='project_investments'")
+        if not cursor.fetchone():
+            cursor.execute('''
+            CREATE TABLE IF NOT EXISTS project_investments (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                project_id INTEGER NOT NULL,
+                investor_id INTEGER NOT NULL,
+                investor_name TEXT NOT NULL,
+                investor_email TEXT,
+                investor_phone TEXT NOT NULL,
+                investment_amount INTEGER NOT NULL,
+                investment_type TEXT NOT NULL, -- equity, loan, grant, partnership
+                equity_percentage REAL DEFAULT 0, -- for equity investments
+                expected_returns TEXT, -- what investor expects in return
+                terms_conditions TEXT, -- investment terms and conditions
+                message TEXT, -- investor's message to project team
+                status TEXT DEFAULT 'pending', -- pending, accepted, rejected, negotiating
+                invested_at TEXT NOT NULL DEFAULT (datetime('now')),
+                response_message TEXT, -- project team's response
+                response_at TEXT,
+                FOREIGN KEY (project_id) REFERENCES projects (id),
+                FOREIGN KEY (investor_id) REFERENCES users (id),
+                UNIQUE(project_id, investor_id) -- one investment per investor per project
+            )
+            ''')
+            
+            # Create indexes for the new table
+            cursor.execute('CREATE INDEX IF NOT EXISTS idx_investment_project ON project_investments (project_id)')
+            cursor.execute('CREATE INDEX IF NOT EXISTS idx_investment_investor ON project_investments (investor_id)')
+            cursor.execute('CREATE INDEX IF NOT EXISTS idx_investment_status ON project_investments (status)')
+        else:
+            # Table exists, check if it has all required columns
+            cursor.execute("PRAGMA table_info(project_investments)")
+            investment_columns = [col[1] for col in cursor.fetchall()]
+            
+            # Check if the table has the problematic structure and recreate if necessary
+            if 'investor_contac' in investment_columns or len(investment_columns) < 10:
+                # Backup existing data if any
+                cursor.execute("SELECT * FROM project_investments")
+                existing_data = cursor.fetchall()
+                
+                # Drop and recreate the table
+                cursor.execute('DROP TABLE IF EXISTS project_investments')
+                cursor.execute('''
+                CREATE TABLE project_investments (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    project_id INTEGER NOT NULL,
+                    investor_id INTEGER NOT NULL,
+                    investor_name TEXT NOT NULL,
+                    investor_email TEXT,
+                    investor_phone TEXT NOT NULL,
+                    investment_amount INTEGER NOT NULL,
+                    investment_type TEXT NOT NULL, -- equity, loan, grant, partnership
+                    equity_percentage REAL DEFAULT 0, -- for equity investments
+                    expected_returns TEXT, -- what investor expects in return
+                    terms_conditions TEXT, -- investment terms and conditions
+                    message TEXT, -- investor's message to project team
+                    status TEXT DEFAULT 'pending', -- pending, accepted, rejected, negotiating
+                    invested_at TEXT NOT NULL DEFAULT (datetime('now')),
+                    response_message TEXT, -- project team's response
+                    response_at TEXT,
+                    FOREIGN KEY (project_id) REFERENCES projects (id),
+                    FOREIGN KEY (investor_id) REFERENCES users (id),
+                    UNIQUE(project_id, investor_id) -- one investment per investor per project
+                )
+                ''')
+                
+                # Create indexes for the new table
+                cursor.execute('CREATE INDEX IF NOT EXISTS idx_investment_project ON project_investments (project_id)')
+                cursor.execute('CREATE INDEX IF NOT EXISTS idx_investment_investor ON project_investments (investor_id)')
+                cursor.execute('CREATE INDEX IF NOT EXISTS idx_investment_status ON project_investments (status)')
+                
+                logger.info("Recreated project_investments table with correct schema")
+            else:
+                # Add missing columns if they don't exist
+                if 'investor_name' not in investment_columns:
+                    cursor.execute('ALTER TABLE project_investments ADD COLUMN investor_name TEXT NOT NULL DEFAULT ""')
+                if 'investor_email' not in investment_columns:
+                    cursor.execute('ALTER TABLE project_investments ADD COLUMN investor_email TEXT')
+                if 'investor_phone' not in investment_columns:
+                    # Check if there's an old column with different name
+                    if 'investor_contac' in investment_columns:
+                        # Rename the old column to the correct name
+                        cursor.execute('ALTER TABLE project_investments RENAME COLUMN investor_contac TO investor_phone')
+                    else:
+                        cursor.execute('ALTER TABLE project_investments ADD COLUMN investor_phone TEXT NOT NULL DEFAULT ""')
+                if 'investment_amount' not in investment_columns:
+                    cursor.execute('ALTER TABLE project_investments ADD COLUMN investment_amount INTEGER NOT NULL DEFAULT 0')
+                if 'investment_type' not in investment_columns:
+                    cursor.execute('ALTER TABLE project_investments ADD COLUMN investment_type TEXT NOT NULL DEFAULT "equity"')
+                if 'equity_percentage' not in investment_columns:
+                    cursor.execute('ALTER TABLE project_investments ADD COLUMN equity_percentage REAL DEFAULT 0')
+                if 'expected_returns' not in investment_columns:
+                    cursor.execute('ALTER TABLE project_investments ADD COLUMN expected_returns TEXT')
+                if 'terms_conditions' not in investment_columns:
+                    cursor.execute('ALTER TABLE project_investments ADD COLUMN terms_conditions TEXT')
+                if 'message' not in investment_columns:
+                    cursor.execute('ALTER TABLE project_investments ADD COLUMN message TEXT')
+                if 'status' not in investment_columns:
+                    cursor.execute('ALTER TABLE project_investments ADD COLUMN status TEXT DEFAULT "pending"')
+                if 'invested_at' not in investment_columns:
+                    cursor.execute('ALTER TABLE project_investments ADD COLUMN invested_at TEXT DEFAULT ""')
+                if 'response_message' not in investment_columns:
+                    cursor.execute('ALTER TABLE project_investments ADD COLUMN response_message TEXT')
+                if 'response_at' not in investment_columns:
+                    cursor.execute('ALTER TABLE project_investments ADD COLUMN response_at TEXT')
+        
         conn.commit()
         logger.info("Database schema migration completed successfully")
         
@@ -412,6 +530,30 @@ CREATE TABLE IF NOT EXISTS notifications (
     )
 ''')
 
+    # Project investments table for investor tracking
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS project_investments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_id INTEGER NOT NULL,
+        investor_id INTEGER NOT NULL,
+        investor_name TEXT NOT NULL,
+        investor_email TEXT,
+        investor_phone TEXT NOT NULL,
+        investment_amount INTEGER NOT NULL,
+        investment_type TEXT NOT NULL, -- equity, loan, grant, partnership
+        equity_percentage REAL DEFAULT 0, -- for equity investments
+        expected_returns TEXT, -- what investor expects in return
+        terms_conditions TEXT, -- investment terms and conditions
+        message TEXT, -- investor's message to project team
+        status TEXT DEFAULT 'pending', -- pending, accepted, rejected, negotiating
+        invested_at TEXT NOT NULL DEFAULT (datetime('now')),
+        response_message TEXT, -- project team's response
+        response_at TEXT,
+        FOREIGN KEY (project_id) REFERENCES projects (id),
+        FOREIGN KEY (investor_id) REFERENCES users (id),
+        UNIQUE(project_id, investor_id) -- one investment per investor per project
+    )''')
+
     # Additional indexes for performance
     # Check if columns exist before creating indexes
     cursor.execute("PRAGMA table_info(job_postings)")
@@ -458,6 +600,9 @@ CREATE TABLE IF NOT EXISTS notifications (
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_team_project ON project_team_members (project_id)')
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_notification_user ON notifications (user_id)')
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_social_event ON social_media_posts (event_id)')
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_investment_project ON project_investments (project_id)')
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_investment_investor ON project_investments (investor_id)')
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_investment_status ON project_investments (status)')
 
     conn.commit()
     conn.close()
@@ -858,7 +1003,7 @@ def seed_db():
         cursor.execute('''
             INSERT INTO events (
                 title, description, event_type, category, location, state,
-                start_date, end_date, max_participants, budget, prize_pool,
+                start_date, end_date, max_participants, current_participants, budget, prize_pool,
                 organizer_id, organizer_type, created_by, skills_required, 
                 tags, status, impact_metrics, marketing_highlights, success_metrics, sections, created_at, updated_at
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -866,6 +1011,7 @@ def seed_db():
             event["title"], event["description"], event["event_type"],
             event["category"], event["location"], event["state"],
             event["start_date"], event["end_date"], event["max_participants"],
+            0,  # current_participants
             event["budget"], event["prize_pool"], event["organizer_id"],
             event["organizer_type"], event["created_by"], event["skills_required"],
             event["tags"], 'active', event["impact_metrics"],

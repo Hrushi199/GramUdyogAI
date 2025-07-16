@@ -13,10 +13,13 @@ import {
   Eye,
   Share2,
   ExternalLink,
-  Search
+  Search,
+  DollarSign
 } from 'lucide-react';
 import { Toaster, toast } from 'react-hot-toast';
 import PublicProfileAvatar from '../ui/PublicProfileAvatar';
+import InvestmentModal from '../ui/InvestmentModal';
+import InvestmentDetails from '../ui/InvestmentDetails';
 
 interface TeamMember {
   id: number;
@@ -83,10 +86,27 @@ interface Project {
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
+// Utility function to get current user ID
+const getCurrentUserId = (): number | null => {
+  try {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      const user = JSON.parse(userStr);
+      if (user && user.id) {
+        return parseInt(user.id);
+      }
+    }
+  } catch (error) {
+    console.error('Error getting current user ID:', error);
+  }
+  return null;
+};
+
 const PublicProjects: React.FC = () => {
   const { t } = useTranslation('public-projects');
   const [projects, setProjects] = useState<Project[]>([]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [investmentProject, setInvestmentProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState<string>('all');
@@ -449,6 +469,22 @@ const PublicProjects: React.FC = () => {
                     </span>
                   </div>
                 )}
+
+                {/* Investment Button */}
+                {project.funding_status === 'seeking' && (
+                  <div className="pt-4 border-t border-gray-700">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setInvestmentProject(project);
+                      }}
+                      className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-2 px-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 flex items-center justify-center space-x-2"
+                    >
+                      <DollarSign className="h-4 w-4" />
+                      <span>Invest in this Project</span>
+                    </button>
+                  </div>
+                )}
               </CardContent>
             </Card>
           ))}
@@ -476,266 +512,344 @@ const PublicProjects: React.FC = () => {
         {/* Detail Modal */}
         {selectedProject && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-            <div className="bg-gray-900/95 border border-gray-700 rounded-xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-              <div className="flex justify-between items-start mb-6">
-                <h2 className="text-3xl font-bold text-white">
-                  {selectedProject.title}
-                </h2>
+            <div className="bg-gray-900/95 border border-gray-700 rounded-xl w-full max-w-6xl max-h-[90vh] overflow-hidden">
+              {/* Modal Header */}
+              <div className="flex justify-between items-start p-6 border-b border-gray-700">
+                <div>
+                  <h2 className="text-3xl font-bold text-white mb-2">
+                    {selectedProject.title}
+                  </h2>
+                  <div className="flex items-center space-x-3">
+                    <Badge className={getBadgeClasses('category', selectedProject.category)}>
+                      {selectedProject.category}
+                    </Badge>
+                    <Badge className={getBadgeClasses('status', selectedProject.status)}>
+                      {selectedProject.status}
+                    </Badge>
+                    <Badge className={getBadgeClasses('funding', selectedProject.funding_status)}>
+                      {selectedProject.funding_status.replace('_', ' ')}
+                    </Badge>
+                  </div>
+                </div>
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="text-gray-400 hover:text-white text-2xl w-8 h-8 flex items-center justify-center"
+                  className="text-gray-400 hover:text-white text-2xl w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-800"
                 >
                   ×
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Left/Main */}
-                <div className="lg:col-span-2 space-y-6 text-gray-300">
-                  <section>
-                    <h3 className="text-xl font-semibold mb-2 text-white">{t('modal.description')}</h3>
-                    <p>{selectedProject.description}</p>
-                  </section>
+              {/* Modal Content */}
+              <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
+                  {/* Left/Main Content */}
+                  <div className="lg:col-span-2 space-y-6">
+                    {/* Project Description */}
+                    <Card className="bg-gray-800/30 border-gray-700">
+                      <CardHeader>
+                        <CardTitle className="text-white">{t('modal.description')}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-gray-300 leading-relaxed">{selectedProject.description}</p>
+                      </CardContent>
+                    </Card>
 
-                  <section>
-                    <h3 className="text-xl font-semibold mb-3 text-white">{t('modal.team')}</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {selectedProject.team_members.map(member => (
-                        <div
-                          key={member.id}
-                          className="flex items-center space-x-3 p-3 bg-gray-800/50 rounded-lg"
-                        >
-                          <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
-                            {member.name.charAt(0)}
-                          </div>
-                          <div>
-                            <PublicProfileAvatar userId={member.user_id} name={member.name} size={32} />
-                            <span>{member.name}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-
-                  <section>
-                    <h3 className="text-xl font-semibold mb-3 text-white">
-                      {t('modal.technologiesUsed')}
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedProject.technologies.map((tech, i) => (
-                        <Badge key={i} className="bg-blue-100 text-blue-800">
-                          {tech}
-                        </Badge>
-                      ))}
-                    </div>
-                  </section>
-
-                  {selectedProject.testimonials.length > 0 && (
-                    <section>
-                      <h3 className="text-xl font-semibold mb-3 text-white">
-                        {t('modal.testimonials')}
-                      </h3>
-                      <div className="space-y-4">
-                        {selectedProject.testimonials.map(t => (
-                          <div
-                            key={t.id}
-                            className="p-4 bg-gray-800/50 rounded-lg"
-                          >
-                            <div className="flex items-center mb-2">
-                              {[...Array(5)].map((_, i) => (
-                                <Star
-                                  key={i}
-                                  className={`h-4 w-4 ${
-                                    i < t.rating
-                                      ? 'text-yellow-400 fill-current'
-                                      : 'text-gray-600'
-                                  }`}
-                                />
-                              ))}
-                            </div>
-                            <p className="text-gray-300 mb-2">"{t.content}"</p>
-                            <div className="text-sm text-gray-400">
-                              <span className="font-semibold text-white">{t.name}</span> -{' '}
-                              {t.role} at {t.organization}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </section>
-                  )}
-
-                  {selectedProject.awards.length > 0 && (
-                    <section>
-                      <h3 className="text-xl font-semibold mb-3 text-white">{t('modal.awards')}</h3>
-                      <div className="space-y-3">
-                        {selectedProject.awards.map(award => (
-                          <div key={award.id} className="flex items-center space-x-3 p-3 bg-gray-800/50 rounded-lg">
-                            <AwardIcon className="h-6 w-6 text-yellow-400" />
-                            <div>
-                              <div className="font-semibold text-white">{award.name}</div>
-                              <div className="text-sm text-gray-400">
-                                {award.organization} • {award.year} • {award.category}
+                    {/* Team Members */}
+                    <Card className="bg-gray-800/30 border-gray-700">
+                      <CardHeader>
+                        <CardTitle className="text-white">{t('modal.team')}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {selectedProject.team_members.map(member => (
+                            <div
+                              key={member.id}
+                              className="flex items-center space-x-3 p-3 bg-gray-700/30 rounded-lg border border-gray-600/30"
+                            >
+                              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                {member.name.charAt(0)}
+                              </div>
+                              <div>
+                                <div className="font-medium text-white">{member.name}</div>
+                                <div className="text-sm text-gray-400">{member.role}</div>
                               </div>
                             </div>
-                          </div>
-                        ))}
-                      </div>
-                    </section>
-                  )}
-                </div>
-
-                {/* Right Sidebar */}
-                <div className="space-y-6">
-                  <Card className="bg-gray-800/50 border-gray-700">
-                    <CardHeader>
-                      <CardTitle className="text-white">{t('modal.impactMetrics')}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-gray-400">{t('projectCard.peopleImpacted')}</span>
-                        <span className="font-semibold text-white">
-                          {formatNumber(selectedProject.impact_metrics.users_reached)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-gray-400">{t('projectCard.revenue')}</span>
-                        <span className="font-semibold text-white">
-                          {formatCurrency(selectedProject.impact_metrics.revenue_generated)}
-                        </span>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="bg-gray-800/50 border-gray-700">
-                    <CardHeader>
-                      <CardTitle className="text-white">{t('modal.projectDetails')}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4 text-sm text-gray-400">
-                      <div className="flex items-center space-x-2">
-                        <Calendar className="h-4 w-4" />
-                        <span>
-                          {t('modal.created')} {new Date(selectedProject.created_at).toLocaleDateString()}
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <MapPin className="h-4 w-4" />
-                        <span>
-                          {selectedProject.location}, {selectedProject.state}
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Building2 className="h-4 w-4" />
-                        <span>{selectedProject.event_name}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Users className="h-4 w-4" />
-                        <span>{t('projectCard.teamMembers', { count: selectedProject.team_members.length })}</span>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {selectedProject.funding_status === 'seeking' && selectedProject.funding_goal > 0 && (
-                    <Card className="bg-gray-800/50 border-gray-700">
-                      <CardHeader>
-                        <CardTitle className="text-white">{t('modal.fundingStatus')}</CardTitle>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-gray-400">{t('modal.goal')}</span>
-                          <span className="font-semibold text-white">
-                            {formatCurrency(selectedProject.funding_goal)}
-                          </span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-gray-400">{t('modal.raised')}</span>
-                          <span className="font-semibold text-white">
-                            {formatCurrency(selectedProject.funding_amount)}
-                          </span>
-                        </div>
-                        <div className="w-full bg-gray-700 rounded-full h-2">
-                          <div
-                            className="bg-purple-600 h-2 rounded-full transition-all duration-300"
-                            style={{
-                              width: `${Math.min(
-                                (selectedProject.funding_amount / selectedProject.funding_goal) * 100,
-                                100
-                              )}%`
-                            }}
-                          />
-                        </div>
-                        <div className="text-center text-sm text-gray-400">
-                          {t('modal.funded', { 
-                            percent: Math.round((selectedProject.funding_amount / selectedProject.funding_goal) * 100) 
-                          })}
+                          ))}
                         </div>
                       </CardContent>
                     </Card>
-                  )}
 
-                  <Card className="bg-gray-800/50 border-gray-700">
-                    <CardHeader>
-                      <CardTitle className="text-white">Actions</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      {selectedProject.media.demo_url && (
-                        <a
-                          href={selectedProject.media.demo_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center space-x-2 w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                        >
-                          <ExternalLink className="h-4 w-4" />
-                          <span>View Demo</span>
-                        </a>
-                      )}
-                      {selectedProject.media.github_url && (
-                        <a
-                          href={selectedProject.media.github_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center space-x-2 w-full py-2 px-4 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors"
-                        >
-                          <ExternalLink className="h-4 w-4" />
-                          <span>{t('modal.viewCode')}</span>
-                        </a>
-                      )}
-                      {selectedProject.funding_status === 'seeking' && (
-                        <button 
+                    {/* Technologies */}
+                    <Card className="bg-gray-800/30 border-gray-700">
+                      <CardHeader>
+                        <CardTitle className="text-white">{t('modal.technologiesUsed')}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex flex-wrap gap-2">
+                          {selectedProject.technologies.map((tech, i) => (
+                            <Badge key={i} className="bg-blue-900/50 text-blue-200 border border-blue-500/30">
+                              {tech}
+                            </Badge>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Testimonials */}
+                    {selectedProject.testimonials.length > 0 && (
+                      <Card className="bg-gray-800/30 border-gray-700">
+                        <CardHeader>
+                          <CardTitle className="text-white">{t('modal.testimonials')}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-4">
+                            {selectedProject.testimonials.map(testimonial => (
+                              <div
+                                key={testimonial.id}
+                                className="p-4 bg-gray-700/30 rounded-lg border border-gray-600/30"
+                              >
+                                <div className="flex items-center mb-3">
+                                  {[...Array(5)].map((_, i) => (
+                                    <Star
+                                      key={i}
+                                      className={`h-4 w-4 ${
+                                        i < testimonial.rating
+                                          ? 'text-yellow-400 fill-current'
+                                          : 'text-gray-600'
+                                      }`}
+                                    />
+                                  ))}
+                                </div>
+                                <p className="text-gray-300 mb-3 italic">"{testimonial.content}"</p>
+                                <div className="text-sm">
+                                  <span className="font-semibold text-white">{testimonial.name}</span>
+                                  <span className="text-gray-400"> - {testimonial.role} at {testimonial.organization}</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    )}
+
+                    {/* Awards */}
+                    {selectedProject.awards.length > 0 && (
+                      <Card className="bg-gray-800/30 border-gray-700">
+                        <CardHeader>
+                          <CardTitle className="text-white">{t('modal.awards')}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-3">
+                            {selectedProject.awards.map(award => (
+                              <div key={award.id} className="flex items-center space-x-3 p-3 bg-gray-700/30 rounded-lg border border-gray-600/30">
+                                <AwardIcon className="h-6 w-6 text-yellow-400 flex-shrink-0" />
+                                <div>
+                                  <div className="font-semibold text-white">{award.name}</div>
+                                  <div className="text-sm text-gray-400">
+                                    {award.organization} • {award.year} • {award.category}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    )}
+                    </div>
+
+                  {/* Right Sidebar */}
+                  <div className="space-y-6">
+                    {/* Impact Metrics */}
+                    <Card className="bg-gray-800/30 border-gray-700">
+                      <CardHeader>
+                        <CardTitle className="text-white flex items-center space-x-2">
+                          <TrendingUp className="h-5 w-5" />
+                          <span>{t('modal.impactMetrics')}</span>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <div className="text-center p-4 bg-blue-900/30 rounded-lg border border-blue-500/30">
+                          <div className="text-2xl font-bold text-blue-300">
+                            {formatNumber(selectedProject.impact_metrics.users_reached)}
+                          </div>
+                          <div className="text-sm text-blue-200">{t('projectCard.peopleImpacted')}</div>
+                        </div>
+                        <div className="text-center p-4 bg-green-900/30 rounded-lg border border-green-500/30">
+                          <div className="text-2xl font-bold text-green-300">
+                            {formatCurrency(selectedProject.impact_metrics.revenue_generated)}
+                          </div>
+                          <div className="text-sm text-green-200">{t('projectCard.revenue')}</div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Project Info */}
+                    <Card className="bg-gray-800/30 border-gray-700">
+                      <CardHeader>
+                        <CardTitle className="text-white flex items-center space-x-2">
+                          <Building2 className="h-5 w-5" />
+                          <span>{t('modal.projectDetails')}</span>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        <div className="flex items-center space-x-3 p-2">
+                          <Calendar className="h-4 w-4 text-gray-400" />
+                          <div>
+                            <div className="text-sm text-gray-400">Created</div>
+                            <div className="text-white font-medium">
+                              {new Date(selectedProject.created_at).toLocaleDateString('en-IN', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric'
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-3 p-2">
+                          <MapPin className="h-4 w-4 text-gray-400" />
+                          <div>
+                            <div className="text-sm text-gray-400">Location</div>
+                            <div className="text-white font-medium">
+                              {selectedProject.location}, {selectedProject.state}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-3 p-2">
+                          <Building2 className="h-4 w-4 text-gray-400" />
+                          <div>
+                            <div className="text-sm text-gray-400">Event</div>
+                            <div className="text-white font-medium">{selectedProject.event_name}</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-3 p-2">
+                          <Users className="h-4 w-4 text-gray-400" />
+                          <div>
+                            <div className="text-sm text-gray-400">Team Size</div>
+                            <div className="text-white font-medium">{selectedProject.team_members.length} members</div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Funding Status */}
+                    {selectedProject.funding_status === 'seeking' && selectedProject.funding_goal > 0 && (
+                      <Card className="bg-gray-800/30 border-gray-700">
+                        <CardHeader>
+                          <CardTitle className="text-white flex items-center space-x-2">
+                            <DollarSign className="h-5 w-5" />
+                            <span>{t('modal.fundingStatus')}</span>
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="flex justify-between items-center">
+                            <span className="text-gray-400">Goal</span>
+                            <span className="font-bold text-white">
+                              {formatCurrency(selectedProject.funding_goal)}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-gray-400">Raised</span>
+                            <span className="font-bold text-green-400">
+                              {formatCurrency(selectedProject.funding_amount)}
+                            </span>
+                          </div>
+                          <div>
+                            <div className="flex justify-between text-sm mb-2">
+                              <span className="text-gray-400">Progress</span>
+                              <span className="text-white font-medium">
+                                {Math.round((selectedProject.funding_amount / selectedProject.funding_goal) * 100)}%
+                              </span>
+                            </div>
+                            <div className="w-full bg-gray-700 rounded-full h-3">
+                              <div
+                                className="bg-gradient-to-r from-purple-500 to-blue-500 h-3 rounded-full transition-all duration-300"
+                                style={{
+                                  width: `${Math.min(
+                                    (selectedProject.funding_amount / selectedProject.funding_goal) * 100,
+                                    100
+                                  )}%`
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    )}
+
+                    {/* Actions */}
+                    <Card className="bg-gray-800/30 border-gray-700">
+                      <CardHeader>
+                        <CardTitle className="text-white">Actions</CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        {selectedProject.media.demo_url && (
+                          <a
+                            href={selectedProject.media.demo_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center space-x-2 w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200"
+                          >
+                            <ExternalLink className="h-4 w-4" />
+                            <span>View Demo</span>
+                          </a>
+                        )}
+                        {selectedProject.media.github_url && (
+                          <a
+                            href={selectedProject.media.github_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center space-x-2 w-full py-3 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                          >
+                            <ExternalLink className="h-4 w-4" />
+                            <span>{t('modal.viewCode')}</span>
+                          </a>
+                        )}
+                        <button
                           onClick={() => {
-                            // Add invest functionality here
-                            toast.success(t('toasts.investmentNote'));
+                            // Add share functionality here
+                            if (navigator.share) {
+                              navigator.share({
+                                title: selectedProject.title,
+                                text: selectedProject.description,
+                                url: window.location.href
+                              });
+                            } else {
+                              // Fallback for browsers that don't support Web Share API
+                              navigator.clipboard.writeText(window.location.href);
+                              toast.success(t('toasts.linkCopied'));
+                            }
                           }}
-                          className="w-full py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                          className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all duration-200 flex items-center justify-center space-x-2"
                         >
-                          {t('modal.investInProject')}
+                          <Share2 className="h-4 w-4" />
+                          <span>{t('modal.shareProject')}</span>
                         </button>
-                      )}
-                      <button
-                        onClick={() => {
-                          // Add share functionality here
-                          if (navigator.share) {
-                            navigator.share({
-                              title: selectedProject.title,
-                              text: selectedProject.description,
-                              url: window.location.href
-                            });
-                          } else {
-                            // Fallback for browsers that don't support Web Share API
-                            navigator.clipboard.writeText(window.location.href);
-                            toast.success(t('toasts.linkCopied'));
-                          }
-                        }}
-                        className="w-full py-2 px-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center space-x-2"
-                      >
-                        <Share2 className="h-4 w-4" />
-                        <span>{t('modal.shareProject')}</span>
-                      </button>
-                    </CardContent>
-                  </Card>
+                      </CardContent>
+                    </Card>
+
+                    {/* Investment Details */}
+                    <InvestmentDetails 
+                      projectId={selectedProject.id} 
+                      isProjectOwner={selectedProject.created_by === getCurrentUserId()}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        )}
+
+        {/* Investment Modal */}
+        {investmentProject && (
+          <InvestmentModal
+            project={investmentProject}
+            isOpen={!!investmentProject}
+            onClose={() => setInvestmentProject(null)}
+            onInvestmentSuccess={() => {
+              fetchProjects(); // Refresh projects to update funding amounts
+              toast.success('Investment proposal submitted successfully!');
+            }}
+          />
         )}
       </div>
       <Toaster

@@ -337,6 +337,45 @@ export interface Award {
   organization: string;
 }
 
+// Investment Types
+export interface ProjectInvestment {
+  id: number;
+  project_id?: number;
+  project_title?: string;
+  investor_id?: number;
+  investor_name: string;
+  investor_email?: string;
+  investor_phone: string;
+  investment_amount: number;
+  investment_type: 'equity' | 'loan' | 'grant' | 'partnership';
+  equity_percentage?: number;
+  expected_returns: string;
+  terms_conditions?: string;
+  message?: string;
+  status: 'pending' | 'accepted' | 'rejected' | 'negotiating';
+  invested_at: string;
+  response_message?: string;
+  response_at?: string;
+}
+
+export interface ProjectInvestmentCreate {
+  project_id: number;
+  investor_name: string;
+  investor_email?: string;
+  investor_phone: string;
+  investment_amount: number;
+  investment_type: 'equity' | 'loan' | 'grant' | 'partnership';
+  equity_percentage?: number;
+  expected_returns: string;
+  terms_conditions?: string;
+  message?: string;
+}
+
+export interface ProjectInvestmentUpdate {
+  status: 'pending' | 'accepted' | 'rejected' | 'negotiating';
+  response_message?: string;
+}
+
 // Job Types - Updated for Skill India integration
 export interface Job {
   id: number;
@@ -843,6 +882,23 @@ export class ProjectAPI {
       organizer_type: type
     });
     return this.api.get<Project[]>(`/api/projects/organizer?${queryParams}`);
+  }
+
+  // Investment methods
+  async createInvestment(investment: ProjectInvestmentCreate): Promise<ApiResponse<{ id: number; message: string }>> {
+    return this.api.post<ProjectInvestmentCreate, { id: number; message: string }>(`/api/projects/${investment.project_id}/invest`, investment);
+  }
+
+  async getProjectInvestments(projectId: number): Promise<ApiResponse<ProjectInvestment[]>> {
+    return this.api.get<ProjectInvestment[]>(`/api/projects/${projectId}/investments`);
+  }
+
+  async updateInvestmentStatus(projectId: number, investmentId: number, update: ProjectInvestmentUpdate): Promise<ApiResponse<{ message: string }>> {
+    return this.api.put<ProjectInvestmentUpdate, { message: string }>(`/api/projects/${projectId}/investments/${investmentId}`, update);
+  }
+
+  async getMyInvestments(): Promise<ApiResponse<ProjectInvestment[]>> {
+    return this.api.get<ProjectInvestment[]>(`/api/investments/my`);
   }
 }
 
