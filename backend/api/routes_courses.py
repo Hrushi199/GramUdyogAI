@@ -2,8 +2,10 @@ from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from init_db import get_db
 from core.translation import llama_translate_string as translate_text
+from core.skill_tutorial import llama_chat_completion as get_llm_response
 from typing import Optional, List
 import json
+import asyncio
 
 router = APIRouter()
 
@@ -403,52 +405,38 @@ async def update_course_progress(enrollment_id: int, progress: int):
 @router.post("/courses/recommend")
 async def recommend_courses(user_query: dict):
     """
-    Simple course recommendation based on user query
+    AI-powered course recommendation based on user query
     """
-    query = user_query.get("query", "").lower()
+    query = user_query.get("query", "").strip()
+    
+    if not query:
+        raise HTTPException(status_code=400, detail="Query cannot be empty")
     
     conn = get_db()
     cursor = conn.cursor()
     
-    # Extract keywords from user query
-    keywords = []
-    
-    # Check for common skill-related keywords
-    if any(word in query for word in ['software', 'developer', 'programming', 'coding', 'python', 'java', 'web']):
-        keywords.extend(['programming', 'python', 'software', 'web'])
-    if any(word in query for word in ['ai', 'artificial intelligence', 'machine learning']):
-        keywords.extend(['ai', 'artificial'])
-    if any(word in query for word in ['business', 'management', 'entrepreneur']):
-        keywords.extend(['business', 'management'])
-    if any(word in query for word in ['design', 'creative', 'graphics']):
-        keywords.extend(['design', 'creative'])
-    
-    # Build query based on keywords
-    if keywords:
-        keyword_conditions = " OR ".join([f"name LIKE '%{keyword}%' OR description LIKE '%{keyword}%' OR tags LIKE '%{keyword}%'" for keyword in keywords])
-        sql_query = f"""
-            SELECT id, name, link, category, skill_level, duration, provider, description, tags, source, is_active, created_at
-            FROM courses 
-            WHERE is_active = 1 AND ({keyword_conditions})
-            ORDER BY created_at DESC 
-            LIMIT 5
-        """
-    else:
-        # Default to recent courses
-        sql_query = """
-            SELECT id, name, link, category, skill_level, duration, provider, description, tags, source, is_active, created_at
-            FROM courses 
-            WHERE is_active = 1
-            ORDER BY created_at DESC 
-            LIMIT 5
-        """
-    
-    cursor.execute(sql_query)
-    courses = cursor.fetchall()
+    # Get all available courses (remove the LIMIT to search through everything)
+    cursor.execute("""
+        SELECT id, name, link, category, skill_level, duration, provider, description, tags, source, is_active, created_at
+        FROM courses 
+        WHERE is_active = 1
+        ORDER BY created_at DESC
+    """)
+    all_courses = cursor.fetchall()
     conn.close()
     
-    recommended_courses = [
-        {
+    if not all_courses:
+        return {
+            "courses": [],
+            "total_found": 0,
+            "query": query,
+            "message": "No courses available in the database"
+        }
+    
+    # Format courses for AI analysis
+    courses_context = []
+    for course in all_courses:
+        course_info = {
             "id": course[0],
             "name": course[1],
             "link": course[2],
@@ -456,17 +444,221 @@ async def recommend_courses(user_query: dict):
             "skill_level": course[4],
             "duration": course[5],
             "provider": course[6],
-            "description": course[7],
-            "tags": json.loads(course[8]) if course[8] else [],
-            "source": course[9],
-            "is_active": course[10],
-            "created_at": course[11]
+            "description": course[7] or "No description available",
+            "tags": json.loads(course[8]) if course[8] else []
         }
-        for course in courses
-    ]
+        courses_context.append(course_info)
+    
+    # Create AI prompt for course recommendation
+    ai_prompt = f"""
+You are an expert course recommendation system. Analyze the user's query and recommend the most relevant courses from the available options.
+
+User Query: "{query}"
+
+Available Courses (Total: {len(courses_context)}):
+{json.dumps(courses_context, indent=2)}
+
+Instructions:
+1. Analyze the user's query to understand their learning goals, skill level, and interests
+2. Match the query against course names, descriptions, categories, tags, and providers
+3. Use semantic understanding - for example:
+   - "finance" should match "financial", "accounting", "money management", "investment", "banking"
+   - "programming" should match "coding", "software development", "python", "java", "web development"
+   - "business" should match "management", "entrepreneurship", "marketing", "sales"
+4. Consider skill progression (beginner → intermediate → advanced)
+5. Prioritize courses that best match the user's intent
+6. Search thoroughly through ALL available courses
+7. Select up to 8 most relevant courses (increased from 6)
+8. Provide a relevance score (1-100) and detailed explanation for each recommendation
+
+Return a JSON response with this exact structure:
+{{
+    "recommendations": [
+        {{
+            "course_id": <course_id>,
+            "relevance_score": <1-100>,
+            "reason": "<detailed explanation of why this course matches the query>",
+            "skill_match": "<how this course aligns with user's skill level>",
+            "learning_path": "<how this fits into a learning progression>"
+        }}
+    ],
+    "analysis": "<detailed analysis of the user's query and learning goals>",
+    "suggested_next_steps": "<specific recommendations for what to learn after these courses>"
+}}
+
+IMPORTANT: Be thorough in your search. If the user searches for "finance", make sure to find ALL finance, financial, accounting, investment, banking, economics, and money-related courses. Use semantic matching, not just exact keyword matching.
+"""
+    
+    try:
+        # Get AI recommendation
+        ai_response = await get_llm_response(ai_prompt)
+        
+        # Parse AI response
+        try:
+            ai_data = json.loads(ai_response)
+        except json.JSONDecodeError:
+            # Fallback to simple matching if AI response is malformed
+            return await fallback_recommendation(query, courses_context)
+        
+        # Build final response with course details
+        recommended_courses = []
+        
+        for rec in ai_data.get("recommendations", [])[:8]:  # Increased to 8 courses
+            course_id = rec.get("course_id")
+            
+            # Find the course details
+            course_details = next((c for c in courses_context if c["id"] == course_id), None)
+            
+            if course_details:
+                enhanced_course = {
+                    **course_details,
+                    "relevance_score": rec.get("relevance_score", 50),
+                    "recommendation_reason": rec.get("reason", "Matches your query"),
+                    "skill_match": rec.get("skill_match", "Suitable for your level"),
+                    "learning_path": rec.get("learning_path", "Part of your learning journey")
+                }
+                recommended_courses.append(enhanced_course)
+        
+        # Sort by relevance score
+        recommended_courses.sort(key=lambda x: x.get("relevance_score", 0), reverse=True)
+        
+        return {
+            "courses": recommended_courses,
+            "total_found": len(recommended_courses),
+            "query": query,
+            "analysis": ai_data.get("analysis", "AI analysis of your learning goals"),
+            "suggested_next_steps": ai_data.get("suggested_next_steps", "Continue learning in this area"),
+            "ai_powered": True
+        }
+        
+    except Exception as e:
+        print(f"AI recommendation failed: {e}")
+        # Fallback to simple matching
+        return await fallback_recommendation(query, courses_context)
+
+async def fallback_recommendation(query: str, courses_context: list):
+    """
+    Enhanced fallback recommendation using comprehensive keyword matching and fuzzy search
+    """
+    query_lower = query.lower()
+    query_words = [word.strip() for word in query_lower.split() if len(word.strip()) > 2]
+    
+    scored_courses = []
+    
+    for course in courses_context:
+        score = 0
+        reasons = []
+        course_text = ""
+        
+        # Create comprehensive searchable text for each course
+        searchable_fields = [
+            course.get("name", ""),
+            course.get("description", ""),
+            course.get("category", ""),
+            " ".join(course.get("tags", [])),
+            course.get("provider", ""),
+            course.get("skill_level", "")
+        ]
+        course_text = " ".join(searchable_fields).lower()
+        
+        # Enhanced keyword matching with different weights
+        for word in query_words:
+            # Exact word match in title (highest weight)
+            if word in course.get("name", "").lower():
+                score += 50
+                reasons.append(f"'{word}' found in course title")
+            
+            # Partial word match in title
+            elif any(word in title_word for title_word in course.get("name", "").lower().split()):
+                score += 35
+                reasons.append(f"'{word}' partially matches title")
+            
+            # Exact word match in description
+            elif word in course.get("description", "").lower():
+                score += 30
+                reasons.append(f"'{word}' found in description")
+            
+            # Category match
+            elif word in course.get("category", "").lower():
+                score += 40
+                reasons.append(f"'{word}' matches category")
+            
+            # Tags match
+            elif any(word in tag.lower() for tag in course.get("tags", [])):
+                score += 25
+                reasons.append(f"'{word}' found in course tags")
+            
+            # Provider match
+            elif word in course.get("provider", "").lower():
+                score += 15
+                reasons.append(f"'{word}' matches provider")
+            
+            # Fuzzy match - check if query word is contained in any course text
+            elif word in course_text:
+                score += 10
+                reasons.append(f"'{word}' found in course content")
+        
+        # Bonus for multiple word matches
+        matched_words = sum(1 for word in query_words if word in course_text)
+        if matched_words > 1:
+            score += (matched_words - 1) * 10
+            reasons.append(f"Multiple keywords matched ({matched_words}/{len(query_words)})")
+        
+        # Special handling for common synonyms and related terms
+        finance_terms = ["finance", "financial", "money", "banking", "investment", "accounting", "economics", "budget"]
+        tech_terms = ["programming", "coding", "software", "development", "python", "java", "web", "app"]
+        business_terms = ["business", "management", "entrepreneur", "marketing", "sales", "leadership"]
+        design_terms = ["design", "creative", "art", "graphics", "ui", "ux", "visual"]
+        
+        query_text = " ".join(query_words)
+        
+        # Check for finance-related queries
+        if any(term in query_text for term in finance_terms):
+            if any(term in course_text for term in finance_terms):
+                score += 30
+                reasons.append("Finance-related content detected")
+        
+        # Check for tech-related queries
+        if any(term in query_text for term in tech_terms):
+            if any(term in course_text for term in tech_terms):
+                score += 30
+                reasons.append("Technology-related content detected")
+        
+        # Check for business-related queries
+        if any(term in query_text for term in business_terms):
+            if any(term in course_text for term in business_terms):
+                score += 30
+                reasons.append("Business-related content detected")
+        
+        # Check for design-related queries
+        if any(term in query_text for term in design_terms):
+            if any(term in course_text for term in design_terms):
+                score += 30
+                reasons.append("Design-related content detected")
+        
+        # If we have any score, add to results
+        if score > 0:
+            enhanced_course = {
+                **course,
+                "relevance_score": min(score, 100),
+                "recommendation_reason": "; ".join(reasons[:3]) if reasons else "General recommendation",  # Limit reasons to avoid clutter
+                "skill_match": f"Suitable for {course.get('skill_level', 'all')} level",
+                "learning_path": "Part of your learning journey",
+                "search_score_details": f"Score: {score}, Matched: {matched_words}/{len(query_words)} keywords"
+            }
+            scored_courses.append(enhanced_course)
+    
+    # Sort by score and take top 8 (increased from 6)
+    scored_courses.sort(key=lambda x: x["relevance_score"], reverse=True)
+    recommended_courses = scored_courses[:8]
     
     return {
         "courses": recommended_courses,
         "total_found": len(recommended_courses),
-        "query": user_query.get("query", "")
+        "query": query,
+        "analysis": f"Enhanced search found {len(recommended_courses)} courses matching '{query}'. Searched across titles, descriptions, categories, tags, and providers.",
+        "suggested_next_steps": "Explore these courses to build your skills. Try more specific keywords if you don't see what you're looking for.",
+        "ai_powered": False,
+        "fallback_used": True,
+        "search_method": "Enhanced keyword matching with semantic grouping"
     }
