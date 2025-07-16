@@ -114,7 +114,7 @@ const JobBoard = () => {
     setLoading(true);
     
     try {
-      const response = await fetch(`${API_BASE_URL}/api/recommend-job`, {
+      const response = await fetch(`${API_BASE_URL}/api/recommend-job-smart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -135,6 +135,21 @@ const JobBoard = () => {
 
       try {
         const data = JSON.parse(responseText);
+        console.log("Full API Response:", data);
+        console.log("Recommended Job Object:", data.best_job);
+        console.log("Job Properties:", Object.keys(data.best_job || {}));
+        console.log("Company Contact Field:", data.best_job?.company_contact);
+        console.log("All Contact Related Fields:", Object.keys(data.best_job || {}).filter(key => key.toLowerCase().includes('contact')));
+        
+        // Check if this job has contact info
+        if (data.best_job?.company_contact) {
+          console.log("✅ Job HAS contact info:", data.best_job.company_contact);
+        } else {
+          console.log("❌ Job does NOT have contact info");
+          console.log("Job Source:", data.best_job?.source);
+          console.log("Job ID:", data.best_job?.id);
+        }
+        
         setRecommendedJob(data.best_job);
       } catch (err) {
         console.error("Error parsing job recommendation JSON:", err, "Raw response:", responseText);
@@ -241,10 +256,10 @@ const JobBoard = () => {
                           className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-xl overflow-hidden transition-all border border-gray-700 p-6 hover:border-purple-500/30"
                         >
                           <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400 mb-3">
-                            {job.job_title || job.title}
+                            {job.job_title || job.title || 'Job Title Not Available'}
                           </h3>
                           <p className="text-gray-300 mb-4 line-clamp-3">
-                            {job.description}
+                            {job.description || 'Description not available'}
                           </p>
                           
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
@@ -303,12 +318,12 @@ const JobBoard = () => {
                               )}
                             </div>
                             <div className="flex gap-2">
-                              {job.source === 'Skill India' && (
+                              {job.apply_url && (
                                 <button 
-                                  onClick={() => window.open('https://skillIndia.gov.in', '_blank')}
+                                  onClick={() => window.open(job.apply_url, '_blank')}
                                   className="px-3 py-2 text-sm font-medium text-blue-400 hover:text-blue-300 bg-gray-800 rounded-lg border border-blue-500/30 hover:border-blue-500/50 transition-colors"
                                 >
-                                  Apply on Skill India
+                                  Apply Now
                                 </button>
                               )}
                               <button 
@@ -518,35 +533,106 @@ const JobBoard = () => {
                     
                     <div className="space-y-6">
                       <div>
-                        <h4 className="text-xl font-semibold text-white mb-2">{recommendedJob.title}</h4>
-                        <p className="text-gray-300">{recommendedJob.description}</p>
+                        <h4 className="text-xl font-semibold text-white mb-2">
+                          {recommendedJob.job_title || recommendedJob.title || 'Job Title Not Available'}
+                        </h4>
+                        <p className="text-gray-300">{recommendedJob.description || 'Description not available'}</p>
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                         <div className="flex flex-col gap-1">
                           <span className="font-medium text-purple-400">Company</span>
-                          <span className="text-gray-300">{recommendedJob.company}</span>
+                          <span className="text-gray-300">
+                            {recommendedJob.company_name || recommendedJob.company || 'Not specified'}
+                          </span>
                         </div>
                         <div className="flex flex-col gap-1">
                           <span className="font-medium text-purple-400">Location</span>
-                          <span className="text-gray-300">{recommendedJob.location}</span>
+                          <span className="text-gray-300">{recommendedJob.location || 'Location not specified'}</span>
                         </div>
                         <div className="flex flex-col gap-1">
-                          <span className="font-medium text-purple-400">Contact</span>
-                          <span className="text-gray-300">{recommendedJob.company_contact}</span>
+                          <span className="font-medium text-purple-400">Industry</span>
+                          <span className="text-gray-300">{recommendedJob.industry || 'General'}</span>
                         </div>
                         <div className="flex flex-col gap-1">
-                          <span className="font-medium text-purple-400">Compensation</span>
-                          <span className="text-gray-300">{recommendedJob.pay}</span>
+                          <span className="font-medium text-purple-400">Salary</span>
+                          <span className="text-gray-300">
+                            {recommendedJob.salary_range || recommendedJob.pay || 'Salary not disclosed'}
+                            {recommendedJob.salary_range && recommendedJob.salary_range !== 'Negotiable' && (
+                              <span className="text-green-400 ml-1">₹</span>
+                            )}
+                          </span>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <span className="font-medium text-purple-400">Job Type</span>
+                          <span className="text-gray-300">{recommendedJob.job_type || 'Full-time'}</span>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <span className="font-medium text-purple-400">Experience Required</span>
+                          <span className="text-gray-300">
+                            {recommendedJob.experience_required === '0' ? 'Fresher' : 
+                             recommendedJob.experience_required ? `${recommendedJob.experience_required} months` : 'Not specified'}
+                          </span>
                         </div>
                       </div>
                       
-                      <div className="mt-6 flex justify-end">
-                        <button 
-                          className="px-6 py-3 text-white font-medium bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg"
-                        >
-                          Apply Now
-                        </button>
+                      {recommendedJob.skills_required && recommendedJob.skills_required.length > 0 && (
+                        <div className="mt-6">
+                          <span className="font-medium text-purple-400 block mb-2">Skills Required</span>
+                          <div className="flex flex-wrap gap-2">
+                            {recommendedJob.skills_required.slice(0, 6).map((skill, index) => (
+                              <span key={index} className="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm">
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div className="mt-6 bg-gray-800/50 rounded-lg p-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Job ID:</span>
+                            <span className="text-gray-300">{recommendedJob.id}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Source:</span>
+                            <span className="text-gray-300">{recommendedJob.source || 'Internal'}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Sector:</span>
+                            <span className="text-gray-300">{recommendedJob.sector || 'General'}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Relevance Score:</span>
+                            <span className="text-green-400">{recommendedJob.relevance_score || 'N/A'}</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-6 flex justify-end gap-3">
+                        {recommendedJob.apply_url ? (
+                          <button 
+                            onClick={() => window.open(recommendedJob.apply_url, '_blank')}
+                            className="px-6 py-3 text-white font-medium bg-gradient-to-r from-green-600 to-green-700 rounded-lg hover:from-green-700 hover:to-green-800 transition-all shadow-lg"
+                          >
+                            Apply Now
+                          </button>
+                        ) : (
+                          <div className="text-center">
+                            {recommendedJob.company_contact ? (
+                              <div className="bg-blue-900/30 border border-blue-500/30 rounded-lg p-4">
+                                <p className="text-blue-300 font-medium mb-1">Contact to Apply</p>
+                                <p className="text-gray-300">{recommendedJob.company_contact}</p>
+                              </div>
+                            ) : (
+                              <div className="bg-gray-800/50 border border-gray-600 rounded-lg p-4">
+                                <p className="text-gray-400">No direct application link available</p>
+                                <p className="text-gray-500 text-sm mt-1">Contact information not provided</p>
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
