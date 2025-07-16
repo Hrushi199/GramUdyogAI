@@ -32,13 +32,14 @@ def build_faiss_index_in_memory():
     try:
         with sqlite3.connect(DB_PATH) as conn:
             conn.row_factory = sqlite3.Row
-            courses = conn.execute("SELECT id, title, description FROM csr_courses").fetchall()
+            # Updated to use the new courses table
+            courses = conn.execute("SELECT id, name, description FROM courses").fetchall()
             if not courses:
-                print("Warning: 'csr_courses' table is empty. Search will not find any local courses.")
+                print("Warning: 'courses' table is empty. Search will not find any local courses.")
                 return faiss.IndexIDMap(faiss.IndexFlatIP(VECTOR_DIM))
             
             print(f"Generating embeddings for {len(courses)} courses...")
-            course_texts = [f"Title: {c['title']}. Description: {c['description']}" for c in courses]
+            course_texts = [f"Course: {c['name']}. Description: {c['description'] or c['name']}" for c in courses]
             embeddings = embedding_model.encode(course_texts, normalize_embeddings=True, show_progress_bar=True)
 
             index = faiss.IndexIDMap(faiss.IndexFlatIP(VECTOR_DIM))

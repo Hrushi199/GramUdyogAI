@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ExternalLink, MapPin, DollarSign, Clock, Building, Star, Users, Award, Calendar, Play } from 'lucide-react';
+import { Job } from '../../lib/api'; // Import Job type from api.ts
 
 // Global helper function to safely render any data type as string
 const safeRender = (value: any): string => {
@@ -13,17 +14,7 @@ const safeRender = (value: any): string => {
   return String(value);
 };
 
-interface Job {
-  id: number;
-  title: string;
-  company_name: string;
-  location: string;
-  job_type: string;
-  salary_range?: string;
-  description: string;
-  contact_info?: string;
-}
-
+// Keep only local interfaces that don't exist in api.ts
 interface Scheme {
   id: number;
   name: string;
@@ -94,38 +85,107 @@ interface ProfileData {
 // Job Renderer Component
 export const JobRenderer: React.FC<{ jobs: Job[]; compact?: boolean }> = ({ jobs, compact = true }) => {
   const { t } = useTranslation('job-board');
+  const [showAll, setShowAll] = React.useState(!compact);
+
+  const displayedJobs = showAll ? jobs : jobs.slice(0, 3);
 
   return (
     <div className="space-y-3">
       <h3 className="text-lg font-semibold text-cyan-400 mb-3">💼 {t('recommended_jobs', 'Recommended Jobs')}</h3>
-      {jobs.slice(0, compact ? 3 : jobs.length).map((job, index) => (
-        <div key={index} className="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
+      {displayedJobs.map((job, index) => (
+        <div key={index} className="bg-gray-800/50 rounded-lg p-4 border border-gray-700 hover:border-cyan-700/50 transition-colors">
           <div className="flex justify-between items-start mb-2">
-            <h4 className="font-semibold text-white text-sm">{safeRender(job.title)}</h4>
-            <span className="text-xs text-cyan-400 px-2 py-1 bg-cyan-900/30 rounded">{safeRender(job.job_type)}</span>
+            <h4 className="font-semibold text-white text-sm">{safeRender(job.job_title || job.title)}</h4>
+            <div className="flex items-center gap-2">
+              {(job as any).relevance_score > 0 && (
+                <span className="text-xs text-yellow-400 px-2 py-1 bg-yellow-900/30 rounded-full">
+                  ⭐ {(job as any).relevance_score}
+                </span>
+              )}
+              {job.job_type && (
+                <span className="text-xs text-cyan-400 px-2 py-1 bg-cyan-900/30 rounded-full">{safeRender(job.job_type)}</span>
+              )}
+            </div>
           </div>
+          
           <div className="flex items-center text-gray-400 text-xs mb-2">
-            <Building className="w-3 h-3 mr-1" />
-            <span className="mr-3">{safeRender(job.company_name)}</span>
-            <MapPin className="w-3 h-3 mr-1" />
-            <span>{safeRender(job.location)}</span>
+            {job.company_name && <><Building className="w-3 h-3 mr-1.5" /> <span className="mr-3">{safeRender(job.company_name)}</span></>}
+            {job.location && <><MapPin className="w-3 h-3 mr-1.5" /> <span>{safeRender(job.location)}</span></>}
           </div>
+          
           {job.salary_range && (
-            <div className="flex items-center text-green-400 text-xs mb-2">
-              <DollarSign className="w-3 h-3 mr-1" />
+            <div className="flex items-center text-green-400 text-xs mb-3">
+              <DollarSign className="w-3 h-3 mr-1.5" />
               <span>{safeRender(job.salary_range)}</span>
             </div>
           )}
-          <p className="text-gray-300 text-xs mb-3 line-clamp-2">{safeRender(job.description)}</p>
-          {job.contact_info && (
-            <button className="bg-cyan-600 hover:bg-cyan-700 text-white text-xs px-3 py-1 rounded transition-colors">
-              Contact
-            </button>
+          
+          <div className="flex flex-wrap gap-2 mb-3">
+            {(job as any).industry && (
+              <span className="text-xs text-purple-400 px-2 py-1 bg-purple-900/30 rounded-full">
+                {safeRender((job as any).industry)}
+              </span>
+            )}
+            {(job as any).employment_type && (
+              <span className="text-xs text-blue-400 px-2 py-1 bg-blue-900/30 rounded-full">
+                {safeRender((job as any).employment_type)}
+              </span>
+            )}
+            {(job as any).experience_required && (
+              <span className="text-xs text-orange-400 px-2 py-1 bg-orange-900/30 rounded-full">
+                {safeRender((job as any).experience_required)} months exp
+              </span>
+            )}
+          </div>
+          
+          {(job as any).skills_required && Array.isArray((job as any).skills_required) && (job as any).skills_required.length > 0 && (
+            <div className="mb-3">
+              <div className="flex flex-wrap gap-1.5">
+                {(job as any).skills_required.slice(0, 5).map((skill: string, skillIndex: number) => (
+                  <span key={skillIndex} className="text-xs text-indigo-400 px-2 py-1 bg-indigo-900/40 rounded-full">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
           )}
+          
+          <p className="text-gray-300 text-xs mb-4 line-clamp-3">{safeRender(job.description)}</p>
+          
+          <div className="flex justify-between items-center">
+            <div className="flex gap-2">
+              {(job as any).apply_url && (
+                <a
+                  href={(job as any).apply_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-cyan-600 hover:bg-cyan-700 text-white text-xs px-4 py-1.5 rounded-full transition-colors flex items-center gap-1.5"
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  Apply Now
+                </a>
+              )}
+              {(job as any).source && (
+                <span className="text-xs text-gray-500 px-3 py-1.5 bg-gray-700/50 rounded-full">
+                  via {safeRender((job as any).source)}
+                </span>
+              )}
+            </div>
+            {(job as any).debug_info && (
+              <span className="text-xs text-gray-600 max-w-xs truncate" title={safeRender((job as any).debug_info)}>
+                🔍
+              </span>
+            )}
+          </div>
         </div>
       ))}
-      {compact && jobs.length > 3 && (
-        <p className="text-gray-400 text-xs text-center">+ {jobs.length - 3} more jobs available</p>
+      {compact && jobs.length > 3 && !showAll && (
+        <button 
+          onClick={() => setShowAll(true)} 
+          className="w-full text-center text-cyan-400 text-xs py-2 hover:bg-gray-800/50 rounded-lg transition-colors"
+        >
+          + {jobs.length - 3} more jobs...
+        </button>
       )}
     </div>
   );

@@ -8,6 +8,48 @@ logger = logging.getLogger(__name__)
 def get_db():
     return sqlite3.connect('gramudyogai.db')
 
+def migrate_database_schema():
+    """Migrate existing database to new schema if needed"""
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    try:
+        # Check if job_postings table exists and has the new columns
+        cursor.execute("PRAGMA table_info(job_postings)")
+        columns = [col[1] for col in cursor.fetchall()]
+        
+        # Add missing columns to job_postings if they don't exist
+        if 'source' not in columns:
+            cursor.execute('ALTER TABLE job_postings ADD COLUMN source TEXT DEFAULT "Skill India"')
+        if 'tags' not in columns:
+            cursor.execute('ALTER TABLE job_postings ADD COLUMN tags TEXT')
+        if 'apply_url' not in columns:
+            cursor.execute('ALTER TABLE job_postings ADD COLUMN apply_url TEXT')
+        
+        # Check if courses table exists and has the new columns
+        cursor.execute("PRAGMA table_info(courses)")
+        course_columns = [col[1] for col in cursor.fetchall()]
+        
+        if 'source' not in course_columns:
+            cursor.execute('ALTER TABLE courses ADD COLUMN source TEXT DEFAULT "Skill India"')
+        if 'is_active' not in course_columns:
+            cursor.execute('ALTER TABLE courses ADD COLUMN is_active BOOLEAN DEFAULT 1')
+
+        # Check if users table has last_login
+        cursor.execute("PRAGMA table_info(users)")
+        user_columns = [col[1] for col in cursor.fetchall()]
+        if 'last_login' not in user_columns:
+            cursor.execute('ALTER TABLE users ADD COLUMN last_login TEXT DEFAULT NULL')
+        
+        conn.commit()
+        logger.info("Database schema migration completed successfully")
+        
+    except Exception as e:
+        logger.error(f"Database migration error: {e}")
+        conn.rollback()
+    finally:
+        conn.close()
+
 def init_database():
     """Initialize database with all required tables"""
     conn = get_db()
@@ -222,17 +264,171 @@ CREATE TABLE IF NOT EXISTS events (
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS job_postings (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        description TEXT NOT NULL,
+        job_title TEXT NOT NULL,
         company TEXT NOT NULL,
         location TEXT NOT NULL,
-        company_contact TEXT NOT NULL,
-        pay TEXT NOT NULL,
+        salary_range TEXT,
+        description TEXT NOT NULL,
+        posted_on TEXT,
+        apply_url TEXT,
+        industry TEXT,
+        sector TEXT,
+        job_status TEXT DEFAULT 'Active',
+        experience_required INTEGER DEFAULT 0,
+        in_hand_salary INTEGER,
+        valid_upto TEXT,
+        source TEXT DEFAULT 'Skill India', -- To identify data source
+        tags TEXT, -- JSON array of relevant tags/keywords
+        title TEXT, -- Legacy field for backward compatibility
+        company_contact TEXT, -- Legacy field for backward compatibility
+        pay TEXT, -- Legacy field for backward compatibility
         created_at TEXT NOT NULL DEFAULT (datetime('now'))
     )
 ''')
 
+    # Courses table for Skill India courses
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS courses (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        link TEXT NOT NULL,
+        category TEXT,
+        skill_level TEXT DEFAULT 'beginner',
+        duration TEXT DEFAULT 'Self-paced',
+        provider TEXT DEFAULT 'Skill India Digital',
+        description TEXT,
+        tags TEXT, -- JSON array of relevant tags/keywords
+        source TEXT DEFAULT 'Skill India', -- To identify data source
+        is_active BOOLEAN DEFAULT 1,
+        created_at TEXT NOT NULL DEFAULT (datetime('now')),
+        updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    )
+''')
+
+    # Course enrollments table for user course tracking
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS course_enrollments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        course_id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        enrolled_at TEXT NOT NULL DEFAULT (datetime('now')),
+        status TEXT DEFAULT 'enrolled', -- enrolled, in_progress, completed, dropped
+        progress INTEGER DEFAULT 0, -- 0-100 percentage
+        completion_date TEXT,
+        certificate_url TEXT,
+        FOREIGN KEY (course_id) REFERENCES courses (id),
+        FOREIGN KEY (user_id) REFERENCES users (id),
+        UNIQUE(course_id, user_id)
+    )
+''')
+
+    # Job applications table for user job tracking
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS job_applications (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        job_id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        applied_at TEXT NOT NULL DEFAULT (datetime('now')),
+        status TEXT DEFAULT 'applied', -- applied, shortlisted, rejected, hired
+        notes TEXT,
+        follow_up_date TEXT,
+        FOREIGN KEY (job_id) REFERENCES job_postings (id),
+        FOREIGN KEY (user_id) REFERENCES users (id),
+        UNIQUE(job_id, user_id)
+    )
+''')
+
+    # User skills tracking
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS user_skills (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        skill_name TEXT NOT NULL,
+        proficiency_level TEXT DEFAULT 'beginner', -- beginner, intermediate, advanced, expert
+        acquired_through TEXT, -- course, project, job, self-taught
+        verified BOOLEAN DEFAULT 0,
+        created_at TEXT NOT NULL DEFAULT (datetime('now')),
+        FOREIGN KEY (user_id) REFERENCES users (id),
+        UNIQUE(user_id, skill_name)
+    )
+''')
+
+    # User achievements/certifications
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS achievements (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        title TEXT NOT NULL,
+        description TEXT,
+        type TEXT, -- certificate, award, milestone, badge
+        issuer TEXT,
+        date TEXT NOT NULL,
+        verification_url TEXT,
+        image_url TEXT,
+        created_at TEXT NOT NULL DEFAULT (datetime('now')),
+        FOREIGN KEY (user_id) REFERENCES users (id)
+    )
+''')
+
+    # User profiles table (enhanced)
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS user_profiles (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER UNIQUE NOT NULL,
+        name TEXT NOT NULL,
+        email TEXT,
+        phone TEXT,
+        location TEXT,
+        state TEXT,
+        skills TEXT, -- JSON array of skills
+        experience TEXT,
+        goals TEXT,
+        education TEXT,
+        work_history TEXT, -- JSON array of work experiences
+        portfolio_url TEXT,
+        linkedin_url TEXT,
+        github_url TEXT,
+        bio TEXT,
+        avatar_url TEXT,
+        created_at TEXT NOT NULL DEFAULT (datetime('now')),
+        updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+        FOREIGN KEY (user_id) REFERENCES users (id)
+    )
+''')
+
     # Additional indexes for performance
+    # Check if columns exist before creating indexes
+    cursor.execute("PRAGMA table_info(job_postings)")
+    job_columns = [col[1] for col in cursor.fetchall()]
+    
+    if 'job_title' in job_columns:
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_title ON job_postings (job_title)')
+    if 'title' in job_columns:
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_title_legacy ON job_postings (title)')
+    if 'company' in job_columns:
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_company ON job_postings (company)')
+    if 'location' in job_columns:
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_location ON job_postings (location)')
+    if 'industry' in job_columns:
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_industry ON job_postings (industry)')
+    if 'job_status' in job_columns:
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_status ON job_postings (job_status)')
+    
+    # Check if courses table exists and create indexes
+    cursor.execute("PRAGMA table_info(courses)")
+    course_columns = [col[1] for col in cursor.fetchall()]
+    
+    if 'name' in course_columns:
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_course_name ON courses (name)')
+    if 'category' in course_columns:
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_course_category ON courses (category)')
+    
+    # Other indexes
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_course_enrollment_user ON course_enrollments (user_id)')
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_application_user ON job_applications (user_id)')
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_user_skill ON user_skills (user_id)')
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_skill_name ON user_skills (skill_name)')
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_achievement_user ON achievements (user_id)')
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_summary_lang ON summary_translations (language)')
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_audio_lang ON audio_files (language)')
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_event_organizer ON events (organizer_id, organizer_type)')
@@ -250,6 +446,315 @@ CREATE TABLE IF NOT EXISTS events (
     conn.commit()
     conn.close()
     logger.info("Database initialized successfully!")
+
+def load_skill_india_jobs():
+    """Load jobs from skill_india_all_jobs.json into the database"""
+    import json
+    import os
+    
+    try:
+        json_file_path = os.path.join(os.path.dirname(__file__), 'skill_india_all_jobs.json')
+        if not os.path.exists(json_file_path):
+            logger.warning(f"Jobs JSON file not found at {json_file_path}")
+            return
+            
+        with open(json_file_path, 'r', encoding='utf-8') as f:
+            jobs_data = json.load(f)
+        
+        conn = get_db()
+        cursor = conn.cursor()
+        
+        # Clear existing Skill India job data
+        cursor.execute("DELETE FROM job_postings WHERE source = 'Skill India' OR source IS NULL")
+        
+        # Insert jobs from JSON
+        jobs_inserted = 0
+        for job in jobs_data:
+            try:
+                # Skip incomplete entries
+                if not job.get('job_title') or not job.get('company'):
+                    continue
+                
+                # Extract tags from job data
+                tags = extract_job_tags(job)
+                
+                cursor.execute('''
+                    INSERT INTO job_postings (
+                        job_title, company, location, salary_range, description,
+                        posted_date, apply_url, industry, sector, 
+                        experience_required, application_deadline, source, tags, 
+                        title, company_contact, pay, created_at, is_active
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ''', (
+                    job.get('job_title', ''),
+                    job.get('company', ''),
+                    job.get('location', ''),
+                    job.get('salary_range', ''),
+                    job.get('description', ''),
+                    job.get('posted_on', ''),  # Maps to posted_date
+                    job.get('apply_url', ''),  # Include the apply_url from JSON
+                    job.get('industry', ''),
+                    job.get('sector', ''),
+                    str(job.get('experience_required', 0)),
+                    job.get('valid_upto', ''),  # Maps to application_deadline
+                    'Skill India',
+                    json.dumps(tags),
+                    job.get('job_title', ''),  # Legacy title field
+                    'Contact via apply_url',  # Legacy company_contact
+                    job.get('salary_range', ''),  # Legacy pay field
+                    datetime.now().isoformat(),  # created_at
+                    1  # is_active
+                ))
+                jobs_inserted += 1
+            except Exception as e:
+                logger.error(f"Error inserting job {job.get('job_title', 'Unknown')}: {e}")
+                continue
+        
+        conn.commit()
+        conn.close()
+        logger.info(f"Successfully loaded {jobs_inserted} jobs from Skill India data")
+        
+    except Exception as e:
+        logger.error(f"Error loading Skill India jobs: {e}")
+
+def extract_job_tags(job):
+    """Extract relevant tags from job data"""
+    tags = []
+    
+    # Add industry and sector as tags
+    if job.get('industry'):
+        tags.append(job['industry'].lower().replace(' ', '-'))
+    if job.get('sector'):
+        tags.append(job['sector'].lower().replace(' ', '-'))
+    
+    # Extract keywords from job title and description
+    job_title = job.get('job_title', '').lower()
+    description = job.get('description', '').lower()
+    
+    # Common job-related keywords
+    keywords = [
+        'sales', 'marketing', 'customer service', 'telecaller', 'delivery',
+        'executive', 'manager', 'developer', 'engineer', 'assistant',
+        'representative', 'consultant', 'specialist', 'coordinator',
+        'analyst', 'operator', 'technician', 'supervisor', 'clerk',
+        'cashier', 'receptionist', 'accountant', 'nurse', 'teacher'
+    ]
+    
+    for keyword in keywords:
+        if keyword in job_title or keyword in description:
+            tags.append(keyword)
+    
+    # Add experience level tag
+    exp_required = job.get('experience_required', 0)
+    if exp_required == 0:
+        tags.append('fresher')
+    elif exp_required <= 2:
+        tags.append('entry-level')
+    elif exp_required <= 5:
+        tags.append('mid-level')
+    else:
+        tags.append('senior-level')
+    
+    # Add location-based tags
+    location = job.get('location', '').lower()
+    if location:
+        tags.append(f"location-{location.replace(' ', '-')}")
+    
+    return list(set(tags))  # Remove duplicates
+
+def load_skill_india_courses():
+    """Load courses from skill_india_all_courses.json into the database"""
+    import json
+    import os
+    
+    try:
+        json_file_path = os.path.join(os.path.dirname(__file__), 'skill_india_all_courses.json')
+        if not os.path.exists(json_file_path):
+            logger.warning(f"Courses JSON file not found at {json_file_path}")
+            return
+            
+        with open(json_file_path, 'r', encoding='utf-8') as f:
+            courses_data = json.load(f)
+        
+        conn = get_db()
+        cursor = conn.cursor()
+        
+        # Clear existing Skill India course data
+        cursor.execute("DELETE FROM courses WHERE source = 'Skill India' OR source IS NULL")
+        
+        # Insert courses from JSON
+        courses_inserted = 0
+        for course in courses_data:
+            try:
+                # Skip incomplete entries
+                if not course.get('name') or not course.get('link'):
+                    continue
+                
+                course_name = course.get('name', '')
+                category = extract_course_category(course_name)
+                skill_level = extract_skill_level(course_name)
+                tags = extract_course_tags(course_name)
+                description = generate_course_description(course_name, category)
+                
+                cursor.execute('''
+                    INSERT INTO courses (
+                        name, link, category, skill_level, provider,
+                        description, tags, source, created_at, updated_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ''', (
+                    course_name,
+                    course.get('link', ''),
+                    category,
+                    skill_level,
+                    'Skill India Digital',
+                    description,
+                    json.dumps(tags),
+                    'Skill India',
+                    datetime.now().isoformat(),
+                    datetime.now().isoformat()
+                ))
+                courses_inserted += 1
+            except Exception as e:
+                logger.error(f"Error inserting course {course.get('name', 'Unknown')}: {e}")
+                continue
+        
+        conn.commit()
+        conn.close()
+        logger.info(f"Successfully loaded {courses_inserted} courses from Skill India data")
+        
+    except Exception as e:
+        logger.error(f"Error loading Skill India courses: {e}")
+
+def generate_course_description(course_name, category):
+    """Generate a descriptive text for the course"""
+    return f"Learn {course_name} through Skill India Digital platform. This {category.lower()} course will help you develop essential skills and knowledge in the field."
+
+def extract_course_category(course_name):
+    """Extract category from course name using keywords"""
+    course_name_lower = course_name.lower()
+    
+    # Technology categories
+    if any(keyword in course_name_lower for keyword in ['ai', 'artificial intelligence', 'machine learning', 'data science', 'python', 'java', 'programming', 'software', 'web development', 'app development', 'cyber', 'nlp', 'computer']):
+        return 'Technology'
+    
+    # Finance categories
+    if any(keyword in course_name_lower for keyword in ['finance', 'banking', 'accounting', 'investment', 'financial']):
+        return 'Finance'
+    
+    # Business categories
+    if any(keyword in course_name_lower for keyword in ['business', 'entrepreneurship', 'management', 'marketing', 'sales', 'scrum']):
+        return 'Business'
+    
+    # Health categories
+    if any(keyword in course_name_lower for keyword in ['health', 'medical', 'healthcare', 'nutrition']):
+        return 'Healthcare'
+    
+    # Agriculture categories
+    if any(keyword in course_name_lower for keyword in ['agriculture', 'farming', 'crop', 'livestock', 'fpo']):
+        return 'Agriculture'
+    
+    # Creative categories
+    if any(keyword in course_name_lower for keyword in ['photography', 'design', 'creative', 'art']):
+        return 'Creative'
+    
+    # Education categories
+    if any(keyword in course_name_lower for keyword in ['education', 'teaching', 'learning']):
+        return 'Education'
+    
+    return 'General'
+
+def extract_skill_level(course_name):
+    """Extract skill level from course name"""
+    course_name_lower = course_name.lower()
+    
+    if any(keyword in course_name_lower for keyword in ['basic', 'fundamentals', 'essentials', 'introduction', 'exploring']):
+        return 'beginner'
+    elif any(keyword in course_name_lower for keyword in ['advanced', 'expert', 'mastery']):
+        return 'advanced'
+    elif any(keyword in course_name_lower for keyword in ['intermediate', 'practice']):
+        return 'intermediate'
+    
+    return 'beginner'  # Default to beginner
+
+def extract_course_tags(course_name):
+    """Extract relevant tags from course name"""
+    course_name_lower = course_name.lower()
+    tags = []
+    
+    # Technology tags
+    tech_keywords = ['ai', 'python', 'java', 'web', 'app', 'data', 'machine learning', 'cyber', 'computer', 'programming']
+    for keyword in tech_keywords:
+        if keyword in course_name_lower:
+            tags.append(keyword)
+    
+    # Business tags
+    business_keywords = ['finance', 'banking', 'business', 'management', 'marketing', 'scrum']
+    for keyword in business_keywords:
+        if keyword in course_name_lower:
+            tags.append(keyword)
+    
+    # General tags
+    if 'digital' in course_name_lower:
+        tags.append('digital')
+    if 'online' in course_name_lower:
+        tags.append('online')
+    if 'certification' in course_name_lower:
+        tags.append('certification')
+    
+    return tags if tags else ['general']
+
+def update_jobs_with_apply_urls():
+    """Update existing jobs with apply URLs from JSON"""
+    import json
+    import os
+    
+    try:
+        json_file_path = os.path.join(os.path.dirname(__file__), 'skill_india_all_jobs.json')
+        if not os.path.exists(json_file_path):
+            logger.warning(f"Jobs JSON file not found at {json_file_path}")
+            return
+            
+        with open(json_file_path, 'r', encoding='utf-8') as f:
+            jobs_data = json.load(f)
+        
+        conn = get_db()
+        cursor = conn.cursor()
+        
+        # Create a mapping of job_title + company to apply_url
+        job_url_mapping = {}
+        for job in jobs_data:
+            if job.get('apply_url') and job.get('job_title') and job.get('company'):
+                key = f"{job['job_title']}_{job['company']}"
+                job_url_mapping[key] = job['apply_url']
+        
+        # Update existing jobs with apply URLs
+        cursor.execute("SELECT id, job_title, company FROM job_postings WHERE apply_url IS NULL OR apply_url = ''")
+        jobs_to_update = cursor.fetchall()
+        
+        updated_count = 0
+        for job_id, job_title, company in jobs_to_update:
+            key = f"{job_title}_{company}"
+            if key in job_url_mapping:
+                cursor.execute(
+                    "UPDATE job_postings SET apply_url = ? WHERE id = ?",
+                    (job_url_mapping[key], job_id)
+                )
+                updated_count += 1
+        
+        conn.commit()
+        conn.close()
+        logger.info(f"Successfully updated {updated_count} jobs with apply URLs")
+        
+    except Exception as e:
+        logger.error(f"Error updating jobs with apply URLs: {e}")
+
+def load_all_skill_india_data():
+    """Load both jobs and courses data"""
+    logger.info("Loading Skill India data...")
+    load_skill_india_jobs()
+    load_skill_india_courses()
+    update_jobs_with_apply_urls()  # Ensure all jobs have apply URLs
+    logger.info("Skill India data loading completed!")
 
 def seed_db():
     """Seed database with sample data"""

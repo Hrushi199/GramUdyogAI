@@ -245,16 +245,25 @@ async def login_user(login_data: UserLogin):
             conn.close()
             raise HTTPException(status_code=401, detail="Invalid phone number or password")
         
-        # Update last login
-        cursor.execute('''
-            UPDATE users SET last_login = ? WHERE id = ?
-        ''', (datetime.utcnow().isoformat(), user['id']))
-        
-        conn.commit()
-        conn.close()
-        
-        # Create JWT token
-        access_token = create_jwt_token(user['id'], user['user_type'])
+        # Update last_login timestamp (optional)
+        try:
+            cursor.execute("UPDATE users SET last_login = ? WHERE id = ?", (datetime.utcnow(), user['id']))
+            conn.commit()
+        except sqlite3.OperationalError as e:
+            if "no such column: last_login" in str(e):
+                logger.warning("Skipping last_login update: column not found in users table.")
+            else:
+                raise
+
+        # Generate JWT token
+        expiry = datetime.utcnow() + timedelta(hours=JWT_EXPIRY_HOURS)
+        token_payload = {
+            "user_id": user['id'],
+            "user_type": user['user_type'],
+            "exp": expiry,
+            "iat": datetime.utcnow()
+        }
+        access_token = jwt.encode(token_payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
         
         return TokenResponse(
             access_token=access_token,

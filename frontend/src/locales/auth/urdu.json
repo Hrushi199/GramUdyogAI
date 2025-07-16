@@ -1,0 +1,100 @@
+{
+  "welcome": {
+    "back": "واپس خوش آمدید",
+    "join": "GramUdyogAI میں شامل ہوں",
+    "signInSubtitle": "اپنے اکاؤنٹ میں سائن ان کریں",
+    "createAccountSubtitle": "شروع کرنے کے لیے اپنا اکاؤنٹ بنائیں"
+  },
+  "userTypes": {
+    "label": "میں ہوں...",
+    "individual": {
+      "title": "انفرادی",
+      "description": "ہنر مند افراد، سیکھنے والے اور پیشہ ور"
+    },
+    "company": {
+      "title": "کمپنی", 
+      "description": "کارپوریٹس اور کاروبار"
+    },
+    "ngo": {
+      "title": "این جی او",
+      "description": "غیر منافع بخش تنظیمیں"
+    },
+    "investor": {
+      "title": "سرمایہ کار",
+      "description": "انجل سرمایہ کار اور وی سی"
+    }
+  },
+  "form": {
+    "fields": {
+      "phoneNumber": "فون نمبر",
+      "password": "پاس ورڈ",
+      "confirmPassword": "پاس ورڈ کی تصدیق کریں",
+      "fullName": "پورا نام",
+      "organizationName": "تنظیم کا نام",
+      "contactPersonName": "رابطہ شخص کا نام"
+    },
+    "placeholders": {
+      "phoneNumber": "اپنا فون نمبر درج کریں",
+      "password": "اپنا پاس ورڈ درج کریں",
+      "confirmPassword": "اپنے پاس ورڈ کی تصدیق کریں",
+      "fullName": "اپنا پورا نام درج کریں",
+      "organizationName": "تنظیم کا نام درج کریں",
+      "contactPersonName": "رابطہ شخص کا نام درج کریں"
+    },
+    "required": "*",
+    "forgotPassword": "پاس ورڈ بھول گئے؟",
+    "forgotPasswordTooltip": "فیچر تیار ہو رہا ہے"
+  },
+  "passwordRequirements": {
+    "title": "پاس ورڈ کی ضروریات:",
+    "length": "کم از کم 8 حروف",
+    "uppercase": "کم از کم ایک بڑا حرف",
+    "lowercase": "کم از کم ایک چھوٹا حرف", 
+    "number": "کم از کم ایک نمبر",
+    "special": "کم از کم ایک خاص حرف (#@$!%*?&)"
+  },
+  "validation": {
+    "phoneRequired": "فون نمبر ضروری ہے",
+    "phoneInvalid": "فون نمبر درست ہونا چاہیے اور 0 سے شروع نہیں ہونا چاہیے۔",
+    "passwordRequired": "پاس ورڈ ضروری ہے",
+    "nameRequired": "نام ضروری ہے",
+    "passwordRequirements": "پاس ورڈ ضروریات پورے نہیں کرتا۔",
+    "passwordMismatch": "پاس ورڈ میل نہیں کھاتے",
+    "passwordLength": "پاس ورڈ کم از کم 8 حروف کا ہونا چاہیے۔",
+    "passwordUppercase": "پاس ورڈ میں ایک بڑا حرف ہونا چاہیے۔",
+    "passwordLowercase": "پاس ورڈ میں ایک چھوٹا حرف ہونا چاہیے۔",
+    "passwordNumber": "پاس ورڈ میں ایک نمبر ہونا چاہیے۔",
+    "passwordSpecial": "پاس ورڈ میں ایک خاص حرف (@$!%*?&) ہونا چاہیے۔",
+    "passwordsNoMatch": "پاس ورڈ میل نہیں کھاتے۔"
+  },
+  "buttons": {
+    "signIn": "سائن ان کریں",
+    "createAccount": "اکاؤنٹ بنائیں",
+    "processing": "پروسیسنگ...",
+    "fillFormByVoice": "آواز سے فارم بھریں",
+    "voiceProcessing": "پروسیسنگ..."
+  },
+  "links": {
+    "noAccount": "اکاؤنٹ نہیں؟ سائن اپ کریں",
+    "hasAccount": "پہلے سے اکاؤنٹ ہے؟ سائن ان کریں"
+  },
+  "messages": {
+    "loginSuccess": "لاگ ان کامیاب! آپ کے پروفائل پر ری ڈائریکٹ کر رہے ہیں...",
+    "registrationSuccess": "رجسٹریشن کامیاب! پروفائل بنانے پر ری ڈائریکٹ کر رہے ہیں...",
+    "accountDeactivated": "اکاؤنٹ غیر فعال ہے۔ براہ کرم مدد سے رابطہ کریں۔",
+    "invalidCredentials": "غلط فون نمبر یا پاس ورڈ۔ براہ کرم اپنی تفصیلات چیک کریں۔",
+    "loginFailed": "لاگ ان ناکام۔ براہ کرم دوبارہ کوشش کریں۔",
+    "phoneExists": "اس فون نمبر کے ساتھ اکاؤنٹ پہلے سے موجود ہے۔ براہ کرم لاگ ان کریں۔",
+    "checkInput": "براہ کرم اپنی تفصیلات چیک کریں اور دوبارہ کوشش کریں۔",
+    "registrationFailed": "رجسٹریشن ناکام۔ براہ کرم دوبارہ کوشش کریں۔",
+    "authFailed": "تصدیق ناکام۔ براہ کرم دوبارہ کوشش کریں۔",
+    "microphoneError": "مائیکروفون استعمال نہیں کر سکے۔ براہ کرم اجازات چیک کریں۔",
+    "voiceInProgress": "آواز انپوٹ پہلے سے جاری ہے۔",
+    "voiceInstructions": "آواز انپوٹ شروع کرنے کے لیے مائیکروفون آئیکن پر کلک کریں۔",
+    "voiceStopped": "آواز انپوٹ رک گیا۔ پروسیسنگ...",
+    "voiceTranscriptionFailed": "آواز ٹرانسکرپشن ناکام۔ براہ کرم دوبارہ کوشش کریں۔",
+    "replaceConfirm": "\"{currentValue}\" کو \"{newValue}\" سے تبدیل کریں؟",
+    "yes": "ہاں",
+    "no": "نہیں"
+  }
+}

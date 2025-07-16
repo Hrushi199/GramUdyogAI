@@ -1,0 +1,64 @@
+{
+  "header": {
+    "title": "CSR ପ୍ରଭାବ ଡ୍ୟାସବୋର୍ଡ",
+    "subtitle": "କର୍ପୋରେଟ ସାମାଜିକ ଦାୟିତ୍ୱ ମେଟ୍ରିକ୍ସ ଏବଂ ଆନାଲିଟିକ୍ସ - ଆପଣଙ୍କ କମ୍ପାନୀର ସାମାଜିକ ପ୍ରଭାବ ଏବଂ ସମ୍ପ୍ରଦାୟ ବିକାଶ ପଦକ୍ଷେପ ଟ୍ରାକ୍ କରନ୍ତୁ"
+  },
+  "loading": {
+    "initializing": "CSR ଡ୍ୟାସବୋର୍ଡ ଆରମ୍ଭ କରାଯାଉଛି..."
+  },
+  "companySelector": {
+    "title": "କମ୍ପାନୀ ବାଛନ୍ତୁ",
+    "employees": "କର୍ମଚାରୀ",
+    "searchPlaceholder": "ଇଭେଣ୍ଟ ଖୋଜନ୍ତୁ..."
+  },
+  "metrics": {
+    "totalEvents": "ମୋଟ ଇଭେଣ୍ଟ",
+    "beneficiaries": "ହିତାଧିକାରୀ",
+    "budgetAllocated": "ବଜେଟ ବଣ୍ଟନ",
+    "impactScore": "ପ୍ରଭାବ ସ୍କୋର"
+  },
+  "tabs": {
+    "overview": "ସମୀକ୍ଷା",
+    "events": "ଇଭେଣ୍ଟ",
+    "analytics": "ଆନାଲିଟିକ୍ସ"
+  },
+  "overview": {
+    "budgetEfficiency": {
+      "title": "ବଜେଟ ଦକ୍ଷତା",
+      "allocated": "ବଣ୍ଟିତ",
+      "spent": "ଖର୍ଚ୍ଚ",
+      "efficiency": "ଦକ୍ଷତା"
+    },
+    "impactMetrics": {
+      "title": "ପ୍ରଭାବ ମେଟ୍ରିକ୍ସ",
+      "sustainabilityScore": "ସ୍ଥାୟିତ୍ୱ ସ୍କୋର",
+      "communityFeedback": "ସମ୍ପ୍ରଦାୟ ମତାମତ",
+      "averageImpact": "ହାରାହାରି ପ୍ରଭାବ"
+    }
+  },
+  "events": {
+    "title": "ସାମ୍ପ୍ରତିକ ଇଭେଣ୍ଟ",
+    "beneficiaries": "ହିତାଧିକାରୀ",
+    "spent": "ଖର୍ଚ୍ଚ"
+  },
+  "analytics": {
+    "eventTypes": "ଇଭେଣ୍ଟ ପ୍ରକାର",
+    "geographicalReach": "ଭୌଗୋଳିକ ପହଞ୍ଚ"
+  },
+  "eventTypes": {
+    "education": "ଶିକ୍ଷା",
+    "healthcare": "ସ୍ୱାସ୍ଥ୍ୟ ସେବା",
+    "environment": "ପରିବେଶ",
+    "skill_development": "ଦକ୍ଷତା ବିକାଶ",
+    "rural_development": "ଗ୍ରାମୀଣ ବିକାଶ",
+    "women_empowerment": "ମହିଳା ସଶକ୍ତିକରଣ",
+    "digital_literacy": "ଡିଜିଟାଲ ସାକ୍ଷରତା",
+    "poverty_alleviation": "ଦାରିଦ୍ର୍ୟ ନିରସନ"
+  },
+  "errors": {
+    "initializingDashboard": "ଡ୍ୟାସବୋର୍ଡ ଆରମ୍ଭ କରିବାରେ ତ୍ରୁଟି:",
+    "fetchingCompanies": "କମ୍ପାନୀ ଆଣିବାରେ ତ୍ରୁଟି:",
+    "fetchingMetrics": "କମ୍ପାନୀ ମେଟ୍ରିକ୍ସ ଆଣିବାରେ ତ୍ରୁଟି:",
+    "fetchingEvents": "କମ୍ପାନୀ ଇଭେଣ୍ଟ ଆଣିବାରେ ତ୍ରୁଟି:"
+  }
+}

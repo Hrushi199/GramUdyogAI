@@ -136,7 +136,13 @@ async def ai_assistant_enhanced(req: AssistantRequest, request: Request = None):
 
         # --- JOBS ---
         elif func_name == "recommend_job":
-            from core.ai_assistant_data import recommend_job, get_jobs, UserInfo
+            # Use the smart job recommendation API for better results
+            from api.routes_jobs import smart_recommend_job
+            from pydantic import BaseModel
+            
+            class UserInfo(BaseModel):
+                user_info: str
+            
             if args:
                 # If args is already a UserInfo, use as-is; if string, wrap; if dict, construct
                 if isinstance(args, UserInfo):
@@ -145,10 +151,22 @@ async def ai_assistant_enhanced(req: AssistantRequest, request: Request = None):
                     user_info = UserInfo(**args)
                 else:
                     user_info = UserInfo(user_info=args)
-                jobs = await recommend_job(user_info)
-                response_data.structured_data = {"jobs": jobs}
-                response_data.output = f"Here are some recommended jobs."
+                
+                # Get smart recommendations with rich data
+                job_result = await smart_recommend_job(user_info)
+                
+                # Transform the response to include all jobs for the frontend
+                jobs_list = []
+                if job_result.get("best_job"):
+                    jobs_list.append(job_result["best_job"])
+                if job_result.get("alternative_jobs"):
+                    jobs_list.extend(job_result["alternative_jobs"])
+                
+                response_data.structured_data = {"jobs": jobs_list}
+                response_data.output = f"Here are some recommended jobs based on your query."
             else:
+                # Fallback to simple job listing
+                from core.ai_assistant_data import get_jobs
                 jobs = await get_jobs()
                 response_data.structured_data = {"jobs": jobs}
                 response_data.output = f"Here are some available jobs."

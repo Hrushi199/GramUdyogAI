@@ -1,0 +1,61 @@
+{
+  "pageTitle": "Job Board",
+  "pageSubtitle": "Find your dream job or post opportunities for talented professionals in our community.",
+  "tabs": {
+    "viewJobs": "View Jobs",
+    "postJob": "Post a Job",
+    "getRecommended": "Get Recommended"
+  },
+  "loading": "Loading...",
+  "viewJobs": {
+    "title": "Available Opportunities",
+    "noJobs": {
+      "message": "No jobs available at the moment.",
+      "cta": "Be the first to post a job opportunity!"
+    },
+    "jobCard": {
+      "company": "Company",
+      "location": "Location", 
+      "contact": "Contact",
+      "compensation": "Compensation",
+      "applyNow": "Apply Now"
+    }
+  },
+  "postJob": {
+    "title": "Post a New Opportunity",
+    "fields": {
+      "jobTitle": "Job Title",
+      "company": "Company",
+      "location": "Location",
+      "compensation": "Compensation",
+      "contactInfo": "Contact Information",
+      "jobDescription": "Job Description"
+    },
+    "placeholders": {
+      "jobTitle": "e.g. Senior Developer",
+      "company": "e.g. Tech Innovations Inc.",
+      "location": "e.g. Remote, New York, NY",
+      "compensation": "e.g. $80,000 - $120,000",
+      "contactInfo": "e.g. careers@techinnovations.com",
+      "jobDescription": "Describe the job responsibilities, requirements, and benefits..."
+    },
+    "submit": "Post Job",
+    "posting": "Posting...",
+    "successNotification": "Job posted successfully!"
+  },
+  "recommendation": {
+    "title": "Find Your Perfect Match",
+    "subtitle": "Tell us about your skills, experience, and preferences, and we'll recommend the best job for you.",
+    "fields": {
+      "profileInfo": "Your Profile Information"
+    },
+    "placeholders": {
+      "profileInfo": "Example: I have 5 years of experience in web development using React and Node.js. I'm looking for remote opportunities in a tech startup with a focus on sustainable products..."
+    },
+    "submit": "Find My Match",
+    "analyzing": "Analyzing...",
+    "results": {
+      "title": "Your Perfect Match"
+    }
+  }
+}

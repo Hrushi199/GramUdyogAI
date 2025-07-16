@@ -1,0 +1,64 @@
+{
+  "header": {
+    "title": "CSR اثرات ڈیش بورڈ",
+    "subtitle": "کارپوریٹ سماجی ذمہ داری میٹرکس اور تجزیات - اپنی کمپنی کے سماجی اثرات اور کمیونٹی ترقیاتی اقدامات کو ٹریک کریں"
+  },
+  "loading": {
+    "initializing": "CSR ڈیش بورڈ شروع کر رہے ہیں..."
+  },
+  "companySelector": {
+    "title": "کمپنی منتخب کریں",
+    "employees": "ملازمین",
+    "searchPlaceholder": "ایونٹس تلاش کریں..."
+  },
+  "metrics": {
+    "totalEvents": "کل ایونٹس",
+    "beneficiaries": "فائدہ اٹھانے والے",
+    "budgetAllocated": "بجٹ مختص",
+    "impactScore": "اثرات کا اسکور"
+  },
+  "tabs": {
+    "overview": "جائزہ",
+    "events": "ایونٹس",
+    "analytics": "تجزیات"
+  },
+  "overview": {
+    "budgetEfficiency": {
+      "title": "بجٹ کی کارکردگی",
+      "allocated": "مختص",
+      "spent": "خرچ",
+      "efficiency": "کارکردگی"
+    },
+    "impactMetrics": {
+      "title": "اثرات کی پیمائش",
+      "sustainabilityScore": "پائیداری کا اسکور",
+      "communityFeedback": "کمیونٹی کی رائے",
+      "averageImpact": "اوسط اثرات"
+    }
+  },
+  "events": {
+    "title": "حالیہ واقعات",
+    "beneficiaries": "فائدہ اٹھانے والے",
+    "spent": "خرچ"
+  },
+  "analytics": {
+    "eventTypes": "ایونٹ کی اقسام",
+    "geographicalReach": "جغرافیائی رسائی"
+  },
+  "eventTypes": {
+    "education": "تعلیم",
+    "healthcare": "صحت کی دیکھ بھال",
+    "environment": "ماحولیات",
+    "skill_development": "مہارت کی ترقی",
+    "rural_development": "دیہی ترقی",
+    "women_empowerment": "خواتین کی بااختیاری",
+    "digital_literacy": "ڈیجیٹل خواندگی",
+    "poverty_alleviation": "غربت کا خاتمہ"
+  },
+  "errors": {
+    "initializingDashboard": "ڈیش بورڈ شروع کرنے میں خرابی:",
+    "fetchingCompanies": "کمپنیاں لانے میں خرابی:",
+    "fetchingMetrics": "کمپنی میٹرکس لانے میں خرابی:",
+    "fetchingEvents": "کمپنی ایونٹس لانے میں خرابی:"
+  }
+}

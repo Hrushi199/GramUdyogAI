@@ -1,0 +1,64 @@
+{
+  "header": {
+    "title": "CSR প্ৰভাৱ ডেছব'ৰ্ড",
+    "subtitle": "কৰ্প'ৰেট সামাজিক দায়বদ্ধতা মেট্ৰিক্স আৰু এনালিটিক্স - আপোনাৰ কোম্পানীৰ সামাজিক প্ৰভাৱ আৰু সমুদায়ৰ উন্নয়ন প্ৰচেষ্টা ট্ৰেক কৰক"
+  },
+  "loading": {
+    "initializing": "CSR ডেছব'ৰ্ড আৰম্ভ কৰি আছো..."
+  },
+  "companySelector": {
+    "title": "কোম্পানী নিৰ্বাচন কৰক",
+    "employees": "কৰ্মচাৰী",
+    "searchPlaceholder": "ইভেণ্ট বিচাৰক..."
+  },
+  "metrics": {
+    "totalEvents": "মুঠ ইভেণ্ট",
+    "beneficiaries": "হিতাধিকাৰী",
+    "budgetAllocated": "বাজেট আবণ্টন",
+    "impactScore": "প্ৰভাৱ স্ক'ৰ"
+  },
+  "tabs": {
+    "overview": "সমীক্ষা",
+    "events": "ইভেণ্ট",
+    "analytics": "এনালিটিক্স"
+  },
+  "overview": {
+    "budgetEfficiency": {
+      "title": "বাজেট দক্ষতা",
+      "allocated": "আবণ্টিত",
+      "spent": "খৰচ",
+      "efficiency": "দক্ষতা"
+    },
+    "impactMetrics": {
+      "title": "প্ৰভাৱ মেট্ৰিক্স",
+      "sustainabilityScore": "স্থায়িত্ব স্ক'ৰ",
+      "communityFeedback": "সমুদায়ৰ মতামত",
+      "averageImpact": "গড় প্ৰভাৱ"
+    }
+  },
+  "events": {
+    "title": "সাম্প্ৰতিক ইভেণ্ট",
+    "beneficiaries": "হিতাধিকাৰী",
+    "spent": "খৰচ"
+  },
+  "analytics": {
+    "eventTypes": "ইভেণ্টৰ প্ৰকাৰ",
+    "geographicalReach": "ভৌগোলিক বিস্তাৰ"
+  },
+  "eventTypes": {
+    "education": "শিক্ষা",
+    "healthcare": "স্বাস্থ্য সেৱা",
+    "environment": "পৰিৱেশ",
+    "skill_development": "দক্ষতা উন্নয়ন",
+    "rural_development": "গ্ৰাম্য উন্নয়ন",
+    "women_empowerment": "মহিলা সৱলীকৰণ",
+    "digital_literacy": "ডিজিটেল শিক্ষা",
+    "poverty_alleviation": "দাৰিদ্ৰ্য নিৰসন"
+  },
+  "errors": {
+    "initializingDashboard": "ডেছব'ৰ্ড আৰম্ভ কৰোতে ত্ৰুটি:",
+    "fetchingCompanies": "কোম্পানী আনিবলৈ ত্ৰুটি:",
+    "fetchingMetrics": "কোম্পানী মেট্ৰিক্স আনিবলৈ ত্ৰুটি:",
+    "fetchingEvents": "কোম্পানী ইভেণ্ট আনিবলৈ ত্ৰুটি:"
+  }
+}

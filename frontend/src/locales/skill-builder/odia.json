@@ -226,14 +226,28 @@
       }
     },
     "navbar": {
-      "features": "ବୈଶିଷ୍ଟ୍ୟ",
-      "about": "ବିଷୟରେ",
-      "contact": "ଯୋଗାଯୋଗ",
-      "profile": "ପ୍ରୋଫାଇଲ",
-      "dashboard": "ଡ୍ୟାଶବୋର୍ଡ",
-      "community": "ସମୁଦାୟ",
-      "skills": "ଦକ୍ଷତା",
-      "signUp": "ସାଇନ ଅପ",
-      "courseRecommender": "କୋର୍ସ ସୁପାରିଶକାରୀ"
-    }
+    "home": "ମୁଖ୍ୟ ପୃଷ୍ଠା",
+    "jobs": "ଚାକିରି",
+    "schemes": "ଯୋଜନା",
+    "learning": "ଶିକ୍ଷା",
+    "skills": "ଦକ୍ଷତା",
+    "courseRecommender": "କୋର୍ସ ସୁପାରିଶକାରୀ",
+    "business": "ବ୍ୟବସାୟ",
+    "businessIdeas": "ବ୍ୟବସାୟିକ ଧାରଣା",
+    "projects": "ପ୍ରକଳ୍ପ",
+    "myProjects": "ମୋର ପ୍ରକଳ୍ପ",
+    "events": "କାର୍ଯ୍ୟକ୍ରମ",
+    "csr": "ସିଏସଆର",
+    "profile": "ପ୍ରୋଫାଇଲ",
+    "dashboard": "ଡ୍ୟାସବୋର୍ଡ",
+    "welcome": "ସ୍ୱାଗତ",
+    "login": "ଲଗଇନ",
+    "logout": "ଲଗଆଉଟ",
+    "community": "ସମ୍ପ୍ରଦାୟ",
+    "createProfile": "ପ୍ରୋଫାଇଲ ତିଆରି କରନ୍ତୁ",
+    "features": "ବିଶେଷତ୍ୱ",
+    "about": "ଆମ ବିଷୟରେ",
+    "contact": "ଯୋଗାଯୋଗ",
+    "signUp": "ସାଇନ ଅପ"
+  }
   }
