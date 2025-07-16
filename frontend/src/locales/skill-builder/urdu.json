@@ -226,13 +226,28 @@
       }
     },
     "navbar": {
-      "features": "خصوصیات",
-      "about": "کے بارے میں",
-      "contact": "رابطہ",
-      "profile": "پروفائل",
-      "dashboard": "ڈیش بورڈ",
-      "community": "برادری",
-      "skills": "ہنر",
-      "signUp": "سائن اپ"
-    }
+    "home": "ہوم",
+    "jobs": "نوکریاں",
+    "schemes": "اسکیمز",
+    "learning": "سیکھنا",
+    "skills": "مہارتیں",
+    "courseRecommender": "کورس تجویز کار",
+    "business": "کاروبار",
+    "businessIdeas": "کاروباری آئیڈیاز",
+    "projects": "پروجیکٹس",
+    "myProjects": "میرے پروجیکٹس",
+    "events": "تقریبات",
+    "csr": "سی ایس آر",
+    "profile": "پروفائل",
+    "dashboard": "ڈیش بورڈ",
+    "welcome": "خوش آمدید",
+    "login": "لاگ ان",
+    "logout": "لاگ آؤٹ",
+    "community": "کمیونٹی",
+    "createProfile": "پروفائل بنائیں",
+    "features": "خصوصیات",
+    "about": "ہمارے بارے میں",
+    "contact": "رابطہ",
+    "signUp": "سائن اپ"
+  }
   }

@@ -17,6 +17,21 @@ import jobMentorDashboardMl from './locales/jobmentordashboard/malayalam.json';
 import jobMentorDashboardPa from './locales/jobmentordashboard/punjabi.json';
 import jobMentorDashboardAs from './locales/jobmentordashboard/assamese.json';
 
+// Import auth translations
+import authEn from './locales/auth/english.json';
+import authHi from './locales/auth/hindi.json';
+import authBn from './locales/auth/bengali.json';
+import authMr from './locales/auth/marathi.json';
+import authTe from './locales/auth/telugu.json';
+import authTa from './locales/auth/tamil.json';
+import authGu from './locales/auth/gujarati.json';
+import authUr from './locales/auth/urdu.json';
+import authKn from './locales/auth/kannada.json';
+import authOr from './locales/auth/odia.json';
+import authMl from './locales/auth/malayalam.json';
+import authPa from './locales/auth/punjabi.json';
+import authAs from './locales/auth/assamese.json';
+
 // Existing namespace translations
 import enSkillBuilder from './locales/skill-builder/english.json';
 import hiSkillBuilder from './locales/skill-builder/hindi.json';
@@ -236,11 +251,42 @@ import eventManagementMl from './locales/event-management/malayalam.json';
 import eventManagementPa from './locales/event-management/punjabi.json';
 import eventManagementAs from './locales/event-management/assamese.json';
 
+// Job Board translations
+import jobBoardEn from './locales/job-board/english.json';
+import jobBoardHi from './locales/job-board/hindi.json';
+import jobBoardBn from './locales/job-board/bengali.json';
+import jobBoardTa from './locales/job-board/tamil.json';
+import jobBoardTe from './locales/job-board/telugu.json';
+import jobBoardMr from './locales/job-board/marathi.json';
+import jobBoardGu from './locales/job-board/gujarati.json';
+import jobBoardUr from './locales/job-board/urdu.json';
+import jobBoardKn from './locales/job-board/kannada.json';
+import jobBoardOr from './locales/job-board/odia.json';
+import jobBoardMl from './locales/job-board/malayalam.json';
+import jobBoardPa from './locales/job-board/punjabi.json';
+import jobBoardAs from './locales/job-board/assamese.json';
+
+// CSR Dashboard translations
+import csrDashboardEn from './locales/csr-dashboard/english.json';
+import csrDashboardHi from './locales/csr-dashboard/hindi.json';
+import csrDashboardBn from './locales/csr-dashboard/bengali.json';
+import csrDashboardMr from './locales/csr-dashboard/marathi.json';
+import csrDashboardTe from './locales/csr-dashboard/telugu.json';
+import csrDashboardTa from './locales/csr-dashboard/tamil.json';
+import csrDashboardGu from './locales/csr-dashboard/gujarati.json';
+import csrDashboardUr from './locales/csr-dashboard/urdu.json';
+import csrDashboardKn from './locales/csr-dashboard/kannada.json';
+import csrDashboardOr from './locales/csr-dashboard/odia.json';
+import csrDashboardMl from './locales/csr-dashboard/malayalam.json';
+import csrDashboardPa from './locales/csr-dashboard/punjabi.json';
+import csrDashboardAs from './locales/csr-dashboard/assamese.json';
+
 i18n
   .use(initReactI18next)
   .init({
     resources: {
       en: {
+        auth: authEn, // Added auth namespace
         skillbuilder: enSkillBuilder,
         hero: enHero,
         featuresname: enFeatures,
@@ -257,8 +303,11 @@ i18n
         myprojects: myProjectsEn, // Added my-projects namespace
         'event-details': eventDetailsEn, // Added event-details namespace
         'event-management': eventManagementEn, // Added event-management namespace
+        'job-board': jobBoardEn, // Added job-board namespace
+        'csr-dashboard': csrDashboardEn, // Added csr-dashboard namespace
       },
       hi: {
+        auth: authHi, // Added auth namespace
         skillbuilder: hiSkillBuilder,
         hero: hiHero,
         featuresname: hiFeatures,
@@ -275,8 +324,11 @@ i18n
         myprojects: myProjectsHi, // Added my-projects namespace
         'event-details': eventDetailsHi, // Added event-details namespace
         'event-management': eventManagementHi, // Added event-management namespace
+        'job-board': jobBoardHi, // Added job-board namespace
+        'csr-dashboard': csrDashboardHi, // Added csr-dashboard namespace
       },
       bn: {
+        auth: authBn, // Added auth namespace
         skillbuilder: bnSkillBuilder,
         hero: bnHero,
         featuresname: bnFeatures,
@@ -293,8 +345,11 @@ i18n
         myprojects: myProjectsBn, // Added my-projects namespace
         'event-details': eventDetailsBn, // Added event-details namespace
         'event-management': eventManagementBn, // Added event-management namespace
+        'job-board': jobBoardBn, // Added job-board namespace
+        'csr-dashboard': csrDashboardBn, // Added csr-dashboard namespace
       },
       mr: {
+        auth: authMr, // Added auth namespace
         skillbuilder: mrSkillBuilder,
         hero: mrHero,
         featuresname: mrFeatures,
@@ -311,8 +366,11 @@ i18n
         myprojects: myProjectsMr, // Added my-projects namespace
         'event-details': eventDetailsMr, // Added event-details namespace
         'event-management': eventManagementMr, // Added event-management namespace
+        'job-board': jobBoardMr, // Added job-board namespace
+        'csr-dashboard': csrDashboardMr, // Added csr-dashboard namespace
       },
       te: {
+        auth: authTe, // Added auth namespace
         skillbuilder: teSkillBuilder,
         hero: teHero,
         featuresname: teFeatures,
@@ -329,8 +387,11 @@ i18n
         myprojects: myProjectsTe, // Added my-projects namespace
         'event-details': eventDetailsTe, // Added event-details namespace
         'event-management': eventManagementTe, // Added event-management namespace
+        'job-board': jobBoardTe, // Added job-board namespace
+        'csr-dashboard': csrDashboardTe, // Added csr-dashboard namespace
       },
       ta: {
+        auth: authTa, // Added auth namespace
         skillbuilder: taSkillBuilder,
         hero: taHero,
         featuresname: taFeatures,
@@ -347,8 +408,11 @@ i18n
         myprojects: myProjectsTa, // Added my-projects namespace
         'event-details': eventDetailsTa, // Added event-details namespace
         'event-management': eventManagementTa, // Added event-management namespace
+        'job-board': jobBoardTa, // Added job-board namespace
+        'csr-dashboard': csrDashboardTa, // Added csr-dashboard namespace
       },
       gu: {
+        auth: authGu, // Added auth namespace
         skillbuilder: guSkillBuilder,
         hero: guHero,
         featuresname: guFeatures,
@@ -365,8 +429,11 @@ i18n
         myprojects: myProjectsGu, // Added my-projects namespace
         'event-details': eventDetailsGu, // Added event-details namespace
         'event-management': eventManagementGu, // Added event-management namespace
+        'job-board': jobBoardGu, // Added job-board namespace
+        'csr-dashboard': csrDashboardGu, // Added csr-dashboard namespace
       },
       ur: {
+        auth: authUr, // Added auth namespace
         skillbuilder: urSkillBuilder,
         hero: urHero,
         featuresname: urFeatures,
@@ -383,8 +450,11 @@ i18n
         myprojects: myProjectsUr, // Added my-projects namespace
         'event-details': eventDetailsUr, // Added event-details namespace
         'event-management': eventManagementUr, // Added event-management namespace
+        'job-board': jobBoardUr, // Added job-board namespace
+        'csr-dashboard': csrDashboardUr, // Added csr-dashboard namespace
       },
       kn: {
+        auth: authKn, // Added auth namespace
         skillbuilder: knSkillBuilder,
         hero: knHero,
         featuresname: knFeatures,
@@ -401,8 +471,11 @@ i18n
         myprojects: myProjectsKn, // Added my-projects namespace
         'event-details': eventDetailsKn, // Added event-details namespace
         'event-management': eventManagementKn, // Added event-management namespace
+        'job-board': jobBoardKn, // Added job-board namespace
+        'csr-dashboard': csrDashboardKn, // Added csr-dashboard namespace
       },
       or: {
+        auth: authOr, // Added auth namespace
         skillbuilder: orSkillBuilder,
         hero: orHero,
         featuresname: orFeatures,
@@ -419,8 +492,11 @@ i18n
         myprojects: myProjectsOr, // Added my-projects namespace
         'event-details': eventDetailsOr, // Added event-details namespace
         'event-management': eventManagementOr, // Added event-management namespace
+        'job-board': jobBoardOr, // Added job-board namespace
+        'csr-dashboard': csrDashboardOr, // Added csr-dashboard namespace
       },
       ml: {
+        auth: authMl, // Added auth namespace
         skillbuilder: mlSkillBuilder,
         hero: mlHero,
         featuresname: mlFeatures,
@@ -437,8 +513,11 @@ i18n
         myprojects: myProjectsMl, // Added my-projects namespace
         'event-details': eventDetailsMl, // Added event-details namespace
         'event-management': eventManagementMl, // Added event-management namespace
+        'job-board': jobBoardMl, // Added job-board namespace
+        'csr-dashboard': csrDashboardMl, // Added csr-dashboard namespace
       },
       pa: {
+        auth: authPa, // Added auth namespace
         skillbuilder: paSkillBuilder,
         hero: paHero,
         featuresname: paFeatures,
@@ -455,8 +534,11 @@ i18n
         myprojects: myProjectsPa, // Added my-projects namespace
         'event-details': eventDetailsPa, // Added event-details namespace
         'event-management': eventManagementPa, // Added event-management namespace
+        'job-board': jobBoardPa, // Added job-board namespace
+        'csr-dashboard': csrDashboardPa, // Added csr-dashboard namespace
       },
       as: {
+        auth: authAs, // Added auth namespace
         skillbuilder: asSkillBuilder,
         hero: asHero,
         featuresname: asFeatures,
@@ -473,11 +555,14 @@ i18n
         myprojects: myProjectsAs, // Added my-projects namespace
         'event-details': eventDetailsAs, // Added event-details namespace
         'event-management': eventManagementAs, // Added event-management namespace
+        'job-board': jobBoardAs, // Added job-board namespace
+        'csr-dashboard': csrDashboardAs, // Added csr-dashboard namespace
       },
     },
     lng: 'en',
     fallbackLng: 'en',
     ns: [
+      'auth', // Added auth to namespaces list
       'skillbuilder',
       'hero',
       'featuresname',
@@ -494,6 +579,8 @@ i18n
       'myprojects', // Added my-projects to namespaces list
       'event-details', // Added event-details to namespaces list
       'event-management', // Added event-management to namespaces list
+      'job-board', // Added job-board to namespaces list
+      'csr-dashboard', // Added csr-dashboard to namespaces list
     ],
     defaultNS: 'translation',
     interpolation: {

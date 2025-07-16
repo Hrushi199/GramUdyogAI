@@ -1,0 +1,64 @@
+{
+  "header": {
+    "title": "सीएसआर प्रभाव डैशबोर्ड",
+    "subtitle": "कॉर्पोरेट सामाजिक जिम्मेदारी मेट्रिक्स और एनालिटिक्स - अपनी कंपनी के सामाजिक प्रभाव और सामुदायिक विकास पहलों को ट्रैक करें"
+  },
+  "loading": {
+    "initializing": "सीएसआर डैशबोर्ड प्रारंभ कर रहे हैं..."
+  },
+  "companySelector": {
+    "title": "कंपनी चुनें",
+    "employees": "कर्मचारी",
+    "searchPlaceholder": "इवेंट्स खोजें..."
+  },
+  "metrics": {
+    "totalEvents": "कुल इवेंट्स",
+    "beneficiaries": "लाभार्थी",
+    "budgetAllocated": "बजट आवंटित",
+    "impactScore": "प्रभाव स्कोर"
+  },
+  "tabs": {
+    "overview": "अवलोकन",
+    "events": "इवेंट्स",
+    "analytics": "एनालिटिक्स"
+  },
+  "overview": {
+    "budgetEfficiency": {
+      "title": "बजट दक्षता",
+      "allocated": "आवंटित",
+      "spent": "खर्च",
+      "efficiency": "दक्षता"
+    },
+    "impactMetrics": {
+      "title": "प्रभाव मेट्रिक्स",
+      "sustainabilityScore": "स्थिरता स्कोर",
+      "communityFeedback": "सामुदायिक प्रतिक्रिया",
+      "averageImpact": "औसत प्रभाव"
+    }
+  },
+  "events": {
+    "title": "हाल की घटनाएं",
+    "beneficiaries": "लाभार्थी",
+    "spent": "खर्च"
+  },
+  "analytics": {
+    "eventTypes": "इवेंट प्रकार",
+    "geographicalReach": "भौगोलिक पहुंच"
+  },
+  "eventTypes": {
+    "education": "शिक्षा",
+    "healthcare": "स्वास्थ्य सेवा",
+    "environment": "पर्यावरण",
+    "skill_development": "कौशल विकास",
+    "rural_development": "ग्रामीण विकास",
+    "women_empowerment": "महिला सशक्तिकरण",
+    "digital_literacy": "डिजिटल साक्षरता",
+    "poverty_alleviation": "गरीबी उन्मूलन"
+  },
+  "errors": {
+    "initializingDashboard": "डैशबोर्ड प्रारंभ करने में त्रुटि:",
+    "fetchingCompanies": "कंपनियों को लाने में त्रुटि:",
+    "fetchingMetrics": "कंपनी मेट्रिक्स लाने में त्रुटि:",
+    "fetchingEvents": "कंपनी इवेंट्स लाने में त्रुटि:"
+  }
+}

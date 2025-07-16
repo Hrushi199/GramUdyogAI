@@ -1,0 +1,100 @@
+{
+  "welcome": {
+    "back": "ફરીથી આપનું સ્વાગત",
+    "join": "GramUdyogAI માં જોડાઓ",
+    "signInSubtitle": "તમારા એકાઉન્ટમાં સાઇન ઇન કરો",
+    "createAccountSubtitle": "શરૂ કરવા માટે તમારું એકાઉન્ટ બનાવો"
+  },
+  "userTypes": {
+    "label": "હું છું...",
+    "individual": {
+      "title": "વ્યક્તિગત",
+      "description": "કુશળ વ્યક્તિઓ, શીખનારાઓ અને વ્યાવસાયિકો"
+    },
+    "company": {
+      "title": "કંપની", 
+      "description": "કોર્પોરેટ્સ અને વ્યવસાયો"
+    },
+    "ngo": {
+      "title": "એનજીઓ",
+      "description": "બિન-લાભકારી સંસ્થાઓ"
+    },
+    "investor": {
+      "title": "રોકાણકાર",
+      "description": "એન્જલ રોકાણકારો અને વીસી"
+    }
+  },
+  "form": {
+    "fields": {
+      "phoneNumber": "ફોન નંબર",
+      "password": "પાસવર્ડ",
+      "confirmPassword": "પાસવર્ડની પુષ્ટિ કરો",
+      "fullName": "પૂરું નામ",
+      "organizationName": "સંસ્થાનું નામ",
+      "contactPersonName": "સંપર્ક વ્યક્તિનું નામ"
+    },
+    "placeholders": {
+      "phoneNumber": "તમારો ફોન નંબર દાખલ કરો",
+      "password": "તમારો પાસવર્ડ દાખલ કરો",
+      "confirmPassword": "તમારા પાસવર્ડની પુષ્ટિ કરો",
+      "fullName": "તમારું પૂરું નામ દાખલ કરો",
+      "organizationName": "સંસ્થાનું નામ દાખલ કરો",
+      "contactPersonName": "સંપર્ક વ્યક્તિનું નામ દાખલ કરો"
+    },
+    "required": "*",
+    "forgotPassword": "પાસવર્ડ ભૂલી ગયા?",
+    "forgotPasswordTooltip": "સુવિધા વિકસિત થઈ રહી છે"
+  },
+  "passwordRequirements": {
+    "title": "પાસવર્ડની આવશ્યકતાઓ:",
+    "length": "ઓછામાં ઓછા 8 અક્ષરો",
+    "uppercase": "ઓછામાં ઓછો એક મોટો અક્ષર",
+    "lowercase": "ઓછામાં ઓછો એક નાનો અક્ષર", 
+    "number": "ઓછામાં ઓછો એક નંબર",
+    "special": "ઓછામાં ઓછો એક વિશેષ અક્ષર (#@$!%*?&)"
+  },
+  "validation": {
+    "phoneRequired": "ફોન નંબર આવશ્યક છે",
+    "phoneInvalid": "ફોન નંબર વૈધ હોવો જોઈએ અને 0 થી શરૂ ન થવો જોઈએ.",
+    "passwordRequired": "પાસવર્ડ આવશ્યક છે",
+    "nameRequired": "નામ આવશ્યક છે",
+    "passwordRequirements": "પાસવર્ડ આવશ્યકતાઓ પૂરી કરતો નથી.",
+    "passwordMismatch": "પાસવર્ડ મેળ ખાતા નથી",
+    "passwordLength": "પાસવર્ડ ઓછામાં ઓછા 8 અક્ષરોનો હોવો જોઈએ.",
+    "passwordUppercase": "પાસવર્ડમાં એક મોટો અક્ષર હોવો જોઈએ.",
+    "passwordLowercase": "પાસવર્ડમાં એક નાનો અક્ષર હોવો જોઈએ.",
+    "passwordNumber": "પાસવર્ડમાં એક નંબર હોવો જોઈએ.",
+    "passwordSpecial": "પાસવર્ડમાં એક વિશેષ અક્ષર (@$!%*?&) હોવો જોઈએ.",
+    "passwordsNoMatch": "પાસવર્ડ મેળ ખાતા નથી."
+  },
+  "buttons": {
+    "signIn": "સાઇન ઇન કરો",
+    "createAccount": "એકાઉન્ટ બનાવો",
+    "processing": "પ્રક્રિયા...",
+    "fillFormByVoice": "અવાજ વડે ફોર્મ ભરો",
+    "voiceProcessing": "પ્રક્રિયા..."
+  },
+  "links": {
+    "noAccount": "એકાઉન્ટ નથી? સાઇન અપ કરો",
+    "hasAccount": "પહેલેથી એકાઉન્ટ છે? સાઇન ઇન કરો"
+  },
+  "messages": {
+    "loginSuccess": "લોગિન સફળ! તમારી પ્રોફાઇલ પર રીડાયરેક્ટ કરી રહ્યા છીએ...",
+    "registrationSuccess": "રજિસ્ટ્રેશન સફળ! પ્રોફાઇલ સર્જન પર રીડાયરેક્ટ કરી રહ્યા છીએ...",
+    "accountDeactivated": "એકાઉન્ટ નિષ્ક્રિય છે. કૃપા કરીને સહાયનો સંપર્ક કરો.",
+    "invalidCredentials": "ખોટો ફોન નંબર અથવા પાસવર્ડ. કૃપા કરીને તમારી વિગતો ચકાસો.",
+    "loginFailed": "લોગિન નિષ્ફળ. કૃપા કરીને ફરીથી પ્રયાસ કરો.",
+    "phoneExists": "આ ફોન નંબર સાથે એકાઉન્ટ પહેલેથી અસ્તિત્વમાં છે. કૃપા કરીને લોગિન કરો.",
+    "checkInput": "કૃપા કરીને તમારી વિગતો ચકાસો અને ફરીથી પ્રયાસ કરો.",
+    "registrationFailed": "રજિસ્ટ્રેશન નિષ્ફળ. કૃપા કરીને ફરીથી પ્રયાસ કરો.",
+    "authFailed": "પ્રમાણીકરણ નિષ્ફળ. કૃપા કરીને ફરીથી પ્રયાસ કરો.",
+    "microphoneError": "માઇક્રોફોનનો ઉપયોગ કરી શકાયો નહીં. કૃપા કરીને પરવાનગીઓ ચકાસો.",
+    "voiceInProgress": "અવાજ ઇનપુટ પહેલેથી ચાલુ છે.",
+    "voiceInstructions": "અવાજ ઇનપુટ શરૂ કરવા માટે માઇક્રોફોન આઇકન પર ક્લિક કરો.",
+    "voiceStopped": "અવાજ ઇનપુટ બંધ. પ્રક્રિયા...",
+    "voiceTranscriptionFailed": "અવાજ ટ્રાન્સક્રિપ્શન નિષ્ફળ. કૃપા કરીને ફરીથી પ્રયાસ કરો.",
+    "replaceConfirm": "\"{currentValue}\" ને \"{newValue}\" સાથે બદલવું?",
+    "yes": "હા",
+    "no": "ના"
+  }
+}

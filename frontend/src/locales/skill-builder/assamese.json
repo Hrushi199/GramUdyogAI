@@ -226,13 +226,28 @@
       }
     },
     "navbar": {
-      "features": "বৈশিষ্ট্য",
-      "about": "পৰিচিতি",
-      "contact": "যোগাযোগ",
-      "profile": "প্ৰ'ফাইল",
-      "dashboard": "ডেচব'ৰ্ড",
-      "community": "সম্প্ৰদায়",
-      "skills": "দক্ষতা",
-      "signUp": "চাইন আপ"
-    }
+    "home": "ঘৰ",
+    "jobs": "চাকৰি",
+    "schemes": "আঁচনি",
+    "learning": "শিক্ষা",
+    "skills": "দক্ষতা",
+    "courseRecommender": "পাঠ্যক্ৰম পৰামৰ্শদাতা",
+    "business": "ব্যৱসায়",
+    "businessIdeas": "ব্যৱসায়িক ধাৰণা",
+    "projects": "প্ৰকল্প",
+    "myProjects": "মোৰ প্ৰকল্প",
+    "events": "অনুষ্ঠান",
+    "csr": "চি.এছ.আৰ",
+    "profile": "প্ৰ'ফাইল",
+    "dashboard": "ডেছব'ৰ্ড",
+    "welcome": "স্বাগতম",
+    "login": "লগইন",
+    "logout": "লগআউট",
+    "community": "সম্প্ৰদায়",
+    "createProfile": "প্ৰ'ফাইল সৃষ্টি কৰক",
+    "features": "বৈশিষ্ট্য",
+    "about": "আমাৰ বিষয়ে",
+    "contact": "যোগাযোগ",
+    "signUp": "চাইন আপ"
+  }
   }
