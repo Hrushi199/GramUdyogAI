@@ -1,7 +1,7 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from models.csr_course import CSRCourse, CourseEnrollment, EnrollmentStatus
 import sqlite3
-from typing import List
+from typing import List, Optional
 from datetime import datetime
 from core.llm_recommendations import get_course_recommendations
 import logging
@@ -101,18 +101,61 @@ async def update_course(course_id: int, course: CSRCourse):
         conn.close()
 
 @router.get("/courses")
-async def get_all_courses():
+async def get_all_courses(
+    limit: int = Query(20, description="Number of courses to return"),
+    offset: int = Query(0, description="Number of courses to skip"),
+    search: Optional[str] = Query(None, description="Search query for title or skills"),
+    language: Optional[str] = Query(None, description="Filter by language"),
+    status: Optional[str] = Query(None, description="Filter by status")
+):
     conn = get_db()
     c = conn.cursor()
     try:
-        c.execute('SELECT * FROM csr_courses')
+        # Build query with filters
+        base_query = "SELECT * FROM csr_courses WHERE 1=1"
+        count_query = "SELECT COUNT(*) FROM csr_courses WHERE 1=1"
+        params = []
+        
+        if search:
+            base_query += " AND (title LIKE ? OR skills LIKE ? OR description LIKE ?)"
+            count_query += " AND (title LIKE ? OR skills LIKE ? OR description LIKE ?)"
+            search_param = f"%{search}%"
+            params.extend([search_param, search_param, search_param])
+        
+        if language:
+            base_query += " AND language = ?"
+            count_query += " AND language = ?"
+            params.append(language)
+        
+        if status:
+            base_query += " AND status = ?"
+            count_query += " AND status = ?"
+            params.append(status)
+        
+        # Get total count
+        c.execute(count_query, params)
+        total_count = c.fetchone()[0]
+        
+        # Add ordering and pagination
+        base_query += " ORDER BY created_at DESC LIMIT ? OFFSET ?"
+        params.extend([limit, offset])
+        
+        c.execute(base_query, params)
         rows = c.fetchall()
         courses = []
         for row in rows:
             course = dict(zip([col[0] for col in c.description], row))
-            course['skills'] = course['skills'].split(',')
+            course['skills'] = course['skills'].split(',') if course['skills'] else []
             courses.append(course)
-        return courses
+        
+        return {
+            "courses": courses,
+            "total_count": total_count,
+            "limit": limit,
+            "offset": offset,
+            "has_next": offset + limit < total_count,
+            "has_prev": offset > 0
+        }
     finally:
         conn.close()
 

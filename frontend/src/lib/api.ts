@@ -28,6 +28,30 @@ interface ApiResponse<T> {
   message?: string;
 }
 
+interface PaginatedResponse<T> {
+  courses?: T[];
+  total_count: number;
+  limit: number;
+  offset: number;
+  has_next: boolean;
+  has_prev: boolean;
+}
+
+interface Course {
+  id: number;
+  name: string;
+  link: string;
+  category: string;
+  skill_level: string;
+  duration: string;
+  provider: string;
+  description: string;
+  tags: string[];
+  source: string;
+  is_active: boolean;
+  created_at: string;
+}
+
 // Generic CRUD operations
 class ApiService {
   private async request<T>(
@@ -973,6 +997,46 @@ const response = await this.api.get<UserProfile>('/api/profile');
   }
 }
 
+// Course API for regular courses
+export class CourseAPI {
+  private api = new ApiService();
+
+  async getCourses(params?: {
+    limit?: number;
+    offset?: number;
+    category?: string;
+    skill_level?: string;
+    search?: string;
+  }): Promise<ApiResponse<PaginatedResponse<Course>>> {
+    const queryParams = new URLSearchParams();
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined) queryParams.append(key, value.toString());
+      });
+    }
+    const endpoint = `/api/courses${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+    return this.api.get<PaginatedResponse<Course>>(endpoint);
+  }
+
+  async getCourseById(id: number): Promise<ApiResponse<Course>> {
+    return this.api.get<Course>(`/api/courses/${id}`);
+  }
+
+  async searchCourses(query: string, limit?: number, offset?: number): Promise<ApiResponse<PaginatedResponse<Course>>> {
+    const params = new URLSearchParams({ query });
+    if (limit) params.append('limit', limit.toString());
+    if (offset) params.append('offset', offset.toString());
+    return this.api.get<PaginatedResponse<Course>>(`/api/courses/search?${params.toString()}`);
+  }
+
+  async getCourseCategories(): Promise<ApiResponse<string[]>> {
+    return this.api.get<string[]>('/api/courses/categories');
+  }
+
+  async getCourseSkillLevels(): Promise<ApiResponse<string[]>> {
+    return this.api.get<string[]>('/api/courses/skill-levels');
+  }
+}
 
 // CSR Course API - Enhanced for Skill India integration
 export class CSRCourseAPI {
@@ -993,7 +1057,8 @@ export class CSRCourseAPI {
     source?: string;
     is_active?: boolean;
     search?: string;
-  }): Promise<ApiResponse<CSRCourse[]>> {
+    status?: string;
+  }): Promise<ApiResponse<PaginatedResponse<CSRCourse>>> {
     const queryParams = new URLSearchParams();
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
@@ -1001,7 +1066,7 @@ export class CSRCourseAPI {
       });
     }
     const endpoint = `/api/csr/courses${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
-    return this.api.get<CSRCourse[]>(endpoint);
+    return this.api.get<PaginatedResponse<CSRCourse>>(endpoint);
   }
 
   async getCourseById(id: number): Promise<ApiResponse<CSRCourse>> {
@@ -1225,6 +1290,7 @@ export const eventAPI = new EventAPI();
 export const projectAPI = new ProjectAPI();
 export const jobAPI = new JobAPI();
 export const userAPI = new UserAPI();
+export const courseAPI = new CourseAPI();
 export const csrCourseAPI = new CSRCourseAPI();
 export const visualSummaryAPI = new VisualSummaryAPI();
 export const notificationAPI = new NotificationAPI();
