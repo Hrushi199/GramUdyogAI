@@ -36,14 +36,21 @@ interface BusinessSuggestion {
   profit_potential?: string;
 }
 
-interface Course {
-  title: string;
-  provider: string;
-  description: string;
-  url?: string;
-  rating?: number;
+interface UpdatedCourse {
+  id: number;
+  name: string;
+  link: string;
+  category?: string;
+  skill_level?: string;
   duration?: string;
+  provider?: string;
+  description?: string;
+  tags?: string[];
+  source?: string;
+  is_active: boolean;
+  created_at: string;
 }
+
 
 interface Event {
   id: number;
@@ -289,40 +296,59 @@ export const BusinessSuggestionRenderer: React.FC<{ suggestions: BusinessSuggest
 };
 
 // Course Renderer Component
-export const CourseRenderer: React.FC<{ courses: Course[]; compact?: boolean }> = ({ courses, compact = true }) => {
+export const CourseRenderer: React.FC<{ courses: UpdatedCourse[]; compact?: boolean }> = ({ courses, compact = true }) => {
   const { t } = useTranslation('courses');
 
   return (
     <div className="space-y-3">
       <h3 className="text-lg font-semibold text-green-400 mb-3">📚 {t('recommended_courses', 'Recommended Courses')}</h3>
       {courses.slice(0, compact ? 3 : courses.length).map((course, index) => (
-        <div key={index} className="bg-gradient-to-r from-green-900/20 to-emerald-900/20 rounded-lg p-4 border border-green-700/50">
+        <div key={course.id} className="bg-gradient-to-r from-green-900/20 to-emerald-900/20 rounded-lg p-4 border border-green-700/50">
           <div className="flex justify-between items-start mb-2">
-            <h4 className="font-semibold text-white text-sm">{safeRender(course.title)}</h4>
-            {course.rating && (
-              <div className="flex items-center text-yellow-400 text-xs">
-                <Star className="w-3 h-3 mr-1 fill-current" />
-                <span>{safeRender(course.rating)}</span>
-              </div>
+            <h4 className="font-semibold text-white text-sm line-clamp-1">{course.name}</h4>
+            {course.skill_level && (
+              <span className="text-xs text-emerald-400 px-2 py-1 bg-emerald-900/30 rounded-full">{course.skill_level}</span>
             )}
           </div>
-          
-          <div className="flex items-center text-gray-400 text-xs mb-2">
-            <Users className="w-3 h-3 mr-1" />
-            <span className="mr-3">{safeRender(course.provider)}</span>
+
+          <div className="text-gray-400 text-xs mb-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+            {course.provider && (
+              <span className="flex items-center">
+                <Users className="w-3 h-3 mr-1" />
+                {course.provider}
+              </span>
+            )}
             {course.duration && (
-              <>
+              <span className="flex items-center">
                 <Clock className="w-3 h-3 mr-1" />
-                <span>{safeRender(course.duration)}</span>
-              </>
+                {course.duration}
+              </span>
+            )}
+            {course.category && (
+              <span className="text-xs text-green-300 px-2 py-0.5 bg-green-900/30 rounded">{course.category}</span>
             )}
           </div>
-          
-          <p className="text-gray-300 text-xs mb-3 line-clamp-2">{safeRender(course.description)}</p>
-          
-          {course.url && (
+
+          <p className="text-gray-300 text-xs mb-3 line-clamp-3">{course.description}</p>
+
+          {course.tags && course.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1 mb-3">
+              {course.tags.slice(0, 4).map((tag, tagIdx) => (
+                <span key={tagIdx} className="text-xs text-green-200 px-2 py-1 bg-green-800/30 rounded-full">
+                  {tag}
+                </span>
+              ))}
+              {course.tags.length > 4 && (
+                <span className="text-xs text-gray-400 px-2 py-1 bg-gray-700/30 rounded-full">
+                  +{course.tags.length - 4} more
+                </span>
+              )}
+            </div>
+          )}
+
+          <div className="flex justify-between items-center">
             <a
-              href={course.url}
+              href={course.link}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-1 rounded transition-colors flex items-center w-fit"
@@ -330,7 +356,10 @@ export const CourseRenderer: React.FC<{ courses: Course[]; compact?: boolean }> 
               <ExternalLink className="w-3 h-3 mr-1" />
               View Course
             </a>
-          )}
+            {course.source && (
+              <span className="text-gray-500 text-xs italic">via {course.source}</span>
+            )}
+          </div>
         </div>
       ))}
       {compact && courses.length > 3 && (

@@ -857,3 +857,73 @@ async def get_courses(limit: int = 10) -> List[Dict[str, Any]]:
     except Exception as e:
         print(f"Error fetching courses: {e}")
         return []
+
+async def recommend_courses(user_query: str):
+    """
+    Simple course recommendation based on user query
+    """
+    query = user_query.lower()
+    
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    # Extract keywords from user query
+    keywords = []
+    
+    # Check for common skill-related keywords
+    if any(word in query for word in ['software', 'developer', 'programming', 'coding', 'python', 'java', 'web']):
+        keywords.extend(['programming', 'python', 'software', 'web'])
+    if any(word in query for word in ['ai', 'artificial intelligence', 'machine learning']):
+        keywords.extend(['ai', 'artificial'])
+    if any(word in query for word in ['business', 'management', 'entrepreneur']):
+        keywords.extend(['business', 'management'])
+    if any(word in query for word in ['design', 'creative', 'graphics']):
+        keywords.extend(['design', 'creative'])
+    
+    # Build query based on keywords
+    if keywords:
+        keyword_conditions = " OR ".join([f"name LIKE '%{keyword}%' OR description LIKE '%{keyword}%' OR tags LIKE '%{keyword}%'" for keyword in keywords])
+        sql_query = f"""
+            SELECT id, name, link, category, skill_level, duration, provider, description, tags, source, is_active, created_at
+            FROM courses 
+            WHERE is_active = 1 AND ({keyword_conditions})
+            ORDER BY created_at DESC 
+            LIMIT 5
+        """
+    else:
+        # Default to recent courses
+        sql_query = """
+            SELECT id, name, link, category, skill_level, duration, provider, description, tags, source, is_active, created_at
+            FROM courses 
+            WHERE is_active = 1
+            ORDER BY created_at DESC 
+            LIMIT 5
+        """
+    
+    cursor.execute(sql_query)
+    courses = cursor.fetchall()
+    conn.close()
+    
+    recommended_courses = [
+        {
+            "id": course[0],
+            "name": course[1],
+            "link": course[2],
+            "category": course[3],
+            "skill_level": course[4],
+            "duration": course[5],
+            "provider": course[6],
+            "description": course[7],
+            "tags": json.loads(course[8]) if course[8] else [],
+            "source": course[9],
+            "is_active": course[10],
+            "created_at": course[11]
+        }
+        for course in courses
+    ]
+    
+    return {
+        "courses": recommended_courses,
+        "total_found": len(recommended_courses),
+        "query": query
+    }

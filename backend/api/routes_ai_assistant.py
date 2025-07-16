@@ -202,8 +202,8 @@ async def ai_assistant_enhanced(req: AssistantRequest, request: Request = None):
 
         # --- COURSES & SKILLS ---
         elif func_name == "course_recommendation":
-            from core.course_recommender import generate_structured_recommendations
-            course_data = generate_structured_recommendations(args, {})
+            from core.ai_assistant_data import recommend_courses
+            course_data = await recommend_courses(args)
             response_data.structured_data = {"courses": course_data.get("courses", [])}
             response_data.output = f"Here are some recommended courses."
         elif func_name == "skill_tutorial":
