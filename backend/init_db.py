@@ -265,24 +265,29 @@ CREATE TABLE IF NOT EXISTS events (
     CREATE TABLE IF NOT EXISTS job_postings (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         job_title TEXT NOT NULL,
-        company TEXT NOT NULL,
+        company_name TEXT NOT NULL,
         location TEXT NOT NULL,
         salary_range TEXT,
         description TEXT NOT NULL,
-        posted_on TEXT,
+        posted_date TEXT,
         apply_url TEXT,
         industry TEXT,
         sector TEXT,
         job_status TEXT DEFAULT 'Active',
-        experience_required INTEGER DEFAULT 0,
-        in_hand_salary INTEGER,
-        valid_upto TEXT,
+        experience_required TEXT, -- Changed to TEXT for compatibility with all data
+        employment_type TEXT,
+        job_type TEXT,
+        in_hand_salary TEXT, -- Changed to TEXT for compatibility
+        application_deadline TEXT,
         source TEXT DEFAULT 'Skill India', -- To identify data source
         tags TEXT, -- JSON array of relevant tags/keywords
+        skills_required TEXT, -- JSON array
         title TEXT, -- Legacy field for backward compatibility
         company_contact TEXT, -- Legacy field for backward compatibility
         pay TEXT, -- Legacy field for backward compatibility
-        created_at TEXT NOT NULL DEFAULT (datetime('now'))
+        company TEXT, -- Legacy field for backward compatibility
+        created_at TEXT NOT NULL DEFAULT (datetime('now')),
+        is_active BOOLEAN DEFAULT 0
     )
 ''')
 
@@ -480,7 +485,7 @@ def load_skill_india_jobs():
                 
                 cursor.execute('''
                     INSERT INTO job_postings (
-                        job_title, company, location, salary_range, description,
+                        job_title, company_name, location, salary_range, description,
                         posted_date, apply_url, industry, sector, 
                         experience_required, application_deadline, source, tags, 
                         title, company_contact, pay, created_at, is_active
@@ -728,7 +733,7 @@ def update_jobs_with_apply_urls():
                 job_url_mapping[key] = job['apply_url']
         
         # Update existing jobs with apply URLs
-        cursor.execute("SELECT id, job_title, company FROM job_postings WHERE apply_url IS NULL OR apply_url = ''")
+        cursor.execute("SELECT id, job_title, company_name FROM job_postings WHERE apply_url IS NULL OR apply_url = ''")
         jobs_to_update = cursor.fetchall()
         
         updated_count = 0

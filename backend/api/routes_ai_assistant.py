@@ -137,7 +137,7 @@ async def ai_assistant_enhanced(req: AssistantRequest, request: Request = None):
         # --- JOBS ---
         elif func_name == "recommend_job":
             # Use the smart job recommendation API for better results
-            from api.routes_jobs import smart_recommend_job
+            from core.ai_assistant_data import smart_recommend_job
             from pydantic import BaseModel
             
             class UserInfo(BaseModel):

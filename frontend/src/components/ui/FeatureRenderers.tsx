@@ -104,51 +104,85 @@ export const JobRenderer: React.FC<{ jobs: Job[]; compact?: boolean }> = ({ jobs
           <div className="flex justify-between items-start mb-2">
             <h4 className="font-semibold text-white text-sm">{safeRender(job.job_title || job.title)}</h4>
             <div className="flex items-center gap-2">
-              {(job as any).relevance_score > 0 && (
+              {job.relevance_score && job.relevance_score > 0 && (
                 <span className="text-xs text-yellow-400 px-2 py-1 bg-yellow-900/30 rounded-full">
-                  ⭐ {(job as any).relevance_score}
+                  ⭐ {job.relevance_score}
                 </span>
               )}
               {job.job_type && (
                 <span className="text-xs text-cyan-400 px-2 py-1 bg-cyan-900/30 rounded-full">{safeRender(job.job_type)}</span>
               )}
+              {job.job_status && (
+                <span className="text-xs text-pink-400 px-2 py-1 bg-pink-900/30 rounded-full">{safeRender(job.job_status)}</span>
+              )}
+              {job.is_active !== undefined && (
+                <span className={`text-xs px-2 py-1 rounded-full ${job.is_active ? 'bg-green-900/30 text-green-400' : 'bg-gray-700/30 text-gray-400'}`}>{job.is_active ? 'Active' : 'Inactive'}</span>
+              )}
             </div>
           </div>
-          
-          <div className="flex items-center text-gray-400 text-xs mb-2">
+
+          <div className="flex items-center text-gray-400 text-xs mb-2 flex-wrap gap-2">
             {job.company_name && <><Building className="w-3 h-3 mr-1.5" /> <span className="mr-3">{safeRender(job.company_name)}</span></>}
+            {job.company && !job.company_name && <><Building className="w-3 h-3 mr-1.5" /> <span className="mr-3">{safeRender(job.company)}</span></>}
             {job.location && <><MapPin className="w-3 h-3 mr-1.5" /> <span>{safeRender(job.location)}</span></>}
+            {job.sector && <><span className="ml-2 text-purple-300">Sector:</span> <span>{safeRender(job.sector)}</span></>}
           </div>
-          
-          {job.salary_range && (
-            <div className="flex items-center text-green-400 text-xs mb-3">
-              <DollarSign className="w-3 h-3 mr-1.5" />
-              <span>{safeRender(job.salary_range)}</span>
+
+          <div className="flex items-center text-gray-400 text-xs mb-2 flex-wrap gap-2">
+            {job.posted_date && <><Calendar className="w-3 h-3 mr-1.5" /> <span>Posted: {safeRender(job.posted_date)}</span></>}
+            {job.application_deadline && <><Calendar className="w-3 h-3 mr-1.5" /> <span>Deadline: {safeRender(job.application_deadline)}</span></>}
+            {job.created_at && <><Clock className="w-3 h-3 mr-1.5" /> <span>Created: {safeRender(job.created_at)}</span></>}
+          </div>
+
+          {(job.salary_range || job.pay || job.in_hand_salary) && (
+            <div className="flex items-center text-green-400 text-xs mb-3 gap-3">
+              {(job.salary_range || job.pay) && (
+                <><DollarSign className="w-3 h-3 mr-1.5" />
+                <span>{safeRender(job.salary_range || job.pay)}</span></>
+              )}
+              {job.in_hand_salary && (
+                <span className="ml-2">In-hand: {safeRender(job.in_hand_salary)}</span>
+              )}
             </div>
           )}
-          
+
           <div className="flex flex-wrap gap-2 mb-3">
-            {(job as any).industry && (
+            {job.industry && (
               <span className="text-xs text-purple-400 px-2 py-1 bg-purple-900/30 rounded-full">
-                {safeRender((job as any).industry)}
+                {safeRender(job.industry)}
               </span>
             )}
-            {(job as any).employment_type && (
+            {job.employment_type && (
               <span className="text-xs text-blue-400 px-2 py-1 bg-blue-900/30 rounded-full">
-                {safeRender((job as any).employment_type)}
+                {safeRender(job.employment_type)}
               </span>
             )}
-            {(job as any).experience_required && (
+            {job.experience_required && (
               <span className="text-xs text-orange-400 px-2 py-1 bg-orange-900/30 rounded-full">
-                {safeRender((job as any).experience_required)} months exp
+                {safeRender(job.experience_required)} months exp
               </span>
             )}
           </div>
-          
-          {(job as any).skills_required && Array.isArray((job as any).skills_required) && (job as any).skills_required.length > 0 && (
+
+          {job.tags && Array.isArray(job.tags) && job.tags.length > 0 && (
+            <div className="mb-3 flex flex-wrap gap-1.5">
+              {job.tags.slice(0, 6).map((tag, tagIdx) => (
+                <span key={tagIdx} className="text-xs text-cyan-200 px-2 py-1 bg-cyan-800/30 rounded-full">
+                  {tag}
+                </span>
+              ))}
+              {job.tags.length > 6 && (
+                <span className="text-xs text-gray-400 px-2 py-1 bg-gray-700/30 rounded-full">
+                  +{job.tags.length - 6} more
+                </span>
+              )}
+            </div>
+          )}
+
+          {job.skills_required && Array.isArray(job.skills_required) && job.skills_required.length > 0 && (
             <div className="mb-3">
               <div className="flex flex-wrap gap-1.5">
-                {(job as any).skills_required.slice(0, 5).map((skill: string, skillIndex: number) => (
+                {job.skills_required.slice(0, 5).map((skill: string, skillIndex: number) => (
                   <span key={skillIndex} className="text-xs text-indigo-400 px-2 py-1 bg-indigo-900/40 rounded-full">
                     {skill}
                   </span>
@@ -156,14 +190,14 @@ export const JobRenderer: React.FC<{ jobs: Job[]; compact?: boolean }> = ({ jobs
               </div>
             </div>
           )}
-          
+
           <p className="text-gray-300 text-xs mb-4 line-clamp-3">{safeRender(job.description)}</p>
-          
+
           <div className="flex justify-between items-center">
             <div className="flex gap-2">
-              {(job as any).apply_url && (
+              {job.apply_url ? (
                 <a
-                  href={(job as any).apply_url}
+                  href={job.apply_url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-cyan-600 hover:bg-cyan-700 text-white text-xs px-4 py-1.5 rounded-full transition-colors flex items-center gap-1.5"
@@ -171,15 +205,19 @@ export const JobRenderer: React.FC<{ jobs: Job[]; compact?: boolean }> = ({ jobs
                   <ExternalLink className="w-3 h-3" />
                   Apply Now
                 </a>
-              )}
-              {(job as any).source && (
+              ) : job.company_contact ? (
+                <span className="bg-blue-900/30 text-blue-300 px-3 py-1.5 rounded-full text-xs">
+                  Contact: {safeRender(job.company_contact)}
+                </span>
+              ) : null}
+              {job.source && (
                 <span className="text-xs text-gray-500 px-3 py-1.5 bg-gray-700/50 rounded-full">
-                  via {safeRender((job as any).source)}
+                  via {safeRender(job.source)}
                 </span>
               )}
             </div>
-            {(job as any).debug_info && (
-              <span className="text-xs text-gray-600 max-w-xs truncate" title={safeRender((job as any).debug_info)}>
+            {job.debug_info && (
+              <span className="text-xs text-gray-600 max-w-xs truncate" title={safeRender(job.debug_info)}>
                 🔍
               </span>
             )}

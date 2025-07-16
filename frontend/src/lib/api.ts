@@ -343,6 +343,8 @@ export interface Job {
   source?: string;
   tags?: string[];
   is_active?: boolean;
+  job_status?: string; // Added for compatibility
+  in_hand_salary?: string; // Added for compatibility
   
   // Smart recommendation fields
   relevance_score?: number;

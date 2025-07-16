@@ -927,3 +927,246 @@ async def recommend_courses(user_query: str):
         "total_found": len(recommended_courses),
         "query": query
     }
+
+from api.routes_jobs import analyze_user_intent_with_ai, get_jobs_based_on_ai_analysis, score_jobs_with_ai, format_job_response
+async def smart_recommend_job(user_info: UserInfo):
+    """
+    AI-powered smart job recommendation using Llama model via Groq
+    """
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        
+        user_text = user_info.user_info.lower()
+        
+        # Step 1: Use AI to analyze user intent and extract key information
+        intent_analysis = await analyze_user_intent_with_ai(user_text)
+        
+        # Step 2: Get relevant jobs based on AI analysis
+        jobs = await get_jobs_based_on_ai_analysis(cursor, intent_analysis, user_text)
+        
+        if not jobs:
+            conn.close()
+            return {"best_job": None, "alternative_jobs": [], "message": "No relevant jobs found. Please try a different search."}
+        
+        # Step 3: Use AI to score and rank jobs
+        scored_jobs = await score_jobs_with_ai(jobs, user_text, intent_analysis)
+        
+        conn.close()
+        
+        if not scored_jobs:
+            return {"best_job": None, "alternative_jobs": [], "message": "No relevant jobs found. Please try a different search."}
+
+        # Format the best job and alternatives
+        best_job_formatted = format_job_response(scored_jobs[0][1], scored_jobs[0][0])
+        alternative_jobs_formatted = [
+            format_job_response(job_data[1], job_data[0]) for job_data in scored_jobs[1:6]
+        ]
+        stuff =  {
+            "best_job": best_job_formatted,
+            "alternative_jobs": alternative_jobs_formatted,
+            "ai_analysis": intent_analysis
+        }
+        print(stuff)
+        return stuff
+        
+    except Exception as e:
+        print(f"Error in AI-powered recommendation: {str(e)}")
+        # Fallback to the original smart recommendation
+        return await smart_recommend_job_fallback(user_info)
+
+
+async def smart_recommend_job_fallback(user_info: UserInfo):
+    """
+    Fallback to original smart recommendation if AI fails
+    """
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    user_text = user_info.user_info.lower()
+    
+    # Add delivery/logistics to skill categories
+    skill_keywords = {
+        'delivery': ['delivery', 'driver', 'courier', 'logistics', 'transport', 'fleet', 'dispatch', 'shipping', 'swiggy', 'zomato', 'dunzo'],
+        'software': ['software', 'developer', 'programming', 'coding', 'python', 'java', 'javascript', 'react', 'node', 'web', 'app', 'frontend', 'backend', 'fullstack', 'mobile', 'android', 'ios'],
+        'sales': ['sales', 'marketing', 'business', 'customer', 'client', 'revenue', 'target', 'account', 'relationship', 'telesales'],
+        'healthcare': ['nurse', 'doctor', 'medical', 'healthcare', 'hospital', 'clinic', 'patient', 'pharmacy', 'therapy'],
+        'education': ['teacher', 'education', 'tutor', 'instructor', 'training', 'academic', 'professor', 'coach', 'school'],
+        'engineering': ['engineer', 'technical', 'mechanical', 'civil', 'electrical', 'design', 'manufacturing', 'quality'],
+        'finance': ['finance', 'accounting', 'bank', 'investment', 'analyst', 'financial', 'audit', 'tax', 'insurance', 'advisor'],
+        'management': ['manager', 'management', 'supervisor', 'lead', 'director', 'coordinator', 'admin', 'executive'],
+        'operations': ['operations', 'logistics', 'supply', 'warehouse', 'procurement', 'planning'],
+        'design': ['design', 'creative', 'graphics', 'ui', 'ux', 'visual', 'artist', 'architect'],
+        'hospitality': ['hotel', 'restaurant', 'hospitality', 'chef', 'food', 'service', 'tourism'],
+        'manufacturing': ['manufacturing', 'production', 'factory', 'assembly', 'quality', 'maintenance'],
+        'retail': ['retail', 'store', 'cashier', 'merchandise', 'inventory', 'shop'],
+        'analyst': ['analyst', 'research', 'data', 'insights']
+    }
+    
+    # Score jobs based on user input - improved algorithm
+    user_skills = []
+    user_categories = []
+    
+    # Extract keywords from user query
+    user_words = [word for word in user_text.split() if len(word) > 2 and word not in ['the', 'and', 'for', 'job', 'work', 'looking', 'want', 'i']]
+
+    for category, keywords in skill_keywords.items():
+        matches = sum(1 for keyword in keywords if keyword in user_words)
+        if matches > 0:
+            user_skills.extend([kw for kw in keywords if kw in user_words])
+            user_categories.append(category)
+
+    # If no categories matched, use the user's words as skills
+    if not user_skills:
+        user_skills.extend(user_words)
+
+    # Extract experience level with better detection
+    experience_level = "0"
+    if any(word in user_text for word in ['senior', 'experienced', '5+', 'five', 'lead', 'principal', 'expert']):
+        experience_level = "60"
+    elif any(word in user_text for word in ['mid', 'intermediate', '2-5', 'few years', '3 year', '4 year']):
+        experience_level = "24"
+    elif any(word in user_text for word in ['junior', 'fresher', 'entry', 'new', 'graduate', 'beginner']):
+        experience_level = "0"
+    
+    # Build diversified query based on user input
+    if user_skills:
+        # Create a comprehensive search that includes direct keyword matching
+        skill_conditions = []
+        
+        # Add skill-based conditions
+        for skill in set(user_skills): # Use set to avoid duplicate conditions
+            skill_conditions.append(f"(job_title LIKE '%{skill}%' OR description LIKE '%{skill}%' OR industry LIKE '%{skill}%' OR tags LIKE '%{skill}%')")
+        
+        if skill_conditions:
+            query = f"""
+                SELECT id, job_title, company_name, location, salary_range, description,
+                       industry, sector, job_type, employment_type, experience_required, 
+                       skills_required, posted_date, application_deadline, tags, source, 
+                       is_active, created_at, title, company, company_contact, pay, apply_url,
+                       -- Scoring for relevance
+                       (CASE 
+                            WHEN experience_required <= ? THEN 3
+                            WHEN experience_required <= ? THEN 2 
+                            ELSE 1 
+                       END) as exp_score
+                FROM job_postings 
+                WHERE is_active = 1 
+                AND ({' OR '.join(skill_conditions)})
+                ORDER BY exp_score DESC, created_at DESC
+                LIMIT 30
+            """
+            params = [experience_level, str(int(experience_level) + 24)]
+        else:
+            # Fallback to general search if no skill conditions were generated
+            query = """
+                SELECT id, job_title, company_name, location, salary_range, description,
+                       industry, sector, job_type, employment_type, experience_required, 
+                       skills_required, posted_date, application_deadline, tags, source, 
+                       is_active, created_at, title, company, company_contact, pay, apply_url,
+                       1 as exp_score
+                FROM job_postings 
+                WHERE is_active = 1
+                ORDER BY created_at DESC 
+                LIMIT 15
+            """
+            params = []
+        
+    else:
+        # Default query for diverse recent jobs when no specific input
+        query = """
+            SELECT id, job_title, company_name, location, salary_range, description,
+                   industry, sector, job_type, employment_type, experience_required, 
+                   skills_required, posted_date, application_deadline, tags, source, 
+                   is_active, created_at, title, company, company_contact, pay, apply_url,
+                   1 as exp_score
+            FROM job_postings 
+            WHERE is_active = 1
+            AND industry IS NOT NULL
+            ORDER BY 
+                CASE 
+                    WHEN industry IN ('Information Technology', 'Software', 'Healthcare', 'Education', 'Finance') THEN 1
+                    ELSE 0
+                END DESC,
+                created_at DESC 
+            LIMIT 15
+        """
+        params = []
+    
+    cursor.execute(query, params)
+    jobs = cursor.fetchall()
+    conn.close()
+    
+    if jobs:
+        # Score and rank jobs based on relevance with diversity
+        scored_jobs = []
+        for job in jobs:
+            score = 0
+            job_title_lower = (job[1] or "").lower()
+            description_lower = (job[5] or "").lower()
+            industry_lower = (job[6] or "").lower()
+            tags_lower = (job[14] or "").lower()
+            job_text = f"{job_title_lower} {description_lower} {industry_lower} {tags_lower}"
+            
+            # Direct exact phrase matching gets highest score
+            if user_text in job_text:
+                score += 20
+            
+            # Score based on individual user input keywords
+            for word in user_words:
+                if word in job_text:
+                    score += 5
+            
+            # Boost for exact job title matches
+            if any(word in job_title_lower for word in user_words):
+                score += 10
+
+            # Boost for matching category keywords
+            for cat in user_categories:
+                for keyword in skill_keywords.get(cat, []):
+                    if keyword in job_text:
+                        score += 2
+            
+            # Negative score for mismatches
+            if "analyst" in user_categories and "delivery" in job_title_lower:
+                score -= 10
+            if "delivery" in user_categories and "analyst" in job_title_lower:
+                score -= 10
+
+            scored_jobs.append((score, job))
+        
+        # Sort by score and get best jobs
+        scored_jobs.sort(key=lambda x: x[0], reverse=True)
+        
+        # Remove duplicates by job_title and company_name
+        seen_jobs = set()
+        unique_scored_jobs = []
+        for score, job in scored_jobs:
+            job_key = (job[1] or job[18], job[2] or job[19])  # (job_title, company_name)
+            if job_key not in seen_jobs:
+                seen_jobs.add(job_key)
+                unique_scored_jobs.append((score, job))
+        
+        # Filter out jobs with a score of 0 unless we have very few results
+        final_jobs = [job for score, job in unique_scored_jobs if score > 0]
+        if len(final_jobs) < 5:
+             final_jobs = [job for score, job in unique_scored_jobs][:10]
+
+
+        if not final_jobs:
+            return {"best_job": None, "alternative_jobs": [], "message": "No relevant jobs found. Please try a different search."}
+
+        best_job_data = unique_scored_jobs[0]
+        best_job_formatted = format_job_response(best_job_data[1], best_job_data[0])
+
+        alternative_jobs_formatted = [
+            format_job_response(job_data[1], job_data[0]) for job_data in unique_scored_jobs[1:6]
+        ]
+        
+        return {
+            "best_job": best_job_formatted,
+            "alternative_jobs": alternative_jobs_formatted
+        }
+    else:
+        return {"best_job": None, "alternative_jobs": [], "message": "No matching jobs found. Try different keywords or check back later for new opportunities."}
+
