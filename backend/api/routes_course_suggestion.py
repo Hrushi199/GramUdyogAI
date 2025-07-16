@@ -45,7 +45,7 @@ def get_db_connection():
         if conn: conn.close()
 
 # --- 3. API ENDPOINT ---
-@router.post("/suggest-courses", response_model=SuggestResponse, tags=["Course Suggestions"])
+@router.post("/suggest-courses-with-platform", response_model=SuggestResponse, tags=["Course Suggestions"])
 def suggest_courses_endpoint(req: SuggestRequest, db: sqlite3.Connection = Depends(get_db_connection)):
     try:
         search_term = req.query

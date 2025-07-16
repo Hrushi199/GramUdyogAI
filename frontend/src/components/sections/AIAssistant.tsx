@@ -13,6 +13,7 @@ import {
   ProfileRenderer
 } from '../ui/FeatureRenderers';
 import { useEffect } from 'react';
+import VisualSummary from '../ui/VisualSummary';
 
 interface AssistantResponse {
   output: string;
@@ -56,6 +57,7 @@ export default function AIAssistant({ lang }: { lang: string }) {
   const [showSettings, setShowSettings] = useState(false);
   const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [translating, setTranslating] = useState(false);
+  const [showVisualSummary, setShowVisualSummary] = useState(false);
 
   // Enhanced browser STT with better feedback
   const handleStartListening = () => {
@@ -245,6 +247,18 @@ export default function AIAssistant({ lang }: { lang: string }) {
     // eslint-disable-next-line
   }, [assistantResponse?.output, lang]);
 
+  // Show VisualSummary modal if feature_type is 'visual_summary' and data exists
+  useEffect(() => {
+    if (
+      assistantResponse?.feature_type === 'visual_summary' &&
+      assistantResponse.structured_data?.visual_summary
+    ) {
+      setShowVisualSummary(true);
+    } else {
+      setShowVisualSummary(false);
+    }
+  }, [assistantResponse]);
+
   return (
     <div
       className="text-white bg-gray-900 rounded-xl shadow-2xl p-6 relative"
@@ -259,6 +273,14 @@ export default function AIAssistant({ lang }: { lang: string }) {
         flexDirection: "column"
       }}
     >
+      {/* Visual Summary Modal */}
+      {showVisualSummary && assistantResponse?.structured_data?.visual_summary && (
+        <VisualSummary
+          summary={assistantResponse.structured_data.visual_summary}
+          onClose={() => setShowVisualSummary(false)}
+          apiBaseUrl={VITE_API_BASE_URL}
+        />
+      )}
       {/* Header with Settings */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">{t('title', 'AI Assistant')}</h2>

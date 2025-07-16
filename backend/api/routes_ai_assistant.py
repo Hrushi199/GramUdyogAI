@@ -202,8 +202,8 @@ async def ai_assistant_enhanced(req: AssistantRequest, request: Request = None):
 
         # --- COURSES & SKILLS ---
         elif func_name == "course_recommendation":
-            from core.course_recommender import generate_structured_recommendations
-            course_data = generate_structured_recommendations(args, {})
+            from core.ai_assistant_data import recommend_courses
+            course_data = await recommend_courses(args)
             response_data.structured_data = {"courses": course_data.get("courses", [])}
             response_data.output = f"Here are some recommended courses."
         elif func_name == "skill_tutorial":
@@ -267,10 +267,20 @@ async def ai_assistant_enhanced(req: AssistantRequest, request: Request = None):
 
         # --- VISUAL SUMMARY ---
         elif func_name == "visual_summary":
-            from core.enhanced_llm import generate_visual_summary_for_marketing
-            summary = await generate_visual_summary_for_marketing(args)
-            response_data.structured_data = {"visual_summary": summary}
-            response_data.output = f"Here is a visual summary for your topic."
+            # Use the real visual summary API endpoint
+            import httpx
+            async with httpx.AsyncClient() as client:
+                vs_req = {"topic": args if isinstance(args, str) else (args.get("topic") if isinstance(args, dict) else ""),
+                          "context": args.get("context") if isinstance(args, dict) and "context" in args else "",
+                          "language": req.lang or "en"}
+                vs_response = await client.post(f"http://localhost:8000/api/skills/visual-summary", json=vs_req)
+                if vs_response.status_code == 200:
+                    summary = vs_response.json()
+                    response_data.structured_data = {"visual_summary": summary}
+                    response_data.output = f"Here is a visual summary for your topic."
+                else:
+                    response_data.structured_data = {"visual_summary": {"error": "Failed to generate visual summary."}}
+                    response_data.output = "Sorry, could not generate a visual summary."
 
         # --- AUDIO (STT) ---
         # elif func_name == "audio_transcription":
