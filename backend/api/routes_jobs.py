@@ -77,9 +77,9 @@ async def create_job(job: JobPosting):
     cursor = conn.cursor()
 
     cursor.execute("""
-        INSERT INTO job_postings (title, description, company, location, company_contact, pay, job_title, company_name, salary_range, is_active)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """, (job.title, job.description, job.company, job.location, job.company_contact, job.pay, job.title, job.company, job.pay, True))
+        INSERT INTO job_postings (title, description, company, location, company_contact, pay, job_title, salary_range, is_active)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (job.title, job.description, job.company, job.location, job.company_contact, job.pay, job.title, job.pay, True))
 
     conn.commit()
     conn.close()
@@ -94,15 +94,15 @@ async def create_enhanced_job(job: EnhancedJobPosting):
 
     cursor.execute("""
         INSERT INTO job_postings (
-            job_title, company_name, location, salary_range, description,
+            job_title, company, location, salary_range, description,
             industry, sector, job_type, experience_required, employment_type,
-            skills_required, is_active, title, company_contact, pay, company
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            skills_required, is_active, title, company_contact, pay
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
         job.job_title, job.company_name, job.location, job.salary_range, job.description,
         job.industry, job.sector, job.job_type, job.experience_required, job.employment_type,
         json.dumps(job.skills_required), job.is_active,
-        job.job_title, "Contact via apply_url", job.salary_range, job.company_name
+        job.job_title, "Contact via apply_url", job.salary_range
     ))
 
     conn.commit()
@@ -129,10 +129,10 @@ async def get_jobs(
     cursor = conn.cursor()
     
     base_query = """
-        SELECT id, job_title, company_name, location, salary_range, description,
+        SELECT id, job_title, company, location, salary_range, description,
                industry, sector, job_type, employment_type, experience_required, 
                skills_required, posted_date, application_deadline, tags, source, 
-               is_active, created_at, title, company, company_contact, pay, apply_url
+               is_active, created_at, title, company_contact, pay, apply_url
         FROM job_postings
         WHERE is_active = ?
     """
@@ -204,9 +204,9 @@ async def get_jobs(
             {
                 "id": job[0],
                 "job_title": job[1] or job[18],  # job_title or title (legacy)
-                "company_name": job[2] or job[19],  # company_name or company (legacy)
+                "company_name": job[2] or job[2],  # company field
                 "location": job[3],
-                "salary_range": job[4] or job[21],  # salary_range or pay (legacy)
+                "salary_range": job[4] or job[20],  # salary_range or pay (legacy)
                 "description": job[5],
                 "industry": job[6],
                 "sector": job[7],
@@ -220,12 +220,12 @@ async def get_jobs(
                 "source": job[15],
                 "is_active": job[16],
                 "created_at": job[17],
-                "apply_url": job[22],
+                "apply_url": job[21],
                 # Legacy fields for backward compatibility
                 "title": job[1] or job[18],
-                "company": job[2] or job[19],
-                "company_contact": job[20],
-                "pay": job[4] or job[21]
+                "company": job[2] or job[2],
+                "company_contact": job[19],
+                "pay": job[4] or job[20]
             }
             for job in jobs
         ],
@@ -250,10 +250,10 @@ async def search_jobs(
     
     # Build dynamic query
     base_query = """
-        SELECT id, job_title, company_name, location, salary_range, description,
+        SELECT id, job_title, company, location, salary_range, description,
                industry, sector, job_type, employment_type, experience_required, 
                skills_required, posted_date, application_deadline, tags, source, 
-               is_active, created_at, title, company, company_contact, pay, apply_url
+               is_active, created_at, title, company_contact, pay, apply_url
         FROM job_postings 
         WHERE is_active = 1
     """
@@ -266,9 +266,9 @@ async def search_jobs(
     params = []
     
     if query:
-        conditions.append("(job_title LIKE ? OR description LIKE ? OR title LIKE ? OR company_name LIKE ? OR company LIKE ?)")
+        conditions.append("(job_title LIKE ? OR description LIKE ? OR title LIKE ? OR company LIKE ?)")
         search_term = f"%{query}%"
-        params.extend([search_term, search_term, search_term, search_term, search_term])
+        params.extend([search_term, search_term, search_term, search_term])
     
     if location:
         conditions.append("location LIKE ?")
@@ -310,9 +310,9 @@ async def search_jobs(
             {
                 "id": job[0],
                 "job_title": job[1] or job[18],
-                "company_name": job[2] or job[19],
+                "company_name": job[2] or job[2],
                 "location": job[3],
-                "salary_range": job[4] or job[21],
+                "salary_range": job[4] or job[20],
                 "description": job[5],
                 "industry": job[6],
                 "sector": job[7],
@@ -326,12 +326,12 @@ async def search_jobs(
                 "source": job[15],
                 "is_active": job[16],
                 "created_at": job[17],
-                "apply_url": job[22],
+                "apply_url": job[21],
                 # Legacy fields for backward compatibility
                 "title": job[1] or job[18],
-                "company": job[2] or job[19],
-                "company_contact": job[20],
-                "pay": job[4] or job[21]
+                "company": job[2] or job[2],
+                "company_contact": job[19],
+                "pay": job[4] or job[20]
             }
             for job in jobs
         ],
@@ -347,10 +347,10 @@ async def get_job_by_id(job_id: int):
     cursor = conn.cursor()
 
     cursor.execute("""
-        SELECT id, job_title, company_name, location, salary_range, description,
+        SELECT id, job_title, company, location, salary_range, description,
                industry, sector, job_type, employment_type, experience_required, 
                skills_required, posted_date, application_deadline, tags, source, 
-               is_active, created_at, title, company, company_contact, pay
+               is_active, created_at, title, company_contact, pay
         FROM job_postings WHERE id = ?
     """, (job_id,))
     job = cursor.fetchone()
@@ -363,9 +363,9 @@ async def get_job_by_id(job_id: int):
     return {
         "id": job[0],
         "job_title": job[1] or job[18],
-        "company_name": job[2] or job[19],
+        "company_name": job[2] or job[2],
         "location": job[3],
-        "salary_range": job[4] or job[21],
+        "salary_range": job[4] or job[20],
         "description": job[5],
         "industry": job[6],
         "sector": job[7],
@@ -381,9 +381,9 @@ async def get_job_by_id(job_id: int):
         "created_at": job[17],
         # Legacy fields for backward compatibility
         "title": job[1] or job[18],
-        "company": job[2] or job[19],
-        "company_contact": job[20],
-        "pay": job[4] or job[21]
+        "company": job[2] or job[2],
+        "company_contact": job[19],
+        "pay": job[4] or job[20]
     }
 
 @router.put("/jobs/{job_id}")
@@ -394,7 +394,7 @@ async def update_job(job_id: int, job_update: SkillIndiaJob):
 
     cursor.execute("""
         UPDATE job_postings 
-        SET job_title = ?, description = ?, company_name = ?, location = ?, 
+        SET job_title = ?, description = ?, company = ?, location = ?, 
             salary_range = ?, industry = ?, sector = ?, job_type = ?, 
             employment_type = ?, experience_required = ?, skills_required = ?, 
             posted_date = ?, application_deadline = ?, tags = ?, source = ?, is_active = ?
@@ -686,10 +686,10 @@ async def get_jobs_based_on_ai_analysis(cursor, intent_analysis: dict, user_text
     
     # Build the final query with robust filtering
     base_query = """
-        SELECT id, job_title, company_name, location, salary_range, description,
+        SELECT id, job_title, company, location, salary_range, description,
                industry, sector, job_type, employment_type, experience_required, 
                skills_required, posted_date, application_deadline, tags, source, 
-               is_active, created_at, title, company, company_contact, pay, apply_url
+               is_active, created_at, title, company_contact, pay, apply_url
         FROM job_postings 
         WHERE is_active = 1
     """
@@ -916,7 +916,7 @@ def format_job_response(job_data, score=0):
     return {
         "id": job_data[0],
         "job_title": job_data[1] or job_data[18],
-        "company_name": job_data[2] or job_data[19],
+        "company_name": job_data[2] or job_data[2],
         "location": job_data[3],
         "salary_range": job_data[4] or job_data[21],
         "description": job_data[5][:250] + "..." if job_data[5] and len(job_data[5]) > 250 else job_data[5],
@@ -997,10 +997,10 @@ async def smart_recommend_job_fallback(user_info: UserInfo):
         
         if skill_conditions:
             query = f"""
-                SELECT id, job_title, company_name, location, salary_range, description,
+                SELECT id, job_title, company, location, salary_range, description,
                        industry, sector, job_type, employment_type, experience_required, 
                        skills_required, posted_date, application_deadline, tags, source, 
-                       is_active, created_at, title, company, company_contact, pay, apply_url,
+                       is_active, created_at, title, company_contact, pay, apply_url,
                        -- Scoring for relevance
                        (CASE 
                             WHEN experience_required <= ? THEN 3
@@ -1017,10 +1017,10 @@ async def smart_recommend_job_fallback(user_info: UserInfo):
         else:
             # Fallback to general search if no skill conditions were generated
             query = """
-                SELECT id, job_title, company_name, location, salary_range, description,
+                SELECT id, job_title, company, location, salary_range, description,
                        industry, sector, job_type, employment_type, experience_required, 
                        skills_required, posted_date, application_deadline, tags, source, 
-                       is_active, created_at, title, company, company_contact, pay, apply_url,
+                       is_active, created_at, title, company_contact, pay, apply_url,
                        1 as exp_score
                 FROM job_postings 
                 WHERE is_active = 1
@@ -1032,10 +1032,10 @@ async def smart_recommend_job_fallback(user_info: UserInfo):
     else:
         # Default query for diverse recent jobs when no specific input
         query = """
-            SELECT id, job_title, company_name, location, salary_range, description,
+            SELECT id, job_title, company, location, salary_range, description,
                    industry, sector, job_type, employment_type, experience_required, 
                    skills_required, posted_date, application_deadline, tags, source, 
-                   is_active, created_at, title, company, company_contact, pay, apply_url,
+                   is_active, created_at, title, company_contact, pay, apply_url,
                    1 as exp_score
             FROM job_postings 
             WHERE is_active = 1
@@ -1095,11 +1095,11 @@ async def smart_recommend_job_fallback(user_info: UserInfo):
         # Sort by score and get best jobs
         scored_jobs.sort(key=lambda x: x[0], reverse=True)
         
-        # Remove duplicates by job_title and company_name
+        # Remove duplicates by job_title and company
         seen_jobs = set()
         unique_scored_jobs = []
         for score, job in scored_jobs:
-            job_key = (job[1] or job[18], job[2] or job[19])  # (job_title, company_name)
+            job_key = (job[1] or job[18], job[2] or job[2])  # (job_title, company)
             if job_key not in seen_jobs:
                 seen_jobs.add(job_key)
                 unique_scored_jobs.append((score, job))
@@ -1155,10 +1155,10 @@ async def simple_recommend_job(user_info: UserInfo):
     if keywords:
         keyword_conditions = " OR ".join([f"job_title LIKE '%{keyword}%' OR industry LIKE '%{keyword}%'" for keyword in keywords])
         query = f"""
-            SELECT id, job_title, company_name, location, salary_range, description,
+            SELECT id, job_title, company, location, salary_range, description,
                    industry, sector, job_type, employment_type, experience_required, 
                    skills_required, posted_date, application_deadline, tags, source, 
-                   is_active, created_at, title, company, company_contact, pay
+                   is_active, created_at, title, company_contact, pay
             FROM job_postings 
             WHERE is_active = 1 AND ({keyword_conditions})
             ORDER BY created_at DESC 
@@ -1167,10 +1167,10 @@ async def simple_recommend_job(user_info: UserInfo):
     else:
         # Default to recent jobs
         query = """
-            SELECT id, job_title, company_name, location, salary_range, description,
+            SELECT id, job_title, company, location, salary_range, description,
                    industry, sector, job_type, employment_type, experience_required, 
                    skills_required, posted_date, application_deadline, tags, source, 
-                   is_active, created_at, title, company, company_contact, pay
+                   is_active, created_at, title, company_contact, pay
             FROM job_postings 
             WHERE is_active = 1
             ORDER BY created_at DESC 
@@ -1186,9 +1186,9 @@ async def simple_recommend_job(user_info: UserInfo):
             "best_job": {
                 "id": job[0],
                 "job_title": job[1] or job[18],
-                "company_name": job[2] or job[19],
+                "company_name": job[2] or job[2],
                 "location": job[3],
-                "salary_range": job[4] or job[21],
+                "salary_range": job[4] or job[19],
                 "description": job[5][:500] + "..." if len(job[5]) > 500 else job[5],
                 "industry": job[6],
                 "sector": job[7],

@@ -25,6 +25,32 @@ def migrate_database_schema():
             cursor.execute('ALTER TABLE job_postings ADD COLUMN tags TEXT')
         if 'apply_url' not in columns:
             cursor.execute('ALTER TABLE job_postings ADD COLUMN apply_url TEXT')
+        if 'posted_date' not in columns:
+            cursor.execute('ALTER TABLE job_postings ADD COLUMN posted_date TEXT')
+        if 'job_type' not in columns:
+            cursor.execute('ALTER TABLE job_postings ADD COLUMN job_type TEXT')
+        if 'employment_type' not in columns:
+            cursor.execute('ALTER TABLE job_postings ADD COLUMN employment_type TEXT')
+        if 'skills_required' not in columns:
+            cursor.execute('ALTER TABLE job_postings ADD COLUMN skills_required TEXT')
+        if 'application_deadline' not in columns:
+            cursor.execute('ALTER TABLE job_postings ADD COLUMN application_deadline TEXT')
+        if 'is_active' not in columns:
+            cursor.execute('ALTER TABLE job_postings ADD COLUMN is_active BOOLEAN DEFAULT 1')
+        if 'updated_at' not in columns:
+            cursor.execute('ALTER TABLE job_postings ADD COLUMN updated_at TEXT NOT NULL DEFAULT (datetime("now"))')
+        if 'company_name' not in columns:
+            cursor.execute('ALTER TABLE job_postings ADD COLUMN company_name TEXT')
+        
+        # Fix experience_required column type if it exists as INTEGER
+        if 'experience_required' in columns:
+            # Check the column type
+            cursor.execute("SELECT sql FROM sqlite_master WHERE type='table' AND name='job_postings'")
+            table_schema = cursor.fetchone()[0]
+            if 'experience_required INTEGER' in table_schema:
+                # We need to recreate the table to change column type from INTEGER to TEXT
+                # This is a complex operation in SQLite, so we'll handle it in the load function
+                pass
         
         # Check if courses table exists and has the new columns
         cursor.execute("PRAGMA table_info(courses)")
@@ -87,7 +113,7 @@ CREATE TABLE IF NOT EXISTS events (
     budget INTEGER DEFAULT 0,
     prize_pool INTEGER DEFAULT 0,
     organizer_id INTEGER NOT NULL,
-    organizer_name TEXT NOT NULL,
+    organizer_name TEXT,
     organizer_type TEXT NOT NULL,
     organizer_logo TEXT,
     created_by INTEGER NOT NULL,
@@ -265,24 +291,32 @@ CREATE TABLE IF NOT EXISTS events (
     CREATE TABLE IF NOT EXISTS job_postings (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         job_title TEXT NOT NULL,
-        company TEXT NOT NULL,
+        company_name TEXT NOT NULL,
         location TEXT NOT NULL,
         salary_range TEXT,
         description TEXT NOT NULL,
-        posted_on TEXT,
+        posted_date TEXT,
         apply_url TEXT,
         industry TEXT,
         sector TEXT,
+        job_type TEXT,
+        employment_type TEXT,
+        experience_required TEXT DEFAULT '0',
+        skills_required TEXT,
+        application_deadline TEXT,
         job_status TEXT DEFAULT 'Active',
-        experience_required INTEGER DEFAULT 0,
         in_hand_salary INTEGER,
         valid_upto TEXT,
-        source TEXT DEFAULT 'Skill India', -- To identify data source
-        tags TEXT, -- JSON array of relevant tags/keywords
-        title TEXT, -- Legacy field for backward compatibility
-        company_contact TEXT, -- Legacy field for backward compatibility
-        pay TEXT, -- Legacy field for backward compatibility
-        created_at TEXT NOT NULL DEFAULT (datetime('now'))
+        source TEXT DEFAULT 'Skill India',
+        tags TEXT,
+        is_active BOOLEAN DEFAULT 1,
+        created_at TEXT NOT NULL DEFAULT (datetime('now')),
+        updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+        -- Legacy fields for backward compatibility
+        title TEXT,
+        company TEXT,
+        company_contact TEXT,
+        pay TEXT
     )
 ''')
 
@@ -405,6 +439,8 @@ CREATE TABLE IF NOT EXISTS events (
         cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_title ON job_postings (job_title)')
     if 'title' in job_columns:
         cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_title_legacy ON job_postings (title)')
+    if 'company_name' in job_columns:
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_company_name ON job_postings (company_name)')
     if 'company' in job_columns:
         cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_company ON job_postings (company)')
     if 'location' in job_columns:
@@ -413,6 +449,12 @@ CREATE TABLE IF NOT EXISTS events (
         cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_industry ON job_postings (industry)')
     if 'job_status' in job_columns:
         cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_status ON job_postings (job_status)')
+    if 'is_active' in job_columns:
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_active ON job_postings (is_active)')
+    if 'source' in job_columns:
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_source ON job_postings (source)')
+    if 'job_type' in job_columns:
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_job_type ON job_postings (job_type)')
     
     # Check if courses table exists and create indexes
     cursor.execute("PRAGMA table_info(courses)")
@@ -481,29 +523,30 @@ def load_skill_india_jobs():
                 cursor.execute('''
                     INSERT INTO job_postings (
                         job_title, company, location, salary_range, description,
-                        posted_date, apply_url, industry, sector, 
-                        experience_required, application_deadline, source, tags, 
-                        title, company_contact, pay, created_at, is_active
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        posted_on, apply_url, industry, sector, job_status,
+                        experience_required, in_hand_salary, valid_upto, source, tags, 
+                        title, company_contact, pay, created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ''', (
                     job.get('job_title', ''),
-                    job.get('company', ''),
+                    job.get('company', ''),  # company field
                     job.get('location', ''),
                     job.get('salary_range', ''),
                     job.get('description', ''),
-                    job.get('posted_on', ''),  # Maps to posted_date
-                    job.get('apply_url', ''),  # Include the apply_url from JSON
+                    job.get('posted_on', ''),  # posted_on field
+                    job.get('apply_url', ''),
                     job.get('industry', ''),
                     job.get('sector', ''),
-                    str(job.get('experience_required', 0)),
-                    job.get('valid_upto', ''),  # Maps to application_deadline
-                    'Skill India',
-                    json.dumps(tags),
+                    'Active',  # job_status
+                    job.get('experience_required', 0),  # experience_required as integer
+                    None,  # in_hand_salary (can be None)
+                    job.get('valid_upto', ''),  # valid_upto
+                    'Skill India',  # source
+                    json.dumps(tags),  # tags
                     job.get('job_title', ''),  # Legacy title field
-                    'Contact via apply_url',  # Legacy company_contact
+                    job.get('company_contact', 'Contact via apply_url'),  # company_contact
                     job.get('salary_range', ''),  # Legacy pay field
-                    datetime.now().isoformat(),  # created_at
-                    1  # is_active
+                    datetime.now().isoformat()  # created_at
                 ))
                 jobs_inserted += 1
             except Exception as e:
@@ -837,14 +880,15 @@ def seed_db():
             INSERT INTO events (
                 title, description, event_type, category, location, state,
                 start_date, end_date, max_participants, budget, prize_pool,
-                organizer_id, organizer_type, created_by, skills_required, 
+                organizer_id, organizer_name, organizer_type, created_by, skills_required, 
                 tags, impact_metrics, status, created_at, updated_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active', ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active', ?, ?)
         ''', (
             event["title"], event["description"], event["event_type"],
             event["category"], event["location"], event["state"],
             event["start_date"], event["end_date"], event["max_participants"],
             event["budget"], event["prize_pool"], event["organizer_id"],
+            "John Developer" if event["organizer_type"] == "individual" else "Tech Corp",  # organizer_name
             event["organizer_type"], event["created_by"], event["skills_required"],
             event["tags"], event["impact_metrics"], now, now
         ))
