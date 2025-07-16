@@ -10,7 +10,9 @@ const JobBoard = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [totalJobs, setTotalJobs] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [jobsPerPage] = useState(10); // Show 10 jobs per page
+  const [jobsPerPage, setJobsPerPage] = useState(10); // Make this changeable
+  const [searchKeyword, setSearchKeyword] = useState(""); // Add search functionality
+  const [appliedFilters, setAppliedFilters] = useState({ search: "", location: "", industry: "" }); // Track applied filters
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [company, setCompany] = useState("");
@@ -23,31 +25,55 @@ const JobBoard = () => {
   const [loading, setLoading] = useState(false); // Loading state for async operations
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  // Fetch job postings with pagination
+  // Highlight search terms in text
+  const highlightText = (text: string, searchTerm: string) => {
+    if (!searchTerm || !text) return text;
+    
+    const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    const parts = text.split(regex);
+    
+    return parts.map((part, index) => 
+      regex.test(part) ? (
+        <span key={index} className="bg-yellow-500/20 text-yellow-300 px-1 rounded">
+          {part}
+        </span>
+      ) : part
+    );
+  };
+
+  // Fetch job postings with pagination and search
   useEffect(() => {
     const fetchJobs = async () => {
       setLoading(true);
       try {
         const offset = (currentPage - 1) * jobsPerPage;
+        console.log(`Fetching jobs: limit=${jobsPerPage}, offset=${offset}, page=${currentPage}, search=${appliedFilters.search}`);
+        
         const response = await jobAPI.getJobs({
           limit: jobsPerPage,
           offset: offset,
-          is_active: true
+          is_active: true,
+          diverse: true,
+          search: appliedFilters.search || undefined,
+          location: appliedFilters.location || undefined,
+          industry: appliedFilters.industry || undefined
         });
         
+        console.log("API Response:", response);
+        
         if (response.data) {
-          setJobs(response.data);
-          // The API should return total_count in the response
-          // For now, let's fetch it separately or use a default
-          if (response.data.length === jobsPerPage) {
-            // If we got a full page, there might be more
-            setTotalJobs((currentPage * jobsPerPage) + 1);
-          } else {
-            // This is the last page
-            setTotalJobs((currentPage - 1) * jobsPerPage + response.data.length);
-          }
+          // The API returns { jobs: Job[], total_count: number }
+          const jobsData = response.data.jobs || response.data;
+          const totalCount = response.data.total_count || 0;
+          
+          console.log(`Fetched ${jobsData.length} jobs, total: ${totalCount}`);
+          
+          setJobs(Array.isArray(jobsData) ? jobsData : []);
+          setTotalJobs(totalCount);
         } else if (response.error) {
           console.error("Error fetching jobs:", response.error);
+          setJobs([]);
+          setTotalJobs(0);
         }
       } catch (error) {
         console.error("Error fetching jobs:", error);
@@ -56,7 +82,33 @@ const JobBoard = () => {
       }
     };
     fetchJobs();
-  }, [currentPage, jobsPerPage]);
+  }, [currentPage, jobsPerPage, appliedFilters]);
+
+  // Handle search form submission
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    setAppliedFilters(prev => ({ ...prev, search: searchKeyword }));
+    setCurrentPage(1); // Reset to first page when searching
+  };
+
+  // Debounced search effect for real-time search
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (searchKeyword !== appliedFilters.search) {
+        setAppliedFilters(prev => ({ ...prev, search: searchKeyword }));
+        setCurrentPage(1);
+      }
+    }, 500); // 500ms delay
+
+    return () => clearTimeout(timeoutId);
+  }, [searchKeyword, appliedFilters.search]);
+
+  // Clear all filters
+  const clearFilters = () => {
+    setSearchKeyword("");
+    setAppliedFilters({ search: "", location: "", industry: "" });
+    setCurrentPage(1);
+  };
 
   // Handle job posting submission
   const handleSubmit = async (e: React.FormEvent) => {
@@ -93,9 +145,18 @@ const JobBoard = () => {
         }
         
         // Refresh job list
-        const updatedJobsResponse = await jobAPI.getJobs();
+        const updatedJobsResponse = await jobAPI.getJobs({
+          limit: jobsPerPage,
+          offset: 0,
+          is_active: true,
+          diverse: true
+        });
         if (updatedJobsResponse.data) {
-          setJobs(updatedJobsResponse.data);
+          const jobsData = updatedJobsResponse.data.jobs || updatedJobsResponse.data;
+          const totalCount = updatedJobsResponse.data.total_count || 0;
+          setJobs(Array.isArray(jobsData) ? jobsData : []);
+          setTotalJobs(totalCount);
+          setCurrentPage(1); // Reset to first page
         }
         setActiveTab("view"); // Switch to the View Jobs tab after posting
       } else if (response.error) {
@@ -240,14 +301,188 @@ const JobBoard = () => {
             {/* View Jobs Tab */}
             {activeTab === "view" && (
               <div className="space-y-8">
+                {/* Search and Filter Section */}
+                <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-xl border border-gray-700 p-6">
+                  <h3 className="text-lg font-semibold text-white mb-4">Search & Filter Jobs</h3>
+                  
+                  <form onSubmit={handleSearch} className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-purple-300">Search Keywords</label>
+                        <div className="relative">
+                          <input
+                            type="text"
+                            value={searchKeyword}
+                            onChange={(e) => setSearchKeyword(e.target.value)}
+                            placeholder="Job title, company, skills... (real-time search)"
+                            className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all pr-10"
+                          />
+                          {searchKeyword && (
+                            <button
+                              type="button"
+                              onClick={() => setSearchKeyword("")}
+                              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200"
+                            >
+                              ×
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                      
+                      <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-purple-300">Location</label>
+                        <input
+                          type="text"
+                          value={appliedFilters.location}
+                          onChange={(e) => setAppliedFilters(prev => ({ ...prev, location: e.target.value }))}
+                          placeholder="City, state..."
+                          className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+                        />
+                      </div>
+                      
+                      <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-purple-300">Industry</label>
+                        <input
+                          type="text"
+                          value={appliedFilters.industry}
+                          onChange={(e) => setAppliedFilters(prev => ({ ...prev, industry: e.target.value }))}
+                          placeholder="Technology, Healthcare..."
+                          className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-3">
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+                      >
+                        {loading ? "Searching..." : "Search Jobs"}
+                      </button>
+                      
+                      <button
+                        type="button"
+                        onClick={clearFilters}
+                        disabled={loading}
+                        className="px-6 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Clear Filters
+                      </button>
+                    </div>
+                    
+                    {/* Quick Search Suggestions */}
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      <span className="text-sm text-gray-400">Quick search:</span>
+                      {['Software Engineer', 'Data Analyst', 'Sales', 'Teacher', 'Healthcare', 'Remote Work', 'Fresher Jobs'].map((suggestion) => (
+                        <button
+                          key={suggestion}
+                          type="button"
+                          onClick={() => {
+                            setSearchKeyword(suggestion);
+                            setAppliedFilters(prev => ({ ...prev, search: suggestion }));
+                            setCurrentPage(1);
+                          }}
+                          className="px-2 py-1 bg-gray-800 text-gray-300 rounded text-xs hover:bg-gray-700 transition-colors"
+                        >
+                          {suggestion}
+                        </button>
+                      ))}
+                    </div>
+                    
+                    {/* Active Filters Display */}
+                    {(appliedFilters.search || appliedFilters.location || appliedFilters.industry) && (
+                      <div className="flex flex-wrap gap-2 pt-2">
+                        <span className="text-sm text-gray-400">Active filters:</span>
+                        {appliedFilters.search && (
+                          <span className="px-2 py-1 bg-blue-900/30 text-blue-300 rounded text-sm flex items-center gap-1">
+                            Search: "{appliedFilters.search}"
+                            <button 
+                              onClick={() => {
+                                setSearchKeyword("");
+                                setAppliedFilters(prev => ({ ...prev, search: "" }));
+                                setCurrentPage(1);
+                              }}
+                              className="ml-1 hover:text-blue-200"
+                            >
+                              ×
+                            </button>
+                          </span>
+                        )}
+                        {appliedFilters.location && (
+                          <span className="px-2 py-1 bg-green-900/30 text-green-300 rounded text-sm flex items-center gap-1">
+                            Location: "{appliedFilters.location}"
+                            <button 
+                              onClick={() => {
+                                setAppliedFilters(prev => ({ ...prev, location: "" }));
+                                setCurrentPage(1);
+                              }}
+                              className="ml-1 hover:text-green-200"
+                            >
+                              ×
+                            </button>
+                          </span>
+                        )}
+                        {appliedFilters.industry && (
+                          <span className="px-2 py-1 bg-purple-900/30 text-purple-300 rounded text-sm flex items-center gap-1">
+                            Industry: "{appliedFilters.industry}"
+                            <button 
+                              onClick={() => {
+                                setAppliedFilters(prev => ({ ...prev, industry: "" }));
+                                setCurrentPage(1);
+                              }}
+                              className="ml-1 hover:text-purple-200"
+                            >
+                              ×
+                            </button>
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </form>
+                </div>
+
                 <div className="flex justify-between items-center">
                   <h2 className="text-2xl font-bold text-white">Available Opportunities</h2>
-                  <p className="text-gray-400">
-                    Page {currentPage} • Showing {jobs.length} jobs
-                  </p>
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-2">
+                      <label className="text-gray-400 text-sm">Jobs per page:</label>
+                      <select
+                        value={jobsPerPage}
+                        onChange={(e) => {
+                          setJobsPerPage(Number(e.target.value));
+                          setCurrentPage(1); // Reset to first page when changing page size
+                        }}
+                        className="bg-gray-800 text-gray-300 border border-gray-600 rounded px-2 py-1 text-sm focus:border-purple-500 focus:outline-none"
+                      >
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={20}>20</option>
+                        <option value={50}>50</option>
+                      </select>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-gray-400">
+                        Page {currentPage} • Showing {jobs.length} of {totalJobs} jobs
+                        {(appliedFilters.search || appliedFilters.location || appliedFilters.industry) && (
+                          <span className="text-purple-400 ml-2">(filtered)</span>
+                        )}
+                      </p>
+                      {totalJobs === 0 && (appliedFilters.search || appliedFilters.location || appliedFilters.industry) && (
+                        <p className="text-yellow-400 text-sm">No jobs match your search criteria. Try different keywords.</p>
+                      )}
+                    </div>
+                  </div>
                 </div>
                 
-                {jobs.length > 0 ? (
+                {loading ? (
+                  <div className="flex justify-center items-center py-12">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-6 h-6 rounded-full border-2 border-gray-300 border-t-purple-500 animate-spin"></div>
+                      <p className="text-purple-400">Loading jobs...</p>
+                    </div>
+                  </div>
+                ) : jobs.length > 0 ? (
                   <>
                     <div className="grid gap-6">
                       {jobs.map((job) => (
@@ -256,24 +491,30 @@ const JobBoard = () => {
                           className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-xl overflow-hidden transition-all border border-gray-700 p-6 hover:border-purple-500/30"
                         >
                           <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400 mb-3">
-                            {job.job_title || job.title || 'Job Title Not Available'}
+                            {highlightText(job.job_title || job.title || 'Job Title Not Available', appliedFilters.search)}
                           </h3>
                           <p className="text-gray-300 mb-4 line-clamp-3">
-                            {job.description || 'Description not available'}
+                            {highlightText(job.description || 'Description not available', appliedFilters.search)}
                           </p>
                           
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                             <div className="flex flex-col gap-1">
                               <span className="font-medium text-purple-400">Company</span>
-                              <span className="text-gray-300">{job.company_name || job.company || 'Not specified'}</span>
+                              <span className="text-gray-300">
+                                {highlightText(job.company_name || job.company || 'Not specified', appliedFilters.search)}
+                              </span>
                             </div>
                             <div className="flex flex-col gap-1">
                               <span className="font-medium text-purple-400">Location</span>
-                              <span className="text-gray-300">{job.location || 'Location not specified'}</span>
+                              <span className="text-gray-300">
+                                {highlightText(job.location || 'Location not specified', appliedFilters.location || appliedFilters.search)}
+                              </span>
                             </div>
                             <div className="flex flex-col gap-1">
                               <span className="font-medium text-purple-400">Industry</span>
-                              <span className="text-gray-300">{job.industry || 'General'}</span>
+                              <span className="text-gray-300">
+                                {highlightText(job.industry || 'General', appliedFilters.industry || appliedFilters.search)}
+                              </span>
                             </div>
                             <div className="flex flex-col gap-1">
                               <span className="font-medium text-purple-400">Salary</span>
@@ -292,7 +533,7 @@ const JobBoard = () => {
                               <div className="flex flex-wrap gap-2">
                                 {job.skills_required.slice(0, 5).map((skill, index) => (
                                   <span key={index} className="px-2 py-1 bg-gray-800 text-gray-300 rounded text-sm">
-                                    {skill}
+                                    {highlightText(skill, appliedFilters.search)}
                                   </span>
                                 ))}
                               </div>
@@ -337,43 +578,116 @@ const JobBoard = () => {
                       ))}
                     </div>
                     
-                    {/* Pagination Controls */}
-                    <div className="flex justify-center items-center space-x-4 mt-8">
-                      <button
-                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                        disabled={currentPage === 1}
-                        className="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg border border-gray-600 hover:border-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                      >
-                        Previous
-                      </button>
-                      
-                      <div className="flex items-center space-x-2">
-                        {Array.from({ length: Math.min(5, Math.ceil(totalJobs / jobsPerPage)) }, (_, i) => {
-                          const pageNum = currentPage - 2 + i;
-                          if (pageNum < 1 || pageNum > Math.ceil(totalJobs / jobsPerPage)) return null;
-                          return (
-                            <button
-                              key={pageNum}
-                              onClick={() => setCurrentPage(pageNum)}
-                              className={`px-3 py-1 rounded ${
-                                pageNum === currentPage
-                                  ? 'bg-purple-600 text-white'
-                                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                              } transition-colors`}
-                            >
-                              {pageNum}
-                            </button>
-                          );
-                        })}
+                    {/* Enhanced Pagination Controls */}
+                    <div className="flex flex-col items-center space-y-4 mt-8">
+                      <div className="flex items-center justify-between w-full text-sm text-gray-400">
+                        <div>
+                          Showing {((currentPage - 1) * jobsPerPage) + 1} to {Math.min(currentPage * jobsPerPage, totalJobs)} of {totalJobs} jobs
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <label className="text-gray-400">Jump to page:</label>
+                          <input
+                            type="number"
+                            min="1"
+                            max={Math.ceil(totalJobs / jobsPerPage)}
+                            value={currentPage}
+                            onChange={(e) => {
+                              const page = Math.max(1, Math.min(Number(e.target.value), Math.ceil(totalJobs / jobsPerPage)));
+                              setCurrentPage(page);
+                            }}
+                            className="bg-gray-800 text-gray-300 border border-gray-600 rounded px-2 py-1 w-16 text-center focus:border-purple-500 focus:outline-none"
+                          />
+                          <span className="text-gray-500">of {Math.ceil(totalJobs / jobsPerPage)}</span>
+                        </div>
                       </div>
                       
-                      <button
-                        onClick={() => setCurrentPage(prev => prev + 1)}
-                        disabled={jobs.length < jobsPerPage}
-                        className="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg border border-gray-600 hover:border-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                      >
-                        Next
-                      </button>
+                      <div className="flex justify-center items-center space-x-4">
+                        <button
+                          onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                          disabled={currentPage === 1 || loading}
+                          className="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg border border-gray-600 hover:border-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        >
+                          Previous
+                        </button>
+                        
+                        <div className="flex items-center space-x-2">
+                          {(() => {
+                            const totalPages = Math.ceil(totalJobs / jobsPerPage);
+                            const maxVisiblePages = 5;
+                            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+                            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+                            
+                            // Adjust startPage if we're near the end
+                            if (endPage - startPage + 1 < maxVisiblePages) {
+                              startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                            }
+                            
+                            const pages = [];
+                            
+                            // Add first page if not visible
+                            if (startPage > 1) {
+                              pages.push(
+                                <button
+                                  key={1}
+                                  onClick={() => setCurrentPage(1)}
+                                  disabled={loading}
+                                  className="px-3 py-1 rounded bg-gray-800 text-gray-300 hover:bg-gray-700 transition-colors"
+                                >
+                                  1
+                                </button>
+                              );
+                              if (startPage > 2) {
+                                pages.push(<span key="start-ellipsis" className="text-gray-500">...</span>);
+                              }
+                            }
+                            
+                            // Add visible pages
+                            for (let i = startPage; i <= endPage; i++) {
+                              pages.push(
+                                <button
+                                  key={i}
+                                  onClick={() => setCurrentPage(i)}
+                                  disabled={loading}
+                                  className={`px-3 py-1 rounded transition-colors ${
+                                    i === currentPage
+                                      ? 'bg-purple-600 text-white'
+                                      : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                                  }`}
+                                >
+                                  {i}
+                                </button>
+                              );
+                            }
+                            
+                            // Add last page if not visible
+                            if (endPage < totalPages) {
+                              if (endPage < totalPages - 1) {
+                                pages.push(<span key="end-ellipsis" className="text-gray-500">...</span>);
+                              }
+                              pages.push(
+                                <button
+                                  key={totalPages}
+                                  onClick={() => setCurrentPage(totalPages)}
+                                  disabled={loading}
+                                  className="px-3 py-1 rounded bg-gray-800 text-gray-300 hover:bg-gray-700 transition-colors"
+                                >
+                                  {totalPages}
+                                </button>
+                              );
+                            }
+                            
+                            return pages;
+                          })()}
+                        </div>
+                        
+                        <button
+                          onClick={() => setCurrentPage(prev => prev + 1)}
+                          disabled={currentPage >= Math.ceil(totalJobs / jobsPerPage) || loading}
+                          className="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg border border-gray-600 hover:border-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        >
+                          Next
+                        </button>
+                      </div>
                     </div>
                   </>
                 ) : (
