@@ -580,25 +580,48 @@ async def search_users(query: str, limit: int = 10):
     except Exception as e:
         print(f"Error searching users: {e}")
 
-async def get_jobs():
+async def get_jobs(limit: int = 20):
+    """Get recent job postings with enhanced Skill India data"""
     conn = get_db()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT id, title, description, company, location, company_contact, pay, created_at FROM job_postings ORDER BY created_at DESC")
+    cursor.execute("""
+        SELECT id, job_title, company_name, location, salary_range, description,
+               industry, sector, job_type, employment_type, experience_required, 
+               skills_required, posted_date, application_deadline, tags, source, 
+               is_active, created_at, title, company, company_contact, pay
+        FROM job_postings 
+        WHERE is_active = 1 
+        ORDER BY created_at DESC 
+        LIMIT ?
+    """, (limit,))
     jobs = cursor.fetchall()
-
     conn.close()
 
     return [
         {
             "id": job[0],
-            "title": job[1],
-            "description": job[2],
-            "company": job[3],
-            "location": job[4],
-            "company_contact": job[5],
-            "pay": job[6],
-            "created_at": job[7]
+            "job_title": job[1] or job[18],  # Use enhanced job_title or fallback to title
+            "title": job[1] or job[18],
+            "company_name": job[2] or job[19],  # Use enhanced company_name or fallback to company
+            "company": job[2] or job[19],
+            "location": job[3],
+            "salary_range": job[4] or job[21],  # Use enhanced salary_range or fallback to pay
+            "pay": job[4] or job[21],
+            "description": job[5],
+            "industry": job[6],
+            "sector": job[7],
+            "job_type": job[8],
+            "employment_type": job[9],
+            "experience_required": job[10],
+            "skills_required": json.loads(job[11]) if job[11] else [],
+            "posted_date": job[12],
+            "application_deadline": job[13],
+            "tags": json.loads(job[14]) if job[14] else [],
+            "source": job[15],
+            "is_active": job[16],
+            "created_at": job[17],
+            "company_contact": job[20]
         }
         for job in jobs
     ]
@@ -609,19 +632,46 @@ class UserInfo(BaseModel):
     user_info: str  # Input from the user for job recommendation
 async def recommend_job(user_info: UserInfo):
     """
-    Recommend the best job for a user based on their information.
+    Recommend the best job for a user based on their information using the smart recommendation system.
     """
     try:
-        from core.job_recommender import get_all_job_names, get_relevant_jobs, load_selected_jobs, find_best_job
-        all_job_names = await get_all_job_names()
-        relevant_job_names = await get_relevant_jobs(user_info.user_info, all_job_names)
-        print('Got relevant job names:', relevant_job_names)
-        relevant_jobs = await load_selected_jobs(relevant_job_names.get('relevant_jobs', []) if isinstance(relevant_job_names, dict) else relevant_job_names)
-        best_job = await find_best_job(user_info.user_info, relevant_jobs)
-        print(best_job)
-        return {"best_job": best_job}
+        # Use the smart recommendation API from routes_jobs
+        from api.routes_jobs import smart_recommend_job
+        job_result = await smart_recommend_job(user_info)
+        
+        if job_result and job_result.get('best_job'):
+            # Format the response to match the frontend expectations
+            best_job = job_result['best_job']
+            alternative_jobs = job_result.get('alternative_jobs', [])
+            
+            # Convert to jobs list format expected by frontend
+            jobs = [best_job]
+            if alternative_jobs:
+                jobs.extend(alternative_jobs)
+            
+            return jobs
+        else:
+            # Fallback to basic job list if no specific recommendation found
+            return await get_jobs(limit=5)
+            
     except Exception as e:
-        print(f"Error recommending job: {e}")
+        print(f"Error in smart job recommendation: {e}")
+        # Fallback to the original recommendation logic
+        try:
+            from core.job_recommender import get_all_job_names, get_relevant_jobs, load_selected_jobs, find_best_job
+            all_job_names = await get_all_job_names()
+            relevant_job_names = await get_relevant_jobs(user_info.user_info, all_job_names)
+            print('Got relevant job names:', relevant_job_names)
+            relevant_jobs = await load_selected_jobs(relevant_job_names.get('relevant_jobs', []) if isinstance(relevant_job_names, dict) else relevant_job_names)
+            best_job = await find_best_job(user_info.user_info, relevant_jobs)
+            print(best_job)
+            if best_job:
+                return [best_job]
+            else:
+                return await get_jobs(limit=5)
+        except Exception as fallback_error:
+            print(f"Error in fallback job recommendation: {fallback_error}")
+            return await get_jobs(limit=5)
 
 async def search_schemes(query: str, limit: int = 10):
     """Search schemes by name, description, or target group (for AI assistant and frontend helpers). Fully implemented."""

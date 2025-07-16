@@ -313,34 +313,94 @@ export interface Award {
   organization: string;
 }
 
-// Job Types
+// Job Types - Updated for Skill India integration
 export interface Job {
   id: number;
+  // Original fields
   title: string;
   description: string;
   company: string;
   location: string;
-  company_contact: string;
-  pay: string;
+  company_contact?: string;
+  pay?: string;
   created_at: string;
+  
+  // New Skill India fields
+  job_title?: string;
+  company_name?: string;
+  salary_range?: string;
+  job_type?: string;
+  experience_required?: string;
+  skills_required?: string[];
+  industry?: string;
+  sector?: string;
+  posted_date?: string;
+  application_deadline?: string;
+  employment_type?: string;
+  apply_url?: string;
+  
+  // Enhanced fields
+  source?: string;
+  tags?: string[];
+  is_active?: boolean;
+  
+  // Smart recommendation fields
+  relevance_score?: number;
+  debug_info?: string;
 }
 
 export interface JobCreate {
+  // Core required fields
   title: string;
   description: string;
   company: string;
   location: string;
-  company_contact: string;
-  pay: string;
+  
+  // Optional original fields
+  company_contact?: string;
+  pay?: string;
+  
+  // Optional new fields
+  job_title?: string;
+  company_name?: string;
+  salary_range?: string;
+  job_type?: string;
+  experience_required?: string;
+  skills_required?: string[];
+  industry?: string;
+  sector?: string;
+  posted_date?: string;
+  application_deadline?: string;
+  employment_type?: string;
+  source?: string;
+  tags?: string[];
+  is_active?: boolean;
 }
 
 export interface JobUpdate {
+  // Original fields
   title?: string;
   description?: string;
   company?: string;
   location?: string;
   company_contact?: string;
   pay?: string;
+  
+  // New fields
+  job_title?: string;
+  company_name?: string;
+  salary_range?: string;
+  job_type?: string;
+  experience_required?: string;
+  skills_required?: string[];
+  industry?: string;
+  sector?: string;
+  posted_date?: string;
+  application_deadline?: string;
+  employment_type?: string;
+  source?: string;
+  tags?: string[];
+  is_active?: boolean;
 }
 
 
@@ -466,7 +526,7 @@ export interface NetworkingSuggestion {
   potential_benefit: number;
 }
 
-// CSR Course Types
+// CSR Course Types - Updated for Skill India integration
 export interface CSRCourse {
   id: number;
   company_id: number;
@@ -482,6 +542,18 @@ export interface CSRCourse {
   content_url?: string;
   created_at: string;
   updated_at: string;
+  
+  // New Skill India fields
+  name?: string;         // For Skill India course name
+  link?: string;         // For Skill India course link
+  category?: string;     // Course category
+  skill_level?: string;  // Beginner, Intermediate, Advanced
+  provider?: string;     // Course provider
+  
+  // Enhanced fields
+  source?: string;       // 'csr' or 'skill_india'
+  tags?: string[];       // Course tags
+  is_active?: boolean;   // Active status
 }
 
 export interface CSRCourseCreate {
@@ -496,6 +568,16 @@ export interface CSRCourseCreate {
   start_date: string;
   status: 'active' | 'inactive' | 'completed';
   content_url?: string;
+  
+  // Optional new fields
+  name?: string;
+  link?: string;
+  category?: string;
+  skill_level?: string;
+  provider?: string;
+  source?: string;
+  tags?: string[];
+  is_active?: boolean;
 }
 
 export interface CSRCourseUpdate {
@@ -509,6 +591,16 @@ export interface CSRCourseUpdate {
   start_date?: string;
   status?: 'active' | 'inactive' | 'completed';
   content_url?: string;
+  
+  // New optional fields
+  name?: string;
+  link?: string;
+  category?: string;
+  skill_level?: string;
+  provider?: string;
+  source?: string;
+  tags?: string[];
+  is_active?: boolean;
 }
 
 // Visual Summary Types
@@ -728,7 +820,7 @@ export class ProjectAPI {
   }
 }
 
-// Job API
+// Job API - Enhanced for Skill India integration
 export class JobAPI {
   private api = new ApiService();
 
@@ -737,9 +829,71 @@ export class JobAPI {
     return this.api.post<JobCreate, { message: string }>('/api/jobs', job);
   }
 
-  // READ
-  async getJobs(): Promise<ApiResponse<Job[]>> {
-    return this.api.get<Job[]>('/api/jobs');
+  // READ - Enhanced with filtering
+  async getJobs(params?: {
+    limit?: number;
+    offset?: number;
+    location?: string;
+    industry?: string;
+    sector?: string;
+    job_type?: string;
+    experience_level?: string;
+    source?: string;
+    is_active?: boolean;
+    search?: string;
+    diverse?: boolean;
+  }): Promise<ApiResponse<{ jobs: Job[], total_count: number }>> {
+    const queryParams = new URLSearchParams();
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined) queryParams.append(key, value.toString());
+      });
+    }
+    const endpoint = `/api/jobs?${queryParams.toString()}`;
+    return this.api.get<{ jobs: Job[], total_count: number }>(endpoint);
+  }
+
+  async getJobById(id: number): Promise<ApiResponse<Job>> {
+    return this.api.get<Job>(`/api/jobs/${id}`);
+  }
+
+  // Enhanced search endpoint
+  async searchJobs(params: {
+    query?: string;
+    location?: string;
+    industry?: string;
+    job_type?: string;
+    limit?: number;
+    offset?: number;
+  }): Promise<ApiResponse<{ jobs: Job[], total_count: number }>> {
+    const queryParams = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined) queryParams.append(key, value.toString());
+    });
+    return this.api.get<{ jobs: Job[], total_count: number }>(`/api/jobs/search?${queryParams.toString()}`);
+  }
+
+  // Utility endpoints
+  async getJobIndustries(): Promise<ApiResponse<{ industry: string, count: number }[]>> {
+    return this.api.get<{ industry: string, count: number }[]>('/api/jobs/industries');
+  }
+
+  async getJobLocations(): Promise<ApiResponse<{ location: string, count: number }[]>> {
+    return this.api.get<{ location: string, count: number }[]>('/api/jobs/locations');
+  }
+
+  async getJobSectors(): Promise<ApiResponse<{ sector: string, count: number }[]>> {
+    return this.api.get<{ sector: string, count: number }[]>('/api/jobs/sectors');
+  }
+
+  async getJobStatistics(): Promise<ApiResponse<{
+    total_jobs: number;
+    active_jobs: number;
+    job_by_industry: Record<string, number>;
+    job_by_location: Record<string, number>;
+    job_by_type: Record<string, number>;
+  }>> {
+    return this.api.get('/api/jobs/stats');
   }
 
   // UPDATE
@@ -818,7 +972,7 @@ const response = await this.api.get<UserProfile>('/api/profile');
 }
 
 
-// CSR Course API
+// CSR Course API - Enhanced for Skill India integration
 export class CSRCourseAPI {
   private api = new ApiService();
 
@@ -827,13 +981,48 @@ export class CSRCourseAPI {
     return this.api.post<CSRCourseCreate, CSRCourse>('/api/csr/courses', course);
   }
 
-  // READ
-  async getCourses(): Promise<ApiResponse<CSRCourse[]>> {
-    return this.api.get<CSRCourse[]>('/api/csr/courses');
+  // READ - Enhanced with filtering
+  async getCourses(params?: {
+    limit?: number;
+    offset?: number;
+    category?: string;
+    skill_level?: string;
+    language?: string;
+    source?: string;
+    is_active?: boolean;
+    search?: string;
+  }): Promise<ApiResponse<CSRCourse[]>> {
+    const queryParams = new URLSearchParams();
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined) queryParams.append(key, value.toString());
+      });
+    }
+    const endpoint = `/api/csr/courses${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+    return this.api.get<CSRCourse[]>(endpoint);
   }
 
   async getCourseById(id: number): Promise<ApiResponse<CSRCourse>> {
     return this.api.get<CSRCourse>(`/api/csr/courses/${id}`);
+  }
+
+  // Enhanced search and utility endpoints
+  async getCourseCategories(): Promise<ApiResponse<string[]>> {
+    return this.api.get<string[]>('/api/courses/categories');
+  }
+
+  async getCourseSkillLevels(): Promise<ApiResponse<string[]>> {
+    return this.api.get<string[]>('/api/courses/skill-levels');
+  }
+
+  async getCourseStatistics(): Promise<ApiResponse<{
+    total_courses: number;
+    active_courses: number;
+    courses_by_category: Record<string, number>;
+    courses_by_level: Record<string, number>;
+    courses_by_source: Record<string, number>;
+  }>> {
+    return this.api.get('/api/courses/stats');
   }
 
   // UPDATE
@@ -1078,4 +1267,4 @@ export async function voiceUpdateProfile(transcription: string, current_profile:
 }
 
 // Export types
-export type { ApiResponse }; 
+export type { ApiResponse };

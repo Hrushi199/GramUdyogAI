@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from "react";
 import ParticleBackground from "../ui/ParticleBackground";
-import { jobAPI } from "../../lib/api";
+import { jobAPI, Job } from "../../lib/api"; // Import Job interface from api.ts
 
-interface Job {
-  id: number;
-  title: string;
-  description: string;
-  company: string;
-  location: string;
-  company_contact: string;
-  pay: string;
-  created_at: string; // Assuming the backend returns a timestamp
-}
+// Remove duplicate Job interface since it's imported from api.ts
 
 const JobBoard = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [totalJobs, setTotalJobs] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [jobsPerPage] = useState(10); // Show 10 jobs per page
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [company, setCompany] = useState("");
@@ -27,14 +21,29 @@ const JobBoard = () => {
   const [loading, setLoading] = useState(false); // Loading state for async operations
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  // Fetch job postings
+  // Fetch job postings with pagination
   useEffect(() => {
     const fetchJobs = async () => {
       setLoading(true);
       try {
-        const response = await jobAPI.getJobs();
+        const offset = (currentPage - 1) * jobsPerPage;
+        const response = await jobAPI.getJobs({
+          limit: jobsPerPage,
+          offset: offset,
+          is_active: true
+        });
+        
         if (response.data) {
           setJobs(response.data);
+          // The API should return total_count in the response
+          // For now, let's fetch it separately or use a default
+          if (response.data.length === jobsPerPage) {
+            // If we got a full page, there might be more
+            setTotalJobs((currentPage * jobsPerPage) + 1);
+          } else {
+            // This is the last page
+            setTotalJobs((currentPage - 1) * jobsPerPage + response.data.length);
+          }
         } else if (response.error) {
           console.error("Error fetching jobs:", response.error);
         }
@@ -45,7 +54,7 @@ const JobBoard = () => {
       }
     };
     fetchJobs();
-  }, []);
+  }, [currentPage, jobsPerPage]);
 
   // Handle job posting submission
   const handleSubmit = async (e: React.FormEvent) => {
@@ -214,48 +223,142 @@ const JobBoard = () => {
             {/* View Jobs Tab */}
             {activeTab === "view" && (
               <div className="space-y-8">
-                <h2 className="text-2xl font-bold text-white">Available Opportunities</h2>
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-bold text-white">Available Opportunities</h2>
+                  <p className="text-gray-400">
+                    Page {currentPage} • Showing {jobs.length} jobs
+                  </p>
+                </div>
+                
                 {jobs.length > 0 ? (
-                  <div className="grid gap-6">
-                    {jobs.map((job) => (
-                      <div 
-                        key={job.id} 
-                        className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-xl overflow-hidden transition-all border border-gray-700 p-6 hover:border-purple-500/30"
+                  <>
+                    <div className="grid gap-6">
+                      {jobs.map((job) => (
+                        <div 
+                          key={job.id} 
+                          className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-xl overflow-hidden transition-all border border-gray-700 p-6 hover:border-purple-500/30"
+                        >
+                          <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400 mb-3">
+                            {job.job_title || job.title}
+                          </h3>
+                          <p className="text-gray-300 mb-4 line-clamp-3">
+                            {job.description}
+                          </p>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                            <div className="flex flex-col gap-1">
+                              <span className="font-medium text-purple-400">Company</span>
+                              <span className="text-gray-300">{job.company_name || job.company || 'Not specified'}</span>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                              <span className="font-medium text-purple-400">Location</span>
+                              <span className="text-gray-300">{job.location || 'Location not specified'}</span>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                              <span className="font-medium text-purple-400">Industry</span>
+                              <span className="text-gray-300">{job.industry || 'General'}</span>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                              <span className="font-medium text-purple-400">Salary</span>
+                              <span className="text-gray-300">
+                                {job.salary_range || job.pay || 'Salary not disclosed'}
+                                {job.salary_range && job.salary_range !== 'Negotiable' && (
+                                  <span className="text-green-400 ml-1">₹</span>
+                                )}
+                              </span>
+                            </div>
+                          </div>
+                          
+                          {job.skills_required && job.skills_required.length > 0 && (
+                            <div className="mt-4">
+                              <span className="font-medium text-purple-400 block mb-2">Skills Required</span>
+                              <div className="flex flex-wrap gap-2">
+                                {job.skills_required.slice(0, 5).map((skill, index) => (
+                                  <span key={index} className="px-2 py-1 bg-gray-800 text-gray-300 rounded text-sm">
+                                    {skill}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          
+                          <div className="mt-6 flex justify-between items-center">
+                            <div className="text-sm text-gray-400 flex flex-wrap gap-2">
+                              {job.job_type && (
+                                <span className="bg-blue-900/30 text-blue-300 px-2 py-1 rounded">
+                                  {job.job_type}
+                                </span>
+                              )}
+                              {job.experience_required && (
+                                <span className="bg-green-900/30 text-green-300 px-2 py-1 rounded">
+                                  {job.experience_required === '0' ? 'Fresher' : `${job.experience_required} months exp.`}
+                                </span>
+                              )}
+                              {job.source && (
+                                <span className="bg-purple-900/30 text-purple-300 px-2 py-1 rounded">
+                                  {job.source}
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex gap-2">
+                              {job.source === 'Skill India' && (
+                                <button 
+                                  onClick={() => window.open('https://skillIndia.gov.in', '_blank')}
+                                  className="px-3 py-2 text-sm font-medium text-blue-400 hover:text-blue-300 bg-gray-800 rounded-lg border border-blue-500/30 hover:border-blue-500/50 transition-colors"
+                                >
+                                  Apply on Skill India
+                                </button>
+                              )}
+                              <button 
+                                className="px-4 py-2 text-sm font-medium text-purple-400 hover:text-purple-300 bg-gray-800 rounded-lg border border-purple-500/30 hover:border-purple-500/50 transition-colors"
+                              >
+                                View Details
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Pagination Controls */}
+                    <div className="flex justify-center items-center space-x-4 mt-8">
+                      <button
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                        className="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg border border-gray-600 hover:border-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
-                        <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400 mb-3">
-                          {job.title}
-                        </h3>
-                        <p className="text-gray-300 mb-4">{job.description}</p>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                          <div className="flex flex-col gap-1">
-                            <span className="font-medium text-purple-400">Company</span>
-                            <span className="text-gray-300">{job.company}</span>
-                          </div>
-                          <div className="flex flex-col gap-1">
-                            <span className="font-medium text-purple-400">Location</span>
-                            <span className="text-gray-300">{job.location}</span>
-                          </div>
-                          <div className="flex flex-col gap-1">
-                            <span className="font-medium text-purple-400">Contact</span>
-                            <span className="text-gray-300">{job.company_contact}</span>
-                          </div>
-                          <div className="flex flex-col gap-1">
-                            <span className="font-medium text-purple-400">Compensation</span>
-                            <span className="text-gray-300">{job.pay}</span>
-                          </div>
-                        </div>
-                        
-                        <div className="mt-6 flex justify-end">
-                          <button 
-                            className="px-4 py-2 text-sm font-medium text-purple-400 hover:text-purple-300 bg-gray-800 rounded-lg border border-purple-500/30 hover:border-purple-500/50 transition-colors"
-                          >
-                            Apply Now
-                          </button>
-                        </div>
+                        Previous
+                      </button>
+                      
+                      <div className="flex items-center space-x-2">
+                        {Array.from({ length: Math.min(5, Math.ceil(totalJobs / jobsPerPage)) }, (_, i) => {
+                          const pageNum = currentPage - 2 + i;
+                          if (pageNum < 1 || pageNum > Math.ceil(totalJobs / jobsPerPage)) return null;
+                          return (
+                            <button
+                              key={pageNum}
+                              onClick={() => setCurrentPage(pageNum)}
+                              className={`px-3 py-1 rounded ${
+                                pageNum === currentPage
+                                  ? 'bg-purple-600 text-white'
+                                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                              } transition-colors`}
+                            >
+                              {pageNum}
+                            </button>
+                          );
+                        })}
                       </div>
-                    ))}
-                  </div>
+                      
+                      <button
+                        onClick={() => setCurrentPage(prev => prev + 1)}
+                        disabled={jobs.length < jobsPerPage}
+                        className="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg border border-gray-600 hover:border-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </>
                 ) : (
                   <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-xl border border-gray-700 p-8 text-center">
                     <p className="text-gray-400 text-lg">No jobs available at the moment.</p>

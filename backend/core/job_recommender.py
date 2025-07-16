@@ -17,12 +17,17 @@ DATABASE_PATH = "gramudyogai.db"  # Path to your SQLite database
 # Pydantic Models for Validation
 class JobDetails(BaseModel):
     id: int
-    title: str
+    job_title: str
     description: str
-    company: str
+    company_name: str
     location: str
-    company_contact: str
-    pay: str
+    salary_range: str
+    industry: Optional[str]
+    sector: Optional[str]
+    job_type: Optional[str]
+    employment_type: Optional[str]
+    experience_required: Optional[str]
+    skills_required: Optional[List[str]]
     created_at: Optional[str]  # Made optional to handle missing field
 
 
@@ -37,7 +42,7 @@ async def get_all_job_names() -> List[str]:
     conn = sqlite3.connect(DATABASE_PATH)
     cursor = conn.cursor()
 
-    cursor.execute("SELECT title FROM job_postings")
+    cursor.execute("SELECT DISTINCT COALESCE(job_title, title) FROM job_postings WHERE is_active = 1 LIMIT 20")
     job_names = [row[0] for row in cursor.fetchall()]
 
     conn.close()
@@ -82,8 +87,16 @@ async def load_selected_jobs(selected_names: List[str]) -> List[Dict]:
     cursor = conn.cursor()
 
     placeholders = ",".join("?" for _ in selected_names)
-    query = f"SELECT id, title, description, company, location, company_contact, pay, created_at FROM job_postings WHERE title IN ({placeholders})"
-    cursor.execute(query, selected_names)
+    query = f"""
+        SELECT id, COALESCE(job_title, title) as job_title, description, 
+               COALESCE(company_name, company) as company_name, location, 
+               COALESCE(salary_range, pay) as salary_range, 
+               created_at, industry, sector, job_type, employment_type, 
+               experience_required, skills_required
+        FROM job_postings 
+        WHERE (job_title IN ({placeholders}) OR title IN ({placeholders})) AND is_active = 1
+    """
+    cursor.execute(query, selected_names + selected_names)  # Double the params for both conditions
     rows = cursor.fetchall()
 
     conn.close()
@@ -91,45 +104,62 @@ async def load_selected_jobs(selected_names: List[str]) -> List[Dict]:
     jobs = [
         {
             "id": row[0],
-            "title": row[1],
-            "description": row[2],
-            "company": row[3],
+            "job_title": row[1],
+            "title": row[1],  # For backward compatibility
+            "description": row[2][:500] + "..." if len(row[2]) > 500 else row[2],  # Limit description length
+            "company_name": row[3],
+            "company": row[3],  # For backward compatibility
             "location": row[4],
-            "company_contact": row[5],
-            "pay": row[6],
-            "created_at": row[7],
+            "salary_range": row[5],
+            "pay": row[5],  # For backward compatibility
+            "created_at": row[6],
+            "industry": row[7],
+            "sector": row[8],
+            "job_type": row[9],
+            "employment_type": row[10],
+            "experience_required": row[11],
+            "skills_required": json.loads(row[12]) if row[12] else []
         }
         for row in rows
     ]
+
     return jobs
 
 
 async def find_best_job(user_info: str, selected_jobs: List[Dict]) -> Dict:
     """
-    Use Groq to find the best job from the selected relevant jobs.
+    Use simple keyword matching to find the best job instead of LLM
     """
-    prompt = (
-        f"Based on the user's information: '{user_info}', find the best job from the following list of relevant jobs:\n\n"
-        f"{json.dumps(selected_jobs, indent=2)}\n\n"
-        f"Return the best job as a JSON object with all its details."
-    )
-    response = client.chat.completions.create(
-        model="llama3-8b-8192",
-        messages=[
-            {"role": "system", "content": "You are a JSON API that selects the best job for a user based on their information."},
-            {"role": "user", "content": prompt}
-        ],
-        response_format={"type": "json_object"}
-    )
-    content = response.choices[0].message.content
-    try:
-        # Validate the response using Pydantic
-        best_job = JobDetails.model_validate_json(content)
-        print(f"Best job found: {best_job}")
-        return best_job.model_dump(mode="json")
-    except Exception as e:
-        print(f"Error parsing/validating JSON: {e}")
-        print(f"Raw response: {content}")
+    if not selected_jobs:
         return {}
+    
+    user_keywords = user_info.lower().split()
+    best_job = None
+    best_score = 0
+    
+    for job in selected_jobs:
+        score = 0
+        job_text = f"{job.get('job_title', '')} {job.get('description', '')} {job.get('industry', '')}".lower()
+        
+        # Score based on keyword matches
+        for keyword in user_keywords:
+            if keyword in job_text:
+                score += 1
+        
+        # Boost score for exact matches in job title
+        job_title = job.get('job_title', '').lower()
+        for keyword in user_keywords:
+            if keyword in job_title:
+                score += 2
+        
+        if score > best_score:
+            best_score = score
+            best_job = job
+    
+    # If no keyword matches, return the first job
+    if not best_job and selected_jobs:
+        best_job = selected_jobs[0]
+    
+    return best_job or {}
 
 
