@@ -204,9 +204,9 @@ async def get_jobs(
             {
                 "id": job["id"],
                 "job_title": job["job_title"] or job["title"],  # job_title or title (legacy)
-                "company_name": job["company_name"] if "company_name" in job.keys() else job.get("company", ""),  # company_name or company
+                "company_name": job["company"] if job["company"] else "",  # company_name or company
                 "location": job["location"],
-                "salary_range": job["salary_range"] or job.get("pay", ""),  # salary_range or pay (legacy)
+                "salary_range": job["salary_range"] or job["pay"] or "",  # salary_range or pay (legacy)
                 "description": job["description"],
                 "industry": job["industry"],
                 "sector": job["sector"],
@@ -223,9 +223,9 @@ async def get_jobs(
                 "apply_url": job["apply_url"],
                 # Legacy fields for backward compatibility
                 "title": job["job_title"] or job["title"],
-                "company": job["company_name"] if "company_name" in job.keys() else job.get("company", ""),
-                "company_contact": job.get("company_contact", ""),
-                "pay": job["salary_range"] or job.get("pay", "")
+                "company": job["company"] if job["company"] else "",
+                "company_contact": job["company_contact"] if job["company_contact"] else "",
+                "pay": job["salary_range"] or job["pay"] or ""
             }
             for job in jobs
         ],
@@ -309,29 +309,29 @@ async def search_jobs(
         "jobs": [
             {
                 "id": job["id"],
-                "job_title": job.get("job_title") or job.get("title"),
-                "company_name": job.get("company") or job.get("company"),
-                "location": job.get("location"),
-                "salary_range": job.get("salary_range") or job.get("pay"),
-                "description": job.get("description"),
-                "industry": job.get("industry"),
-                "sector": job.get("sector"),
-                "job_type": job.get("job_type"),
-                "employment_type": job.get("employment_type"),
-                "experience_required": job.get("experience_required"),
-                "skills_required": json.loads(job["skills_required"]) if job.get("skills_required") else [],
-                "posted_date": job.get("posted_date"),
-                "application_deadline": job.get("application_deadline"),
-                "tags": json.loads(job["tags"]) if job.get("tags") else [],
-                "source": job.get("source"),
-                "is_active": job.get("is_active"),
-                "created_at": job.get("created_at"),
-                "apply_url": job.get("apply_url"),
+                "job_title": job["job_title"] or job["title"],
+                "company_name": job["company"] or "",
+                "location": job["location"],
+                "salary_range": job["salary_range"] or job["pay"] or "",
+                "description": job["description"],
+                "industry": job["industry"],
+                "sector": job["sector"],
+                "job_type": job["job_type"],
+                "employment_type": job["employment_type"],
+                "experience_required": job["experience_required"],
+                "skills_required": json.loads(job["skills_required"]) if job["skills_required"] else [],
+                "posted_date": job["posted_date"],
+                "application_deadline": job["application_deadline"],
+                "tags": json.loads(job["tags"]) if job["tags"] else [],
+                "source": job["source"],
+                "is_active": job["is_active"],
+                "created_at": job["created_at"],
+                "apply_url": job["apply_url"],
                 # Legacy fields for backward compatibility
-                "title": job.get("job_title") or job.get("title"),
-                "company": job.get("company") or job.get("company"),
-                "company_contact": job.get("company_contact"),
-                "pay": job.get("salary_range") or job.get("pay")
+                "title": job["job_title"] or job["title"],
+                "company": job["company"] or "",
+                "company_contact": job["company_contact"] or "",
+                "pay": job["salary_range"] or job["pay"] or ""
             }
             for job in jobs
         ],
@@ -362,10 +362,10 @@ async def get_job_by_id(job_id: int):
 
     return {
         "id": job["id"],
-        "job_title": job["job_title"] or job.get("title"),
-        "company_name": job.get("company_name") or job.get("company"),
+        "job_title": job["job_title"] or job["title"],
+        "company_name": job["company"] or "",
         "location": job["location"],
-        "salary_range": job.get("salary_range") or job.get("pay"),
+        "salary_range": job["salary_range"] or job["pay"] or "",
         "description": job["description"],
         "industry": job["industry"],
         "sector": job["sector"],
@@ -380,10 +380,10 @@ async def get_job_by_id(job_id: int):
         "is_active": job["is_active"],
         "created_at": job["created_at"],
         # Legacy fields for backward compatibility
-        "title": job["job_title"] or job.get("title"),
-        "company": job.get("company_name") or job.get("company"),
-        "company_contact": job.get("company_contact"),
-        "pay": job.get("salary_range") or job.get("pay")
+        "title": job["job_title"] or job["title"],
+        "company": job["company"] or "",
+        "company_contact": job["company_contact"] or "",
+        "pay": job["salary_range"] or job["pay"] or ""
     }
 
 @router.put("/jobs/{job_id}")
@@ -915,20 +915,20 @@ def format_job_response(job_data, score=0):
     """Format job data for API response"""
     return {
         "id": job_data["id"],
-        "job_title": job_data.get("job_title") or job_data.get("alternate_job_title"),
-        "company_name": job_data.get("company_name") or job_data.get("company_name"),
-        "location": job_data.get("location"),
-        "salary_range": job_data.get("salary_range") or job_data.get("alternate_salary_range"),
-        "description": job_data.get("description")[:250] + "..." if job_data.get("description") and len(job_data.get("description")) > 250 else job_data.get("description"),
-        "industry": job_data.get("industry"),
-        "sector": job_data.get("sector"),
-        "job_type": job_data.get("job_type"),
-        "employment_type": job_data.get("employment_type"),
-        "experience_required": job_data.get("experience_required"),
-        "skills_required": json.loads(job_data.get("skills_required")) if job_data.get("skills_required") and job_data.get("skills_required") != "null" else [],
-        "source": job_data.get("source"),
-        "company_contact": job_data.get("company_contact"),
-        "apply_url": job_data.get("apply_url"),
+        "job_title": job_data["job_title"] or job_data["title"] or "",
+        "company_name": job_data["company"] or "",
+        "location": job_data["location"] or "",
+        "salary_range": job_data["salary_range"] or job_data["pay"] or "",
+        "description": (job_data["description"] or "")[:250] + "..." if job_data["description"] and len(job_data["description"]) > 250 else (job_data["description"] or ""),
+        "industry": job_data["industry"] or "",
+        "sector": job_data["sector"] or "",
+        "job_type": job_data["job_type"] or "",
+        "employment_type": job_data["employment_type"] or "",
+        "experience_required": job_data["experience_required"] or "",
+        "skills_required": json.loads(job_data["skills_required"]) if job_data["skills_required"] and job_data["skills_required"] != "null" else [],
+        "source": job_data["source"] or "",
+        "company_contact": job_data["company_contact"] or "",
+        "apply_url": job_data["apply_url"] or "",
         "relevance_score": score,
         "ai_powered": True
     }
