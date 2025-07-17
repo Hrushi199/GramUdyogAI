@@ -15,11 +15,9 @@ import JobMentorDashboard from './components/sections/JobMentorDashboard';
 import Community from './components/sections/Community';
 import JobBoard from './components/sections/job_board';
 import YoutubeAudioSummary from './components/sections/YoutubeAudioSummary';
-import CSRDashboard from './components/sections/CSRDashboard';
 import CourseRecommender from './components/sections/CourseRecommender';
 import EventManagement from './components/sections/EventManagement';
 import PublicProjects from './components/sections/PublicProjects';
-import MyProjects from './components/sections/MyProjects';
 import Auth from './components/sections/Auth';
 import UnifiedProfile from './components/sections/UnifiedProfile';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -94,12 +92,10 @@ export default function App() {
           <Route path="/skill-builder" element={<ProtectedRoute><SkillBuilder /></ProtectedRoute>} />
           <Route path="/business-suggestions" element={<ProtectedRoute><BusinessSuggestions /></ProtectedRoute>} />
           <Route path="/youtube-audio-summary" element={<ProtectedRoute><YoutubeAudioSummary /></ProtectedRoute>} />
-          <Route path="/csr-dashboard" element={<ProtectedRoute><CSRDashboard /></ProtectedRoute>} />
           <Route path="/course-recommender" element={<ProtectedRoute><CourseRecommender /></ProtectedRoute>} />
           <Route path="/events" element={<ProtectedRoute><EventManagement /></ProtectedRoute>} />
           <Route path="/events/:eventId" element={<EventDetails />} />
           <Route path="/projects" element={<ProtectedRoute><PublicProjects /></ProtectedRoute>} />
-          <Route path="/my-projects" element={<ProtectedRoute><MyProjects /></ProtectedRoute>} />
         </Routes>
       </Router>
     </div>

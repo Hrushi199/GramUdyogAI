@@ -157,16 +157,12 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenNotifications }) => {
                 dropdownKey="business"
                 items={[
                   { label: t('navbar.businessIdeas'), path: "/business-suggestions" },
-                  { label: t('navbar.projects'), path: "/projects" },
-                  ...(isLoggedIn ? [{ label: t('navbar.myProjects'), path: "/my-projects" }] : [])
+                  { label: t('navbar.projects'), path: "/projects" }
                 ]}
               />
               
               <NavLink to="/events" className="text-gray-300 hover:text-white transition-colors">
                 {t('navbar.events')}
-              </NavLink>
-              <NavLink to="/csr-dashboard" className="text-gray-300 hover:text-white transition-colors">
-                {t('navbar.csr')}
               </NavLink>
               
               {isLoggedIn ? (
@@ -307,15 +303,6 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenNotifications }) => {
               >
                 {t('navbar.projects')}
               </Link>
-              {isLoggedIn && (
-                <Link 
-                  to="/my-projects" 
-                  className="text-gray-300 hover:text-white transition-colors py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {t('navbar.myProjects')}
-                </Link>
-              )}
               <Link 
                 to="/community" 
                 className="text-gray-300 hover:text-white transition-colors py-2"

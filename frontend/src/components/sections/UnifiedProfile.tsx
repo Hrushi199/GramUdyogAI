@@ -48,13 +48,17 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
   const [loaded, setLoaded] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
+  const [achievements, setAchievements] = useState<any[]>([]);
+  const [activities, setActivities] = useState<any[]>([]);
+  const [recommendations, setRecommendations] = useState<any[]>([]);
+  const [networkingSuggestions, setNetworkingSuggestions] = useState<any[]>([]);
+  const [userStats, setUserStats] = useState<any>(null);
   const [showVoiceOnboarding, setShowVoiceOnboarding] = useState(false);
 
   // Voice input states
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentVoiceField, setCurrentVoiceField] = useState<string | null>(null);
-  const [isTyping, setIsTyping] = useState(false);
 
   // Media recorder reference
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -80,6 +84,11 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
       fetchProfile();
       fetchProjects();
       fetchEvents();
+      fetchAchievements();
+      fetchActivities();
+      fetchRecommendations();
+      fetchNetworkingSuggestions();
+      fetchUserStats();
     }
     return () => clearTimeout(timer);
   }, [publicView, userId]);
@@ -114,20 +123,8 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
           },
           achievements: [],
           recent_activities: [],
-          recommendations: [
-            {
-              id: 1,
-              type: 'skill',
-              title: 'Complete Your Profile',
-              description: 'Add more details to get personalized recommendations',
-              priority: 'high',
-              estimated_impact: 100,
-            }
-          ],
-          networking_suggestions: [
-            'Join relevant events in your area',
-            'Connect with professionals in your field'
-          ],
+          recommendations: [],
+          networking_suggestions: [],
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         });
@@ -147,12 +144,11 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
         return;
       }
       
-      const response = await fetch(`${API_BASE_URL}/api/users/${userId}/projects`);
-      if (response.ok) {
-        const data = await response.json();
-        setProjects(data);
+      const response = await userAPI.getUserProjects(parseInt(userId));
+      if (response.data) {
+        setProjects(response.data);
       } else {
-        console.error('Error fetching user projects:', response.statusText);
+        console.error('Error fetching user projects:', response.error);
         setProjects([]);
       }
     } catch (error) {
@@ -169,17 +165,121 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
         return;
       }
       
-      const response = await fetch(`${API_BASE_URL}/api/users/${userId}/events`);
-      if (response.ok) {
-        const data = await response.json();
-        setEvents(data);
+      const response = await userAPI.getUserEvents(parseInt(userId));
+      if (response.data) {
+        setEvents(response.data);
       } else {
-        console.error('Error fetching user events:', response.statusText);
+        console.error('Error fetching user events:', response.error);
         setEvents([]);
       }
     } catch (error) {
       console.error('Error fetching events:', error);
       setEvents([]);
+    }
+  };
+
+  const fetchAchievements = async () => {
+    try {
+      const userId = localStorage.getItem('user_id');
+      if (!userId) {
+        setAchievements([]);
+        return;
+      }
+      
+      const response = await userAPI.getUserAchievements(parseInt(userId));
+      if (response.data) {
+        setAchievements(response.data);
+      } else {
+        console.error('Error fetching user achievements:', response.error);
+        setAchievements([]);
+      }
+    } catch (error) {
+      console.error('Error fetching achievements:', error);
+      setAchievements([]);
+    }
+  };
+
+  const fetchActivities = async () => {
+    try {
+      const userId = localStorage.getItem('user_id');
+      if (!userId) {
+        setActivities([]);
+        return;
+      }
+      
+      const response = await userAPI.getUserActivities(parseInt(userId), 10);
+      if (response.data) {
+        setActivities(response.data);
+      } else {
+        console.error('Error fetching user activities:', response.error);
+        setActivities([]);
+      }
+    } catch (error) {
+      console.error('Error fetching activities:', error);
+      setActivities([]);
+    }
+  };
+
+  const fetchRecommendations = async () => {
+    try {
+      const userId = localStorage.getItem('user_id');
+      if (!userId) {
+        setRecommendations([]);
+        return;
+      }
+      
+      const response = await userAPI.getUserRecommendations(parseInt(userId));
+      if (response.data) {
+        setRecommendations(response.data);
+      } else {
+        console.error('Error fetching user recommendations:', response.error);
+        setRecommendations([]);
+      }
+    } catch (error) {
+      console.error('Error fetching recommendations:', error);
+      setRecommendations([]);
+    }
+  };
+
+  const fetchNetworkingSuggestions = async () => {
+    try {
+      const userId = localStorage.getItem('user_id');
+      if (!userId) {
+        setNetworkingSuggestions([]);
+        return;
+      }
+      
+      const response = await userAPI.getUserNetworkingSuggestions(parseInt(userId));
+      if (response.data) {
+        setNetworkingSuggestions(response.data);
+      } else {
+        console.error('Error fetching networking suggestions:', response.error);
+        setNetworkingSuggestions([]);
+      }
+    } catch (error) {
+      console.error('Error fetching networking suggestions:', error);
+      setNetworkingSuggestions([]);
+    }
+  };
+
+  const fetchUserStats = async () => {
+    try {
+      const userId = localStorage.getItem('user_id');
+      if (!userId) {
+        setUserStats(null);
+        return;
+      }
+      
+      const response = await userAPI.getUserStats(parseInt(userId));
+      if (response.data) {
+        setUserStats(response.data);
+      } else {
+        console.error('Error fetching user stats:', response.error);
+        setUserStats(null);
+      }
+    } catch (error) {
+      console.error('Error fetching user stats:', error);
+      setUserStats(null);
     }
   };
 
@@ -216,15 +316,6 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
       investor: 'bg-orange-500/20 text-orange-300 border-orange-500/50'
     };
     return colors[userType as keyof typeof colors] || 'bg-gray-500/20 text-gray-300 border-gray-500/50';
-  };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
   };
 
   const formatNumber = (num: number) => {
@@ -577,10 +668,10 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
         experience: updatedProfile.experience,
         goals: updatedProfile.goals,
         impact_metrics: updatedProfile.impact_metrics,
-        achievements: updatedProfile.achievements,
-        recent_activities: updatedProfile.recent_activities,
-        recommendations: updatedProfile.recommendations,
-        networking_suggestions: updatedProfile.networking_suggestions,
+        achievements: [],
+        recent_activities: [],
+        recommendations: [],
+        networking_suggestions: [],
       });
       
       if (response.data) {
@@ -684,7 +775,6 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
   }
 
   const UserTypeIcon = getUserTypeIcon(profile.user_type);
-  const skills = profile.skills || [];
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -936,8 +1026,8 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
             <div className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 backdrop-blur-sm border border-purple-500/30 rounded-2xl p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-purple-300 text-sm font-medium">Events Hosted</p>
-                  <p className="text-3xl font-bold text-white">{formatNumber(profile.impact_metrics.events_hosted || 0)}</p>
+                  <p className="text-purple-300 text-sm font-medium">Events Organized</p>
+                  <p className="text-3xl font-bold text-white">{formatNumber(userStats?.events_organized || 0)}</p>
                 </div>
                 <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
                   <Calendar className="w-6 h-6 text-purple-400" />
@@ -948,8 +1038,8 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
             <div className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 backdrop-blur-sm border border-blue-500/30 rounded-2xl p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-blue-300 text-sm font-medium">People Impacted</p>
-                  <p className="text-3xl font-bold text-white">{formatNumber(profile.impact_metrics.people_impacted || 0)}</p>
+                  <p className="text-blue-300 text-sm font-medium">Events Participated</p>
+                  <p className="text-3xl font-bold text-white">{formatNumber(userStats?.events_participated || 0)}</p>
                 </div>
                 <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
                   <Users className="w-6 h-6 text-blue-400" />
@@ -960,8 +1050,8 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
             <div className="bg-gradient-to-br from-green-600/20 to-green-800/20 backdrop-blur-sm border border-green-500/30 rounded-2xl p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-green-300 text-sm font-medium">Revenue Generated</p>
-                  <p className="text-3xl font-bold text-white">{formatCurrency(profile.impact_metrics.revenue_generated)}</p>
+                  <p className="text-green-300 text-sm font-medium">Projects Created</p>
+                  <p className="text-3xl font-bold text-white">{formatNumber(userStats?.projects_created || 0)}</p>
                 </div>
                 <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
                   <DollarSign className="w-6 h-6 text-green-400" />
@@ -972,8 +1062,8 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
             <div className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 backdrop-blur-sm border border-orange-500/30 rounded-2xl p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-orange-300 text-sm font-medium">Impact Score</p>
-                  <p className="text-3xl font-bold text-white">{profile.impact_metrics.social_impact_score}/100</p>
+                  <p className="text-orange-300 text-sm font-medium">Total Activities</p>
+                  <p className="text-3xl font-bold text-white">{userStats?.total_activities || 0}</p>
                 </div>
                 <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center">
                   <Target className="w-6 h-6 text-orange-400" />
@@ -1039,15 +1129,23 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
                     <div className="space-y-4">
                       <div className="flex justify-between items-center">
                         <span className="text-gray-300">Events Participated</span>
-                        <span className="text-white font-semibold">{profile.impact_metrics.events_participated}</span>
+                        <span className="text-white font-semibold">{userStats?.events_participated || 0}</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-300">Projects Created</span>
-                        <span className="text-white font-semibold">{profile.impact_metrics.projects_created}</span>
+                        <span className="text-white font-semibold">{userStats?.projects_created || 0}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-300">Jobs Created</span>
-                        <span className="text-white font-semibold">{profile.impact_metrics.jobs_created}</span>
+                        <span className="text-gray-300">Events Organized</span>
+                        <span className="text-white font-semibold">{userStats?.events_organized || 0}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-300">Team Memberships</span>
+                        <span className="text-white font-semibold">{userStats?.team_memberships || 0}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-300">Total Activities</span>
+                        <span className="text-white font-semibold">{userStats?.total_activities || 0}</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-300">Sustainability Score</span>
@@ -1069,10 +1167,10 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
                       Networking Suggestions
                     </h3>
                     <div className="space-y-2">
-                      {(profile.networking_suggestions || []).slice(0, 3).map((suggestion, index) => (
+                      {networkingSuggestions.slice(0, 3).map((suggestion, index) => (
                         <div key={index} className="flex items-center space-x-2 text-gray-300">
                           <ArrowRight className="w-4 h-4 text-purple-400" />
-                          <span>{suggestion}</span>
+                          <span>{suggestion.title}</span>
                         </div>
                       ))}
                     </div>
@@ -1083,7 +1181,7 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
 
             {activeTab === 'achievements' && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {(profile.achievements || []).map((achievement) => (
+                {achievements.map((achievement) => (
                   <div key={achievement.id} className="bg-gray-800/30 border border-gray-600 rounded-xl p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center">
@@ -1106,7 +1204,7 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
 
             {activeTab === 'activities' && (
               <div className="space-y-4">
-                {(profile.recent_activities || []).map((activity) => (
+                {activities.map((activity) => (
                   <div key={activity.id} className="bg-gray-800/30 border border-gray-600 rounded-xl p-6">
                     <div className="flex items-start justify-between">
                       <div className="flex items-start space-x-4">
@@ -1133,7 +1231,7 @@ const UnifiedProfile: React.FC<UnifiedProfileProps> = ({ publicView = false, use
 
             {activeTab === 'recommendations' && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {(profile.recommendations || []).map((recommendation) => (
+                {recommendations.map((recommendation) => (
                   <div key={recommendation.id} className="bg-gray-800/30 border border-gray-600 rounded-xl p-6">
                     <div className="flex items-start justify-between mb-4">
                       <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">

@@ -877,3 +877,57 @@ async def get_my_investments(current_user: Dict[str, Any] = Depends(get_current_
     except Exception as e:
         logger.error(f"Error fetching user investments: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/users/{user_id}/projects")
+async def get_user_projects(user_id: int):
+    """Get all projects for a specific user (both created and participated)"""
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        
+        # Get projects created by user
+        cursor.execute("""
+            SELECT p.id, p.title, p.description, p.category, p.event_id, p.event_name, p.event_type,
+                   p.team_members, p.technologies, p.impact_metrics, p.funding_status, p.funding_amount,
+                   p.funding_goal, p.location, p.state, p.created_by, p.created_at, p.completed_at,
+                   p.status, p.media, p.testimonials, p.awards, p.tags
+            FROM projects p
+            WHERE p.created_by = ?
+            ORDER BY p.created_at DESC
+        """, (user_id,))
+        
+        projects = []
+        for row in cursor.fetchall():
+            project = {
+                "id": row['id'],
+                "title": row['title'],
+                "description": row['description'],
+                "category": row['category'],
+                "event_id": row['event_id'],
+                "event_name": row['event_name'],
+                "event_type": row['event_type'],
+                "team_members": json.loads(row['team_members']) if row['team_members'] else [],
+                "technologies": json.loads(row['technologies']) if row['technologies'] else [],
+                "impact_metrics": json.loads(row['impact_metrics']) if row['impact_metrics'] else {},
+                "funding_status": row['funding_status'],
+                "funding_amount": row['funding_amount'],
+                "funding_goal": row['funding_goal'],
+                "location": row['location'],
+                "state": row['state'],
+                "created_by": row['created_by'],
+                "created_at": row['created_at'],
+                "completed_at": row['completed_at'],
+                "status": row['status'],
+                "media": json.loads(row['media']) if row['media'] else [],
+                "testimonials": json.loads(row['testimonials']) if row['testimonials'] else [],
+                "awards": json.loads(row['awards']) if row['awards'] else [],
+                "tags": json.loads(row['tags']) if row['tags'] else []
+            }
+            projects.append(project)
+        
+        return projects
+        
+    except Exception as e:
+        logger.error(f"Error fetching user projects: {e}")
+        raise HTTPException(status_code=500, detail=str(e))

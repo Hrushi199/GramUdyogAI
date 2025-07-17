@@ -205,20 +205,6 @@ import publicProjectsMl from './locales/public-projects/malayalam.json';
 import publicProjectsPa from './locales/public-projects/punjabi.json';
 import publicProjectsAs from './locales/public-projects/assamese.json';
 
-import myProjectsEn from './locales/my-projects/english.json';
-import myProjectsHi from './locales/my-projects/hindi.json';
-import myProjectsBn from './locales/my-projects/bengali.json';
-import myProjectsMr from './locales/my-projects/marathi.json';
-import myProjectsTe from './locales/my-projects/telugu.json';
-import myProjectsTa from './locales/my-projects/tamil.json';
-import myProjectsGu from './locales/my-projects/gujarati.json';
-import myProjectsUr from './locales/my-projects/urdu.json';
-import myProjectsKn from './locales/my-projects/kannada.json';
-import myProjectsOr from './locales/my-projects/odia.json';
-import myProjectsMl from './locales/my-projects/malayalam.json';
-import myProjectsPa from './locales/my-projects/punjabi.json';
-import myProjectsAs from './locales/my-projects/assamese.json';
-
 // Event Details namespace imports
 import eventDetailsEn from './locales/event-details/english.json';
 import eventDetailsHi from './locales/event-details/hindi.json';
@@ -267,19 +253,19 @@ import jobBoardPa from './locales/job-board/punjabi.json';
 import jobBoardAs from './locales/job-board/assamese.json';
 
 // CSR Dashboard translations
-import csrDashboardEn from './locales/csr-dashboard/english.json';
-import csrDashboardHi from './locales/csr-dashboard/hindi.json';
-import csrDashboardBn from './locales/csr-dashboard/bengali.json';
-import csrDashboardMr from './locales/csr-dashboard/marathi.json';
-import csrDashboardTe from './locales/csr-dashboard/telugu.json';
-import csrDashboardTa from './locales/csr-dashboard/tamil.json';
-import csrDashboardGu from './locales/csr-dashboard/gujarati.json';
-import csrDashboardUr from './locales/csr-dashboard/urdu.json';
-import csrDashboardKn from './locales/csr-dashboard/kannada.json';
-import csrDashboardOr from './locales/csr-dashboard/odia.json';
-import csrDashboardMl from './locales/csr-dashboard/malayalam.json';
-import csrDashboardPa from './locales/csr-dashboard/punjabi.json';
-import csrDashboardAs from './locales/csr-dashboard/assamese.json';
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 i18n
   .use(initReactI18next)
@@ -300,11 +286,10 @@ i18n
         'ai-assistant': aiAssistantEn, // Added ai-assistant namespace
         'course-recommender': courseRecommenderEn, // Added course-recommender namespace
         'public-projects': publicProjectsEn, // Added public-projects namespace
-        myprojects: myProjectsEn, // Added my-projects namespace
         'event-details': eventDetailsEn, // Added event-details namespace
         'event-management': eventManagementEn, // Added event-management namespace
         'job-board': jobBoardEn, // Added job-board namespace
-        'csr-dashboard': csrDashboardEn, // Added csr-dashboard namespace
+
       },
       hi: {
         auth: authHi, // Added auth namespace
@@ -321,11 +306,10 @@ i18n
         'ai-assistant': aiAssistantHi, // Added ai-assistant namespace
         'course-recommender': courseRecommenderHi, // Added course-recommender namespace
         'public-projects': publicProjectsHi, // Added public-projects namespace
-        myprojects: myProjectsHi, // Added my-projects namespace
         'event-details': eventDetailsHi, // Added event-details namespace
         'event-management': eventManagementHi, // Added event-management namespace
         'job-board': jobBoardHi, // Added job-board namespace
-        'csr-dashboard': csrDashboardHi, // Added csr-dashboard namespace
+
       },
       bn: {
         auth: authBn, // Added auth namespace
@@ -342,11 +326,11 @@ i18n
         'ai-assistant': aiAssistantBn, // Added ai-assistant namespace
         'course-recommender': courseRecommenderBn, // Added course-recommender namespace
         'public-projects': publicProjectsBn, // Added public-projects namespace
-        myprojects: myProjectsBn, // Added my-projects namespace
+
         'event-details': eventDetailsBn, // Added event-details namespace
         'event-management': eventManagementBn, // Added event-management namespace
         'job-board': jobBoardBn, // Added job-board namespace
-        'csr-dashboard': csrDashboardBn, // Added csr-dashboard namespace
+
       },
       mr: {
         auth: authMr, // Added auth namespace
@@ -363,11 +347,11 @@ i18n
         'ai-assistant': aiAssistantMr, // Added ai-assistant namespace
         'course-recommender': courseRecommenderMr, // Added course-recommender namespace
         'public-projects': publicProjectsMr, // Added public-projects namespace
-        myprojects: myProjectsMr, // Added my-projects namespace
+
         'event-details': eventDetailsMr, // Added event-details namespace
         'event-management': eventManagementMr, // Added event-management namespace
         'job-board': jobBoardMr, // Added job-board namespace
-        'csr-dashboard': csrDashboardMr, // Added csr-dashboard namespace
+
       },
       te: {
         auth: authTe, // Added auth namespace
@@ -384,11 +368,11 @@ i18n
         'ai-assistant': aiAssistantTe, // Added ai-assistant namespace
         'course-recommender': courseRecommenderTe, // Added course-recommender namespace
         'public-projects': publicProjectsTe, // Added public-projects namespace
-        myprojects: myProjectsTe, // Added my-projects namespace
+
         'event-details': eventDetailsTe, // Added event-details namespace
         'event-management': eventManagementTe, // Added event-management namespace
         'job-board': jobBoardTe, // Added job-board namespace
-        'csr-dashboard': csrDashboardTe, // Added csr-dashboard namespace
+
       },
       ta: {
         auth: authTa, // Added auth namespace
@@ -405,11 +389,11 @@ i18n
         'ai-assistant': aiAssistantTa, // Added ai-assistant namespace
         'course-recommender': courseRecommenderTa, // Added course-recommender namespace
         'public-projects': publicProjectsTa, // Added public-projects namespace
-        myprojects: myProjectsTa, // Added my-projects namespace
+
         'event-details': eventDetailsTa, // Added event-details namespace
         'event-management': eventManagementTa, // Added event-management namespace
         'job-board': jobBoardTa, // Added job-board namespace
-        'csr-dashboard': csrDashboardTa, // Added csr-dashboard namespace
+
       },
       gu: {
         auth: authGu, // Added auth namespace
@@ -426,11 +410,11 @@ i18n
         'ai-assistant': aiAssistantGu, // Added ai-assistant namespace
         'course-recommender': courseRecommenderGu, // Added course-recommender namespace
         'public-projects': publicProjectsGu, // Added public-projects namespace
-        myprojects: myProjectsGu, // Added my-projects namespace
+
         'event-details': eventDetailsGu, // Added event-details namespace
         'event-management': eventManagementGu, // Added event-management namespace
         'job-board': jobBoardGu, // Added job-board namespace
-        'csr-dashboard': csrDashboardGu, // Added csr-dashboard namespace
+
       },
       ur: {
         auth: authUr, // Added auth namespace
@@ -447,11 +431,11 @@ i18n
         'ai-assistant': aiAssistantUr, // Added ai-assistant namespace
         'course-recommender': courseRecommenderUr, // Added course-recommender namespace
         'public-projects': publicProjectsUr, // Added public-projects namespace
-        myprojects: myProjectsUr, // Added my-projects namespace
+
         'event-details': eventDetailsUr, // Added event-details namespace
         'event-management': eventManagementUr, // Added event-management namespace
         'job-board': jobBoardUr, // Added job-board namespace
-        'csr-dashboard': csrDashboardUr, // Added csr-dashboard namespace
+
       },
       kn: {
         auth: authKn, // Added auth namespace
@@ -468,11 +452,11 @@ i18n
         'ai-assistant': aiAssistantKn, // Added ai-assistant namespace
         'course-recommender': courseRecommenderKn, // Added course-recommender namespace
         'public-projects': publicProjectsKn, // Added public-projects namespace
-        myprojects: myProjectsKn, // Added my-projects namespace
+
         'event-details': eventDetailsKn, // Added event-details namespace
         'event-management': eventManagementKn, // Added event-management namespace
         'job-board': jobBoardKn, // Added job-board namespace
-        'csr-dashboard': csrDashboardKn, // Added csr-dashboard namespace
+
       },
       or: {
         auth: authOr, // Added auth namespace
@@ -489,11 +473,11 @@ i18n
         'ai-assistant': aiAssistantOr, // Added ai-assistant namespace
         'course-recommender': courseRecommenderOr, // Added course-recommender namespace
         'public-projects': publicProjectsOr, // Added public-projects namespace
-        myprojects: myProjectsOr, // Added my-projects namespace
+
         'event-details': eventDetailsOr, // Added event-details namespace
         'event-management': eventManagementOr, // Added event-management namespace
         'job-board': jobBoardOr, // Added job-board namespace
-        'csr-dashboard': csrDashboardOr, // Added csr-dashboard namespace
+
       },
       ml: {
         auth: authMl, // Added auth namespace
@@ -510,11 +494,11 @@ i18n
         'ai-assistant': aiAssistantMl, // Added ai-assistant namespace
         'course-recommender': courseRecommenderMl, // Added course-recommender namespace
         'public-projects': publicProjectsMl, // Added public-projects namespace
-        myprojects: myProjectsMl, // Added my-projects namespace
+
         'event-details': eventDetailsMl, // Added event-details namespace
         'event-management': eventManagementMl, // Added event-management namespace
         'job-board': jobBoardMl, // Added job-board namespace
-        'csr-dashboard': csrDashboardMl, // Added csr-dashboard namespace
+
       },
       pa: {
         auth: authPa, // Added auth namespace
@@ -531,11 +515,11 @@ i18n
         'ai-assistant': aiAssistantPa, // Added ai-assistant namespace
         'course-recommender': courseRecommenderPa, // Added course-recommender namespace
         'public-projects': publicProjectsPa, // Added public-projects namespace
-        myprojects: myProjectsPa, // Added my-projects namespace
+
         'event-details': eventDetailsPa, // Added event-details namespace
         'event-management': eventManagementPa, // Added event-management namespace
         'job-board': jobBoardPa, // Added job-board namespace
-        'csr-dashboard': csrDashboardPa, // Added csr-dashboard namespace
+
       },
       as: {
         auth: authAs, // Added auth namespace
@@ -552,11 +536,11 @@ i18n
         'ai-assistant': aiAssistantAs, // Added ai-assistant namespace
         'course-recommender': courseRecommenderAs, // Added course-recommender namespace
         'public-projects': publicProjectsAs, // Added public-projects namespace
-        myprojects: myProjectsAs, // Added my-projects namespace
+
         'event-details': eventDetailsAs, // Added event-details namespace
         'event-management': eventManagementAs, // Added event-management namespace
         'job-board': jobBoardAs, // Added job-board namespace
-        'csr-dashboard': csrDashboardAs, // Added csr-dashboard namespace
+
       },
     },
     lng: 'en',
@@ -576,11 +560,9 @@ i18n
       'ai-assistant', // Added ai-assistant to namespaces list
       'course-recommender', // Added course-recommender to namespaces list
       'public-projects', // Added public-projects to namespaces list
-      'myprojects', // Added my-projects to namespaces list
       'event-details', // Added event-details to namespaces list
       'event-management', // Added event-management to namespaces list
       'job-board', // Added job-board to namespaces list
-      'csr-dashboard', // Added csr-dashboard to namespaces list
     ],
     defaultNS: 'translation',
     interpolation: {

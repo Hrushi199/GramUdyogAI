@@ -1051,6 +1051,35 @@ const response = await this.api.get<UserProfile>('/api/profile');
   async deleteUser(id: number): Promise<ApiResponse<{ message: string }>> {
     return this.api.delete<{ message: string }>(`/api/users/${id}`);
   }
+
+  // User-specific data methods
+  async getUserEvents(userId: number): Promise<ApiResponse<Event[]>> {
+    return this.api.get<Event[]>(`/api/users/${userId}/events`);
+  }
+
+  async getUserProjects(userId: number): Promise<ApiResponse<Project[]>> {
+    return this.api.get<Project[]>(`/api/users/${userId}/projects`);
+  }
+
+  async getUserAchievements(userId: number): Promise<ApiResponse<any[]>> {
+    return this.api.get<any[]>(`/api/users/${userId}/achievements`);
+  }
+
+  async getUserActivities(userId: number, limit: number = 10): Promise<ApiResponse<any[]>> {
+    return this.api.get<any[]>(`/api/users/${userId}/activities?limit=${limit}`);
+  }
+
+  async getUserRecommendations(userId: number): Promise<ApiResponse<any[]>> {
+    return this.api.get<any[]>(`/api/users/${userId}/recommendations`);
+  }
+
+  async getUserNetworkingSuggestions(userId: number): Promise<ApiResponse<any[]>> {
+    return this.api.get<any[]>(`/api/users/${userId}/networking-suggestions`);
+  }
+
+  async getUserStats(userId: number): Promise<ApiResponse<any>> {
+    return this.api.get<any>(`/api/users/${userId}/stats`);
+  }
 }
 
 // Course API for regular courses
