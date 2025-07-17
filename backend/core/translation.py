@@ -131,7 +131,7 @@ def translate_json(json_data, target_language, sleep_gap=0.7):
         # For other types, return as is
     return json_obj
 
-def translate_text_safely(text, target_language, max_length=200):
+def translate_text_safely(text, target_language, max_length=500):
     """
     Safely translate text by splitting into smaller chunks if needed
     """

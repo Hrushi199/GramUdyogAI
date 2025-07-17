@@ -77,7 +77,7 @@ const SchemeRecommendation = () => {
   const handleTranslateExplanation = async (idx: number, scheme: SchemeExplanation) => {
     setTranslatingIdx(idx);
     try {
-      const tr = await fetch(`${API_BASE_URL}/api/translate`, {
+      const tr = await fetch(`${API_BASE_URL}/translate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ json: scheme, target_language: i18n.language }),

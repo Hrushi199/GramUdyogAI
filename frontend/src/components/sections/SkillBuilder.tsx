@@ -221,7 +221,7 @@ const SkillBuilder = () => {
   const handleTranslateSummary = async (summary: VisualSummary) => {
     setTranslatingSummaryId(summary.id);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/translate`, {
+      const response = await fetch(`${API_BASE_URL}/translate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ json: summary, target_language: i18n.language }),

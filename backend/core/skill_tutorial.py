@@ -269,7 +269,7 @@ def translate_text(text: str, target_language: str) -> str:
             return text
         
         # Use the safe translation function from translation.py
-        return translate_text_safely(text, target_language, max_length=200)
+        return translate_text_safely(text, target_language, max_length=700)
         
     except Exception as e:
         print(f"Translation failed: {e}")

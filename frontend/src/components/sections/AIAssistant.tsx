@@ -33,7 +33,7 @@ async function translateInChunks(text: string, lang: string, chunkSize = 400) {
   const translatedChunks = await Promise.all(
     chunks.map(async (chunk) => {
       // Call your backend translation endpoint (replace with actual API call)
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/translate`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/translate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: chunk, lang }),

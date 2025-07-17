@@ -237,7 +237,7 @@ const EventManagement: React.FC = () => {
   const translateEventData = async (eventData: any) => {
     setTranslating(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/translate`, {
+      const response = await fetch(`${API_BASE_URL}/translate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

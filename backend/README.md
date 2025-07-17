@@ -109,7 +109,7 @@ Once the server is running, you can access:
 ### AI Services
 - `POST /api/ai-assistant` - AI chat assistant
 - `POST /api/youtube-summary` - YouTube video summarization
-- `POST /api/translate` - Text translation
+- `POST /translate` - Text translation
 
 ## Development
 

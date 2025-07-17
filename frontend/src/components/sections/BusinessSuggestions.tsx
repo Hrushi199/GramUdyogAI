@@ -79,7 +79,7 @@ const BusinessSuggestion: React.FC = () => {
   const handleTranslateSuggestion = async (idx: number, suggestion: Suggestion) => {
     setTranslatingIdx(idx);
     try {
-      const tr = await fetch(`${API_BASE_URL}/api/translate`, {
+      const tr = await fetch(`${API_BASE_URL}/translate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ json: suggestion, target_language: i18n.language }),
